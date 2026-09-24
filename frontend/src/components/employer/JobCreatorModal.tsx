@@ -186,7 +186,7 @@ export default function JobCreatorModal({ onClose }: JobCreatorModalProps) {
             </div>
             <div>
               <h3 className="text-base font-semibold text-white">
-                Job Ingestion & Benchmark Parser (E1, E2)
+                Job Ingestion & Benchmark Parser
               </h3>
               <p className="text-xs text-slate-400">
                 Input job opening via industry template or paste raw JD for automatic skill node extraction.
@@ -221,7 +221,7 @@ export default function JobCreatorModal({ onClose }: JobCreatorModalProps) {
                 : "text-slate-400 hover:text-slate-200"
             }`}
           >
-            Paste Raw JD Text (Automated Parser E1)
+            Paste Raw JD Text (Automated Parser)
           </button>
         </div>
 
@@ -247,7 +247,7 @@ export default function JobCreatorModal({ onClose }: JobCreatorModalProps) {
                   className="mt-3 flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold bg-cyan-500 hover:bg-cyan-400 text-slate-950 transition-all disabled:opacity-50"
                 >
                   <Sparkles className="w-4 h-4" />
-                  {isParsing ? "Extracting Skill Nodes..." : "Parse JD into Critical & Optional Nodes (E2)"}
+                  {isParsing ? "Extracting Skill Nodes..." : "Parse JD into Critical & Optional Nodes"}
                 </button>
               </div>
             </div>
@@ -256,7 +256,7 @@ export default function JobCreatorModal({ onClose }: JobCreatorModalProps) {
               {/* Preconfigured Templates Row */}
               <div className="space-y-2">
                 <label className="text-xs font-mono uppercase tracking-wider text-slate-400 font-semibold block">
-                  Select Pre-Configured Template (E1):
+                  Select Pre-Configured Template:
                 </label>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                   {TEMPLATES.map((tmpl, idx) => (
@@ -309,7 +309,7 @@ export default function JobCreatorModal({ onClose }: JobCreatorModalProps) {
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-xs font-semibold text-emerald-400 font-mono uppercase tracking-wider flex items-center gap-1.5">
                       <span className="w-2 h-2 rounded-full bg-emerald-400" />
-                      Critical Skills (Must-Have, Weight = 3.0) (E2)
+                      Critical Skills (Must-Have, Weight = 3.0)
                     </span>
                     <span className="text-[10px] text-slate-400 font-mono">
                       {criticalSkills.length} nodes
@@ -332,7 +332,7 @@ export default function JobCreatorModal({ onClose }: JobCreatorModalProps) {
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-xs font-semibold text-slate-300 font-mono uppercase tracking-wider flex items-center gap-1.5">
                       <span className="w-2 h-2 rounded-full bg-slate-500" />
-                      Optional Skills (Nice-to-Have, Weight = 1.0) (E2)
+                      Optional Skills (Nice-to-Have, Weight = 1.0)
                     </span>
                     <span className="text-[10px] text-slate-400 font-mono">
                       {optionalSkills.length} nodes

@@ -18,7 +18,7 @@ export default function AnomalyMonitor() {
           <div>
             <div className="flex items-center gap-2">
               <h3 className="text-lg font-bold text-white">
-                Fraud & Conflict Sentinel Telemetry (A9, A10, A11)
+                Fraud & Conflict Sentinel Telemetry
               </h3>
               <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-rose-950 text-rose-300 border border-rose-800 font-semibold">
                 Integrity Monitor

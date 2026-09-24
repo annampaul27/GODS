@@ -144,7 +144,7 @@ export default function CandidateDrawer({
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/50 text-amber-300 text-xs font-medium transition-all"
               >
                 <Send className="w-3.5 h-3.5" />
-                <span>Dispatch 1-Click Gap Sprint (E6)</span>
+                <span>Dispatch 1-Click Gap Sprint</span>
               </button>
             </div>
           </div>
@@ -154,7 +154,7 @@ export default function CandidateDrawer({
         <div className="mt-6 space-y-3">
           <div className="flex items-center justify-between">
             <h4 className="text-xs uppercase font-mono tracking-wider text-slate-400 font-semibold">
-              Skill Trust Matrix (S15: Verified vs Unverified)
+              Skill Trust Matrix (Verified vs Unverified)
             </h4>
             <span className="text-[11px] text-slate-500">
               Only verified skills count toward job fit
@@ -205,7 +205,7 @@ export default function CandidateDrawer({
                     }}
                     className="px-2.5 py-1 rounded bg-cyan-950 text-cyan-300 border border-cyan-800 hover:bg-cyan-900 text-[11px] font-mono transition-colors"
                   >
-                    Inspect Hash (E7)
+                    Inspect Hash
                   </button>
                 )}
               </div>
@@ -259,7 +259,7 @@ export default function CandidateDrawer({
         {/* Pipeline History (E16) */}
         <div className="mt-6 pt-4 border-t border-slate-800 space-y-2 text-xs">
           <h4 className="text-xs uppercase font-mono tracking-wider text-slate-400 font-semibold">
-            Status Audit Log (E16)
+            Status Audit Log
           </h4>
           <div className="space-y-1.5">
             {candidate.statusHistory.map((h, i) => (

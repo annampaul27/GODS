@@ -14,7 +14,7 @@ export default function SkillTaxonomyTable() {
 
     addToast({
       type: "success",
-      title: "Taxonomy Synonyms Updated (A2)",
+      title: "Taxonomy Synonyms Updated",
       message: `Mapped "${val}" to canonical skill node "${canonicalId}".`,
     });
 
@@ -32,7 +32,7 @@ export default function SkillTaxonomyTable() {
           <div>
             <div className="flex items-center gap-2">
               <h3 className="text-lg font-bold text-white">
-                Global Skill Taxonomy Manager (A2)
+                Global Skill Taxonomy Manager
               </h3>
               <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-cyan-950 text-cyan-300 border border-cyan-800 font-semibold">
                 Canonical Normalization
@@ -54,7 +54,7 @@ export default function SkillTaxonomyTable() {
                 <th className="pb-3 font-semibold">Canonical ID</th>
                 <th className="pb-3 font-semibold">Standard Node Name</th>
                 <th className="pb-3 font-semibold">Default Weight</th>
-                <th className="pb-3 font-semibold">Recognized Synonyms & Aliases (A2)</th>
+                <th className="pb-3 font-semibold">Recognized Synonyms & Aliases</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-800/60 font-sans">

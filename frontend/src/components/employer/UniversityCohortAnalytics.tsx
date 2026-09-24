@@ -56,7 +56,7 @@ export default function UniversityCohortAnalytics() {
     setExported(true);
     addToast({
       type: "success",
-      title: "NAAC/NIRF Accreditation Dossier Exported (E22)",
+      title: "NAAC/NIRF Accreditation Dossier Exported",
       message:
         "Generated NAAC Criterion 5.1.4 / NIRF Placement Readiness Compliance CSV and verifiable cryptographic hash summary.",
     });
@@ -75,7 +75,7 @@ export default function UniversityCohortAnalytics() {
             <div>
               <div className="flex items-center gap-2">
                 <h3 className="text-lg font-bold text-white">
-                  University Cohort Readiness & NAAC/NIRF Analytics (E21, E22)
+                  University Cohort Readiness & NAAC/NIRF Analytics
                 </h3>
                 <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-cyan-950 text-cyan-300 border border-cyan-800 font-semibold">
                   TPO Institutional Portal
@@ -92,7 +92,7 @@ export default function UniversityCohortAnalytics() {
             className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold bg-gradient-to-r from-cyan-500 to-emerald-500 hover:from-cyan-400 hover:to-emerald-400 text-slate-950 shadow-lg shadow-cyan-500/20 transition-all shrink-0"
           >
             <Download className="w-4 h-4" />
-            <span>{exported ? "Dossier Exported ✓" : "1-Click NAAC/NIRF Export (E22)"}</span>
+            <span>{exported ? "Dossier Exported ✓" : "1-Click NAAC/NIRF Export"}</span>
           </button>
         </div>
 
@@ -126,7 +126,7 @@ export default function UniversityCohortAnalytics() {
         <div className="flex items-center justify-between">
           <div>
             <h4 className="text-sm font-semibold text-white font-mono uppercase tracking-wider">
-              Cohort-Wide Skill Gap Delta Heatmap (E21)
+              Cohort-Wide Skill Gap Delta Heatmap
             </h4>
             <p className="text-xs text-slate-400 mt-0.5">
               Identifies exact curriculum blind spots based on real employer requisition benchmarks.

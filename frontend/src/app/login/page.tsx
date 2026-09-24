@@ -259,7 +259,7 @@ export default function LoginPage() {
               <label className="text-xs font-mono text-slate-300 uppercase tracking-wider font-semibold flex items-center justify-between">
                 <span className="flex items-center gap-1.5">
                   <Building2 className="w-3.5 h-3.5 text-cyan-400" />
-                  Tenant Organization (E11)
+                  Tenant Organization
                 </span>
                 <span className="text-[10px] text-slate-500 font-normal">Scoped Query Level</span>
               </label>
@@ -412,7 +412,7 @@ export default function LoginPage() {
         <div className="pt-2 text-center text-[11px] text-slate-500 space-y-1">
           <p>
             Zero-knowledge cryptographic authentication. All candidate and requisition data is
-            strictly scoped to tenant organization IDs (SRS Section 4 • NF6).
+            strictly scoped to tenant organization IDs.
           </p>
         </div>
       </div>

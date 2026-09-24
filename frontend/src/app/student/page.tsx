@@ -22,8 +22,14 @@ import {
   Award,
   FileText,
   Clock,
+  AlertTriangle,
+  Bell,
+  Calendar,
+  Sparkles,
+  ArrowRight,
 } from "lucide-react";
 import Link from "next/link";
+import { UserNotification } from "@/types";
 
 export default function StudentPage() {
   const { currentStudent, activeJob } = useStore();
@@ -34,6 +40,38 @@ export default function StudentPage() {
   const [isATSResumeModalOpen, setIsATSResumeModalOpen] = useState(false);
   const [verificationSkillId, setVerificationSkillId] = useState("postgresql");
   const [verificationSkillName, setVerificationSkillName] = useState("PostgreSQL Optimization & Architecture");
+  const [deadlineAlerts, setDeadlineAlerts] = useState<UserNotification[]>([]);
+
+  // Fetch deadline notifications for candidate
+  React.useEffect(() => {
+    const fetchAlerts = async () => {
+      try {
+        const res = await fetch("http://localhost:8000/api/v1/notifications?user_id=cand-1");
+        if (res.ok) {
+          const data = await res.json();
+          setDeadlineAlerts(data.notifications || []);
+        }
+      } catch (e) {
+        console.warn("Unable to fetch deadline notifications:", e);
+      }
+    };
+    fetchAlerts();
+    const timer = setInterval(fetchAlerts, 10000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const handleMarkAlertRead = async (alertId: string) => {
+    setDeadlineAlerts((prev) =>
+      prev.map((a) => (a.id === alertId ? { ...a, is_read: true } : a))
+    );
+    try {
+      await fetch(`http://localhost:8000/api/v1/notifications/${alertId}/read`, {
+        method: "PATCH",
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   const handleLaunchSprint = (skillId: string) => {
     // Select sprint from library, or fallback to postgres_optimization
@@ -90,7 +128,7 @@ export default function StudentPage() {
             className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 shadow-lg shadow-cyan-500/20 transition-all border border-cyan-400/40"
           >
             <Award className="w-4 h-4" />
-            <span>Verify Skill Assessment (FR-01: 20 Qs • 12-Min)</span>
+            <span>Verify Skill Assessment (20 Qs • 12-Min)</span>
           </button>
 
           {/* FR-02: ATS-Friendly Tailored Resume Parser & Editor */}
@@ -100,7 +138,7 @@ export default function StudentPage() {
             className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 shadow-lg shadow-emerald-500/20 transition-all border border-emerald-400/40"
           >
             <FileText className="w-4 h-4" />
-            <span>ATS Resume Studio (FR-02)</span>
+            <span>ATS Resume Studio</span>
           </button>
 
           <button
@@ -112,6 +150,74 @@ export default function StudentPage() {
           </button>
         </div>
       </div>
+
+      {/* FR-04: Deadlines & Strategic Application Notification Widget */}
+      {deadlineAlerts.length > 0 && (
+        <div id="deadline-alerts-banner" className="space-y-3">
+          {deadlineAlerts.map((alert) => (
+            <div
+              key={alert.id}
+              className={`p-4 rounded-2xl border transition-all duration-300 flex flex-col md:flex-row md:items-center justify-between gap-4 ${
+                !alert.is_read
+                  ? "bg-gradient-to-r from-rose-950/40 via-slate-900/90 to-amber-950/20 border-rose-500/40 shadow-xl shadow-rose-950/20"
+                  : "bg-slate-950/60 border-slate-800/80 opacity-75"
+              }`}
+            >
+              <div className="flex items-start sm:items-center gap-3.5">
+                <div
+                  className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 border ${
+                    !alert.is_read
+                      ? "bg-rose-500/20 border-rose-500/40 text-rose-300"
+                      : "bg-slate-800 border-slate-700 text-slate-400"
+                  }`}
+                >
+                  <AlertTriangle className="w-5 h-5 animate-pulse" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="text-[10px] font-mono font-bold uppercase px-2 py-0.5 rounded-full bg-rose-950 text-rose-300 border border-rose-800">
+                      Deadline Warning
+                    </span>
+                    <span className="text-xs font-semibold text-white">
+                      {alert.job_title}
+                    </span>
+                    {!alert.is_read && (
+                      <span className="w-2 h-2 rounded-full bg-rose-400 animate-ping" />
+                    )}
+                  </div>
+                  <p className="text-xs text-slate-300 mt-1">
+                    {alert.message}
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3 shrink-0 self-end md:self-center">
+                {!alert.is_read ? (
+                  <button
+                    onClick={() => handleMarkAlertRead(alert.id)}
+                    className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-rose-500/20 hover:bg-rose-500/30 text-rose-200 border border-rose-500/40 transition-colors"
+                  >
+                    Mark as Read
+                  </button>
+                ) : (
+                  <span className="text-xs text-slate-500 flex items-center gap-1 font-mono">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> Acknowledged
+                  </span>
+                )}
+                <button
+                  onClick={() => {
+                    setActiveTab("roadmap");
+                  }}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 transition-colors"
+                >
+                  <span>Accelerate Prep</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
 
       {/* Tabs */}
       <div className="flex items-center justify-between border-b border-slate-800 pb-3">
@@ -125,7 +231,7 @@ export default function StudentPage() {
             }`}
           >
             <Radar className="w-4 h-4" />
-            <span>Skill Gap Delta Radar (S3, S4)</span>
+            <span>Skill Gap Delta Radar</span>
           </button>
 
           <button
@@ -137,7 +243,7 @@ export default function StudentPage() {
             }`}
           >
             <Compass className="w-4 h-4" />
-            <span>Application Readiness Report & Roadmap (S17, S18)</span>
+            <span>Application Readiness Report & Roadmap</span>
           </button>
         </div>
 
@@ -162,7 +268,7 @@ export default function StudentPage() {
           <div className="flex items-center gap-2">
             <Award className="w-5 h-5 text-cyan-400" />
             <h4 className="text-xs uppercase font-mono tracking-wider text-slate-300 font-semibold">
-              My Cryptographic Proof-of-Work Badges (S10, S11)
+              My Cryptographic Proof-of-Work Badges
             </h4>
           </div>
           <span className="text-[11px] text-slate-500 font-mono">
@@ -210,7 +316,7 @@ export default function StudentPage() {
                   target="_blank"
                   className="flex items-center gap-1 text-cyan-400 hover:text-cyan-300 font-medium text-[11px]"
                 >
-                  Verify Publicly (S11) <ExternalLink className="w-3 h-3" />
+                  Verify Publicly <ExternalLink className="w-3 h-3" />
                 </Link>
               </div>
             </div>

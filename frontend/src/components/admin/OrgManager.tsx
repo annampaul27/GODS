@@ -15,7 +15,7 @@ export default function OrgManager() {
         const newStatus = org.status === "active" ? "suspended" : "active";
         addToast({
           type: newStatus === "active" ? "success" : "warning",
-          title: `Organization Status Changed (A7)`,
+          title: `Organization Status Changed`,
           message: `${org.name} has been ${newStatus.toUpperCase()}. Data remains intact for reinstatement.`,
         });
         return { ...org, status: newStatus };
@@ -34,7 +34,7 @@ export default function OrgManager() {
           <div>
             <div className="flex items-center gap-2">
               <h3 className="text-lg font-bold text-white">
-                Multi-Tenant Organization Management (A7, A8, E11)
+                Multi-Tenant Organization Management
               </h3>
               <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-indigo-950 text-indigo-300 border border-indigo-800 font-semibold">
                 Superuser Console
@@ -126,7 +126,7 @@ export default function OrgManager() {
                 >
                   {isActive ? (
                     <>
-                      <Ban className="w-3 h-3" /> Suspend Tenant (A7)
+                      <Ban className="w-3 h-3" /> Suspend Tenant
                     </>
                   ) : (
                     <>

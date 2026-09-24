@@ -52,7 +52,7 @@ export default function EmployerPage() {
     setCopiedShareLink(true);
     addToast({
       type: "info",
-      title: "Shareable Shortlist Link Copied (E18)",
+      title: "Shareable Shortlist Link Copied",
       message: "External client link copied to clipboard for stakeholder review.",
     });
     setTimeout(() => setCopiedShareLink(false), 3000);
@@ -99,7 +99,7 @@ export default function EmployerPage() {
             {isAnonymizedScreening ? (
               <>
                 <EyeOff className="w-4 h-4 text-amber-400" />
-                <span>Blind Mode: ON (E17)</span>
+                <span>Blind Mode: ON</span>
               </>
             ) : (
               <>
@@ -113,7 +113,7 @@ export default function EmployerPage() {
           <button
             onClick={handleShareShortlist}
             className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-xs font-medium text-slate-300 hover:text-white transition-colors"
-            title="E18: Shareable, read-only candidate shortlist link"
+            title="Shareable, read-only candidate shortlist link"
           >
             {copiedShareLink ? (
               <>
@@ -123,7 +123,7 @@ export default function EmployerPage() {
             ) : (
               <>
                 <Share2 className="w-3.5 h-3.5 text-slate-400" />
-                <span>Share Shortlist (E18)</span>
+                <span>Share Shortlist</span>
               </>
             )}
           </button>
@@ -134,7 +134,7 @@ export default function EmployerPage() {
             className="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold bg-gradient-to-r from-cyan-500 to-indigo-500 hover:from-cyan-400 hover:to-indigo-400 text-slate-950 shadow-lg shadow-cyan-500/20 transition-all"
           >
             <Plus className="w-4 h-4" />
-            <span>Ingest Job / JD (E1)</span>
+            <span>Ingest Job / JD</span>
           </button>
         </div>
       </div>
@@ -151,7 +151,7 @@ export default function EmployerPage() {
             }`}
           >
             <Users className="w-4 h-4" />
-            <span>Talent Radar & Gap Sprints (E3-E6)</span>
+            <span>Talent Radar & Gap Sprints</span>
           </button>
 
           <button
@@ -163,7 +163,7 @@ export default function EmployerPage() {
             }`}
           >
             <Layers className="w-4 h-4" />
-            <span>Pipeline Kanban (E16)</span>
+            <span>Pipeline Kanban</span>
           </button>
 
           {/* Show University Cohort Analytics Tab if Org is University (E21, E22) */}
@@ -176,7 +176,7 @@ export default function EmployerPage() {
             }`}
           >
             <GraduationCap className="w-4 h-4" />
-            <span>University Cohort & NAAC Analytics (E21)</span>
+            <span>University Cohort & NAAC Analytics</span>
           </button>
         </div>
 

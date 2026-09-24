@@ -114,19 +114,19 @@ export default function HomePage() {
             <div className="space-y-1.5 pt-2 text-[11px] font-mono text-slate-300">
               <div className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
-                <span>1-Click Gap Sprint Dispatch (E6)</span>
+                <span>1-Click Gap Sprint Dispatch</span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
-                <span>SHA-256 Proof-of-Work Audit (E7, E8)</span>
+                <span>SHA-256 Proof-of-Work Audit</span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-                <span>Blind Bias-Free Screening Mode (E17)</span>
+                <span>Blind Bias-Free Screening Mode</span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-indigo-400" />
-                <span>University NAAC / NIRF Analytics (E21, E22)</span>
+                <span>University NAAC / NIRF Analytics</span>
               </div>
             </div>
           </div>
@@ -163,19 +163,19 @@ export default function HomePage() {
             <div className="space-y-1.5 pt-2 text-[11px] font-mono text-slate-300">
               <div className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                <span>Skill Gap Delta Radar (S4)</span>
+                <span>Skill Gap Delta Radar</span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                <span>90s Countdown & Tab-Blur Anti-Cheat (S7, S8)</span>
+                <span>90s Countdown & Tab-Blur Anti-Cheat</span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
-                <span>SHA-256 Micro-Credential Minting (S10)</span>
+                <span>SHA-256 Micro-Credential Minting</span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-                <span>Application Readiness Roadmap (S17, S18)</span>
+                <span>Application Readiness Roadmap</span>
               </div>
             </div>
           </div>
@@ -212,19 +212,19 @@ export default function HomePage() {
             <div className="space-y-1.5 pt-2 text-[11px] font-mono text-slate-300">
               <div className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-purple-400" />
-                <span>Immutable Credential Ledger (A3)</span>
+                <span>Immutable Credential Ledger</span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-purple-400" />
-                <span>Skill Taxonomy Synonym Mapper (A2)</span>
+                <span>Skill Taxonomy Synonym Mapper</span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-indigo-400" />
-                <span>Tenant Organization Management (A7, A8)</span>
+                <span>Tenant Organization Management</span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-rose-400" />
-                <span>Fraud & Conflict Sentinel (A9-A11)</span>
+                <span>Fraud & Conflict Sentinel</span>
               </div>
             </div>
           </div>
@@ -248,14 +248,14 @@ export default function HomePage() {
             </p>
           </div>
           <span className="text-xs font-mono text-cyan-400 px-3 py-1 rounded-full bg-cyan-950 border border-cyan-800">
-            FastAPI Contract Ready (NF5)
+            FastAPI Contract Ready
           </span>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
           <div className="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 space-y-2">
             <span className="text-[10px] uppercase font-mono text-cyan-400 font-bold block">
-              NF1 & NF2 • Ultra-Low Latency & Cache
+              Ultra-Low Latency & Cache
             </span>
             <h4 className="font-semibold text-white">Sub-3.0s Engine & 100ms Cache</h4>
             <p className="text-slate-400 leading-relaxed text-[11px]">
@@ -265,7 +265,7 @@ export default function HomePage() {
 
           <div className="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 space-y-2">
             <span className="text-[10px] uppercase font-mono text-emerald-400 font-bold block">
-              NF3 • Zero-Trust Math
+              Zero-Trust Math
             </span>
             <h4 className="font-semibold text-white">Deterministic SHA-256 Digest</h4>
             <p className="text-slate-400 leading-relaxed text-[11px]">
@@ -275,7 +275,7 @@ export default function HomePage() {
 
           <div className="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 space-y-2">
             <span className="text-[10px] uppercase font-mono text-purple-400 font-bold block">
-              NF6 & E14 • Multi-Tenant Isolation
+              Multi-Tenant Isolation
             </span>
             <h4 className="font-semibold text-white">Org-Scoped Data Partitioning</h4>
             <p className="text-slate-400 leading-relaxed text-[11px]">

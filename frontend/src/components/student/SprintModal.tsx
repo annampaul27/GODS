@@ -52,7 +52,7 @@ export default function SprintModal({ sprint, onClose }: SprintModalProps) {
       if (part === 3 && !quizFinished) {
         setTabBlurEvents((prev) => {
           const updated = prev + 1;
-          const warningMsg = `⚠️ Anti-Cheat Warning (S8): Window focus lost! Tab blur count: ${updated}. All blur events are recorded in your cryptographic audit log.`;
+          const warningMsg = `⚠️ Anti-Cheat Warning: Window focus lost! Tab blur count: ${updated}. All blur events are recorded in your cryptographic audit log.`;
           setTabBlurWarning(warningMsg);
           logAnomaly({
             type: "Tab-blur Threshold Exceeded",
@@ -94,7 +94,7 @@ export default function SprintModal({ sprint, onClose }: SprintModalProps) {
     setIsAnswerSubmitted(true);
     addToast({
       type: "warning",
-      title: "Time Expired (S7)",
+      title: "Time Expired",
       message: "The 90-second countdown has reached 0. Your current selection was locked.",
     });
   };
@@ -190,11 +190,11 @@ export default function SprintModal({ sprint, onClose }: SprintModalProps) {
             <div>
               <div className="flex items-center gap-2">
                 <h3 className="text-base font-semibold text-white">
-                  10-Minute Micro-Learning Sprint (S5, S6)
+                  10-Minute Micro-Learning Sprint
                 </h3>
                 {sprint.sponsorOrgName && (
                   <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-indigo-950 text-indigo-300 border border-indigo-800 font-semibold">
-                    Sponsored by {sprint.sponsorOrgName} (S23)
+                    Sponsored by {sprint.sponsorOrgName}
                   </span>
                 )}
               </div>
@@ -417,7 +417,7 @@ export default function SprintModal({ sprint, onClose }: SprintModalProps) {
                     >
                       {timeLeft}s
                     </span>{" "}
-                    <span className="text-[10px] text-slate-500">(S7 Anti-Copy)</span>
+                    <span className="text-[10px] text-slate-500">(Anti-Copy)</span>
                   </div>
                 </div>
               </div>
@@ -479,8 +479,8 @@ export default function SprintModal({ sprint, onClose }: SprintModalProps) {
                 >
                   <strong className="block mb-1 font-mono uppercase text-[10px]">
                     {selectedOption === currentQ.correctOptionIndex
-                      ? "✓ Correct Answer Explanation (S9)"
-                      : "✕ Diagnostic Explanation (S9)"}
+                      ? "✓ Correct Answer Explanation"
+                      : "✕ Diagnostic Explanation"}
                   </strong>
                   <p>{currentQ.explanations[currentQ.correctOptionIndex]}</p>
                 </div>
@@ -504,7 +504,7 @@ export default function SprintModal({ sprint, onClose }: SprintModalProps) {
                     <span>
                       {currentQuestionIndex < sprint.part3Questions.length - 1
                         ? "Next Question"
-                        : "Finish & Mint SHA-256 Credential (S10)"}
+                        : "Finish & Mint SHA-256 Credential"}
                     </span>
                     <ArrowRight className="w-4 h-4" />
                   </button>
@@ -534,7 +534,7 @@ export default function SprintModal({ sprint, onClose }: SprintModalProps) {
                 <div className="p-5 rounded-2xl glass-panel border-emerald-500/50 bg-emerald-950/10 text-left space-y-3">
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-mono uppercase text-emerald-400 font-semibold flex items-center gap-1.5">
-                      <ShieldCheck className="w-4 h-4" /> Cryptographic SHA-256 Micro-Credential (S10)
+                      <ShieldCheck className="w-4 h-4" /> Cryptographic SHA-256 Micro-Credential
                     </span>
                     <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800">
                       Immutable Proof
@@ -552,7 +552,7 @@ export default function SprintModal({ sprint, onClose }: SprintModalProps) {
 
                   <div className="p-3 rounded-xl bg-slate-950/80 border border-slate-800/80 flex items-center justify-between text-xs">
                     <div>
-                      <p className="text-slate-300 font-medium">Public Zero-Auth URL (S11)</p>
+                      <p className="text-slate-300 font-medium">Public Zero-Auth URL</p>
                       <p className="text-[10px] text-slate-500">
                         Share on LinkedIn, resumes, or send to recruiters
                       </p>
@@ -573,7 +573,7 @@ export default function SprintModal({ sprint, onClose }: SprintModalProps) {
                       <strong className="text-white font-semibold">Direct Economic Impact:</strong>{" "}
                       Your fit score benchmark against employer openings has increased to{" "}
                       <strong className="text-emerald-400 font-mono">Job-Ready (≥85%)</strong>!
-                      You are now elevated on the recruiter radar (S12).
+                      You are now elevated on the recruiter radar.
                     </p>
                   </div>
                 </div>

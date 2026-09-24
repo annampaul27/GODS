@@ -101,7 +101,7 @@ export default function AdminPage() {
             }`}
           >
             <Shield className="w-4 h-4" />
-            <span>Cryptographic Credential Ledger (A3)</span>
+            <span>Cryptographic Credential Ledger</span>
           </button>
 
           <button
@@ -113,7 +113,7 @@ export default function AdminPage() {
             }`}
           >
             <Network className="w-4 h-4" />
-            <span>Global Skill Taxonomy (A2)</span>
+            <span>Global Skill Taxonomy</span>
           </button>
 
           <button
@@ -125,7 +125,7 @@ export default function AdminPage() {
             }`}
           >
             <Building2 className="w-4 h-4" />
-            <span>Multi-Tenant Organizations (A7, A8)</span>
+            <span>Multi-Tenant Organizations</span>
           </button>
 
           <button
@@ -137,7 +137,7 @@ export default function AdminPage() {
             }`}
           >
             <AlertTriangle className="w-4 h-4" />
-            <span>Fraud & Conflict Sentinel (A9-A11)</span>
+            <span>Fraud & Conflict Sentinel</span>
             {pendingAnomalies.length > 0 && (
               <span className="text-[10px] font-mono px-1.5 py-0.2 rounded-full bg-rose-950 text-rose-300 border border-rose-800">
                 {pendingAnomalies.length}

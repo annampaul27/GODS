@@ -58,7 +58,7 @@ export default function PipelineKanban({
       <div className="flex items-center justify-between">
         <div>
           <h3 className="text-sm font-semibold text-white uppercase tracking-wider font-mono">
-            Candidate Pipeline Status Workflow (E16)
+            Candidate Pipeline Status Workflow
           </h3>
           <p className="text-xs text-slate-400 mt-0.5">
             Real-time stage transitions with full audit log history. Advance candidates as proofs are verified.

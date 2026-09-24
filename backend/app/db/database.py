@@ -79,6 +79,58 @@ def init_db():
     )
     """)
 
+    # 5. Jobs Table (FR-04)
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS jobs (
+        id TEXT PRIMARY KEY,
+        org_id TEXT NOT NULL,
+        title TEXT NOT NULL,
+        department TEXT,
+        location TEXT,
+        type TEXT DEFAULT 'Full-Time',
+        experience_min_years REAL DEFAULT 0.0,
+        salary_range TEXT,
+        description TEXT,
+        pass_threshold INTEGER DEFAULT 85,
+        opening_date TIMESTAMP NOT NULL,
+        application_deadline TIMESTAMP NOT NULL,
+        critical_skills_json TEXT,
+        optional_skills_json TEXT,
+        status TEXT DEFAULT 'active',
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )
+    """)
+
+    # 6. Saved Jobs Table (FR-04)
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS saved_jobs (
+        id TEXT PRIMARY KEY,
+        user_id TEXT NOT NULL,
+        job_id TEXT NOT NULL,
+        saved_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users (id),
+        FOREIGN KEY (job_id) REFERENCES jobs (id),
+        UNIQUE(user_id, job_id)
+    )
+    """)
+
+    # 7. User Notifications Table (FR-04)
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS user_notifications (
+        id TEXT PRIMARY KEY,
+        user_id TEXT NOT NULL,
+        job_id TEXT NOT NULL,
+        message TEXT NOT NULL,
+        notification_type TEXT NOT NULL DEFAULT 'deadline_warning',
+        is_read BOOLEAN NOT NULL DEFAULT 0,
+        trigger_date TIMESTAMP NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users (id),
+        FOREIGN KEY (job_id) REFERENCES jobs (id),
+        UNIQUE(user_id, job_id, notification_type, trigger_date)
+    )
+    """)
+
     # Seed Initial Data if empty
     cursor.execute("SELECT COUNT(*) FROM skills")
     if cursor.fetchone()[0] == 0:
@@ -103,6 +155,67 @@ def init_db():
         cursor.executemany(
             "INSERT INTO users (id, email, full_name, role, user_class, college, experience_years, readiness_score, current_tier, avatar_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
             initial_users
+        )
+
+    cursor.execute("SELECT COUNT(*) FROM jobs")
+    if cursor.fetchone()[0] == 0:
+        # Default jobs
+        from datetime import datetime, timedelta
+        today = datetime.now()
+        initial_jobs = [
+            (
+                "job-fullstack-01",
+                "org-acme",
+                "Senior Full-Stack Architect (Next.js 15 + FastAPI)",
+                "Platform Engineering",
+                "Bengaluru / Remote",
+                "Full-Time",
+                3.0,
+                "₹28,00,000 - ₹38,00,000",
+                "Looking for a high-craft Full-Stack Architect to spearhead core microservices and edge rendering.",
+                85,
+                (today - timedelta(days=10)).strftime("%Y-%m-%d %H:%M:%S"),
+                (today + timedelta(days=21)).strftime("%Y-%m-%d %H:%M:%S"), # Exactly 21 days from now!
+                json.dumps([{"id": "react", "name": "React 19 & Next.js Architecture", "weight": 3.0}]),
+                json.dumps([{"id": "docker", "name": "Docker, Containerization & CI/CD", "weight": 1.0}]),
+                "active"
+            ),
+            (
+                "job-ai-systems-02",
+                "org-acme",
+                "AI Platform & Inference Systems Engineer",
+                "Applied AI",
+                "Hyderabad / Hybrid",
+                "Full-Time",
+                2.0,
+                "₹25,00,000 - ₹35,00,000",
+                "Scale generative AI pipelines and vector databases for enterprise workloads.",
+                85,
+                (today - timedelta(days=5)).strftime("%Y-%m-%d %H:%M:%S"),
+                (today + timedelta(days=45)).strftime("%Y-%m-%d %H:%M:%S"),
+                json.dumps([{"id": "python", "name": "Python Core, Concurrency & AsyncIO", "weight": 3.0}]),
+                json.dumps([{"id": "docker", "name": "Docker, Containerization & CI/CD", "weight": 1.0}]),
+                "active"
+            )
+        ]
+        cursor.executemany(
+            """INSERT INTO jobs (
+                id, org_id, title, department, location, type, experience_min_years, 
+                salary_range, description, pass_threshold, opening_date, application_deadline,
+                critical_skills_json, optional_skills_json, status
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+            initial_jobs
+        )
+
+        # Seed saved jobs for cand-1 and cand-2
+        initial_saved = [
+            ("save-1", "cand-1", "job-fullstack-01"),
+            ("save-2", "cand-2", "job-fullstack-01"),
+            ("save-3", "cand-1", "job-ai-systems-02"),
+        ]
+        cursor.executemany(
+            "INSERT INTO saved_jobs (id, user_id, job_id) VALUES (?, ?, ?)",
+            initial_saved
         )
 
     conn.commit()

@@ -341,7 +341,7 @@ export default function SkillVerificationModal({
         // Time expired: Auto-submit
         addToast({
           type: "warning",
-          title: "12-Minute Time Limit Reached (FR-01)",
+          title: "12-Minute Time Limit Reached",
           message: "Assessment timer has expired. Your current answers are being submitted for grading.",
         });
         handleSubmitAssessment();
@@ -567,7 +567,7 @@ export default function SkillVerificationModal({
             <div>
               <div className="flex items-center gap-2">
                 <h3 className="text-base font-bold text-white tracking-tight">
-                  Skill Verification Engine (FR-01)
+                  Skill Verification Engine
                 </h3>
                 <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded-full bg-cyan-950 text-cyan-300 border border-cyan-800 font-semibold">
                   20 Questions • 12-Min Countdown
@@ -865,7 +865,7 @@ export default function SkillVerificationModal({
                         ) : (
                           <>
                             <ShieldCheck className="w-4 h-4" />
-                            <span>Submit for Grading (FR-01)</span>
+                            <span>Submit for Grading</span>
                           </>
                         )}
                       </button>

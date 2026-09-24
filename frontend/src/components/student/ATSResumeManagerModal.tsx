@@ -192,7 +192,7 @@ export default function ATSResumeManagerModal({ onClose }: ATSResumeManagerModal
         setActiveTab("edit");
         addToast({
           type: "success",
-          title: "PDF Parsed Successfully (FR-02)",
+          title: "PDF Parsed Successfully",
           message: "Extracted into structured, ATS-compliant JSON format ready for manual editing.",
         });
         setIsParsing(false);
@@ -208,7 +208,7 @@ export default function ATSResumeManagerModal({ onClose }: ATSResumeManagerModal
       setActiveTab("edit");
       addToast({
         type: "success",
-        title: "PDF Parsed Successfully (FR-02)",
+        title: "PDF Parsed Successfully",
         message: "AI spatial layout engine extracted structured ATS-compliant JSON schema.",
       });
     }, 1000);
@@ -231,7 +231,7 @@ export default function ATSResumeManagerModal({ onClose }: ATSResumeManagerModal
         const result = await response.json();
         addToast({
           type: "success",
-          title: "ATS Resume Saved (FR-02)",
+          title: "ATS Resume Saved",
           message: result.message || "Your ATS-compliant profile has been synchronized with the database.",
         });
       }
@@ -323,7 +323,7 @@ export default function ATSResumeManagerModal({ onClose }: ATSResumeManagerModal
             <div>
               <div className="flex items-center gap-2">
                 <h3 className="text-base font-bold text-white tracking-tight">
-                  ATS Resume Parsing & Interactive Editor (FR-02)
+                  ATS Resume Parsing & Interactive Editor
                 </h3>
                 <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-800 font-semibold">
                   ATS-100 Compliant Schema
@@ -962,7 +962,7 @@ export default function ATSResumeManagerModal({ onClose }: ATSResumeManagerModal
               className="flex items-center gap-2 px-6 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-slate-950 shadow-lg shadow-emerald-500/20 transition-all"
             >
               <Check className="w-4 h-4" />
-              <span>Save ATS Profile (FR-02)</span>
+              <span>Save ATS Profile</span>
             </button>
           </div>
         </div>

@@ -49,7 +49,7 @@ export default function ReadinessRoadmap({ onLaunchSprint }: ReadinessRoadmapPro
   const handleRefreshFit = () => {
     addToast({
       type: "info",
-      title: "Real-Time Fit Recomputed (S19)",
+      title: "Real-Time Fit Recomputed",
       message: `Profile re-evaluated against ${targetJob.title}. Current readiness score: ${currentStudent.readinessScore}%.`,
     });
   };
@@ -63,7 +63,7 @@ export default function ReadinessRoadmap({ onLaunchSprint }: ReadinessRoadmapPro
             <div className="flex items-center gap-2 mb-1">
               <Compass className="w-4 h-4 text-amber-400" />
               <span className="text-xs uppercase font-mono text-amber-300 font-semibold tracking-wider">
-                Objective Application Readiness Report (S17)
+                Objective Application Readiness Report
               </span>
             </div>
             <h3 className="text-lg font-bold text-white">
@@ -80,10 +80,10 @@ export default function ReadinessRoadmap({ onLaunchSprint }: ReadinessRoadmapPro
             <button
               onClick={handleRefreshFit}
               className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs font-medium text-slate-300 hover:text-white transition-colors"
-              title="S19: Re-check fit score without re-uploading resume"
+              title="Re-check fit score without re-uploading resume"
             >
               <RefreshCw className="w-3.5 h-3.5 text-cyan-400" />
-              <span>Re-check Fit (S19)</span>
+              <span>Re-check Fit</span>
             </button>
           </div>
         </div>
@@ -127,7 +127,7 @@ export default function ReadinessRoadmap({ onLaunchSprint }: ReadinessRoadmapPro
       {/* Sequenced Roadmap Steps (S18, S19) */}
       <div className="rounded-2xl glass-panel border-slate-800 p-6 space-y-4">
         <h4 className="text-xs uppercase font-mono tracking-wider text-slate-400 font-semibold">
-          Sequenced Competency Steps (Ranked by Critical Weight First - S18)
+          Sequenced Competency Steps (Ranked by Critical Weight First)
         </h4>
 
         <div className="space-y-3">

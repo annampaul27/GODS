@@ -171,3 +171,19 @@ export interface AnomalyLog {
   severity: "low" | "medium" | "high";
   resolved: boolean;
 }
+
+export interface UserNotification {
+  id: string;
+  user_id: string;
+  job_id: string;
+  job_title?: string;
+  message: string;
+  notification_type: "deadline_warning" | "opening_warning" | string;
+  is_read: boolean;
+  trigger_date: string;
+  application_deadline?: string;
+  opening_date?: string;
+  location?: string;
+  created_at: string;
+}
+

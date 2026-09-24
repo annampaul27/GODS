@@ -51,7 +51,7 @@ export default function CredentialLedger() {
             <div>
               <div className="flex items-center gap-2">
                 <h3 className="text-lg font-bold text-white">
-                  Immutable Cryptographic Credential Ledger (A3)
+                  Immutable Cryptographic Credential Ledger
                 </h3>
                 <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-purple-950 text-purple-300 border border-purple-800 font-semibold">
                   Zero-Trust SHA-256

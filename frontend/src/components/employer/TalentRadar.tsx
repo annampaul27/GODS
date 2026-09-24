@@ -53,7 +53,7 @@ export default function TalentRadar({
           <p className="text-2xl font-bold font-mono text-white mt-1">
             {candidates.length} <span className="text-xs text-slate-400 font-sans font-normal">candidates</span>
           </p>
-          <p className="text-[11px] text-cyan-400 mt-1 font-mono">100% Parsed & Scored (E3)</p>
+          <p className="text-[11px] text-cyan-400 mt-1 font-mono">100% Parsed & Scored</p>
         </div>
 
         <div className="p-4 rounded-2xl glass-panel border-emerald-500/20">
@@ -67,7 +67,7 @@ export default function TalentRadar({
               ({Math.round((jobReadyList.length / candidates.length) * 100)}%)
             </span>
           </p>
-          <p className="text-[11px] text-emerald-400/80 mt-1 font-mono">Zero Resume Spam (E4)</p>
+          <p className="text-[11px] text-emerald-400/80 mt-1 font-mono">Zero Resume Spam</p>
         </div>
 
         <div className="p-4 rounded-2xl glass-panel border-amber-500/30 bg-amber-950/10">
@@ -82,7 +82,7 @@ export default function TalentRadar({
             </span>
           </p>
           <p className="text-[11px] text-amber-400 mt-1 flex items-center gap-1 font-mono">
-            <TrendingUp className="w-3 h-3" /> Missing 1-2 skills only (E5)
+            <TrendingUp className="w-3 h-3" /> Missing 1-2 skills only
           </p>
         </div>
 
@@ -136,10 +136,10 @@ export default function TalentRadar({
                 ? "bg-amber-500/25 text-amber-200 border border-amber-500/60 shadow-md shadow-amber-500/20"
                 : "bg-slate-900/80 text-amber-400 hover:text-amber-200 border border-slate-800"
             }`}
-            title="E5: Dedicated Bridgeable Candidates diagnostic filter isolating applicants missing 1-2 competencies"
+            title="Dedicated Bridgeable Candidates diagnostic filter isolating applicants missing 1-2 competencies"
           >
             <Zap className="w-3.5 h-3.5 text-amber-400" />
-            <span className="font-semibold">Bridgeable Diagnostic Filter (E5)</span>
+            <span className="font-semibold">Bridgeable Diagnostic Filter</span>
             <span className="text-[10px] font-mono px-1.5 py-0.2 bg-amber-950/80 rounded border border-amber-800/80 text-amber-300">
               {bridgeableList.length}
             </span>
@@ -310,10 +310,10 @@ export default function TalentRadar({
                       )
                     }
                     className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/50 text-[11px] font-semibold transition-all shadow-sm shadow-amber-500/10"
-                    title="E6: Trigger automated targeted challenge invitation"
+                    title="Trigger automated targeted challenge invitation"
                   >
                     <Send className="w-3 h-3" />
-                    <span>1-Click Sprint (E6)</span>
+                    <span>1-Click Sprint</span>
                   </button>
                 )}
 

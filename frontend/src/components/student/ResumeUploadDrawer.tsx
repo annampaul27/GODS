@@ -50,7 +50,7 @@ export default function ResumeUploadDrawer({ onClose }: ResumeUploadDrawerProps)
 
       addToast({
         type: "success",
-        title: "Resume Parsed Successfully (S1, S2)",
+        title: "Resume Parsed Successfully",
         message:
           "Gemini spatial layout parser extracted 5 skills, 2 verified projects, and educational credentials into your profile.",
       });
@@ -69,7 +69,7 @@ export default function ResumeUploadDrawer({ onClose }: ResumeUploadDrawerProps)
     });
     addToast({
       type: "success",
-      title: "Candidate Profile Saved (S13, S14)",
+      title: "Candidate Profile Saved",
       message: "Your single-source-of-truth profile is ready for job benchmark matching.",
     });
     onClose();
@@ -86,7 +86,7 @@ export default function ResumeUploadDrawer({ onClose }: ResumeUploadDrawerProps)
             </div>
             <div>
               <h3 className="text-base font-bold text-white">
-                Resume Ingestion & Candidate Profile (S1, S2, S13)
+                Resume Ingestion & Candidate Profile
               </h3>
               <p className="text-xs text-slate-400">
                 Spatial layout parsing extracts skills into an editable single-source-of-truth.
@@ -115,7 +115,7 @@ export default function ResumeUploadDrawer({ onClose }: ResumeUploadDrawerProps)
                 {isParsing ? "Parsing Resume via Spatial Layout Model..." : "Drop PDF Resume here or Click to Ingest"}
               </p>
               <p className="text-[11px] text-slate-400 mt-0.5">
-                Accepts PDF, DOCX • Auto-populates all S13 profile fields (S14)
+                Accepts PDF, DOCX • Auto-populates profile fields
               </p>
             </div>
             {isParsing && (
@@ -130,7 +130,7 @@ export default function ResumeUploadDrawer({ onClose }: ResumeUploadDrawerProps)
         <form onSubmit={handleSaveProfile} className="mt-6 space-y-4 flex-1">
           <div className="flex items-center justify-between">
             <h4 className="text-xs uppercase font-mono tracking-wider text-slate-400 font-semibold">
-              Candidate Single Source of Truth (S13)
+              Candidate Single Source of Truth
             </h4>
             <span className="text-[10px] text-slate-500 font-mono">Editable auto-fill</span>
           </div>
@@ -209,7 +209,7 @@ export default function ResumeUploadDrawer({ onClose }: ResumeUploadDrawerProps)
               <div className="flex items-center gap-2">
                 <Lock className="w-4 h-4 text-cyan-400" />
                 <h5 className="text-xs font-semibold text-slate-200">
-                  Student Privacy Guard (S21)
+                  Student Privacy Guard
                 </h5>
               </div>
               <button
@@ -250,7 +250,7 @@ export default function ResumeUploadDrawer({ onClose }: ResumeUploadDrawerProps)
               type="submit"
               className="px-5 py-2 rounded-xl text-xs font-semibold bg-cyan-500 hover:bg-cyan-400 text-slate-950 shadow-md shadow-cyan-500/20 transition-all"
             >
-              Save Profile & Update Radar (S14)
+              Save Profile & Update Radar
             </button>
           </div>
         </form>

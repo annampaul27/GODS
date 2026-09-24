@@ -84,7 +84,7 @@ export default function ProofOfWorkModal({
             <div>
               <div className="flex items-center gap-2">
                 <h3 className="text-base font-semibold text-white">
-                  Proof-of-Work Credential Audit (E7)
+                  Proof-of-Work Credential Audit
                 </h3>
                 <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-950/80 text-emerald-400 border border-emerald-800/60 font-semibold">
                   Tamper-Evident SHA-256
@@ -225,7 +225,7 @@ export default function ProofOfWorkModal({
                   </p>
                 </div>
                 <div className="p-3 rounded-xl bg-slate-900/60 border border-slate-800">
-                  <span className="text-slate-400 text-[10px] uppercase">Anti-Cheat Flags (S8)</span>
+                  <span className="text-slate-400 text-[10px] uppercase">Anti-Cheat Flags</span>
                   <p className="font-semibold text-emerald-400 mt-1 flex items-center gap-1 font-mono">
                     {credential.antiCheatAudit.tabBlurEvents} Tab Blurs (Clean)
                   </p>
@@ -313,7 +313,7 @@ export default function ProofOfWorkModal({
                   className="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-medium bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-slate-950 font-semibold shadow-lg shadow-emerald-500/20 transition-all"
                 >
                   <UserCheck className="w-4 h-4" />
-                  Shortlist for Interview (E8)
+                  Shortlist for Interview
                 </button>
               )}
           </div>

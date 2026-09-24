@@ -59,7 +59,7 @@ export default function SkillGapRadar({ onLaunchSprint }: SkillGapRadarProps) {
     if (isJobReady) {
       addToast({
         type: "success",
-        title: "Application Submitted Successfully (S16)",
+        title: "Application Submitted Successfully",
         message: `Your verified profile (Score: ${currentStudent.readinessScore}%) has been dispatched to ${targetJob.title} hiring managers.`,
       });
     }
@@ -74,7 +74,7 @@ export default function SkillGapRadar({ onLaunchSprint }: SkillGapRadarProps) {
             <div className="flex items-center gap-2 mb-1">
               <Target className="w-4 h-4 text-cyan-400" />
               <span className="text-xs uppercase font-mono text-cyan-300 font-semibold tracking-wider">
-                Target Role Benchmark (S3)
+                Target Role Benchmark
               </span>
             </div>
             <div className="flex items-center gap-3">
@@ -129,13 +129,13 @@ export default function SkillGapRadar({ onLaunchSprint }: SkillGapRadarProps) {
                   className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-semibold bg-gradient-to-r from-emerald-500 to-cyan-400 hover:from-emerald-400 hover:to-cyan-300 text-slate-950 shadow-lg shadow-emerald-500/20 transition-all"
                 >
                   <CheckCircle2 className="w-4 h-4" />
-                  <span>Apply Now (S16)</span>
+                  <span>Apply Now</span>
                 </button>
               ) : (
                 <button
                   disabled
                   className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-medium bg-slate-800 text-slate-400 border border-slate-700 cursor-not-allowed"
-                  title="S16: Restricted to ≥85% Job-Ready tier. Close remaining gaps to unlock direct apply."
+                  title="Restricted to ≥85% Job-Ready tier. Close remaining gaps to unlock direct apply."
                 >
                   <Lock className="w-3.5 h-3.5 text-amber-400" />
                   <span>Apply Locked (Requires 85%)</span>
@@ -150,7 +150,7 @@ export default function SkillGapRadar({ onLaunchSprint }: SkillGapRadarProps) {
       <div className="space-y-3">
         <div className="flex items-center justify-between">
           <h4 className="text-xs uppercase font-mono tracking-wider text-slate-300 font-semibold flex items-center gap-2">
-            <span>Skill Gap Delta Radar Breakdown (S4)</span>
+            <span>Skill Gap Delta Radar Breakdown</span>
           </h4>
           <div className="flex items-center gap-4 text-[11px] font-mono">
             <span className="flex items-center gap-1.5 text-emerald-400">
@@ -226,7 +226,7 @@ export default function SkillGapRadar({ onLaunchSprint }: SkillGapRadarProps) {
                     {isVerified
                       ? "Cryptographic proof issued and verified. This competency contributes full positive weight to employer fit score."
                       : isUnverified
-                      ? "Claimed on resume, but lacks cryptographic proof-of-work. Complete the 10-minute micro-sprint to verify (S15)."
+                      ? "Claimed on resume, but lacks cryptographic proof-of-work. Complete the 10-minute micro-sprint to verify."
                       : "Required by target employer benchmark. Complete the 10-minute sprint to close this gap."}
                   </p>
                 </div>
@@ -243,7 +243,7 @@ export default function SkillGapRadar({ onLaunchSprint }: SkillGapRadarProps) {
                       className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gradient-to-r from-cyan-500 to-indigo-500 hover:from-cyan-400 hover:to-indigo-400 text-slate-950 font-semibold text-[11px] transition-all shadow-sm shadow-cyan-500/10"
                     >
                       <Zap className="w-3 h-3" />
-                      <span>Start 10-Min Micro-Sprint (S5)</span>
+                      <span>Start 10-Min Micro-Sprint</span>
                     </button>
                   )}
 

@@ -21,6 +21,7 @@ import {
   User,
 } from "lucide-react";
 import { RoleType } from "@/types";
+import NotificationCenter from "./NotificationCenter";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -69,7 +70,7 @@ export default function Navbar() {
                   SkillSetu<span className="text-cyan-400">.AI</span>
                 </span>
                 <span className="text-[10px] font-mono tracking-wider font-semibold uppercase px-2 py-0.5 rounded-full bg-cyan-950/80 text-cyan-300 border border-cyan-800/50">
-                  SRS v2.0
+                  v2.0
                 </span>
               </div>
               <p className="text-[10px] text-slate-400 hidden sm:block tracking-wide">
@@ -96,7 +97,7 @@ export default function Navbar() {
               <div className="absolute top-full left-0 mt-2 w-72 rounded-xl glass-panel-elevated p-2 shadow-2xl z-50 animate-in fade-in">
                 <div className="px-3 py-2 border-b border-slate-800 mb-1">
                   <p className="text-[11px] uppercase tracking-wider font-mono text-slate-400 font-semibold">
-                    Multi-Tenant Workspace (E11)
+                    Multi-Tenant Workspace
                   </p>
                 </div>
                 {organizations.map((org) => (
@@ -179,7 +180,7 @@ export default function Navbar() {
                   ? "bg-amber-500/20 border-amber-500/40 text-amber-300 shadow-sm shadow-amber-500/10"
                   : "bg-slate-900/60 border-slate-800 text-slate-400 hover:text-slate-200"
               }`}
-              title="E17: Anonymized screening mode hides candidate name, photo, and college until shortlisting"
+              title="Anonymized screening mode hides candidate name, photo, and college until shortlisting"
             >
               {isAnonymizedScreening ? (
                 <>
@@ -199,11 +200,14 @@ export default function Navbar() {
           <Link
             href={`/verify/${sampleHash}`}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900/80 hover:bg-slate-800 border border-slate-800 text-xs font-medium text-cyan-400 hover:text-cyan-300 transition-colors"
-            title="S11: Zero-auth public cryptographic ledger verification"
+            title="Zero-auth public cryptographic ledger verification"
           >
             <Hash className="w-3.5 h-3.5" />
             <span className="hidden lg:inline">Verify Credential</span>
           </Link>
+
+          {/* FR-04: Deadlines & Strategic Application Notification Center */}
+          <NotificationCenter userId="cand-1" />
 
           {/* User Authentication Status / Sign In Button */}
           {isAuthenticated && currentUser ? (

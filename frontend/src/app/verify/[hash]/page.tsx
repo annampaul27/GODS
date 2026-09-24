@@ -132,10 +132,10 @@ export default function VerifyCredentialPage() {
             <div>
               <div className="flex items-center gap-2">
                 <span className="text-[11px] font-mono uppercase tracking-wider text-cyan-400 font-bold px-2 py-0.5 rounded bg-cyan-950/80 border border-cyan-800">
-                  Public Zero-Auth Proof (S11)
+                  Public Zero-Auth Proof
                 </span>
                 <span className="text-[11px] font-mono text-emerald-400 font-semibold flex items-center gap-1">
-                  <CheckCircle2 className="w-3.5 h-3.5" /> Deterministic SHA-256 (NF3)
+                  <CheckCircle2 className="w-3.5 h-3.5" /> Deterministic SHA-256
                 </span>
               </div>
               <h1 className="text-2xl font-bold text-white mt-2 tracking-tight">
