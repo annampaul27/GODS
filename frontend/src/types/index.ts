@@ -177,8 +177,9 @@ export interface UserNotification {
   user_id: string;
   job_id: string;
   job_title?: string;
+  company?: string;
   message: string;
-  notification_type: "deadline_warning" | "opening_warning" | string;
+  notification_type: "deadline_warning" | "opening_warning" | "job_match" | string;
   is_read: boolean;
   trigger_date: string;
   application_deadline?: string;

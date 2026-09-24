@@ -207,19 +207,106 @@ def init_db():
             initial_jobs
         )
 
-        # Seed saved jobs for cand-1 and cand-2
-        initial_saved = [
-            ("save-1", "cand-1", "job-fullstack-01"),
-            ("save-2", "cand-2", "job-fullstack-01"),
-            ("save-3", "cand-1", "job-ai-systems-02"),
-        ]
-        cursor.executemany(
-            "INSERT INTO saved_jobs (id, user_id, job_id) VALUES (?, ?, ?)",
-            initial_saved
+    # Migrations: Ensure verified_skills_json on users, company on jobs
+    cursor.execute("PRAGMA table_info(users)")
+    user_cols = [c[1] for c in cursor.fetchall()]
+    if "verified_skills_json" not in user_cols:
+        cursor.execute("ALTER TABLE users ADD COLUMN verified_skills_json TEXT DEFAULT '[]'")
+
+    cursor.execute("PRAGMA table_info(jobs)")
+    job_cols = [c[1] for c in cursor.fetchall()]
+    if "company" not in job_cols:
+        cursor.execute("ALTER TABLE jobs ADD COLUMN company TEXT DEFAULT 'Acme HyperScale Systems'")
+
+    # Seed mock candidates with exactly 4 verified skills: Python, SQL, AWS, Docker (FR-05)
+    default_verified_skills = json.dumps(["Python", "SQL", "AWS", "Docker"])
+    cursor.execute("""
+    UPDATE users 
+    SET verified_skills_json = ? 
+    WHERE id = 'cand-1' AND (verified_skills_json IS NULL OR verified_skills_json = '[]' OR verified_skills_json = '')
+    """, (default_verified_skills,))
+
+    # Also ensure cand-mock-01 exists for verification
+    cursor.execute("SELECT id FROM users WHERE id = 'cand-mock-01'")
+    if not cursor.fetchone():
+        cursor.execute("""
+        INSERT INTO users (
+            id, email, full_name, role, user_class, college, experience_years,
+            readiness_score, current_tier, avatar_url, verified_skills_json
+        ) VALUES (
+            'cand-mock-01', 'cloud.candidate@example.com', 'Alex Rivera', 'student', 'Experienced',
+            'Indian Institute of Technology (IIT) Delhi', 3.0, 92, 'job_ready',
+            'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+            ?
         )
+        """, (default_verified_skills,))
 
     conn.commit()
     conn.close()
 
+def get_user_verified_skills(user_id: str) -> List[str]:
+    """
+    Returns array of verified skills for a user from their profile and passed assessments.
+    """
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    # 1. Profile verified_skills_json
+    cursor.execute("SELECT verified_skills_json FROM users WHERE id = ?", (user_id,))
+    row = cursor.fetchone()
+    skills_set = set()
+    if row and row["verified_skills_json"]:
+        try:
+            profile_skills = json.loads(row["verified_skills_json"])
+            if isinstance(profile_skills, list):
+                skills_set.update(profile_skills)
+        except Exception:
+            pass
+
+    # 2. Passed assessments
+    cursor.execute("""
+    SELECT DISTINCT s.name 
+    FROM assessments a
+    JOIN skills s ON a.skill_id = s.id
+    WHERE a.user_id = ? AND a.verification_status = 'Passed'
+    """, (user_id,))
+    for asmt_row in cursor.fetchall():
+        skills_set.add(asmt_row["name"])
+
+    conn.close()
+    return list(skills_set)
+
+def get_all_candidate_profiles() -> List[Dict[str, Any]]:
+    """
+    Returns all student candidate profiles along with their verified skills array.
+    """
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT id, email, full_name, role, college, current_tier, readiness_score, verified_skills_json FROM users WHERE role = 'student'")
+    candidates = []
+    for r in cursor.fetchall():
+        v_skills = []
+        if r["verified_skills_json"]:
+            try:
+                parsed = json.loads(r["verified_skills_json"])
+                if isinstance(parsed, list):
+                    v_skills = parsed
+            except Exception:
+                pass
+        
+        candidates.append({
+            "id": r["id"],
+            "email": r["email"],
+            "full_name": r["full_name"],
+            "role": r["role"],
+            "college": r["college"],
+            "current_tier": r["current_tier"],
+            "readiness_score": r["readiness_score"],
+            "verified_skills": v_skills
+        })
+    conn.close()
+    return candidates
+
 # Auto-initialize DB on import
 init_db()
+

@@ -30,6 +30,8 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { UserNotification } from "@/types";
+import RealtimeJobAlerts from "@/components/student/RealtimeJobAlerts";
+import JobDetailsModal from "@/components/student/JobDetailsModal";
 
 export default function StudentPage() {
   const { currentStudent, activeJob } = useStore();
@@ -41,6 +43,8 @@ export default function StudentPage() {
   const [verificationSkillId, setVerificationSkillId] = useState("postgresql");
   const [verificationSkillName, setVerificationSkillName] = useState("PostgreSQL Optimization & Architecture");
   const [deadlineAlerts, setDeadlineAlerts] = useState<UserNotification[]>([]);
+  const [selectedJobModalId, setSelectedJobModalId] = useState<string | null>(null);
+
 
   // Fetch deadline notifications for candidate
   React.useEffect(() => {
@@ -150,6 +154,12 @@ export default function StudentPage() {
           </button>
         </div>
       </div>
+
+      {/* FR-05: Real-Time Eligibility Job Matching Alerts (Realtime Live Updates & Actionable Alert) */}
+      <RealtimeJobAlerts
+        userId={currentStudent.id}
+        onOpenJobDetails={(jobId) => setSelectedJobModalId(jobId)}
+      />
 
       {/* FR-04: Deadlines & Strategic Application Notification Widget */}
       {deadlineAlerts.length > 0 && (
@@ -348,6 +358,14 @@ export default function StudentPage() {
 
       {isResumeDrawerOpen && (
         <ResumeUploadDrawer onClose={() => setIsResumeDrawerOpen(false)} />
+      )}
+
+      {/* FR-05: Actionable Job Details Modal */}
+      {selectedJobModalId && (
+        <JobDetailsModal
+          jobId={selectedJobModalId}
+          onClose={() => setSelectedJobModalId(null)}
+        />
       )}
     </div>
   );

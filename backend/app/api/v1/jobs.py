@@ -1,0 +1,208 @@
+from fastapi import APIRouter, HTTPException, BackgroundTasks, status
+from pydantic import BaseModel
+from typing import List, Optional, Dict, Any
+import uuid
+import json
+import logging
+from datetime import datetime, timedelta
+
+from app.db.database import get_db_connection, get_all_candidate_profiles
+from app.core.matching_engine import calculate_match_percentage
+
+logger = logging.getLogger("jobs_ingestion")
+logger.setLevel(logging.INFO)
+
+router = APIRouter(tags=["FR-05: Job Ingestion & Real-Time Matching"])
+
+class IncomingJobPayload(BaseModel):
+    id: Optional[str] = None
+    title: str
+    company: Optional[str] = "Acme HyperScale Systems"
+    org_id: Optional[str] = "org-acme"
+    department: Optional[str] = "Platform Engineering"
+    location: Optional[str] = "Bengaluru / Remote"
+    type: Optional[str] = "Full-Time"
+    salary_range: Optional[str] = "₹28,00,000 - ₹38,00,000"
+    experience_min_years: Optional[float] = 2.0
+    required_skills: List[str]
+    optional_skills: Optional[List[str]] = []
+    description: Optional[str] = "Exciting high-growth engineering role requiring deep technical expertise."
+    pass_threshold: Optional[int] = 85
+    threshold: Optional[float] = 80.0
+
+def run_job_matching_for_all_candidates(job: Dict[str, Any]):
+    """
+    Asynchronous matching task:
+    Runs the Matching Engine comparing incoming job's required skills against all candidate profiles.
+    Inserts 'job_match' notifications for eligible matches (>= 80% match).
+    """
+    logger.info(f"Starting asynchronous matching engine for job '{job['title']}' ({job['id']})")
+    candidates = get_all_candidate_profiles()
+    logger.info(f"Evaluating {len(candidates)} candidates against required skills: {job['required_skills']}")
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    matches_created = 0
+    now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    for cand in candidates:
+        match_res = calculate_match_percentage(
+            user_skills=cand["verified_skills"],
+            required_skills=job["required_skills"],
+            threshold=job.get("threshold", 80.0)
+        )
+
+        logger.info(
+            f"Candidate {cand['full_name']} ({cand['id']}) match: {match_res['match_percentage']}% "
+            f"(Eligible: {match_res['is_eligible_match']}, Matched: {match_res['matched_skills']})"
+        )
+
+        if match_res["is_eligible_match"]:
+            match_pct = round(match_res["match_percentage"])
+            company_name = job.get("company") or "Acme HyperScale Systems"
+            job_title = job.get("title")
+
+            # Notification format specified in FR-05 requirement:
+            # "New Match: You are an 85% match for [Job Title] at [Company]. Apply now!"
+            message = f"New Match: You are an {match_pct}% match for {job_title} at {company_name}. Apply now!"
+            notif_id = f"notif-match-{uuid.uuid4().hex[:10]}"
+
+            try:
+                cursor.execute("""
+                INSERT INTO user_notifications (
+                    id, user_id, job_id, message, notification_type, is_read, trigger_date
+                ) VALUES (?, ?, ?, ?, 'job_match', 0, ?)
+                """, (notif_id, cand["id"], job["id"], message, now_str))
+                matches_created += 1
+                logger.info(f"Inserted job_match notification for {cand['id']} -> {notif_id}")
+            except Exception as e:
+                logger.error(f"Failed to insert notification for candidate {cand['id']}: {e}")
+
+    conn.commit()
+    conn.close()
+    logger.info(f"Asynchronous matching completed. Created {matches_created} notifications for job {job['id']}.")
+
+@router.post("/incoming", status_code=status.HTTP_202_ACCEPTED)
+async def ingest_incoming_job(
+    payload: IncomingJobPayload,
+    background_tasks: BackgroundTasks
+):
+    """
+    FR-05 Job Ingestion Endpoint:
+    Simulates receiving new job postings from an external board or employer partner.
+    Asynchronously triggers the Matching Engine against candidates in the database.
+    """
+    job_id = payload.id or f"job-{uuid.uuid4().hex[:8]}"
+    company = payload.company or "Acme HyperScale Systems"
+    
+    # Store job in SQLite database
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    now = datetime.now()
+    deadline = now + timedelta(days=30)
+
+    # Format skills for database storage
+    critical_skills = [{"id": s.lower().replace(" ", "_"), "name": s, "weight": 3.0} for s in payload.required_skills]
+    optional_skills = [{"id": s.lower().replace(" ", "_"), "name": s, "weight": 1.0} for s in (payload.optional_skills or [])]
+
+    cursor.execute("""
+    INSERT OR REPLACE INTO jobs (
+        id, org_id, title, department, location, type, experience_min_years,
+        salary_range, description, pass_threshold, opening_date, application_deadline,
+        critical_skills_json, optional_skills_json, status, company
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    """, (
+        job_id,
+        payload.org_id,
+        payload.title,
+        payload.department,
+        payload.location,
+        payload.type,
+        payload.experience_min_years,
+        payload.salary_range,
+        payload.description,
+        payload.pass_threshold,
+        now.strftime("%Y-%m-%d %H:%M:%S"),
+        deadline.strftime("%Y-%m-%d %H:%M:%S"),
+        json.dumps(critical_skills),
+        json.dumps(optional_skills),
+        "active",
+        company
+    ))
+
+    conn.commit()
+    conn.close()
+
+    job_dict = payload.model_dump()
+    job_dict["id"] = job_id
+    job_dict["company"] = company
+
+    # Immediately and asynchronously trigger matching engine in the background
+    background_tasks.add_task(run_job_matching_for_all_candidates, job_dict)
+
+    return {
+        "status": "received",
+        "message": f"Job '{payload.title}' ingested successfully. Asynchronous eligibility matching initiated.",
+        "job_id": job_id,
+        "title": payload.title,
+        "company": company,
+        "required_skills": payload.required_skills,
+        "threshold": payload.threshold
+    }
+
+@router.get("/{job_id}")
+async def get_job_details(job_id: str):
+    """
+    Retrieve specific job details for the actionable alert modal.
+    """
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+    SELECT 
+        id, org_id, title, department, location, type, experience_min_years,
+        salary_range, description, pass_threshold, opening_date, application_deadline,
+        critical_skills_json, optional_skills_json, status, company, created_at
+    FROM jobs 
+    WHERE id = ?
+    """, (job_id,))
+    row = cursor.fetchone()
+    conn.close()
+
+    if not row:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Job with id '{job_id}' not found"
+        )
+
+    critical_skills = []
+    optional_skills = []
+    try:
+        if row["critical_skills_json"]:
+            critical_skills = json.loads(row["critical_skills_json"])
+        if row["optional_skills_json"]:
+            optional_skills = json.loads(row["optional_skills_json"])
+    except Exception:
+        pass
+
+    required_skill_names = [s.get("name", s) if isinstance(s, dict) else s for s in critical_skills]
+
+    return {
+        "id": row["id"],
+        "title": row["title"],
+        "company": row["company"] or "Acme HyperScale Systems",
+        "department": row["department"],
+        "location": row["location"],
+        "type": row["type"],
+        "salary_range": row["salary_range"],
+        "experience_min_years": row["experience_min_years"],
+        "description": row["description"],
+        "pass_threshold": row["pass_threshold"],
+        "opening_date": row["opening_date"],
+        "application_deadline": row["application_deadline"],
+        "critical_skills": critical_skills,
+        "optional_skills": optional_skills,
+        "required_skill_names": required_skill_names,
+        "status": row["status"]
+    }

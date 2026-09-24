@@ -271,13 +271,17 @@ export default function NotificationCenter({ userId = "cand-1" }: NotificationCe
                       <div
                         className={`w-8 h-8 rounded-xl shrink-0 flex items-center justify-center border mt-0.5 ${
                           !notif.is_read
-                            ? isDeadline
+                            ? notif.notification_type === "job_match"
+                              ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-400"
+                              : isDeadline
                               ? "bg-rose-500/10 border-rose-500/30 text-rose-400"
                               : "bg-cyan-500/10 border-cyan-500/30 text-cyan-400"
                             : "bg-slate-800 border-slate-700 text-slate-400"
                         }`}
                       >
-                        {isDeadline ? (
+                        {notif.notification_type === "job_match" ? (
+                          <Sparkles className="w-4 h-4 text-emerald-400" />
+                        ) : isDeadline ? (
                           <AlertTriangle className="w-4 h-4" />
                         ) : (
                           <Calendar className="w-4 h-4" />
@@ -290,13 +294,19 @@ export default function NotificationCenter({ userId = "cand-1" }: NotificationCe
                           <span
                             className={`text-[10px] font-mono font-semibold uppercase px-1.5 py-0.2 rounded border ${
                               !notif.is_read
-                                ? isDeadline
+                                ? notif.notification_type === "job_match"
+                                  ? "bg-emerald-950/80 text-emerald-300 border-emerald-800/60"
+                                  : isDeadline
                                   ? "bg-rose-950/80 text-rose-300 border-rose-800/60"
                                   : "bg-cyan-950/80 text-cyan-300 border-cyan-800/60"
                                 : "bg-slate-800 text-slate-400 border-slate-700"
                             }`}
                           >
-                            {isDeadline ? "3-Week Deadline Warning" : "3-Week Window Opening"}
+                            {notif.notification_type === "job_match"
+                              ? "⚡ Eligible Job Match"
+                              : isDeadline
+                              ? "3-Week Deadline Warning"
+                              : "3-Week Window Opening"}
                           </span>
 
                           <span className="text-[10px] font-mono text-slate-500">

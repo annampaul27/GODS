@@ -23,15 +23,19 @@ app.add_middleware(
 from app.api.v1.assessments import router as assessments_router
 from app.api.v1.resume import router as resume_router
 from app.api.v1.notifications import router as notifications_router
+from app.api.v1.jobs import router as jobs_router
 from app.workers.notification_worker import run_deadline_notifications_job
 from app.db.database import init_db
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
-# Mount API V1 Routers
+# Mount API Routers
 app.include_router(auth_router, prefix=settings.API_V1_STR)
 app.include_router(assessments_router, prefix=settings.API_V1_STR)
 app.include_router(resume_router, prefix=settings.API_V1_STR)
 app.include_router(notifications_router, prefix=settings.API_V1_STR)
+app.include_router(jobs_router, prefix=f"{settings.API_V1_STR}/jobs")
+app.include_router(jobs_router, prefix="/api/jobs")
+
 
 scheduler = AsyncIOScheduler()
 
