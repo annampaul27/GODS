@@ -23,6 +23,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+from app.api.v1.assessments import router as assessments_router
+from app.api.v1.resume import router as resume_router
+from app.db.database import init_db
+
 # Mount API V1 Routers
 app.include_router(auth_router, prefix=settings.API_V1_STR)
 app.include_router(ats_router, prefix=settings.API_V1_STR)
@@ -32,6 +36,12 @@ app.include_router(
     prefix=settings.API_V1_STR + "/career-compass",
     tags=["CareerCompass Features (Jayasree A B)"]
 )
+app.include_router(assessments_router, prefix=settings.API_V1_STR)
+app.include_router(resume_router, prefix=settings.API_V1_STR)
+
+@app.on_event("startup")
+async def on_startup():
+    init_db()
 
 @app.get("/health", tags=["System Telemetry"])
 async def health_check():

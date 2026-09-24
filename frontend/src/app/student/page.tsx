@@ -8,6 +8,8 @@ import SkillGapRadar from "@/components/student/SkillGapRadar";
 import ReadinessRoadmap from "@/components/student/ReadinessRoadmap";
 import SprintModal from "@/components/student/SprintModal";
 import ResumeUploadDrawer from "@/components/student/ResumeUploadDrawer";
+import SkillVerificationModal from "@/components/student/SkillVerificationModal";
+import ATSResumeManagerModal from "@/components/student/ATSResumeManagerModal";
 import {
   GraduationCap,
   UploadCloud,
@@ -18,6 +20,8 @@ import {
   CheckCircle2,
   ExternalLink,
   Award,
+  FileText,
+  Clock,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -26,6 +30,10 @@ export default function StudentPage() {
   const [activeTab, setActiveTab] = useState<"radar" | "roadmap">("radar");
   const [activeSprint, setActiveSprint] = useState<MicroSprintData | null>(null);
   const [isResumeDrawerOpen, setIsResumeDrawerOpen] = useState(false);
+  const [isVerificationModalOpen, setIsVerificationModalOpen] = useState(false);
+  const [isATSResumeModalOpen, setIsATSResumeModalOpen] = useState(false);
+  const [verificationSkillId, setVerificationSkillId] = useState("postgresql");
+  const [verificationSkillName, setVerificationSkillName] = useState("PostgreSQL Optimization & Architecture");
 
   const handleLaunchSprint = (skillId: string) => {
     // Select sprint from library, or fallback to postgres_optimization
@@ -71,20 +79,36 @@ export default function StudentPage() {
 
         {/* Action Controls */}
         <div className="flex flex-wrap items-center gap-3">
+          {/* FR-01: Skill Verification Engine (20 Qs, 12-min Timer) */}
           <button
-            onClick={() => setIsResumeDrawerOpen(true)}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-200 transition-colors"
+            id="btn-start-verification-assessment"
+            onClick={() => {
+              setVerificationSkillId("postgresql");
+              setVerificationSkillName("PostgreSQL Optimization & Architecture");
+              setIsVerificationModalOpen(true);
+            }}
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 shadow-lg shadow-cyan-500/20 transition-all border border-cyan-400/40"
           >
-            <UploadCloud className="w-4 h-4 text-cyan-400" />
-            <span>Update Resume / Profile (S1, S13)</span>
+            <Award className="w-4 h-4" />
+            <span>Verify Skill Assessment (FR-01: 20 Qs • 12-Min)</span>
+          </button>
+
+          {/* FR-02: ATS-Friendly Tailored Resume Parser & Editor */}
+          <button
+            id="btn-open-ats-resume-studio"
+            onClick={() => setIsATSResumeModalOpen(true)}
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 shadow-lg shadow-emerald-500/20 transition-all border border-emerald-400/40"
+          >
+            <FileText className="w-4 h-4" />
+            <span>ATS Resume Studio (FR-02)</span>
           </button>
 
           <button
-            onClick={() => handleLaunchSprint("postgres_optimization")}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-slate-950 shadow-lg shadow-emerald-500/20 transition-all"
+            onClick={() => setIsResumeDrawerOpen(true)}
+            className="flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 transition-colors"
           >
-            <Zap className="w-4 h-4" />
-            <span>Launch Quick Sprint (S5)</span>
+            <UploadCloud className="w-4 h-4 text-cyan-400" />
+            <span>Profile Drawer</span>
           </button>
         </div>
       </div>
@@ -226,6 +250,20 @@ export default function StudentPage() {
       </div>
 
       {/* Modals */}
+      {isVerificationModalOpen && (
+        <SkillVerificationModal
+          skillId={verificationSkillId}
+          skillName={verificationSkillName}
+          onClose={() => setIsVerificationModalOpen(false)}
+        />
+      )}
+
+      {isATSResumeModalOpen && (
+        <ATSResumeManagerModal
+          onClose={() => setIsATSResumeModalOpen(false)}
+        />
+      )}
+
       {activeSprint && (
         <SprintModal
           sprint={activeSprint}
