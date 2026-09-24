@@ -1,0 +1,170 @@
+{
+  "course_id": "javascript_fundamentals",
+  "title": "JavaScript Fundamentals Mock Test",
+  "duration_minutes": 12,
+  "question_count": 20,
+  "total_marks": 20,
+  "passing_score": 60,
+  "questions": [
+    {
+      "question_id": 1,
+      "question": "What is JavaScript primarily used for in web development?",
+      "options": [
+        "Adding interactivity and dynamic behavior",
+        "Creating only databases",
+        "Replacing HTML completely",
+        "Formatting disk drives"
+      ],
+      "correct_answer": 0,
+      "explanation": "JavaScript is commonly used to add dynamic behavior and interactivity to web pages."
+    },
+    {
+      "question_id": 2,
+      "question": "Which keyword declares a variable that can be reassigned?",
+      "options": ["let", "const", "static", "fixed"],
+      "correct_answer": 0,
+      "explanation": "let declares a variable whose binding can later be reassigned."
+    },
+    {
+      "question_id": 3,
+      "question": "Which keyword is commonly used for a binding that should not be reassigned?",
+      "options": ["const", "let", "varies", "fixed"],
+      "correct_answer": 0,
+      "explanation": "const creates a binding that cannot be reassigned."
+    },
+    {
+      "question_id": 4,
+      "question": "Which method prints information to the browser console?",
+      "options": ["console.log()", "print.console()", "write.log()", "console.print()"],
+      "correct_answer": 0,
+      "explanation": "console.log() writes values to the console."
+    },
+    {
+      "question_id": 5,
+      "question": "Which value is a Boolean?",
+      "options": ["true", "42", "\"hello\"", "null"],
+      "correct_answer": 0,
+      "explanation": "true and false are Boolean values."
+    },
+    {
+      "question_id": 6,
+      "question": "Which operator performs strict equality comparison?",
+      "options": ["===", "=", "==", "!="],
+      "correct_answer": 0,
+      "explanation": "=== compares both value and type."
+    },
+    {
+      "question_id": 7,
+      "question": "Which statement is used for conditional execution?",
+      "options": ["if", "repeat", "loop", "check"],
+      "correct_answer": 0,
+      "explanation": "The if statement executes code when its condition is true."
+    },
+    {
+      "question_id": 8,
+      "question": "Which loop is commonly used when the number of iterations is known?",
+      "options": ["for", "if", "switch", "case"],
+      "correct_answer": 0,
+      "explanation": "A for loop is commonly used when iterating a known number of times."
+    },
+    {
+      "question_id": 9,
+      "question": "What keyword sends a value back from a function?",
+      "options": ["return", "send", "output", "give"],
+      "correct_answer": 0,
+      "explanation": "The return statement provides a function's result to its caller."
+    },
+    {
+      "question_id": 10,
+      "question": "Which is a valid arrow function?",
+      "options": [
+        "const add = (a, b) => a + b;",
+        "function => add(a,b)",
+        "arrow add(a,b)",
+        "const => add(a,b)"
+      ],
+      "correct_answer": 0,
+      "explanation": "const add = (a, b) => a + b; is valid arrow function syntax."
+    },
+    {
+      "question_id": 11,
+      "question": "What is the first index of a JavaScript array?",
+      "options": ["0", "1", "-1", "first"],
+      "correct_answer": 0,
+      "explanation": "JavaScript arrays use zero-based indexing."
+    },
+    {
+      "question_id": 12,
+      "question": "Which method adds an element to the end of an array?",
+      "options": ["push()", "add()", "append()", "insert()"],
+      "correct_answer": 0,
+      "explanation": "push() adds one or more elements to the end of an array."
+    },
+    {
+      "question_id": 13,
+      "question": "What does map() return?",
+      "options": [
+        "A new array containing transformed elements",
+        "Only the first element",
+        "A Boolean value",
+        "The original HTML document"
+      ],
+      "correct_answer": 0,
+      "explanation": "map() creates a new array by applying a function to each element."
+    },
+    {
+      "question_id": 14,
+      "question": "What structure stores key-value pairs?",
+      "options": ["Object", "Loop", "Function", "Operator"],
+      "correct_answer": 0,
+      "explanation": "JavaScript objects store properties as key-value pairs."
+    },
+    {
+      "question_id": 15,
+      "question": "Which notation accesses the name property of user?",
+      "options": ["user.name", "user->name", "user:name", "user/name"],
+      "correct_answer": 0,
+      "explanation": "Dot notation is used as user.name."
+    },
+    {
+      "question_id": 16,
+      "question": "What does DOM stand for?",
+      "options": [
+        "Document Object Model",
+        "Data Object Management",
+        "Document Operation Method",
+        "Dynamic Object Module"
+      ],
+      "correct_answer": 0,
+      "explanation": "DOM stands for Document Object Model."
+    },
+    {
+      "question_id": 17,
+      "question": "Which method can select an element using a CSS selector?",
+      "options": ["querySelector()", "selectElement()", "findHTML()", "getCSS()"],
+      "correct_answer": 0,
+      "explanation": "querySelector() returns the first element matching a CSS selector."
+    },
+    {
+      "question_id": 18,
+      "question": "Which method is commonly used to respond to browser events?",
+      "options": ["addEventListener()", "eventListen()", "onEventAdd()", "listenBrowser()"],
+      "correct_answer": 0,
+      "explanation": "addEventListener() registers a function to run when an event occurs."
+    },
+    {
+      "question_id": 19,
+      "question": "Which syntax is used for JavaScript template literals?",
+      "options": ["Backticks", "Single quotes only", "Double quotes only", "Parentheses"],
+      "correct_answer": 0,
+      "explanation": "Template literals are enclosed using backticks."
+    },
+    {
+      "question_id": 20,
+      "question": "What does the spread operator use?",
+      "options": ["...", "###", "***", "==="],
+      "correct_answer": 0,
+      "explanation": "The ... syntax is the spread syntax."
+    }
+  ]
+}

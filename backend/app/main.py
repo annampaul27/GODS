@@ -28,6 +28,7 @@ from app.api.v1.resume import router as resume_router
 from app.api.v1.sandbox import router as sandbox_router
 from app.api.v1.notifications import router as notifications_router
 from app.api.v1.jobs import router as jobs_router
+from app.api.v1.courses import router as courses_router
 from app.workers.notification_worker import run_deadline_notifications_job
 from app.db.database import init_db
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
@@ -48,6 +49,8 @@ app.include_router(sandbox_router, prefix="/api")
 app.include_router(notifications_router, prefix=settings.API_V1_STR)
 app.include_router(jobs_router, prefix=f"{settings.API_V1_STR}/jobs")
 app.include_router(jobs_router, prefix="/api/jobs")
+app.include_router(courses_router, prefix=settings.API_V1_STR)
+app.include_router(courses_router, prefix="/api")
 
 scheduler = AsyncIOScheduler()
 

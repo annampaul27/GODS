@@ -1,0 +1,362 @@
+{
+  "course_id": "trees_fundamentals",
+  "lessons": [
+    {
+      "lesson_id": "trees_01",
+      "title": "Introduction to Trees",
+      "duration_minutes": 15,
+      "topics": [
+        "Trees",
+        "Nodes",
+        "Root",
+        "Edges",
+        "Parent",
+        "Child",
+        "Leaf"
+      ],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "What is a Tree?",
+          "text": "A tree is a hierarchical data structure made up of nodes connected by edges. Unlike a linear structure such as an array, a tree represents relationships in levels."
+        },
+        {
+          "type": "explanation",
+          "title": "Root",
+          "text": "The root is the topmost node of a tree. A tree normally has one root node."
+        },
+        {
+          "type": "explanation",
+          "title": "Parent and Child",
+          "text": "A node directly connected above another node is its parent. The node below it is its child."
+        },
+        {
+          "type": "explanation",
+          "title": "Leaf Node",
+          "text": "A leaf is a node that has no children."
+        },
+        {
+          "type": "code_example",
+          "title": "Simple Tree",
+          "language": "text",
+          "code": "        A\n       / \\\n      B   C\n     / \\\n    D   E\n\nA = root\nB and C = children of A\nD and E = children of B\nC, D and E = leaf nodes"
+        }
+      ],
+      "key_points": [
+        "Trees represent hierarchical relationships.",
+        "The root is the topmost node.",
+        "Nodes can have parents and children.",
+        "Leaf nodes have no children."
+      ]
+    },
+    {
+      "lesson_id": "trees_02",
+      "title": "Tree Terminology",
+      "duration_minutes": 12,
+      "topics": [
+        "Depth",
+        "Height",
+        "Subtree",
+        "Level",
+        "Degree"
+      ],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Depth",
+          "text": "The depth of a node represents the number of edges from the root to that node."
+        },
+        {
+          "type": "explanation",
+          "title": "Height",
+          "text": "The height of a node is the number of edges on the longest path from that node to a leaf. The height of the tree is the height of its root."
+        },
+        {
+          "type": "explanation",
+          "title": "Subtree",
+          "text": "A subtree consists of a node and all of its descendants."
+        },
+        {
+          "type": "explanation",
+          "title": "Degree",
+          "text": "The degree of a node is the number of children it has."
+        },
+        {
+          "type": "code_example",
+          "title": "Example",
+          "language": "text",
+          "code": "        A\n       / \\\n      B   C\n     /\n    D\n\nDepth(A) = 0\nDepth(B) = 1\nDepth(D) = 2"
+        }
+      ],
+      "key_points": [
+        "Depth measures distance from the root.",
+        "Height measures the longest downward path.",
+        "A subtree contains a node and its descendants.",
+        "Degree represents the number of children."
+      ]
+    },
+    {
+      "lesson_id": "trees_03",
+      "title": "Binary Trees",
+      "duration_minutes": 15,
+      "topics": [
+        "Binary trees",
+        "Left child",
+        "Right child",
+        "Full binary tree",
+        "Complete binary tree"
+      ],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Binary Tree",
+          "text": "A binary tree is a tree in which each node can have at most two children, commonly called the left child and right child."
+        },
+        {
+          "type": "code_example",
+          "title": "Binary Tree Example",
+          "language": "text",
+          "code": "        10\n       /  \\\n      5    15\n     / \\\n    2   7"
+        },
+        {
+          "type": "explanation",
+          "title": "Full Binary Tree",
+          "text": "A full binary tree is a binary tree in which every node has either zero or two children."
+        },
+        {
+          "type": "explanation",
+          "title": "Complete Binary Tree",
+          "text": "A complete binary tree has all levels completely filled except possibly the last, and nodes in the last level are filled from left to right."
+        }
+      ],
+      "key_points": [
+        "Binary tree nodes have at most two children.",
+        "Children are called left and right.",
+        "Full and complete describe different structural properties."
+      ]
+    },
+    {
+      "lesson_id": "trees_04",
+      "title": "Tree Traversal",
+      "duration_minutes": 20,
+      "topics": [
+        "Preorder",
+        "Inorder",
+        "Postorder",
+        "Traversal"
+      ],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Tree Traversal",
+          "text": "Traversal means visiting every node in a tree according to a particular order."
+        },
+        {
+          "type": "explanation",
+          "title": "Preorder",
+          "text": "Preorder visits the current node first, then the left subtree, then the right subtree."
+        },
+        {
+          "type": "code_example",
+          "title": "Preorder",
+          "language": "text",
+          "code": "        A\n       / \\\n      B   C\n\nPreorder: A B C"
+        },
+        {
+          "type": "explanation",
+          "title": "Inorder",
+          "text": "Inorder visits the left subtree first, then the current node, then the right subtree."
+        },
+        {
+          "type": "code_example",
+          "title": "Inorder",
+          "language": "text",
+          "code": "        A\n       / \\\n      B   C\n\nInorder: B A C"
+        },
+        {
+          "type": "explanation",
+          "title": "Postorder",
+          "text": "Postorder visits the left subtree, then the right subtree, and finally the current node."
+        },
+        {
+          "type": "code_example",
+          "title": "Postorder",
+          "language": "text",
+          "code": "        A\n       / \\\n      B   C\n\nPostorder: B C A"
+        }
+      ],
+      "key_points": [
+        "Preorder: Root, Left, Right.",
+        "Inorder: Left, Root, Right.",
+        "Postorder: Left, Right, Root.",
+        "Traversal is used to process every node."
+      ]
+    },
+    {
+      "lesson_id": "trees_05",
+      "title": "Binary Search Trees",
+      "duration_minutes": 18,
+      "topics": [
+        "BST",
+        "Ordering property",
+        "Searching",
+        "Insertion"
+      ],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Binary Search Tree",
+          "text": "A binary search tree is a binary tree where values smaller than a node are stored in its left subtree and values larger than the node are stored in its right subtree."
+        },
+        {
+          "type": "code_example",
+          "title": "BST Example",
+          "language": "text",
+          "code": "        50\n       /  \\\n      30   70\n     / \\   / \\\n    20 40 60 80"
+        },
+        {
+          "type": "explanation",
+          "title": "Searching",
+          "text": "To search for a value, compare it with the current node. If the target is smaller, move left. If larger, move right."
+        },
+        {
+          "type": "explanation",
+          "title": "Insertion",
+          "text": "A new value is inserted by following the same comparison process until an empty position is found."
+        },
+        {
+          "type": "code_example",
+          "title": "Search Example",
+          "language": "text",
+          "code": "Search for 60:\n50 -> target is larger -> right\n70 -> target is smaller -> left\n60 -> found"
+        }
+      ],
+      "key_points": [
+        "BSTs maintain an ordering property.",
+        "Smaller values go left.",
+        "Larger values go right.",
+        "Searching follows the ordering property."
+      ]
+    },
+    {
+      "lesson_id": "trees_06",
+      "title": "BST Operations and Complexity",
+      "duration_minutes": 15,
+      "topics": [
+        "Search",
+        "Insertion",
+        "Deletion",
+        "Complexity",
+        "Balanced trees"
+      ],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "BST Search",
+          "text": "In a balanced binary search tree, search can take O(log n) time because each comparison eliminates a large portion of the remaining tree."
+        },
+        {
+          "type": "explanation",
+          "title": "Worst Case",
+          "text": "If a BST becomes highly unbalanced, it can behave like a linked list and search, insertion or deletion can degrade to O(n)."
+        },
+        {
+          "type": "code_example",
+          "title": "Balanced vs Unbalanced",
+          "language": "text",
+          "code": "Balanced:\n       50\n      /  \\\n     30   70\n\nUnbalanced:\n10\n  \\\n   20\n     \\\n      30\n        \\\n         40"
+        },
+        {
+          "type": "explanation",
+          "title": "Balanced Trees",
+          "text": "Balanced tree structures try to keep the height relatively small so that operations remain efficient."
+        }
+      ],
+      "key_points": [
+        "Balanced BST operations can be O(log n).",
+        "A badly unbalanced BST can degrade to O(n).",
+        "Tree height strongly affects performance."
+      ]
+    },
+    {
+      "lesson_id": "trees_07",
+      "title": "Tree Implementations",
+      "duration_minutes": 15,
+      "topics": [
+        "Tree nodes",
+        "Classes",
+        "Recursion",
+        "Python implementation"
+      ],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Tree Node",
+          "text": "A binary tree node commonly stores a value and references to a left child and a right child."
+        },
+        {
+          "type": "code_example",
+          "title": "Python Node",
+          "language": "python",
+          "code": "class Node:\n    def __init__(self, value):\n        self.value = value\n        self.left = None\n        self.right = None"
+        },
+        {
+          "type": "explanation",
+          "title": "Recursive Traversal",
+          "text": "Tree traversal is naturally expressed using recursion because each subtree is itself a tree."
+        },
+        {
+          "type": "code_example",
+          "title": "Inorder Traversal",
+          "language": "python",
+          "code": "def inorder(node):\n    if node is not None:\n        inorder(node.left)\n        print(node.value)\n        inorder(node.right)"
+        }
+      ],
+      "key_points": [
+        "Nodes store values and child references.",
+        "Binary nodes commonly have left and right references.",
+        "Recursion is commonly used for tree traversal."
+      ]
+    },
+    {
+      "lesson_id": "trees_08",
+      "title": "Applications of Trees",
+      "duration_minutes": 10,
+      "topics": [
+        "File systems",
+        "Search",
+        "Hierarchical data",
+        "Decision trees",
+        "Expression trees"
+      ],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "File Systems",
+          "text": "Folders and files naturally form hierarchical structures that can be represented using trees."
+        },
+        {
+          "type": "explanation",
+          "title": "Decision Trees",
+          "text": "Decision trees represent decisions as nodes and possible outcomes as branches."
+        },
+        {
+          "type": "explanation",
+          "title": "Expression Trees",
+          "text": "Expression trees can represent mathematical expressions, with operators as internal nodes and values as leaves."
+        },
+        {
+          "type": "explanation",
+          "title": "Why Trees Matter",
+          "text": "Trees are useful whenever information has a hierarchy or when efficient searching and organization are required."
+        }
+      ],
+      "key_points": [
+        "Trees represent hierarchical information.",
+        "File systems are naturally hierarchical.",
+        "Decision trees represent choices and outcomes.",
+        "Trees are useful for searching and organization."
+      ]
+    }
+  ]
+}

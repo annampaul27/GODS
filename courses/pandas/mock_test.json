@@ -1,0 +1,150 @@
+{
+  "course_id": "pandas_fundamentals",
+  "title": "Pandas Fundamentals Mock Test",
+  "duration_minutes": 12,
+  "question_count": 20,
+  "total_marks": 20,
+  "passing_score": 60,
+  "questions": [
+    {
+      "question_id": 1,
+      "question": "What is Pandas mainly used for?",
+      "options": ["Data analysis", "Game development", "Operating systems", "Web browsing"],
+      "correct_answer": 0,
+      "explanation": "Pandas is a Python library widely used for data manipulation and analysis."
+    },
+    {
+      "question_id": 2,
+      "question": "Which import statement is commonly used for Pandas?",
+      "options": ["import pandas as pd", "import pandas as py", "import pd as pandas", "include pandas"],
+      "correct_answer": 0,
+      "explanation": "The conventional alias for Pandas is pd."
+    },
+    {
+      "question_id": 3,
+      "question": "Which Pandas structure is two-dimensional?",
+      "options": ["DataFrame", "Series", "Tuple", "Set"],
+      "correct_answer": 0,
+      "explanation": "A DataFrame is a two-dimensional labeled data structure."
+    },
+    {
+      "question_id": 4,
+      "question": "Which structure is one-dimensional?",
+      "options": ["Series", "DataFrame", "Database", "Dictionary only"],
+      "correct_answer": 0,
+      "explanation": "A Series is a one-dimensional labeled data structure."
+    },
+    {
+      "question_id": 5,
+      "question": "Which function reads a CSV file?",
+      "options": ["pd.read_csv()", "pd.open_csv()", "pd.load_csv()", "pd.csv()"],
+      "correct_answer": 0,
+      "explanation": "pd.read_csv() loads CSV data into a DataFrame."
+    },
+    {
+      "question_id": 6,
+      "question": "What does head() normally display?",
+      "options": ["First rows", "Last rows only", "Column types only", "Duplicate rows only"],
+      "correct_answer": 0,
+      "explanation": "head() displays the first rows of a DataFrame."
+    },
+    {
+      "question_id": 7,
+      "question": "Which method provides DataFrame structure and data types?",
+      "options": ["info()", "shape()", "structure()", "types_only()"],
+      "correct_answer": 0,
+      "explanation": "info() displays information about columns, types and non-null values."
+    },
+    {
+      "question_id": 8,
+      "question": "How do you select the Score column?",
+      "options": ["df['Score']", "df.ScoreColumn()", "df.select('Score')", "df.column('Score')"],
+      "correct_answer": 0,
+      "explanation": "A column can be selected using df['Score']."
+    },
+    {
+      "question_id": 9,
+      "question": "What does iloc primarily use for selection?",
+      "options": ["Integer positions", "Column descriptions", "SQL syntax", "File names"],
+      "correct_answer": 0,
+      "explanation": "iloc selects using integer-based positions."
+    },
+    {
+      "question_id": 10,
+      "question": "What does loc primarily use?",
+      "options": ["Labels", "Only integers", "File paths", "Memory addresses"],
+      "correct_answer": 0,
+      "explanation": "loc performs label-based selection."
+    },
+    {
+      "question_id": 11,
+      "question": "Which function identifies missing values?",
+      "options": ["isnull()", "missing()", "findnull()", "checkempty()"],
+      "correct_answer": 0,
+      "explanation": "isnull() identifies missing values."
+    },
+    {
+      "question_id": 12,
+      "question": "Which method removes missing rows?",
+      "options": ["dropna()", "remove_null()", "delete_missing()", "clearna()"],
+      "correct_answer": 0,
+      "explanation": "dropna() removes rows or columns containing missing values depending on its configuration."
+    },
+    {
+      "question_id": 13,
+      "question": "Which method removes duplicate rows?",
+      "options": ["drop_duplicates()", "remove_duplicates()", "unique_delete()", "deduplicate_rows_only()"],
+      "correct_answer": 0,
+      "explanation": "drop_duplicates() removes duplicate records."
+    },
+    {
+      "question_id": 14,
+      "question": "Which method sorts a DataFrame?",
+      "options": ["sort_values()", "order_data()", "sort_table_only()", "arrange_df()"],
+      "correct_answer": 0,
+      "explanation": "sort_values() sorts rows according to column values."
+    },
+    {
+      "question_id": 15,
+      "question": "What is groupby() used for?",
+      "options": ["Grouped analysis", "Deleting columns", "Opening files", "Installing Pandas"],
+      "correct_answer": 0,
+      "explanation": "groupby() groups records so calculations can be performed on each group."
+    },
+    {
+      "question_id": 16,
+      "question": "Which is an aggregation function?",
+      "options": ["mean()", "route()", "render()", "compile()"],
+      "correct_answer": 0,
+      "explanation": "mean() calculates an average and is commonly used for aggregation."
+    },
+    {
+      "question_id": 17,
+      "question": "Which function combines DataFrames using related columns?",
+      "options": ["merge()", "join_files_only()", "combine_rows_only()", "connect()"],
+      "correct_answer": 0,
+      "explanation": "merge() combines DataFrames based on related columns."
+    },
+    {
+      "question_id": 18,
+      "question": "Which function concatenates DataFrames?",
+      "options": ["pd.concat()", "pd.combine_only()", "pd.stack_files()", "pd.append_csv()"],
+      "correct_answer": 0,
+      "explanation": "pd.concat() concatenates multiple Pandas objects."
+    },
+    {
+      "question_id": 19,
+      "question": "Which method exports a DataFrame to CSV?",
+      "options": ["to_csv()", "save_csv()", "export_csv_only()", "write_csv_file()"],
+      "correct_answer": 0,
+      "explanation": "to_csv() writes a DataFrame to a CSV file."
+    },
+    {
+      "question_id": 20,
+      "question": "Which method can export a DataFrame to Excel?",
+      "options": ["to_excel()", "save_excel_only()", "write_xlsx()", "export_sheet()"],
+      "correct_answer": 0,
+      "explanation": "to_excel() exports a DataFrame to an Excel file."
+    }
+  ]
+}

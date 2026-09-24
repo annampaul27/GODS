@@ -1,0 +1,278 @@
+{
+  "course_id": "pandas_fundamentals",
+  "lessons": [
+    {
+      "lesson_id": "pandas_01",
+      "title": "Introduction to Pandas",
+      "duration_minutes": 12,
+      "topics": ["Pandas", "Series", "DataFrame"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "What is Pandas?",
+          "text": "Pandas is a Python library designed for working with structured and tabular data."
+        },
+        {
+          "type": "code_example",
+          "title": "Import Pandas",
+          "language": "python",
+          "code": "import pandas as pd"
+        },
+        {
+          "type": "code_example",
+          "title": "Create a Series",
+          "language": "python",
+          "code": "scores = pd.Series([80, 90, 75, 88])\nprint(scores)"
+        },
+        {
+          "type": "code_example",
+          "title": "Create a DataFrame",
+          "language": "python",
+          "code": "data = {\n    'Name': ['Asha', 'Ravi', 'John'],\n    'Score': [85, 92, 78]\n}\n\ndf = pd.DataFrame(data)\nprint(df)"
+        }
+      ],
+      "key_points": [
+        "Pandas is widely used for data analysis.",
+        "Series represents one-dimensional data.",
+        "DataFrame represents two-dimensional tabular data."
+      ]
+    },
+    {
+      "lesson_id": "pandas_02",
+      "title": "Loading and Inspecting Data",
+      "duration_minutes": 13,
+      "topics": ["CSV", "Excel", "read_csv", "Data inspection"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Loading CSV Data",
+          "text": "The read_csv() function loads a CSV file into a DataFrame."
+        },
+        {
+          "type": "code_example",
+          "title": "Read CSV",
+          "language": "python",
+          "code": "df = pd.read_csv('data.csv')"
+        },
+        {
+          "type": "code_example",
+          "title": "Inspect the Data",
+          "language": "python",
+          "code": "print(df.head())\nprint(df.info())\nprint(df.describe())"
+        },
+        {
+          "type": "explanation",
+          "title": "Other Useful Methods",
+          "text": "shape returns the number of rows and columns. columns shows column names. dtypes shows data types."
+        }
+      ],
+      "key_points": [
+        "read_csv() loads CSV files.",
+        "head() displays the first rows.",
+        "info() provides structure and data-type information.",
+        "describe() provides numerical summary statistics."
+      ]
+    },
+    {
+      "lesson_id": "pandas_03",
+      "title": "Selecting and Filtering Data",
+      "duration_minutes": 13,
+      "topics": ["Columns", "loc", "iloc", "Filtering"],
+      "content": [
+        {
+          "type": "code_example",
+          "title": "Select a Column",
+          "language": "python",
+          "code": "names = df['Name']"
+        },
+        {
+          "type": "code_example",
+          "title": "Select Multiple Columns",
+          "language": "python",
+          "code": "result = df[['Name', 'Score']]"
+        },
+        {
+          "type": "code_example",
+          "title": "Filter Rows",
+          "language": "python",
+          "code": "high_scores = df[df['Score'] > 80]"
+        },
+        {
+          "type": "code_example",
+          "title": "Using loc",
+          "language": "python",
+          "code": "result = df.loc[df['Score'] > 80, ['Name', 'Score']]"
+        },
+        {
+          "type": "code_example",
+          "title": "Using iloc",
+          "language": "python",
+          "code": "result = df.iloc[0:3, 0:2]"
+        }
+      ],
+      "key_points": [
+        "Columns can be selected using their names.",
+        "loc uses labels.",
+        "iloc uses integer positions.",
+        "Boolean conditions can filter rows."
+      ]
+    },
+    {
+      "lesson_id": "pandas_04",
+      "title": "Cleaning Data",
+      "duration_minutes": 13,
+      "topics": ["Missing values", "Duplicates", "Data cleaning"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Missing Values",
+          "text": "Real datasets often contain missing values. Pandas provides functions for identifying and handling them."
+        },
+        {
+          "type": "code_example",
+          "title": "Find Missing Values",
+          "language": "python",
+          "code": "print(df.isnull().sum())"
+        },
+        {
+          "type": "code_example",
+          "title": "Drop Missing Rows",
+          "language": "python",
+          "code": "df = df.dropna()"
+        },
+        {
+          "type": "code_example",
+          "title": "Fill Missing Values",
+          "language": "python",
+          "code": "df['Score'] = df['Score'].fillna(df['Score'].mean())"
+        },
+        {
+          "type": "code_example",
+          "title": "Remove Duplicates",
+          "language": "python",
+          "code": "df = df.drop_duplicates()"
+        }
+      ],
+      "key_points": [
+        "isnull() helps identify missing values.",
+        "dropna() removes rows containing missing values.",
+        "fillna() replaces missing values.",
+        "drop_duplicates() removes duplicate rows."
+      ]
+    },
+    {
+      "lesson_id": "pandas_05",
+      "title": "Sorting and Transforming Data",
+      "duration_minutes": 13,
+      "topics": ["Sorting", "New columns", "apply", "Data transformation"],
+      "content": [
+        {
+          "type": "code_example",
+          "title": "Sort Data",
+          "language": "python",
+          "code": "df = df.sort_values('Score', ascending=False)"
+        },
+        {
+          "type": "code_example",
+          "title": "Create a New Column",
+          "language": "python",
+          "code": "df['Passed'] = df['Score'] >= 50"
+        },
+        {
+          "type": "code_example",
+          "title": "Apply a Function",
+          "language": "python",
+          "code": "df['Score_Double'] = df['Score'].apply(lambda x: x * 2)"
+        },
+        {
+          "type": "explanation",
+          "title": "Data Transformation",
+          "text": "Transformation changes existing data into a form that is more useful for analysis."
+        }
+      ],
+      "key_points": [
+        "sort_values() sorts rows.",
+        "New columns can be created from existing columns.",
+        "apply() can apply a function to values."
+      ]
+    },
+    {
+      "lesson_id": "pandas_06",
+      "title": "Grouping and Aggregation",
+      "duration_minutes": 13,
+      "topics": ["groupby", "Aggregation", "mean", "sum", "count"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "GroupBy",
+          "text": "groupby() allows data to be divided into groups so that calculations can be performed on each group."
+        },
+        {
+          "type": "code_example",
+          "title": "Group and Calculate Mean",
+          "language": "python",
+          "code": "result = df.groupby('Department')['Score'].mean()"
+        },
+        {
+          "type": "code_example",
+          "title": "Multiple Aggregations",
+          "language": "python",
+          "code": "result = df.groupby('Department')['Score'].agg(['mean', 'max', 'min', 'count'])"
+        },
+        {
+          "type": "explanation",
+          "title": "Common Aggregations",
+          "text": "Common aggregation functions include sum(), mean(), median(), min(), max() and count()."
+        }
+      ],
+      "key_points": [
+        "groupby() performs grouped analysis.",
+        "Aggregation summarizes data.",
+        "Multiple aggregation functions can be used together."
+      ]
+    },
+    {
+      "lesson_id": "pandas_07",
+      "title": "Merging and Exporting Data",
+      "duration_minutes": 13,
+      "topics": ["merge", "concat", "Excel", "CSV export"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Merging DataFrames",
+          "text": "merge() combines DataFrames using related columns, similar to SQL joins."
+        },
+        {
+          "type": "code_example",
+          "title": "Merge DataFrames",
+          "language": "python",
+          "code": "result = pd.merge(students, marks, on='student_id', how='inner')"
+        },
+        {
+          "type": "code_example",
+          "title": "Concatenate DataFrames",
+          "language": "python",
+          "code": "result = pd.concat([df1, df2])"
+        },
+        {
+          "type": "code_example",
+          "title": "Export CSV",
+          "language": "python",
+          "code": "df.to_csv('output.csv', index=False)"
+        },
+        {
+          "type": "code_example",
+          "title": "Export Excel",
+          "language": "python",
+          "code": "df.to_excel('output.xlsx', index=False)"
+        }
+      ],
+      "key_points": [
+        "merge() combines related DataFrames.",
+        "concat() combines DataFrames along an axis.",
+        "to_csv() exports CSV files.",
+        "to_excel() exports Excel files."
+      ]
+    }
+  ]
+}

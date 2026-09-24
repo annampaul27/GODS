@@ -1,0 +1,23 @@
+{
+  "course_id": "python_fundamentals",
+  "title": "Python Fundamentals",
+  "subject": "Python",
+  "difficulty": "Beginner",
+  "duration_minutes": 180,
+  "description": "A beginner-friendly course covering the fundamental concepts of Python programming.",
+  "learning_objectives": [
+    "Understand Python syntax and program structure",
+    "Work with variables and data types",
+    "Use operators and conditional statements",
+    "Use loops and collections",
+    "Create and use functions",
+    "Handle errors and exceptions",
+    "Understand modules and basic file handling"
+  ],
+  "lesson_count": 9,
+  "mock_test": {
+    "question_count": 20,
+    "duration_minutes": 12,
+    "passing_score": 60
+  }
+}

@@ -1,0 +1,250 @@
+{
+  "course_id": "sql_fundamentals",
+  "title": "SQL Fundamentals Mock Test",
+  "duration_minutes": 12,
+  "question_count": 20,
+  "total_marks": 20,
+  "passing_score": 60,
+  "questions": [
+    {
+      "question_id": 1,
+      "question": "What does SQL stand for?",
+      "options": [
+        "Structured Query Language",
+        "Simple Question Language",
+        "System Query Logic",
+        "Structured Question List"
+      ],
+      "correct_answer": 0,
+      "explanation": "SQL stands for Structured Query Language."
+    },
+    {
+      "question_id": 2,
+      "question": "Which SQL statement retrieves data?",
+      "options": [
+        "SELECT",
+        "INSERT",
+        "DELETE",
+        "UPDATE"
+      ],
+      "correct_answer": 0,
+      "explanation": "SELECT is used to retrieve data."
+    },
+    {
+      "question_id": 3,
+      "question": "Which clause specifies the table being queried?",
+      "options": [
+        "FROM",
+        "WHERE",
+        "ORDER BY",
+        "GROUP BY"
+      ],
+      "correct_answer": 0,
+      "explanation": "FROM specifies the table from which data is retrieved."
+    },
+    {
+      "question_id": 4,
+      "question": "What does SELECT * return?",
+      "options": [
+        "All columns from the selected table",
+        "Only the first column",
+        "Only numeric columns",
+        "Only unique rows"
+      ],
+      "correct_answer": 0,
+      "explanation": "The asterisk selects all columns."
+    },
+    {
+      "question_id": 5,
+      "question": "Which clause filters rows?",
+      "options": [
+        "WHERE",
+        "FROM",
+        "ORDER BY",
+        "SELECT"
+      ],
+      "correct_answer": 0,
+      "explanation": "WHERE filters rows according to a condition."
+    },
+    {
+      "question_id": 6,
+      "question": "Which clause sorts query results?",
+      "options": [
+        "ORDER BY",
+        "GROUP BY",
+        "WHERE",
+        "HAVING"
+      ],
+      "correct_answer": 0,
+      "explanation": "ORDER BY sorts query results."
+    },
+    {
+      "question_id": 7,
+      "question": "Which keyword removes duplicate results?",
+      "options": [
+        "DISTINCT",
+        "UNIQUE",
+        "REMOVE",
+        "FILTER"
+      ],
+      "correct_answer": 0,
+      "explanation": "DISTINCT removes duplicate rows from a query result."
+    },
+    {
+      "question_id": 8,
+      "question": "Which function counts rows?",
+      "options": [
+        "COUNT",
+        "TOTAL",
+        "NUMBER",
+        "ROWS"
+      ],
+      "correct_answer": 0,
+      "explanation": "COUNT is used to count records."
+    },
+    {
+      "question_id": 9,
+      "question": "Which function calculates an average?",
+      "options": [
+        "AVG",
+        "MEAN",
+        "AVERAGE",
+        "MID"
+      ],
+      "correct_answer": 0,
+      "explanation": "AVG calculates the average value."
+    },
+    {
+      "question_id": 10,
+      "question": "What is the purpose of GROUP BY?",
+      "options": [
+        "Create groups for aggregate calculations",
+        "Sort all columns alphabetically",
+        "Delete duplicate tables",
+        "Create a database"
+      ],
+      "correct_answer": 0,
+      "explanation": "GROUP BY groups rows so aggregate functions can be applied to each group."
+    },
+    {
+      "question_id": 11,
+      "question": "Which clause filters grouped results?",
+      "options": [
+        "HAVING",
+        "WHERE",
+        "FROM",
+        "ORDER"
+      ],
+      "correct_answer": 0,
+      "explanation": "HAVING filters groups after aggregation."
+    },
+    {
+      "question_id": 12,
+      "question": "What is a primary key?",
+      "options": [
+        "A value that uniquely identifies a record",
+        "A column that always contains text",
+        "A duplicate value",
+        "A temporary query"
+      ],
+      "correct_answer": 0,
+      "explanation": "A primary key uniquely identifies rows in a table."
+    },
+    {
+      "question_id": 13,
+      "question": "What is a foreign key used for?",
+      "options": [
+        "Representing a relationship between tables",
+        "Sorting rows",
+        "Deleting columns",
+        "Creating passwords"
+      ],
+      "correct_answer": 0,
+      "explanation": "Foreign keys reference keys in other tables and help establish relationships."
+    },
+    {
+      "question_id": 14,
+      "question": "What does INNER JOIN return?",
+      "options": [
+        "Matching rows from both tables",
+        "All rows from the first table regardless of matches",
+        "Only unmatched rows",
+        "All databases"
+      ],
+      "correct_answer": 0,
+      "explanation": "INNER JOIN returns records where the join condition matches."
+    },
+    {
+      "question_id": 15,
+      "question": "What does LEFT JOIN preserve?",
+      "options": [
+        "All rows from the left table",
+        "Only rows from the right table",
+        "Only unmatched rows",
+        "Only duplicate rows"
+      ],
+      "correct_answer": 0,
+      "explanation": "LEFT JOIN keeps all rows from the left table and matching rows from the right."
+    },
+    {
+      "question_id": 16,
+      "question": "Which statement adds a new record?",
+      "options": [
+        "INSERT",
+        "UPDATE",
+        "DELETE",
+        "SELECT"
+      ],
+      "correct_answer": 0,
+      "explanation": "INSERT adds new records."
+    },
+    {
+      "question_id": 17,
+      "question": "Which statement modifies existing records?",
+      "options": [
+        "UPDATE",
+        "INSERT",
+        "SELECT",
+        "CREATE"
+      ],
+      "correct_answer": 0,
+      "explanation": "UPDATE modifies existing records."
+    },
+    {
+      "question_id": 18,
+      "question": "Which statement removes records?",
+      "options": [
+        "DELETE",
+        "REMOVE",
+        "DROP ROW",
+        "CLEAR"
+      ],
+      "correct_answer": 0,
+      "explanation": "DELETE removes records from a table."
+    },
+    {
+      "question_id": 19,
+      "question": "What does NOT NULL enforce?",
+      "options": [
+        "The column cannot contain NULL",
+        "The column must be unique",
+        "The column must contain numbers",
+        "The column must be a primary key"
+      ],
+      "correct_answer": 0,
+      "explanation": "NOT NULL prevents NULL values."
+    },
+    {
+      "question_id": 20,
+      "question": "What is the main purpose of database constraints?",
+      "options": [
+        "Maintain data accuracy and consistency",
+        "Make queries longer",
+        "Delete unused tables",
+        "Increase screen resolution"
+      ],
+      "correct_answer": 0,
+      "explanation": "Constraints enforce rules that help maintain database integrity."
+    }
+  ]
+}

@@ -1,0 +1,175 @@
+{
+  "course_id": "html_fundamentals",
+  "title": "HTML Fundamentals Mock Test",
+  "duration_minutes": 12,
+  "question_count": 20,
+  "total_marks": 20,
+  "passing_score": 60,
+  "questions": [
+    {
+      "question_id": 1,
+      "question": "What does HTML stand for?",
+      "options": [
+        "HyperText Markup Language",
+        "HighText Machine Language",
+        "HyperTool Multi Language",
+        "HomeText Markup Language"
+      ],
+      "correct_answer": 0,
+      "explanation": "HTML stands for HyperText Markup Language."
+    },
+    {
+      "question_id": 2,
+      "question": "Which element represents the largest heading?",
+      "options": ["<h1>", "<h6>", "<head>", "<heading>"],
+      "correct_answer": 0,
+      "explanation": "h1 is the highest-level HTML heading."
+    },
+    {
+      "question_id": 3,
+      "question": "Which element is used for a paragraph?",
+      "options": ["<p>", "<para>", "<text>", "<paragraph>"],
+      "correct_answer": 0,
+      "explanation": "The p element represents a paragraph."
+    },
+    {
+      "question_id": 4,
+      "question": "Which attribute specifies the destination of a link?",
+      "options": ["href", "src", "link", "url"],
+      "correct_answer": 0,
+      "explanation": "The href attribute specifies the URL of a hyperlink."
+    },
+    {
+      "question_id": 5,
+      "question": "Which element creates a hyperlink?",
+      "options": ["<a>", "<link>", "<href>", "<url>"],
+      "correct_answer": 0,
+      "explanation": "The a element creates hyperlinks."
+    },
+    {
+      "question_id": 6,
+      "question": "Which attribute specifies an image source?",
+      "options": ["src", "href", "source", "image"],
+      "correct_answer": 0,
+      "explanation": "The src attribute specifies the image resource."
+    },
+    {
+      "question_id": 7,
+      "question": "Why is the alt attribute used with images?",
+      "options": [
+        "To provide alternative text",
+        "To change image size",
+        "To create a hyperlink",
+        "To hide the image"
+      ],
+      "correct_answer": 0,
+      "explanation": "alt provides alternative text for an image."
+    },
+    {
+      "question_id": 8,
+      "question": "Which element creates an unordered list?",
+      "options": ["<ul>", "<ol>", "<list>", "<li>"],
+      "correct_answer": 0,
+      "explanation": "ul creates an unordered list."
+    },
+    {
+      "question_id": 9,
+      "question": "Which element represents an item inside a list?",
+      "options": ["<li>", "<item>", "<ul>", "<list>"],
+      "correct_answer": 0,
+      "explanation": "li represents a list item."
+    },
+    {
+      "question_id": 10,
+      "question": "Which element represents the main content of a page?",
+      "options": ["<main>", "<body-content>", "<content>", "<primary>"],
+      "correct_answer": 0,
+      "explanation": "The main element represents the dominant content of the document."
+    },
+    {
+      "question_id": 11,
+      "question": "Which element is used for navigation links?",
+      "options": ["<nav>", "<navigate>", "<navigation>", "<links>"],
+      "correct_answer": 0,
+      "explanation": "The nav element represents navigation links."
+    },
+    {
+      "question_id": 12,
+      "question": "Which element is used to create a table row?",
+      "options": ["<tr>", "<td>", "<th>", "<row>"],
+      "correct_answer": 0,
+      "explanation": "tr represents a table row."
+    },
+    {
+      "question_id": 13,
+      "question": "Which element represents a table header cell?",
+      "options": ["<th>", "<td>", "<header>", "<thead-cell>"],
+      "correct_answer": 0,
+      "explanation": "th represents a header cell."
+    },
+    {
+      "question_id": 14,
+      "question": "Which element is used to create a form?",
+      "options": ["<form>", "<input>", "<fieldset-only>", "<data>"],
+      "correct_answer": 0,
+      "explanation": "The form element defines an HTML form."
+    },
+    {
+      "question_id": 15,
+      "question": "Which input type is appropriate for an email address?",
+      "options": ["email", "mailbox", "text-email", "address"],
+      "correct_answer": 0,
+      "explanation": "input type=\"email\" is intended for email addresses."
+    },
+    {
+      "question_id": 16,
+      "question": "Which element creates a submit button?",
+      "options": [
+        "<button type=\"submit\">",
+        "<submit>",
+        "<send>",
+        "<input type=\"send\">"
+      ],
+      "correct_answer": 0,
+      "explanation": "A button with type submit can submit a form."
+    },
+    {
+      "question_id": 17,
+      "question": "Where is the page title normally defined?",
+      "options": ["Inside <title> in <head>", "Inside <body>", "Inside <footer>", "Inside <main>"],
+      "correct_answer": 0,
+      "explanation": "The title element belongs in the document head."
+    },
+    {
+      "question_id": 18,
+      "question": "Which element can embed video in modern HTML?",
+      "options": ["<video>", "<media>", "<movie>", "<player>"],
+      "correct_answer": 0,
+      "explanation": "HTML provides the video element for video content."
+    },
+    {
+      "question_id": 19,
+      "question": "What is the main purpose of semantic HTML?",
+      "options": [
+        "To describe the meaning and structure of content",
+        "To replace CSS",
+        "To execute JavaScript",
+        "To create databases"
+      ],
+      "correct_answer": 0,
+      "explanation": "Semantic elements communicate the meaning and structure of content."
+    },
+    {
+      "question_id": 20,
+      "question": "What is the main role of HTML in web development?",
+      "options": [
+        "To structure web page content",
+        "To style every element",
+        "To manage databases",
+        "To provide server hardware"
+      ],
+      "correct_answer": 0,
+      "explanation": "HTML provides the structure of web pages."
+    }
+  ]
+}

@@ -1,0 +1,383 @@
+{
+  "course_id": "sql_fundamentals",
+  "lessons": [
+    {
+      "lesson_id": "sql_01",
+      "title": "Introduction to Databases and SQL",
+      "duration_minutes": 15,
+      "topics": [
+        "Databases",
+        "Relational databases",
+        "Tables",
+        "Rows and columns",
+        "SQL"
+      ],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "What is a Database?",
+          "text": "A database is an organized collection of information that can be stored, managed and retrieved efficiently."
+        },
+        {
+          "type": "explanation",
+          "title": "Relational Databases",
+          "text": "A relational database stores information in tables made up of rows and columns. Tables can be related to one another using keys."
+        },
+        {
+          "type": "explanation",
+          "title": "What is SQL?",
+          "text": "SQL stands for Structured Query Language. It is used to communicate with relational database systems and perform operations such as retrieving and modifying data."
+        },
+        {
+          "type": "code_example",
+          "title": "Example Table",
+          "language": "text",
+          "code": "students\n----------------\nid | name | age\n1  | Anu  | 21\n2  | Ravi | 22"
+        }
+      ],
+      "key_points": [
+        "Databases store organized information.",
+        "Relational databases use tables.",
+        "Rows represent records and columns represent attributes.",
+        "SQL is used to work with relational databases."
+      ]
+    },
+    {
+      "lesson_id": "sql_02",
+      "title": "SELECT Queries",
+      "duration_minutes": 15,
+      "topics": [
+        "SELECT",
+        "FROM",
+        "Column selection",
+        "DISTINCT"
+      ],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "SELECT",
+          "text": "The SELECT statement is used to retrieve data from a database table."
+        },
+        {
+          "type": "code_example",
+          "title": "Select Columns",
+          "language": "sql",
+          "code": "SELECT name, age\nFROM students;"
+        },
+        {
+          "type": "code_example",
+          "title": "Select All Columns",
+          "language": "sql",
+          "code": "SELECT *\nFROM students;"
+        },
+        {
+          "type": "explanation",
+          "title": "DISTINCT",
+          "text": "DISTINCT removes duplicate values from the selected result."
+        },
+        {
+          "type": "code_example",
+          "title": "Distinct Values",
+          "language": "sql",
+          "code": "SELECT DISTINCT department\nFROM students;"
+        }
+      ],
+      "key_points": [
+        "SELECT retrieves data.",
+        "FROM specifies the table.",
+        "An asterisk selects all columns.",
+        "DISTINCT removes duplicate results."
+      ]
+    },
+    {
+      "lesson_id": "sql_03",
+      "title": "Filtering and Sorting Data",
+      "duration_minutes": 15,
+      "topics": [
+        "WHERE",
+        "Comparison operators",
+        "AND",
+        "OR",
+        "ORDER BY"
+      ],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "WHERE",
+          "text": "The WHERE clause filters rows according to a condition."
+        },
+        {
+          "type": "code_example",
+          "title": "Filter Rows",
+          "language": "sql",
+          "code": "SELECT *\nFROM students\nWHERE age > 20;"
+        },
+        {
+          "type": "code_example",
+          "title": "Multiple Conditions",
+          "language": "sql",
+          "code": "SELECT *\nFROM students\nWHERE age > 20 AND department = 'Computer Science';"
+        },
+        {
+          "type": "explanation",
+          "title": "ORDER BY",
+          "text": "ORDER BY sorts query results. ASC specifies ascending order and DESC specifies descending order."
+        },
+        {
+          "type": "code_example",
+          "title": "Sorting",
+          "language": "sql",
+          "code": "SELECT name, age\nFROM students\nORDER BY age DESC;"
+        }
+      ],
+      "key_points": [
+        "WHERE filters records.",
+        "AND requires multiple conditions to be true.",
+        "OR allows either condition to be true.",
+        "ORDER BY sorts results."
+      ]
+    },
+    {
+      "lesson_id": "sql_04",
+      "title": "Aggregate Functions and GROUP BY",
+      "duration_minutes": 15,
+      "topics": [
+        "COUNT",
+        "SUM",
+        "AVG",
+        "MIN",
+        "MAX",
+        "GROUP BY"
+      ],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Aggregate Functions",
+          "text": "Aggregate functions perform calculations over multiple rows."
+        },
+        {
+          "type": "code_example",
+          "title": "COUNT",
+          "language": "sql",
+          "code": "SELECT COUNT(*)\nFROM students;"
+        },
+        {
+          "type": "code_example",
+          "title": "Average",
+          "language": "sql",
+          "code": "SELECT AVG(salary)\nFROM employees;"
+        },
+        {
+          "type": "explanation",
+          "title": "GROUP BY",
+          "text": "GROUP BY divides rows into groups so that aggregate calculations can be performed separately for each group."
+        },
+        {
+          "type": "code_example",
+          "title": "Grouping",
+          "language": "sql",
+          "code": "SELECT department, COUNT(*)\nFROM employees\nGROUP BY department;"
+        }
+      ],
+      "key_points": [
+        "COUNT counts records.",
+        "SUM calculates totals.",
+        "AVG calculates averages.",
+        "MIN and MAX find minimum and maximum values.",
+        "GROUP BY creates groups for aggregation."
+      ]
+    },
+    {
+      "lesson_id": "sql_05",
+      "title": "SQL Joins",
+      "duration_minutes": 20,
+      "topics": [
+        "Primary keys",
+        "Foreign keys",
+        "INNER JOIN",
+        "LEFT JOIN",
+        "RIGHT JOIN"
+      ],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Why Joins?",
+          "text": "Database information is often divided across multiple tables. Joins allow related records from different tables to be combined."
+        },
+        {
+          "type": "explanation",
+          "title": "Primary and Foreign Keys",
+          "text": "A primary key uniquely identifies a row in a table. A foreign key references a key in another table and can establish a relationship between tables."
+        },
+        {
+          "type": "code_example",
+          "title": "INNER JOIN",
+          "language": "sql",
+          "code": "SELECT students.name, departments.name\nFROM students\nINNER JOIN departments\nON students.department_id = departments.id;"
+        },
+        {
+          "type": "explanation",
+          "title": "INNER JOIN",
+          "text": "INNER JOIN returns rows where the join condition matches in both tables."
+        },
+        {
+          "type": "explanation",
+          "title": "LEFT JOIN",
+          "text": "LEFT JOIN returns all rows from the left table and matching rows from the right table. Missing matches produce NULL values for the right-side columns."
+        },
+        {
+          "type": "code_example",
+          "title": "LEFT JOIN",
+          "language": "sql",
+          "code": "SELECT students.name, departments.name\nFROM students\nLEFT JOIN departments\nON students.department_id = departments.id;"
+        }
+      ],
+      "key_points": [
+        "Joins combine related tables.",
+        "Primary keys identify records.",
+        "Foreign keys represent relationships.",
+        "INNER JOIN returns matching records.",
+        "LEFT JOIN keeps all records from the left table."
+      ]
+    },
+    {
+      "lesson_id": "sql_06",
+      "title": "Subqueries and HAVING",
+      "duration_minutes": 15,
+      "topics": [
+        "Subqueries",
+        "Nested queries",
+        "HAVING",
+        "Aggregated filtering"
+      ],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Subqueries",
+          "text": "A subquery is a query nested inside another SQL query. It can be used to calculate or retrieve information needed by the outer query."
+        },
+        {
+          "type": "code_example",
+          "title": "Subquery Example",
+          "language": "sql",
+          "code": "SELECT name, salary\nFROM employees\nWHERE salary > (\n  SELECT AVG(salary)\n  FROM employees\n);"
+        },
+        {
+          "type": "explanation",
+          "title": "HAVING",
+          "text": "HAVING filters grouped results after GROUP BY has been applied."
+        },
+        {
+          "type": "code_example",
+          "title": "HAVING Example",
+          "language": "sql",
+          "code": "SELECT department, COUNT(*)\nFROM employees\nGROUP BY department\nHAVING COUNT(*) > 5;"
+        }
+      ],
+      "key_points": [
+        "Subqueries are queries inside other queries.",
+        "HAVING filters grouped results.",
+        "WHERE filters rows before grouping.",
+        "HAVING is commonly used with GROUP BY."
+      ]
+    },
+    {
+      "lesson_id": "sql_07",
+      "title": "INSERT, UPDATE and DELETE",
+      "duration_minutes": 15,
+      "topics": [
+        "INSERT",
+        "UPDATE",
+        "DELETE",
+        "Data manipulation"
+      ],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "INSERT",
+          "text": "INSERT adds new records to a table."
+        },
+        {
+          "type": "code_example",
+          "title": "INSERT Example",
+          "language": "sql",
+          "code": "INSERT INTO students (name, age)\nVALUES ('Anu', 21);"
+        },
+        {
+          "type": "explanation",
+          "title": "UPDATE",
+          "text": "UPDATE modifies existing records. A WHERE condition should normally be used to restrict which records are changed."
+        },
+        {
+          "type": "code_example",
+          "title": "UPDATE Example",
+          "language": "sql",
+          "code": "UPDATE students\nSET age = 22\nWHERE id = 1;"
+        },
+        {
+          "type": "explanation",
+          "title": "DELETE",
+          "text": "DELETE removes records from a table. A missing WHERE condition can remove every record in the table."
+        },
+        {
+          "type": "code_example",
+          "title": "DELETE Example",
+          "language": "sql",
+          "code": "DELETE FROM students\nWHERE id = 1;"
+        }
+      ],
+      "key_points": [
+        "INSERT adds records.",
+        "UPDATE changes records.",
+        "DELETE removes records.",
+        "WHERE should be used carefully with UPDATE and DELETE."
+      ]
+    },
+    {
+      "lesson_id": "sql_08",
+      "title": "Constraints and Database Design Basics",
+      "duration_minutes": 10,
+      "topics": [
+        "PRIMARY KEY",
+        "FOREIGN KEY",
+        "NOT NULL",
+        "UNIQUE",
+        "Database integrity"
+      ],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Constraints",
+          "text": "Constraints are rules applied to table data to help maintain accuracy and consistency."
+        },
+        {
+          "type": "code_example",
+          "title": "Table with Constraints",
+          "language": "sql",
+          "code": "CREATE TABLE students (\n  id INT PRIMARY KEY,\n  email VARCHAR(100) UNIQUE NOT NULL,\n  department_id INT\n);"
+        },
+        {
+          "type": "explanation",
+          "title": "NOT NULL",
+          "text": "NOT NULL prevents a column from containing NULL values."
+        },
+        {
+          "type": "explanation",
+          "title": "UNIQUE",
+          "text": "UNIQUE prevents duplicate values in a constrained column or group of columns."
+        },
+        {
+          "type": "explanation",
+          "title": "Database Integrity",
+          "text": "Good database design uses appropriate keys and constraints to keep stored information consistent."
+        }
+      ],
+      "key_points": [
+        "Constraints enforce database rules.",
+        "PRIMARY KEY uniquely identifies records.",
+        "NOT NULL prevents missing values.",
+        "UNIQUE prevents duplicate values."
+      ]
+    }
+  ]
+}

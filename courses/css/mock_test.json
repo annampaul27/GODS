@@ -1,0 +1,196 @@
+{
+  "course_id": "css_fundamentals",
+  "title": "CSS Fundamentals Mock Test",
+  "duration_minutes": 12,
+  "question_count": 20,
+  "total_marks": 20,
+  "passing_score": 60,
+  "questions": [
+    {
+      "question_id": 1,
+      "question": "What does CSS stand for?",
+      "options": [
+        "Cascading Style Sheets",
+        "Computer Style System",
+        "Creative Styling Syntax",
+        "Cascading Script System"
+      ],
+      "correct_answer": 0,
+      "explanation": "CSS stands for Cascading Style Sheets."
+    },
+    {
+      "question_id": 2,
+      "question": "What is the main purpose of CSS?",
+      "options": [
+        "To control the appearance and layout of web pages",
+        "To create databases",
+        "To write server hardware drivers",
+        "To replace HTML"
+      ],
+      "correct_answer": 0,
+      "explanation": "CSS controls presentation, styling and layout."
+    },
+    {
+      "question_id": 3,
+      "question": "Which selector targets all paragraph elements?",
+      "options": ["p", ".p", "#p", "paragraph"]
+      ,
+      "correct_answer": 0,
+      "explanation": "p is an element selector targeting paragraph elements."
+    },
+    {
+      "question_id": 4,
+      "question": "Which symbol starts a class selector?",
+      "options": [".", "#", "@", "$"],
+      "correct_answer": 0,
+      "explanation": "A class selector begins with a dot."
+    },
+    {
+      "question_id": 5,
+      "question": "Which symbol starts an ID selector?",
+      "options": ["#", ".", "@", "&"],
+      "correct_answer": 0,
+      "explanation": "An ID selector begins with #."
+    },
+    {
+      "question_id": 6,
+      "question": "Which CSS property changes text color?",
+      "options": ["color", "text-color", "font-color", "foreground"],
+      "correct_answer": 0,
+      "explanation": "The color property changes text color."
+    },
+    {
+      "question_id": 7,
+      "question": "Which property changes the size of text?",
+      "options": ["font-size", "text-size", "size", "font-scale"],
+      "correct_answer": 0,
+      "explanation": "font-size controls text size."
+    },
+    {
+      "question_id": 8,
+      "question": "Which is NOT part of the CSS box model?",
+      "options": ["Database", "Content", "Padding", "Margin"],
+      "correct_answer": 0,
+      "explanation": "The box model consists of content, padding, border and margin."
+    },
+    {
+      "question_id": 9,
+      "question": "What does padding create?",
+      "options": [
+        "Space between content and border",
+        "Space outside the page",
+        "A new HTML element",
+        "A database connection"
+      ],
+      "correct_answer": 0,
+      "explanation": "Padding is the space between content and the border."
+    },
+    {
+      "question_id": 10,
+      "question": "What does margin create?",
+      "options": [
+        "Space outside an element's border",
+        "Space inside the text",
+        "A new CSS selector",
+        "A new HTML document"
+      ],
+      "correct_answer": 0,
+      "explanation": "Margin creates space outside the border."
+    },
+    {
+      "question_id": 11,
+      "question": "Which property controls how an element participates in layout?",
+      "options": ["display", "layout", "show", "render"],
+      "correct_answer": 0,
+      "explanation": "The display property controls an element's layout behavior."
+    },
+    {
+      "question_id": 12,
+      "question": "Which property controls an element's positioning method?",
+      "options": ["position", "location", "place", "coordinate"],
+      "correct_answer": 0,
+      "explanation": "The position property controls positioning behavior."
+    },
+    {
+      "question_id": 13,
+      "question": "Which value creates a flex container?",
+      "options": ["display: flex", "flex: true", "layout: flex", "display: box"],
+      "correct_answer": 0,
+      "explanation": "display: flex creates a flex container."
+    },
+    {
+      "question_id": 14,
+      "question": "What does justify-content control in Flexbox?",
+      "options": [
+        "Distribution along the main axis",
+        "Font size",
+        "Border thickness",
+        "HTML structure"
+      ],
+      "correct_answer": 0,
+      "explanation": "justify-content controls distribution along the main axis."
+    },
+    {
+      "question_id": 15,
+      "question": "What does align-items control in Flexbox?",
+      "options": [
+        "Alignment along the cross axis",
+        "Database alignment",
+        "Font family",
+        "Page title"
+      ],
+      "correct_answer": 0,
+      "explanation": "align-items controls alignment along the cross axis."
+    },
+    {
+      "question_id": 16,
+      "question": "Which CSS layout system is designed for rows and columns?",
+      "options": ["Grid", "Float-only", "Inline-only", "Text layout"],
+      "correct_answer": 0,
+      "explanation": "CSS Grid provides a two-dimensional row and column layout system."
+    },
+    {
+      "question_id": 17,
+      "question": "Which property defines grid columns?",
+      "options": [
+        "grid-template-columns",
+        "grid-columns",
+        "columns-grid",
+        "template-grid"
+      ],
+      "correct_answer": 0,
+      "explanation": "grid-template-columns defines grid column tracks."
+    },
+    {
+      "question_id": 18,
+      "question": "What is responsive design?",
+      "options": [
+        "Design that adapts to different screen sizes",
+        "Design that uses only desktop screens",
+        "Design without CSS",
+        "Design that only uses tables"
+      ],
+      "correct_answer": 0,
+      "explanation": "Responsive design adapts layouts to different devices and screen sizes."
+    },
+    {
+      "question_id": 19,
+      "question": "Which feature is commonly used to apply CSS based on screen width?",
+      "options": ["Media queries", "HTML comments", "SQL queries", "Java classes"],
+      "correct_answer": 0,
+      "explanation": "CSS media queries allow conditional styling based on viewport characteristics."
+    },
+    {
+      "question_id": 20,
+      "question": "Which statement correctly describes HTML and CSS?",
+      "options": [
+        "HTML provides structure and CSS provides presentation",
+        "CSS provides databases and HTML provides servers",
+        "HTML replaces CSS",
+        "CSS replaces all programming languages"
+      ],
+      "correct_answer": 0,
+      "explanation": "HTML structures content while CSS controls presentation and layout."
+    }
+  ]
+}

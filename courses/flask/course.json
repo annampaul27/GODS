@@ -1,0 +1,24 @@
+{
+  "course_id": "flask_fundamentals",
+  "title": "Flask Fundamentals",
+  "subject": "Flask",
+  "difficulty": "Beginner",
+  "duration_minutes": 90,
+  "description": "Learn the fundamentals of Flask, including routing, views, templates, forms, APIs, databases and application structure.",
+  "learning_objectives": [
+    "Understand Flask and its architecture",
+    "Create a basic Flask application",
+    "Define routes and handle requests",
+    "Render HTML templates",
+    "Handle forms and user input",
+    "Build basic JSON APIs",
+    "Connect Flask applications to databases",
+    "Understand basic Flask project structure"
+  ],
+  "lesson_count": 7,
+  "mock_test": {
+    "question_count": 20,
+    "duration_minutes": 12,
+    "passing_score": 60
+  }
+}

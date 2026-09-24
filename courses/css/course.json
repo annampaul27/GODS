@@ -1,0 +1,24 @@
+{
+  "course_id": "css_fundamentals",
+  "title": "CSS Fundamentals",
+  "subject": "CSS",
+  "difficulty": "Beginner",
+  "duration_minutes": 120,
+  "description": "Learn how to style and design web pages using CSS selectors, properties, colors, fonts, box model, positioning, Flexbox, Grid and responsive design.",
+  "learning_objectives": [
+    "Understand CSS syntax and selectors",
+    "Apply colors, fonts and text styling",
+    "Understand the CSS box model",
+    "Use margins, padding and borders",
+    "Understand positioning",
+    "Use Flexbox for layouts",
+    "Use CSS Grid for layouts",
+    "Create responsive web pages"
+  ],
+  "lesson_count": 8,
+  "mock_test": {
+    "question_count": 20,
+    "duration_minutes": 12,
+    "passing_score": 60
+  }
+}

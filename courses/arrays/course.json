@@ -1,0 +1,23 @@
+{
+  "course_id": "arrays_fundamentals",
+  "title": "Arrays Fundamentals",
+  "subject": "Arrays",
+  "difficulty": "Beginner",
+  "duration_minutes": 90,
+  "description": "Learn the fundamentals of arrays, indexing, traversal, searching, insertion, deletion, sorting and common array algorithms.",
+  "learning_objectives": [
+    "Understand what arrays are",
+    "Use array indexing and traversal",
+    "Perform insertion and deletion",
+    "Search for elements",
+    "Understand common sorting techniques",
+    "Solve basic array problems",
+    "Understand time complexity of common array operations"
+  ],
+  "lesson_count": 7,
+  "mock_test": {
+    "question_count": 20,
+    "duration_minutes": 12,
+    "passing_score": 60
+  }
+}

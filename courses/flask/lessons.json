@@ -1,0 +1,284 @@
+{
+  "course_id": "flask_fundamentals",
+  "lessons": [
+    {
+      "lesson_id": "flask_01",
+      "title": "Introduction to Flask",
+      "duration_minutes": 12,
+      "topics": ["Flask", "Python", "Web framework", "Development server"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "What is Flask?",
+          "text": "Flask is a lightweight Python web framework used to build web applications and APIs."
+        },
+        {
+          "type": "code_example",
+          "title": "Install Flask",
+          "language": "bash",
+          "code": "pip install flask"
+        },
+        {
+          "type": "code_example",
+          "title": "First Flask Application",
+          "language": "python",
+          "code": "from flask import Flask\n\napp = Flask(__name__)\n\n@app.route('/')\ndef home():\n    return 'Hello Flask!'\n\nif __name__ == '__main__':\n    app.run(debug=True)"
+        },
+        {
+          "type": "explanation",
+          "title": "Development Server",
+          "text": "The Flask development server allows you to run and test an application locally during development."
+        }
+      ],
+      "key_points": [
+        "Flask is a Python web framework.",
+        "Flask is lightweight and flexible.",
+        "Flask applications are commonly created using Flask(__name__).",
+        "app.run() starts the development server."
+      ]
+    },
+    {
+      "lesson_id": "flask_02",
+      "title": "Routes and Views",
+      "duration_minutes": 13,
+      "topics": ["Routes", "Views", "URL", "HTTP requests"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Routes",
+          "text": "A route connects a URL path to a Python function. When a user visits that URL, Flask calls the associated function."
+        },
+        {
+          "type": "code_example",
+          "title": "Multiple Routes",
+          "language": "python",
+          "code": "@app.route('/')\ndef home():\n    return 'Home Page'\n\n@app.route('/about')\ndef about():\n    return 'About Page'"
+        },
+        {
+          "type": "explanation",
+          "title": "Dynamic Routes",
+          "text": "Flask can capture values directly from a URL and pass them to the view function."
+        },
+        {
+          "type": "code_example",
+          "title": "Dynamic Route",
+          "language": "python",
+          "code": "@app.route('/user/<name>')\ndef user(name):\n    return f'Hello {name}'"
+        },
+        {
+          "type": "explanation",
+          "title": "HTTP Methods",
+          "text": "Routes can handle HTTP methods such as GET and POST."
+        },
+        {
+          "type": "code_example",
+          "title": "GET and POST",
+          "language": "python",
+          "code": "@app.route('/login', methods=['GET', 'POST'])\ndef login():\n    return 'Login'"
+        }
+      ],
+      "key_points": [
+        "Routes map URLs to functions.",
+        "Dynamic routes can capture URL values.",
+        "GET is commonly used to retrieve data.",
+        "POST is commonly used to submit data."
+      ]
+    },
+    {
+      "lesson_id": "flask_03",
+      "title": "Templates and Jinja",
+      "duration_minutes": 13,
+      "topics": ["Templates", "Jinja", "HTML", "Template variables"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Flask Templates",
+          "text": "Flask uses the Jinja template engine to generate dynamic HTML pages."
+        },
+        {
+          "type": "code_example",
+          "title": "Rendering a Template",
+          "language": "python",
+          "code": "from flask import render_template\n\n@app.route('/')\ndef home():\n    return render_template('home.html', name='Alex')"
+        },
+        {
+          "type": "code_example",
+          "title": "Template Variable",
+          "language": "html",
+          "code": "<h1>Hello {{ name }}</h1>"
+        },
+        {
+          "type": "code_example",
+          "title": "Template Condition",
+          "language": "html",
+          "code": "{% if logged_in %}\n    <p>Welcome back!</p>\n{% else %}\n    <p>Please log in.</p>\n{% endif %}"
+        },
+        {
+          "type": "code_example",
+          "title": "Template Loop",
+          "language": "html",
+          "code": "{% for item in items %}\n    <p>{{ item }}</p>\n{% endfor %}"
+        }
+      ],
+      "key_points": [
+        "Flask uses Jinja for templates.",
+        "render_template() renders HTML templates.",
+        "Jinja variables use {{ }}.",
+        "Jinja supports conditions and loops."
+      ]
+    },
+    {
+      "lesson_id": "flask_04",
+      "title": "Forms and Request Data",
+      "duration_minutes": 13,
+      "topics": ["Forms", "Request", "POST", "Form data"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Handling Forms",
+          "text": "Flask provides the request object for accessing information submitted by users."
+        },
+        {
+          "type": "code_example",
+          "title": "Reading Form Data",
+          "language": "python",
+          "code": "from flask import request\n\n@app.route('/login', methods=['POST'])\ndef login():\n    username = request.form['username']\n    return f'Hello {username}'"
+        },
+        {
+          "type": "explanation",
+          "title": "GET Parameters",
+          "text": "Query-string parameters can be accessed using request.args."
+        },
+        {
+          "type": "code_example",
+          "title": "Query Parameter",
+          "language": "python",
+          "code": "@app.route('/search')\ndef search():\n    query = request.args.get('q')\n    return f'Searching for {query}'"
+        },
+        {
+          "type": "explanation",
+          "title": "Validation",
+          "text": "Applications should validate submitted input before processing or storing it."
+        }
+      ],
+      "key_points": [
+        "request provides access to incoming request data.",
+        "request.form handles submitted form data.",
+        "request.args handles query parameters.",
+        "User input should be validated."
+      ]
+    },
+    {
+      "lesson_id": "flask_05",
+      "title": "Building JSON APIs",
+      "duration_minutes": 13,
+      "topics": ["REST API", "JSON", "API routes", "jsonify"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Flask APIs",
+          "text": "Flask can be used to build APIs that return JSON data to frontend applications or other clients."
+        },
+        {
+          "type": "code_example",
+          "title": "JSON Response",
+          "language": "python",
+          "code": "from flask import jsonify\n\n@app.route('/api/user')\ndef user_api():\n    return jsonify({\n        'name': 'Alex',\n        'role': 'Developer'\n    })"
+        },
+        {
+          "type": "explanation",
+          "title": "REST Concepts",
+          "text": "REST APIs commonly use HTTP methods such as GET, POST, PUT and DELETE to work with resources."
+        },
+        {
+          "type": "code_example",
+          "title": "POST API",
+          "language": "python",
+          "code": "@app.route('/api/users', methods=['POST'])\ndef create_user():\n    data = request.get_json()\n    return jsonify(data), 201"
+        }
+      ],
+      "key_points": [
+        "Flask can create REST-style APIs.",
+        "jsonify() creates JSON responses.",
+        "request.get_json() reads JSON request data.",
+        "HTTP methods represent different API operations."
+      ]
+    },
+    {
+      "lesson_id": "flask_06",
+      "title": "Databases and Application Data",
+      "duration_minutes": 13,
+      "topics": ["Database", "SQLite", "SQLAlchemy", "Models"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Database Integration",
+          "text": "Flask applications can connect to databases such as SQLite, PostgreSQL and MySQL."
+        },
+        {
+          "type": "explanation",
+          "title": "SQLAlchemy",
+          "text": "SQLAlchemy is a popular Python SQL toolkit and ORM that can be used with Flask applications."
+        },
+        {
+          "type": "code_example",
+          "title": "Simple SQLite Connection",
+          "language": "python",
+          "code": "import sqlite3\n\nconnection = sqlite3.connect('app.db')\ncursor = connection.cursor()\ncursor.execute('CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, name TEXT)')\nconnection.commit()\nconnection.close()"
+        },
+        {
+          "type": "explanation",
+          "title": "Why Use an ORM?",
+          "text": "An ORM allows application code to work with database records through programming-language objects rather than manually writing every SQL statement."
+        }
+      ],
+      "key_points": [
+        "Flask can work with many databases.",
+        "SQLite is useful for small applications and development.",
+        "SQLAlchemy provides SQL and ORM functionality.",
+        "Database connections should be handled carefully."
+      ]
+    },
+    {
+      "lesson_id": "flask_07",
+      "title": "Project Structure and Best Practices",
+      "duration_minutes": 13,
+      "topics": ["Project structure", "Blueprints", "Configuration", "Environment variables"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Project Structure",
+          "text": "As Flask applications grow, separating routes, templates, static files, models and configuration makes the project easier to maintain."
+        },
+        {
+          "type": "explanation",
+          "title": "Blueprints",
+          "text": "Blueprints allow related routes and functionality to be organized into reusable components."
+        },
+        {
+          "type": "code_example",
+          "title": "Blueprint Example",
+          "language": "python",
+          "code": "from flask import Blueprint\n\nusers = Blueprint('users', __name__)\n\n@users.route('/users')\ndef list_users():\n    return 'Users'"
+        },
+        {
+          "type": "explanation",
+          "title": "Environment Variables",
+          "text": "Secrets such as API keys and database credentials should be stored in environment variables instead of being hard-coded in source files."
+        },
+        {
+          "type": "code_example",
+          "title": "Reading an Environment Variable",
+          "language": "python",
+          "code": "import os\n\napi_key = os.environ.get('API_KEY')"
+        }
+      ],
+      "key_points": [
+        "Large Flask applications benefit from modular structure.",
+        "Blueprints organize related routes.",
+        "Configuration should be separated from application logic.",
+        "Secrets should not be hard-coded."
+      ]
+    }
+  ]
+}

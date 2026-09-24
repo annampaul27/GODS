@@ -1,0 +1,250 @@
+{
+  "course_id": "trees_fundamentals",
+  "title": "Trees Fundamentals Mock Test",
+  "duration_minutes": 12,
+  "question_count": 20,
+  "total_marks": 20,
+  "passing_score": 60,
+  "questions": [
+    {
+      "question_id": 1,
+      "question": "What is a tree?",
+      "options": [
+        "A hierarchical data structure",
+        "A programming language",
+        "A database query",
+        "A network cable"
+      ],
+      "correct_answer": 0,
+      "explanation": "A tree is a hierarchical data structure made up of nodes and edges."
+    },
+    {
+      "question_id": 2,
+      "question": "What is the topmost node of a tree called?",
+      "options": [
+        "Root",
+        "Leaf",
+        "Child",
+        "Branch"
+      ],
+      "correct_answer": 0,
+      "explanation": "The root is the topmost node."
+    },
+    {
+      "question_id": 3,
+      "question": "What is a leaf node?",
+      "options": [
+        "A node with no children",
+        "The root node",
+        "A node with two parents",
+        "The largest node"
+      ],
+      "correct_answer": 0,
+      "explanation": "A leaf has no children."
+    },
+    {
+      "question_id": 4,
+      "question": "What does the depth of a node measure?",
+      "options": [
+        "Edges from the root to the node",
+        "Number of children only",
+        "Number of leaves",
+        "Size of the computer"
+      ],
+      "correct_answer": 0,
+      "explanation": "Depth measures the distance from the root in edges."
+    },
+    {
+      "question_id": 5,
+      "question": "How many children can a node in a binary tree have at most?",
+      "options": [
+        "2",
+        "1",
+        "3",
+        "Unlimited"
+      ],
+      "correct_answer": 0,
+      "explanation": "A binary tree allows at most two children per node."
+    },
+    {
+      "question_id": 6,
+      "question": "What are the two children of a binary tree node commonly called?",
+      "options": [
+        "Left and right",
+        "Top and bottom",
+        "First and last",
+        "Parent and child"
+      ],
+      "correct_answer": 0,
+      "explanation": "Binary tree children are conventionally called left and right."
+    },
+    {
+      "question_id": 7,
+      "question": "Which traversal follows Root, Left, Right?",
+      "options": [
+        "Preorder",
+        "Inorder",
+        "Postorder",
+        "Level-order"
+      ],
+      "correct_answer": 0,
+      "explanation": "Preorder visits Root, then Left, then Right."
+    },
+    {
+      "question_id": 8,
+      "question": "Which traversal follows Left, Root, Right?",
+      "options": [
+        "Inorder",
+        "Preorder",
+        "Postorder",
+        "Reverse order"
+      ],
+      "correct_answer": 0,
+      "explanation": "Inorder visits Left, Root, Right."
+    },
+    {
+      "question_id": 9,
+      "question": "Which traversal follows Left, Right, Root?",
+      "options": [
+        "Postorder",
+        "Preorder",
+        "Inorder",
+        "Level-order"
+      ],
+      "correct_answer": 0,
+      "explanation": "Postorder visits Left, Right, then Root."
+    },
+    {
+      "question_id": 10,
+      "question": "What is a binary search tree?",
+      "options": [
+        "A binary tree with an ordering property",
+        "A tree with no root",
+        "A tree containing only strings",
+        "A tree with unlimited children"
+      ],
+      "correct_answer": 0,
+      "explanation": "A BST organizes values so smaller values are placed to the left and larger values to the right."
+    },
+    {
+      "question_id": 11,
+      "question": "In a typical BST, where is a value smaller than the current node searched?",
+      "options": [
+        "Left subtree",
+        "Right subtree",
+        "Parent only",
+        "Root only"
+      ],
+      "correct_answer": 0,
+      "explanation": "Smaller values are searched in the left subtree."
+    },
+    {
+      "question_id": 12,
+      "question": "In a typical BST, where is a value larger than the current node searched?",
+      "options": [
+        "Right subtree",
+        "Left subtree",
+        "Parent only",
+        "Root only"
+      ],
+      "correct_answer": 0,
+      "explanation": "Larger values are searched in the right subtree."
+    },
+    {
+      "question_id": 13,
+      "question": "What is the typical search complexity of a balanced BST?",
+      "options": [
+        "O(log n)",
+        "O(n²)",
+        "O(1) always",
+        "O(n³)"
+      ],
+      "correct_answer": 0,
+      "explanation": "A balanced BST can support search in O(log n)."
+    },
+    {
+      "question_id": 14,
+      "question": "What can happen if a BST becomes highly unbalanced?",
+      "options": [
+        "Operations can degrade to O(n)",
+        "It becomes an array automatically",
+        "All values disappear",
+        "Search becomes impossible"
+      ],
+      "correct_answer": 0,
+      "explanation": "An unbalanced BST can behave like a linked list."
+    },
+    {
+      "question_id": 15,
+      "question": "Why is recursion commonly used with trees?",
+      "options": [
+        "Each subtree is itself a tree",
+        "Trees cannot use loops",
+        "Recursion creates databases",
+        "Trees only store numbers"
+      ],
+      "correct_answer": 0,
+      "explanation": "The recursive structure of trees makes recursive algorithms natural."
+    },
+    {
+      "question_id": 16,
+      "question": "What does the height of a tree describe?",
+      "options": [
+        "The longest downward path from the root",
+        "The number of root nodes",
+        "The number of databases",
+        "The number of programming languages"
+      ],
+      "correct_answer": 0,
+      "explanation": "Tree height is based on the longest path from the root to a leaf."
+    },
+    {
+      "question_id": 17,
+      "question": "Which structure is useful for representing folders and files?",
+      "options": [
+        "Tree",
+        "Stack only",
+        "Queue only",
+        "Hash string"
+      ],
+      "correct_answer": 0,
+      "explanation": "File systems naturally have a hierarchical structure."
+    },
+    {
+      "question_id": 18,
+      "question": "What is a subtree?",
+      "options": [
+        "A node and its descendants",
+        "Only the root",
+        "Only leaf nodes",
+        "A database table"
+      ],
+      "correct_answer": 0,
+      "explanation": "A subtree consists of a node and all of its descendants."
+    },
+    {
+      "question_id": 19,
+      "question": "Which tree structure can represent choices and outcomes?",
+      "options": [
+        "Decision tree",
+        "SQL table",
+        "Array only",
+        "Queue"
+      ],
+      "correct_answer": 0,
+      "explanation": "Decision trees represent decisions and their possible outcomes."
+    },
+    {
+      "question_id": 20,
+      "question": "Why are trees useful in computer science?",
+      "options": [
+        "They represent hierarchy and support useful search and organization operations",
+        "They only store images",
+        "They replace every programming language",
+        "They are used only for printing"
+      ],
+      "correct_answer": 0,
+      "explanation": "Trees are useful for hierarchical data, searching, organization and many algorithms."
+    }
+  ]
+}

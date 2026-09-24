@@ -1,0 +1,343 @@
+{
+  "course_id": "css_fundamentals",
+  "lessons": [
+    {
+      "lesson_id": "css_01",
+      "title": "Introduction to CSS",
+      "duration_minutes": 15,
+      "topics": ["CSS", "Syntax", "Selectors", "Properties", "Values"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "What is CSS?",
+          "text": "CSS stands for Cascading Style Sheets. It is used to control the appearance, layout and presentation of HTML elements."
+        },
+        {
+          "type": "code_example",
+          "title": "Basic CSS",
+          "language": "css",
+          "code": "p {\n  color: blue;\n  font-size: 18px;\n}"
+        },
+        {
+          "type": "explanation",
+          "title": "CSS Rule",
+          "text": "A CSS rule normally contains a selector followed by declarations. Each declaration contains a property and a value."
+        },
+        {
+          "type": "explanation",
+          "title": "Ways to Add CSS",
+          "text": "CSS can be written inline, inside a style element, or in an external stylesheet. External stylesheets are commonly preferred for maintainability."
+        }
+      ],
+      "key_points": [
+        "CSS controls presentation and layout.",
+        "Selectors identify elements.",
+        "Properties define what is changed.",
+        "Values define how the property is applied."
+      ]
+    },
+    {
+      "lesson_id": "css_02",
+      "title": "Selectors and Colors",
+      "duration_minutes": 15,
+      "topics": ["Element selector", "Class selector", "ID selector", "Colors"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Element Selector",
+          "text": "An element selector targets all elements of a particular HTML type."
+        },
+        {
+          "type": "code_example",
+          "title": "Element Selector",
+          "language": "css",
+          "code": "h1 {\n  color: navy;\n}"
+        },
+        {
+          "type": "explanation",
+          "title": "Class Selector",
+          "text": "A class selector begins with a dot and targets elements having the specified class."
+        },
+        {
+          "type": "code_example",
+          "title": "Class Selector",
+          "language": "css",
+          "code": ".highlight {\n  background-color: yellow;\n}"
+        },
+        {
+          "type": "explanation",
+          "title": "ID Selector",
+          "text": "An ID selector begins with # and targets an element with the specified ID."
+        },
+        {
+          "type": "code_example",
+          "title": "ID Selector",
+          "language": "css",
+          "code": "#header {\n  color: white;\n}"
+        },
+        {
+          "type": "explanation",
+          "title": "Colors",
+          "text": "CSS colors can be specified using names, hexadecimal values, RGB, RGBA and other supported formats."
+        }
+      ],
+      "key_points": [
+        "Element selectors target HTML elements.",
+        "Class selectors begin with a dot.",
+        "ID selectors begin with #.",
+        "CSS supports multiple color formats."
+      ]
+    },
+    {
+      "lesson_id": "css_03",
+      "title": "Text, Fonts and Backgrounds",
+      "duration_minutes": 15,
+      "topics": ["Fonts", "Text", "Backgrounds", "Alignment"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Font Properties",
+          "text": "CSS provides properties such as font-family, font-size, font-weight and font-style for controlling text appearance."
+        },
+        {
+          "type": "code_example",
+          "title": "Font Styling",
+          "language": "css",
+          "code": "body {\n  font-family: Arial, sans-serif;\n}\n\nh1 {\n  font-size: 32px;\n  font-weight: bold;\n}"
+        },
+        {
+          "type": "explanation",
+          "title": "Text Alignment",
+          "text": "The text-align property can align text to the left, right, center or justify."
+        },
+        {
+          "type": "code_example",
+          "title": "Text Alignment",
+          "language": "css",
+          "code": "h1 {\n  text-align: center;\n}"
+        },
+        {
+          "type": "explanation",
+          "title": "Backgrounds",
+          "text": "Background properties control the background color or image of an element."
+        }
+      ],
+      "key_points": [
+        "font-family controls the font.",
+        "font-size controls text size.",
+        "text-align controls horizontal text alignment.",
+        "background properties control element backgrounds."
+      ]
+    },
+    {
+      "lesson_id": "css_04",
+      "title": "The CSS Box Model",
+      "duration_minutes": 20,
+      "topics": ["Content", "Padding", "Border", "Margin", "Box sizing"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Box Model",
+          "text": "Every HTML element can be considered as a rectangular box consisting of content, padding, border and margin."
+        },
+        {
+          "type": "code_example",
+          "title": "Box Model",
+          "language": "css",
+          "code": ".card {\n  width: 300px;\n  padding: 20px;\n  border: 2px solid black;\n  margin: 10px;\n}"
+        },
+        {
+          "type": "explanation",
+          "title": "Padding",
+          "text": "Padding creates space between an element's content and its border."
+        },
+        {
+          "type": "explanation",
+          "title": "Margin",
+          "text": "Margin creates space outside an element's border."
+        },
+        {
+          "type": "explanation",
+          "title": "Border",
+          "text": "A border surrounds the padding and content area."
+        },
+        {
+          "type": "code_example",
+          "title": "Box Sizing",
+          "language": "css",
+          "code": "* {\n  box-sizing: border-box;\n}"
+        }
+      ],
+      "key_points": [
+        "The box model consists of content, padding, border and margin.",
+        "Padding is inside the border.",
+        "Margin is outside the border.",
+        "box-sizing can change how dimensions are calculated."
+      ]
+    },
+    {
+      "lesson_id": "css_05",
+      "title": "Positioning and Display",
+      "duration_minutes": 15,
+      "topics": ["Display", "Block", "Inline", "Position", "Relative", "Absolute", "Fixed"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Display",
+          "text": "The display property controls how an element participates in layout."
+        },
+        {
+          "type": "code_example",
+          "title": "Display Values",
+          "language": "css",
+          "code": ".block {\n  display: block;\n}\n\n.inline {\n  display: inline;\n}\n\n.hidden {\n  display: none;\n}"
+        },
+        {
+          "type": "explanation",
+          "title": "Position",
+          "text": "The position property controls how an element is positioned. Common values include static, relative, absolute, fixed and sticky."
+        },
+        {
+          "type": "code_example",
+          "title": "Relative and Absolute",
+          "language": "css",
+          "code": ".parent {\n  position: relative;\n}\n\n.child {\n  position: absolute;\n  top: 10px;\n  right: 10px;\n}"
+        }
+      ],
+      "key_points": [
+        "display controls layout behavior.",
+        "block elements normally occupy a full line.",
+        "inline elements normally occupy only their required space.",
+        "position controls positioning behavior."
+      ]
+    },
+    {
+      "lesson_id": "css_06",
+      "title": "Flexbox",
+      "duration_minutes": 20,
+      "topics": ["Flex container", "Flex items", "justify-content", "align-items", "gap"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "What is Flexbox?",
+          "text": "Flexbox is a CSS layout system designed to arrange elements along a row or column."
+        },
+        {
+          "type": "code_example",
+          "title": "Basic Flexbox",
+          "language": "css",
+          "code": ".container {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  gap: 20px;\n}"
+        },
+        {
+          "type": "explanation",
+          "title": "justify-content",
+          "text": "justify-content controls how flex items are distributed along the main axis."
+        },
+        {
+          "type": "explanation",
+          "title": "align-items",
+          "text": "align-items controls how flex items are aligned along the cross axis."
+        },
+        {
+          "type": "explanation",
+          "title": "Flex Direction",
+          "text": "flex-direction controls whether items are arranged in a row or column."
+        },
+        {
+          "type": "code_example",
+          "title": "Column Layout",
+          "language": "css",
+          "code": ".container {\n  display: flex;\n  flex-direction: column;\n}"
+        }
+      ],
+      "key_points": [
+        "display: flex creates a flex container.",
+        "justify-content controls the main axis.",
+        "align-items controls the cross axis.",
+        "flex-direction controls row or column arrangement."
+      ]
+    },
+    {
+      "lesson_id": "css_07",
+      "title": "CSS Grid",
+      "duration_minutes": 15,
+      "topics": ["Grid", "Columns", "Rows", "Gap", "Grid layout"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "What is CSS Grid?",
+          "text": "CSS Grid is a two-dimensional layout system that allows elements to be arranged using rows and columns."
+        },
+        {
+          "type": "code_example",
+          "title": "Basic Grid",
+          "language": "css",
+          "code": ".container {\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  gap: 20px;\n}"
+        },
+        {
+          "type": "explanation",
+          "title": "Grid Columns",
+          "text": "grid-template-columns defines the number and size of columns."
+        },
+        {
+          "type": "explanation",
+          "title": "Gap",
+          "text": "The gap property controls spacing between grid items."
+        }
+        ,
+        {
+          "type": "code_example",
+          "title": "Two Column Grid",
+          "language": "css",
+          "code": ".layout {\n  display: grid;\n  grid-template-columns: 1fr 2fr;\n}"
+        }
+      ],
+      "key_points": [
+        "Grid is useful for two-dimensional layouts.",
+        "Grid can define rows and columns.",
+        "The gap property creates space between grid items.",
+        "fr represents a fraction of available space."
+      ]
+    },
+    {
+      "lesson_id": "css_08",
+      "title": "Responsive Design",
+      "duration_minutes": 15,
+      "topics": ["Responsive design", "Media queries", "Mobile layouts", "Viewport"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Responsive Design",
+          "text": "Responsive design allows a web page to adapt to different screen sizes such as phones, tablets and desktops."
+        },
+        {
+          "type": "explanation",
+          "title": "Media Queries",
+          "text": "Media queries apply CSS rules conditionally based on characteristics such as viewport width."
+        },
+        {
+          "type": "code_example",
+          "title": "Media Query",
+          "language": "css",
+          "code": ".container {\n  display: flex;\n}\n\n@media (max-width: 600px) {\n  .container {\n    flex-direction: column;\n  }\n}"
+        },
+        {
+          "type": "explanation",
+          "title": "Responsive Layouts",
+          "text": "Flexible widths, relative units, Flexbox, Grid and media queries can be combined to create responsive layouts."
+        },
+        {
+          "type": "explanation",
+          "title": "CSS and HTML",
+          "text": "HTML provides the structure while CSS controls presentation and layout. Keeping structure and styling separate makes applications easier to maintain."
+        }
+      ],
+      "key_points": [
+        "Responsive design adapts to different screen sizes.",
+        "Media queries apply conditional CSS.",
+        "Flexbox and Grid are useful for responsive layouts.",
+        "HTML provides structure and CSS provides presentation."
+      ]
+    }
+  ]
+}

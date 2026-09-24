@@ -1,0 +1,310 @@
+{
+  "course_id": "arrays_fundamentals",
+  "lessons": [
+    {
+      "lesson_id": "arrays_01",
+      "title": "Introduction to Arrays",
+      "duration_minutes": 12,
+      "topics": [
+        "Arrays",
+        "Elements",
+        "Indexing",
+        "Fixed-size arrays"
+      ],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "What is an Array?",
+          "text": "An array is a data structure used to store multiple values of the same type in a sequence. Elements are stored at positions called indexes."
+        },
+        {
+          "type": "explanation",
+          "title": "Indexing",
+          "text": "In most programming languages, array indexing starts at 0. Therefore, the first element is at index 0 and the second element is at index 1."
+        },
+        {
+          "type": "code_example",
+          "title": "Python Array Example",
+          "language": "python",
+          "code": "numbers = [10, 20, 30, 40]\nprint(numbers[0])\nprint(numbers[2])"
+        },
+        {
+          "type": "explanation",
+          "title": "Array Size",
+          "text": "The size of an array represents how many elements it contains. Accessing an element by index is generally a constant-time operation."
+        }
+      ],
+      "key_points": [
+        "Arrays store multiple values in a sequence.",
+        "Indexes commonly start at 0.",
+        "The first element has index 0.",
+        "Direct element access is generally O(1)."
+      ]
+    },
+    {
+      "lesson_id": "arrays_02",
+      "title": "Traversing Arrays",
+      "duration_minutes": 12,
+      "topics": [
+        "Traversal",
+        "Loops",
+        "Index-based traversal",
+        "Element-based traversal"
+      ],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Array Traversal",
+          "text": "Traversal means visiting each element of an array, usually using a loop."
+        },
+        {
+          "type": "code_example",
+          "title": "Python Traversal",
+          "language": "python",
+          "code": "numbers = [10, 20, 30, 40]\n\nfor number in numbers:\n    print(number)"
+        },
+        {
+          "type": "code_example",
+          "title": "Index-Based Traversal",
+          "language": "python",
+          "code": "numbers = [10, 20, 30, 40]\n\nfor i in range(len(numbers)):\n    print(numbers[i])"
+        },
+        {
+          "type": "explanation",
+          "title": "Time Complexity",
+          "text": "Visiting every element once takes O(n) time because the number of operations grows with the number of elements."
+        }
+      ],
+      "key_points": [
+        "Traversal visits array elements.",
+        "Loops are commonly used for traversal.",
+        "Traversing all elements takes O(n) time."
+      ]
+    },
+    {
+      "lesson_id": "arrays_03",
+      "title": "Searching Arrays",
+      "duration_minutes": 12,
+      "topics": [
+        "Linear search",
+        "Binary search",
+        "Searching complexity"
+      ],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Linear Search",
+          "text": "Linear search checks elements one by one until the target is found or the array ends."
+        },
+        {
+          "type": "code_example",
+          "title": "Linear Search",
+          "language": "python",
+          "code": "numbers = [10, 25, 30, 45]\ntarget = 30\n\nfor i in range(len(numbers)):\n    if numbers[i] == target:\n        print('Found at index', i)"
+        },
+        {
+          "type": "explanation",
+          "title": "Linear Search Complexity",
+          "text": "Linear search has O(n) worst-case time complexity because it may need to inspect every element."
+        },
+        {
+          "type": "explanation",
+          "title": "Binary Search",
+          "text": "Binary search repeatedly divides a sorted array into halves and eliminates the half that cannot contain the target."
+        },
+        {
+          "type": "code_example",
+          "title": "Binary Search Concept",
+          "language": "text",
+          "code": "Sorted array:\n[10, 20, 30, 40, 50]\n\nTarget = 40\nCheck middle -> 30\nTarget is larger -> search right half\nCheck 40 -> found"
+        },
+        {
+          "type": "explanation",
+          "title": "Binary Search Complexity",
+          "text": "Binary search runs in O(log n) time, but it requires the data to be sorted."
+        }
+      ],
+      "key_points": [
+        "Linear search works on unsorted data.",
+        "Linear search is O(n).",
+        "Binary search requires sorted data.",
+        "Binary search is O(log n)."
+      ]
+    },
+    {
+      "lesson_id": "arrays_04",
+      "title": "Insertion and Deletion",
+      "duration_minutes": 12,
+      "topics": [
+        "Insertion",
+        "Deletion",
+        "Shifting elements",
+        "Dynamic arrays"
+      ],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Insertion",
+          "text": "Insertion adds an element to an array. Inserting in the middle may require existing elements to be shifted."
+        },
+        {
+          "type": "code_example",
+          "title": "Python Insertion",
+          "language": "python",
+          "code": "numbers = [10, 20, 40]\nnumbers.insert(2, 30)\nprint(numbers)"
+        },
+        {
+          "type": "explanation",
+          "title": "Deletion",
+          "text": "Deletion removes an element. Removing an element from the middle may require later elements to shift."
+        },
+        {
+          "type": "code_example",
+          "title": "Python Deletion",
+          "language": "python",
+          "code": "numbers = [10, 20, 30, 40]\nnumbers.pop(1)\nprint(numbers)"
+        },
+        {
+          "type": "explanation",
+          "title": "Complexity",
+          "text": "Insertion or deletion at the end of a dynamic array can often be efficient, while operations in the middle may require O(n) shifting."
+        }
+      ],
+      "key_points": [
+        "Insertion adds elements.",
+        "Deletion removes elements.",
+        "Middle insertion can require shifting.",
+        "Middle deletion can require shifting."
+      ]
+    },
+    {
+      "lesson_id": "arrays_05",
+      "title": "Sorting Arrays",
+      "duration_minutes": 15,
+      "topics": [
+        "Sorting",
+        "Bubble sort",
+        "Selection sort",
+        "Insertion sort"
+      ],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Why Sort?",
+          "text": "Sorting arranges elements in a specific order, such as ascending or descending order. Sorted data can make searching and analysis easier."
+        },
+        {
+          "type": "explanation",
+          "title": "Bubble Sort",
+          "text": "Bubble sort repeatedly compares adjacent elements and swaps them when they are in the wrong order."
+        },
+        {
+          "type": "code_example",
+          "title": "Bubble Sort",
+          "language": "python",
+          "code": "numbers = [5, 2, 8, 1]\n\nfor i in range(len(numbers)):\n    for j in range(0, len(numbers) - i - 1):\n        if numbers[j] > numbers[j + 1]:\n            numbers[j], numbers[j + 1] = numbers[j + 1], numbers[j]"
+        },
+        {
+          "type": "explanation",
+          "title": "Selection Sort",
+          "text": "Selection sort repeatedly finds the smallest remaining element and places it in the correct position."
+        },
+        {
+          "type": "explanation",
+          "title": "Insertion Sort",
+          "text": "Insertion sort builds a sorted portion of the array by inserting each new element into its correct position."
+        }
+      ],
+      "key_points": [
+        "Sorting arranges elements.",
+        "Bubble sort compares adjacent elements.",
+        "Selection sort selects the next minimum element.",
+        "Insertion sort builds a sorted portion."
+      ]
+    },
+    {
+      "lesson_id": "arrays_06",
+      "title": "Common Array Problems",
+      "duration_minutes": 15,
+      "topics": [
+        "Maximum value",
+        "Minimum value",
+        "Sum",
+        "Duplicates",
+        "Reversal"
+      ],
+      "content": [
+        {
+          "type": "code_example",
+          "title": "Find Maximum",
+          "language": "python",
+          "code": "numbers = [10, 5, 25, 8]\nmaximum = numbers[0]\n\nfor number in numbers:\n    if number > maximum:\n        maximum = number\n\nprint(maximum)"
+        },
+        {
+          "type": "code_example",
+          "title": "Calculate Sum",
+          "language": "python",
+          "code": "numbers = [10, 20, 30]\ntotal = 0\n\nfor number in numbers:\n    total += number\n\nprint(total)"
+        },
+        {
+          "type": "code_example",
+          "title": "Reverse an Array",
+          "language": "python",
+          "code": "numbers = [1, 2, 3, 4]\nnumbers.reverse()\nprint(numbers)"
+        },
+        {
+          "type": "explanation",
+          "title": "Duplicate Detection",
+          "text": "Duplicates can be detected by comparing elements or by using a set to track values that have already been encountered."
+        }
+      ],
+      "key_points": [
+        "Maximum and minimum can be found using a single traversal.",
+        "Array sums can be calculated in O(n).",
+        "Arrays can be reversed.",
+        "Sets can help detect duplicates efficiently."
+      ]
+    },
+    {
+      "lesson_id": "arrays_07",
+      "title": "Array Complexity and Problem Solving",
+      "duration_minutes": 12,
+      "topics": [
+        "Big O notation",
+        "O(1)",
+        "O(n)",
+        "O(log n)",
+        "Algorithm selection"
+      ],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Time Complexity",
+          "text": "Time complexity describes how the running time of an algorithm changes as the input size increases."
+        },
+        {
+          "type": "explanation",
+          "title": "Common Complexities",
+          "text": "Direct array access is commonly O(1), traversal is O(n), linear search is O(n), and binary search is O(log n) when the data is sorted."
+        },
+        {
+          "type": "code_example",
+          "title": "Complexity Examples",
+          "language": "text",
+          "code": "Access element: O(1)\nTraverse array: O(n)\nLinear search: O(n)\nBinary search: O(log n)"
+        },
+        {
+          "type": "explanation",
+          "title": "Choosing an Algorithm",
+          "text": "When solving an array problem, first understand the input, identify the required operation, consider whether the data is sorted, and choose an approach that provides acceptable time and space complexity."
+        }
+      ],
+      "key_points": [
+        "Big O describes algorithm growth.",
+        "Array access is commonly O(1).",
+        "Traversal and linear search are O(n).",
+        "Binary search is O(log n) on sorted data."
+      ]
+    }
+  ]
+}

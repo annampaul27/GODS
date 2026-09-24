@@ -1,0 +1,327 @@
+{
+  "course_id": "django_fundamentals",
+  "lessons": [
+    {
+      "lesson_id": "django_01",
+      "title": "Introduction to Django",
+      "duration_minutes": 15,
+      "topics": ["Django", "Python", "Web framework", "MVT architecture"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "What is Django?",
+          "text": "Django is a Python web framework designed for building web applications quickly and with a clear structure."
+        },
+        {
+          "type": "explanation",
+          "title": "Django Architecture",
+          "text": "Django commonly follows a Model-View-Template architecture. Models handle data, views handle application logic and templates handle presentation."
+        },
+        {
+          "type": "code_example",
+          "title": "Install Django",
+          "language": "bash",
+          "code": "pip install django"
+        },
+        {
+          "type": "code_example",
+          "title": "Create a Project",
+          "language": "bash",
+          "code": "django-admin startproject myproject\ncd myproject\npython manage.py runserver"
+        }
+      ],
+      "key_points": [
+        "Django is a Python web framework.",
+        "Django follows an MVT-style architecture.",
+        "django-admin can create projects.",
+        "manage.py provides project management commands."
+      ]
+    },
+    {
+      "lesson_id": "django_02",
+      "title": "Projects and Applications",
+      "duration_minutes": 15,
+      "topics": ["Project", "App", "manage.py", "settings.py"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Project vs App",
+          "text": "A Django project contains the configuration for a complete website, while an app is a component that provides a particular feature."
+        },
+        {
+          "type": "code_example",
+          "title": "Create an App",
+          "language": "bash",
+          "code": "python manage.py startapp students"
+        },
+        {
+          "type": "explanation",
+          "title": "Installed Apps",
+          "text": "An application normally needs to be added to INSTALLED_APPS in the project's settings.py file."
+        },
+        {
+          "type": "code_example",
+          "title": "Installed App",
+          "language": "python",
+          "code": "INSTALLED_APPS = [\n    ...,\n    'students',\n]"
+        },
+        {
+          "type": "explanation",
+          "title": "manage.py",
+          "text": "manage.py is used to run development commands such as starting the server, creating migrations and creating administrative users."
+        }
+      ],
+      "key_points": [
+        "A project contains overall configuration.",
+        "An app provides a specific feature.",
+        "Apps are registered in INSTALLED_APPS.",
+        "manage.py is used for common Django commands."
+      ]
+    },
+    {
+      "lesson_id": "django_03",
+      "title": "URLs and Views",
+      "duration_minutes": 15,
+      "topics": ["URL patterns", "Views", "HttpResponse", "Routing"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "URL Routing",
+          "text": "Django uses URL patterns to map incoming web requests to views."
+        },
+        {
+          "type": "code_example",
+          "title": "Basic View",
+          "language": "python",
+          "code": "from django.http import HttpResponse\n\ndef home(request):\n    return HttpResponse(\"Hello Django!\")"
+        },
+        {
+          "type": "code_example",
+          "title": "URL Pattern",
+          "language": "python",
+          "code": "from django.urls import path\nfrom . import views\n\nurlpatterns = [\n    path('', views.home, name='home'),\n]"
+        },
+        {
+          "type": "explanation",
+          "title": "Views",
+          "text": "A view receives a request and returns a response. A response may contain HTML, JSON or other content."
+        }
+      ],
+      "key_points": [
+        "URLs map requests to views.",
+        "Views process requests.",
+        "HttpResponse can return a simple response.",
+        "path() defines URL patterns."
+      ]
+    },
+    {
+      "lesson_id": "django_04",
+      "title": "Templates",
+      "duration_minutes": 15,
+      "topics": ["HTML", "Templates", "Template variables", "Template tags"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Django Templates",
+          "text": "Templates allow HTML pages to contain dynamic data supplied by views."
+        },
+        {
+          "type": "code_example",
+          "title": "Render a Template",
+          "language": "python",
+          "code": "from django.shortcuts import render\n\ndef home(request):\n    context = {'name': 'Alex'}\n    return render(request, 'home.html', context)"
+        },
+        {
+          "type": "code_example",
+          "title": "Template Variable",
+          "language": "html",
+          "code": "<h1>Hello {{ name }}</h1>"
+        },
+        {
+          "type": "explanation",
+          "title": "Template Tags",
+          "text": "Django templates provide tags for operations such as loops and conditional rendering."
+        },
+        {
+          "type": "code_example",
+          "title": "Template Loop",
+          "language": "html",
+          "code": "{% for student in students %}\n  <p>{{ student.name }}</p>\n{% endfor %}"
+        }
+      ],
+      "key_points": [
+        "Templates generate dynamic HTML.",
+        "Views can pass context data to templates.",
+        "Template variables use double curly braces.",
+        "Template tags can implement loops and conditions."
+      ]
+    },
+    {
+      "lesson_id": "django_05",
+      "title": "Models and Databases",
+      "duration_minutes": 20,
+      "topics": ["Models", "Fields", "ORM", "Migrations"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Django Models",
+          "text": "A Django model is a Python class that represents data stored in a database."
+        },
+        {
+          "type": "code_example",
+          "title": "Basic Model",
+          "language": "python",
+          "code": "from django.db import models\n\nclass Student(models.Model):\n    name = models.CharField(max_length=100)\n    age = models.IntegerField()\n    email = models.EmailField()"
+        },
+        {
+          "type": "explanation",
+          "title": "ORM",
+          "text": "Django's Object-Relational Mapper allows developers to work with database records using Python objects instead of writing SQL for every operation."
+        },
+        {
+          "type": "code_example",
+          "title": "Querying Data",
+          "language": "python",
+          "code": "students = Student.objects.all()\nstudent = Student.objects.get(id=1)"
+        },
+        {
+          "type": "explanation",
+          "title": "Migrations",
+          "text": "Migrations record changes to model definitions and apply those changes to the database."
+        },
+        {
+          "type": "code_example",
+          "title": "Migration Commands",
+          "language": "bash",
+          "code": "python manage.py makemigrations\npython manage.py migrate"
+        }
+      ],
+      "key_points": [
+        "Models represent database data.",
+        "Django provides an ORM.",
+        "QuerySets are used to retrieve database records.",
+        "makemigrations creates migration files.",
+        "migrate applies migrations."
+      ]
+    },
+    {
+      "lesson_id": "django_06",
+      "title": "Forms and User Input",
+      "duration_minutes": 15,
+      "topics": ["Forms", "ModelForm", "Validation", "POST requests"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Django Forms",
+          "text": "Django forms simplify collecting and validating user input."
+        },
+        {
+          "type": "code_example",
+          "title": "Basic Form",
+          "language": "python",
+          "code": "from django import forms\n\nclass StudentForm(forms.Form):\n    name = forms.CharField(max_length=100)\n    email = forms.EmailField()"
+        },
+        {
+          "type": "explanation",
+          "title": "ModelForm",
+          "text": "ModelForm can automatically generate form fields based on a Django model."
+        },
+        {
+          "type": "code_example",
+          "title": "ModelForm",
+          "language": "python",
+          "code": "from django.forms import ModelForm\nfrom .models import Student\n\nclass StudentForm(ModelForm):\n    class Meta:\n        model = Student\n        fields = ['name', 'age', 'email']"
+        },
+        {
+          "type": "explanation",
+          "title": "Validation",
+          "text": "Django forms validate submitted data and provide information about invalid fields."
+        }
+      ],
+      "key_points": [
+        "Forms collect user input.",
+        "Forms can validate data.",
+        "ModelForm connects forms to models.",
+        "POST requests are commonly used to submit form data."
+      ]
+    },
+    {
+      "lesson_id": "django_07",
+      "title": "Django Admin",
+      "duration_minutes": 15,
+      "topics": ["Admin", "Superuser", "Model registration"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Django Admin",
+          "text": "Django provides a built-in administrative interface that can be used to manage application data."
+        },
+        {
+          "type": "code_example",
+          "title": "Create Superuser",
+          "language": "bash",
+          "code": "python manage.py createsuperuser"
+        },
+        {
+          "type": "code_example",
+          "title": "Register a Model",
+          "language": "python",
+          "code": "from django.contrib import admin\nfrom .models import Student\n\nadmin.site.register(Student)"
+        },
+        {
+          "type": "explanation",
+          "title": "Admin Interface",
+          "text": "After registering models and creating a superuser, administrators can manage records through the Django admin site."
+        }
+      ],
+      "key_points": [
+        "Django includes a built-in admin interface.",
+        "createsuperuser creates an administrative account.",
+        "Models can be registered with admin.site.register().",
+        "The admin interface is useful for managing application data."
+      ]
+    },
+    {
+      "lesson_id": "django_08",
+      "title": "CRUD and Django Application Structure",
+      "duration_minutes": 15,
+      "topics": ["CRUD", "Create", "Read", "Update", "Delete"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "CRUD",
+          "text": "CRUD stands for Create, Read, Update and Delete. These operations form the foundation of many database-driven applications."
+        },
+        {
+          "type": "code_example",
+          "title": "Create",
+          "language": "python",
+          "code": "Student.objects.create(\n    name='Alex',\n    age=22,\n    email='alex@example.com'\n)"
+        },
+        {
+          "type": "code_example",
+          "title": "Update",
+          "language": "python",
+          "code": "student = Student.objects.get(id=1)\nstudent.age = 23\nstudent.save()"
+        },
+        {
+          "type": "code_example",
+          "title": "Delete",
+          "language": "python",
+          "code": "student = Student.objects.get(id=1)\nstudent.delete()"
+        },
+        {
+          "type": "explanation",
+          "title": "Application Structure",
+          "text": "A typical Django application separates models, views, URLs, templates, forms and administrative configuration into appropriate files."
+        }
+      ],
+      "key_points": [
+        "CRUD means Create, Read, Update and Delete.",
+        "Django ORM provides methods for CRUD operations.",
+        "save() persists model changes.",
+        "delete() removes a database record."
+      ]
+    }
+  ]
+}

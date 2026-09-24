@@ -1,0 +1,250 @@
+{
+  "course_id": "llm_fundamentals",
+  "title": "LLM Fundamentals Mock Test",
+  "duration_minutes": 12,
+  "question_count": 20,
+  "total_marks": 20,
+  "passing_score": 60,
+  "questions": [
+    {
+      "question_id": 1,
+      "question": "What does LLM stand for?",
+      "options": [
+        "Large Language Model",
+        "Linear Learning Machine",
+        "Language Logic Module",
+        "Large Logic Machine"
+      ],
+      "correct_answer": 0,
+      "explanation": "LLM stands for Large Language Model."
+    },
+    {
+      "question_id": 2,
+      "question": "What is a common task performed during language model training?",
+      "options": [
+        "Predicting the next token",
+        "Deleting all text",
+        "Sorting files alphabetically",
+        "Compiling operating systems"
+      ],
+      "correct_answer": 0,
+      "explanation": "Next-token prediction is a common training objective for language models."
+    },
+    {
+      "question_id": 3,
+      "question": "What is a token?",
+      "options": [
+        "Only a complete sentence",
+        "A unit of text processed by a model",
+        "A database table",
+        "A programming language"
+      ],
+      "correct_answer": 1,
+      "explanation": "A token is a unit of text processed by a language model."
+    },
+    {
+      "question_id": 4,
+      "question": "What does a context window describe?",
+      "options": [
+        "The model's screen size",
+        "The amount of information the model can consider in an interaction",
+        "The number of programming languages installed",
+        "The number of users on a website"
+      ],
+      "correct_answer": 1,
+      "explanation": "A context window limits how much tokenized information the model can consider."
+    },
+    {
+      "question_id": 5,
+      "question": "Which architecture is strongly associated with modern language models?",
+      "options": [
+        "Transformer",
+        "Spreadsheet",
+        "Relational database",
+        "Operating system"
+      ],
+      "correct_answer": 0,
+      "explanation": "Transformers form the foundation of many modern language models."
+    },
+    {
+      "question_id": 6,
+      "question": "What is the purpose of attention?",
+      "options": [
+        "To delete tokens",
+        "To assign importance to different parts of the input",
+        "To format a hard drive",
+        "To create database tables"
+      ],
+      "correct_answer": 1,
+      "explanation": "Attention allows models to focus on relevant parts of an input."
+    },
+    {
+      "question_id": 7,
+      "question": "What is prompt engineering?",
+      "options": [
+        "Designing instructions to obtain useful model outputs",
+        "Building computer hardware",
+        "Managing network cables",
+        "Creating spreadsheets"
+      ],
+      "correct_answer": 0,
+      "explanation": "Prompt engineering involves designing inputs and instructions to guide model behavior."
+    },
+    {
+      "question_id": 8,
+      "question": "Which prompt is generally more specific?",
+      "options": [
+        "Explain Python.",
+        "Explain Python loops to a beginner using three examples.",
+        "Python?",
+        "Tell me something."
+      ],
+      "correct_answer": 1,
+      "explanation": "The second prompt specifies the topic, audience and desired examples."
+    },
+    {
+      "question_id": 9,
+      "question": "What is few-shot prompting?",
+      "options": [
+        "Providing examples of desired behavior",
+        "Removing all examples",
+        "Training a computer from scratch",
+        "Deleting the context"
+      ],
+      "correct_answer": 0,
+      "explanation": "Few-shot prompting provides examples that demonstrate the desired input-output pattern."
+    },
+    {
+      "question_id": 10,
+      "question": "What is an embedding?",
+      "options": [
+        "A numerical representation of information",
+        "A type of HTML tag",
+        "A database password",
+        "A computer monitor"
+      ],
+      "correct_answer": 0,
+      "explanation": "Embeddings represent information such as text as numerical vectors."
+    },
+    {
+      "question_id": 11,
+      "question": "What does semantic search primarily focus on?",
+      "options": [
+        "Meaning",
+        "File size",
+        "Screen resolution",
+        "Keyboard layout"
+      ],
+      "correct_answer": 0,
+      "explanation": "Semantic search focuses on meaning and conceptual similarity."
+    },
+    {
+      "question_id": 12,
+      "question": "What is commonly stored in a vector database?",
+      "options": [
+        "Embeddings",
+        "Only images",
+        "Operating systems",
+        "Keyboard drivers"
+      ],
+      "correct_answer": 0,
+      "explanation": "Vector databases can store embeddings for similarity-based retrieval."
+    },
+    {
+      "question_id": 13,
+      "question": "What does RAG stand for?",
+      "options": [
+        "Retrieval-Augmented Generation",
+        "Random AI Generation",
+        "Recursive Application Gateway",
+        "Remote Access Generator"
+      ],
+      "correct_answer": 0,
+      "explanation": "RAG stands for Retrieval-Augmented Generation."
+    },
+    {
+      "question_id": 14,
+      "question": "What is the main idea of RAG?",
+      "options": [
+        "Retrieve relevant information and provide it as context for generation",
+        "Remove all external information",
+        "Train an operating system",
+        "Replace every database with a spreadsheet"
+      ],
+      "correct_answer": 0,
+      "explanation": "RAG retrieves relevant information and supplies it to the model as additional context."
+    },
+    {
+      "question_id": 15,
+      "question": "Which problem occurs when a model produces plausible but unsupported information?",
+      "options": [
+        "Hallucination",
+        "Compilation",
+        "Indexing",
+        "Normalization"
+      ],
+      "correct_answer": 0,
+      "explanation": "An AI hallucination is an incorrect or unsupported output presented as if it were valid."
+    },
+    {
+      "question_id": 16,
+      "question": "Why should important LLM outputs sometimes be verified?",
+      "options": [
+        "LLMs can produce incorrect information",
+        "LLMs cannot produce text",
+        "LLMs only work offline",
+        "LLMs always return database errors"
+      ],
+      "correct_answer": 0,
+      "explanation": "Language models can generate inaccurate information, so important outputs should be checked."
+    },
+    {
+      "question_id": 17,
+      "question": "Which is an important consideration when handling sensitive information with an AI application?",
+      "options": [
+        "Privacy",
+        "Screen brightness",
+        "Keyboard color",
+        "File icon size"
+      ],
+      "correct_answer": 0,
+      "explanation": "Applications should carefully consider privacy when processing sensitive information."
+    },
+    {
+      "question_id": 18,
+      "question": "What is one benefit of structured model output?",
+      "options": [
+        "It can be easier for software to process",
+        "It removes the need for testing",
+        "It guarantees factual accuracy",
+        "It eliminates all model limitations"
+      ],
+      "correct_answer": 0,
+      "explanation": "Structured output can make model responses easier for applications to parse and use."
+    },
+    {
+      "question_id": 19,
+      "question": "Which approach is appropriate for high-impact AI decisions?",
+      "options": [
+        "Blindly trust the model",
+        "Use appropriate validation and human oversight",
+        "Ignore the input data",
+        "Remove all evaluation"
+      ],
+      "correct_answer": 1,
+      "explanation": "High-impact applications should use appropriate validation and human oversight."
+    },
+    {
+      "question_id": 20,
+      "question": "Which sequence best describes a simple RAG workflow?",
+      "options": [
+        "Retrieve information, provide context, generate answer",
+        "Generate answer, delete documents, retrieve later",
+        "Compile code, restart computer, generate answer",
+        "Create spreadsheet, print it, retrieve information"
+      ],
+      "correct_answer": 0,
+      "explanation": "A basic RAG workflow retrieves relevant information, provides it as context and then generates an answer."
+    }
+  ]
+}

@@ -1,0 +1,285 @@
+{
+  "course_id": "llm_fundamentals",
+  "lessons": [
+    {
+      "lesson_id": "llm_01",
+      "title": "Introduction to Large Language Models",
+      "duration_minutes": 20,
+      "topics": [
+        "Artificial intelligence",
+        "Machine learning",
+        "Language models",
+        "Large language models",
+        "LLM applications"
+      ],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "What is an LLM?",
+          "text": "A large language model is a machine learning model trained on large amounts of text data to process and generate natural language. LLMs can perform tasks such as answering questions, summarizing text, generating content, translating languages and assisting with programming."
+        },
+        {
+          "type": "explanation",
+          "title": "How LLMs Learn",
+          "text": "During training, an LLM learns statistical patterns and relationships in its training data. A common objective is predicting the next token given previous tokens."
+        },
+        {
+          "type": "explanation",
+          "title": "LLM Applications",
+          "text": "LLMs can be used for chatbots, document summarization, information extraction, coding assistance, question answering, classification and content generation."
+        },
+        {
+          "type": "scenario",
+          "title": "Practical Example",
+          "text": "A company wants an assistant that summarizes customer support conversations. An LLM can process the conversation and generate a concise summary."
+        }
+      ],
+      "key_points": [
+        "LLMs process and generate natural language.",
+        "They learn patterns from large datasets.",
+        "Next-token prediction is a common training objective.",
+        "LLMs support many language-related applications."
+      ]
+    },
+    {
+      "lesson_id": "llm_02",
+      "title": "Tokens and Context Windows",
+      "duration_minutes": 15,
+      "topics": [
+        "Tokens",
+        "Tokenization",
+        "Context",
+        "Context window"
+      ],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "What is a Token?",
+          "text": "A token is a unit of text processed by a language model. Depending on the tokenizer, a token may represent a word, part of a word, punctuation or another text unit."
+        },
+        {
+          "type": "explanation",
+          "title": "Tokenization",
+          "text": "Tokenization converts input text into tokens that can be processed by the model."
+        },
+        {
+          "type": "explanation",
+          "title": "Context Window",
+          "text": "A context window is the amount of tokenized information a model can consider within a single interaction. Larger context windows allow models to work with longer inputs and conversations."
+        },
+        {
+          "type": "scenario",
+          "title": "Why Context Matters",
+          "text": "If a user provides a very long document, the application must ensure that the relevant content fits within the model's supported context window."
+        }
+      ],
+      "key_points": [
+        "Models process tokens rather than raw characters directly.",
+        "Tokenization converts text into model-readable units.",
+        "A context window limits how much information can be considered at once."
+      ]
+    },
+    {
+      "lesson_id": "llm_03",
+      "title": "Transformers and Attention",
+      "duration_minutes": 20,
+      "topics": [
+        "Transformers",
+        "Attention",
+        "Self-attention",
+        "Sequence processing"
+      ],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Transformer Architecture",
+          "text": "Transformers are neural network architectures designed to process sequences using attention mechanisms. They became an important foundation for modern language models."
+        },
+        {
+          "type": "explanation",
+          "title": "Attention",
+          "text": "Attention allows a model to assign different levels of importance to different parts of an input when processing a token."
+        },
+        {
+          "type": "explanation",
+          "title": "Self-Attention",
+          "text": "Self-attention allows tokens in a sequence to interact with other tokens in the same sequence. This helps models capture relationships between words and phrases."
+        },
+        {
+          "type": "scenario",
+          "title": "Example",
+          "text": "In the sentence 'The student submitted the assignment because she finished it', attention can help the model connect 'she' with 'student' and 'it' with 'assignment'."
+        }
+      ],
+      "key_points": [
+        "Transformers are central to many modern language models.",
+        "Attention helps models focus on relevant parts of input.",
+        "Self-attention captures relationships between tokens."
+      ]
+    },
+    {
+      "lesson_id": "llm_04",
+      "title": "Prompt Engineering",
+      "duration_minutes": 20,
+      "topics": [
+        "Prompts",
+        "Instructions",
+        "Role prompting",
+        "Few-shot prompting",
+        "Structured output"
+      ],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "What is Prompt Engineering?",
+          "text": "Prompt engineering is the practice of designing instructions and input context to obtain useful and consistent outputs from a language model."
+        },
+        {
+          "type": "code_example",
+          "title": "Basic Prompt",
+          "language": "text",
+          "code": "Explain SQL joins to a beginner using a simple example."
+        },
+        {
+          "type": "explanation",
+          "title": "Specific Instructions",
+          "text": "Prompts generally become easier to control when they clearly describe the task, desired format, relevant context and constraints."
+        },
+        {
+          "type": "code_example",
+          "title": "Structured Prompt",
+          "language": "text",
+          "code": "Task: Summarize the text.\nAudience: Beginner.\nFormat: 5 bullet points.\nConstraint: Use simple language."
+        },
+        {
+          "type": "explanation",
+          "title": "Few-Shot Prompting",
+          "text": "Few-shot prompting provides examples of desired inputs and outputs so the model can infer the expected pattern."
+        }
+      ],
+      "key_points": [
+        "Clear instructions improve controllability.",
+        "Prompts can specify format, audience and constraints.",
+        "Few-shot prompting provides examples.",
+        "Structured outputs can make model responses easier for applications to process."
+      ]
+    },
+    {
+      "lesson_id": "llm_05",
+      "title": "Embeddings and Semantic Search",
+      "duration_minutes": 15,
+      "topics": [
+        "Embeddings",
+        "Vectors",
+        "Semantic similarity",
+        "Vector databases"
+      ],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "What is an Embedding?",
+          "text": "An embedding is a numerical representation of information such as text. Similar meanings can be represented by vectors that are close together according to an appropriate similarity measure."
+        },
+        {
+          "type": "explanation",
+          "title": "Semantic Search",
+          "text": "Semantic search uses representations of meaning rather than relying only on exact keyword matches."
+        },
+        {
+          "type": "scenario",
+          "title": "Example",
+          "text": "A search for 'ways to reduce vehicle fuel consumption' may retrieve a document discussing fuel efficiency even if the exact words in the query do not appear in the document."
+        },
+        {
+          "type": "explanation",
+          "title": "Vector Databases",
+          "text": "Vector databases can store embeddings and efficiently retrieve vectors that are similar to a query vector."
+        }
+      ],
+      "key_points": [
+        "Embeddings represent information numerically.",
+        "Semantic search focuses on meaning.",
+        "Vector databases can retrieve similar embeddings."
+      ]
+    },
+    {
+      "lesson_id": "llm_06",
+      "title": "Retrieval-Augmented Generation",
+      "duration_minutes": 20,
+      "topics": [
+        "RAG",
+        "Retrieval",
+        "Knowledge bases",
+        "Grounded generation"
+      ],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "What is RAG?",
+          "text": "Retrieval-Augmented Generation combines information retrieval with language generation. Relevant external information is retrieved and provided to the language model as context before generating a response."
+        },
+        {
+          "type": "explanation",
+          "title": "Typical RAG Pipeline",
+          "text": "A basic RAG system can split documents into chunks, create embeddings, store them in a vector database, retrieve relevant chunks for a query and provide those chunks to an LLM."
+        },
+        {
+          "type": "code_example",
+          "title": "RAG Flow",
+          "language": "text",
+          "code": "User Question\n     ↓\nCreate Query Embedding\n     ↓\nRetrieve Relevant Documents\n     ↓\nProvide Context to LLM\n     ↓\nGenerate Answer"
+        },
+        {
+          "type": "scenario",
+          "title": "CareerCompass Example",
+          "text": "A career platform could retrieve relevant course material and provide it to an LLM when answering a learner's question."
+        }
+      ],
+      "key_points": [
+        "RAG combines retrieval and generation.",
+        "Retrieved information can provide additional context.",
+        "RAG is useful when applications need answers grounded in external documents."
+      ]
+    },
+    {
+      "lesson_id": "llm_07",
+      "title": "LLM Limitations and Responsible AI",
+      "duration_minutes": 10,
+      "topics": [
+        "Hallucinations",
+        "Bias",
+        "Privacy",
+        "Evaluation",
+        "Human oversight"
+      ],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Hallucinations",
+          "text": "An LLM can generate information that sounds plausible but is incorrect or unsupported. Such outputs should be verified when accuracy matters."
+        },
+        {
+          "type": "explanation",
+          "title": "Bias",
+          "text": "Models can reproduce or amplify patterns and biases present in their training data or evaluation environment."
+        },
+        {
+          "type": "explanation",
+          "title": "Privacy",
+          "text": "Applications should carefully consider what user information is sent to an AI service and how sensitive information is handled."
+        },
+        {
+          "type": "explanation",
+          "title": "Human Oversight",
+          "text": "High-impact decisions should include appropriate validation and human oversight rather than relying blindly on model output."
+        }
+      ],
+      "key_points": [
+        "LLM outputs can be incorrect.",
+        "Model outputs should be evaluated for important use cases.",
+        "Privacy and sensitive information require careful handling.",
+        "Human oversight remains important for high-impact applications."
+      ]
+    }
+  ]
+}

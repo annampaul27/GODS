@@ -1,0 +1,23 @@
+{
+  "course_id": "html_fundamentals",
+  "title": "HTML Fundamentals",
+  "subject": "HTML",
+  "difficulty": "Beginner",
+  "duration_minutes": 120,
+  "description": "Learn how to structure web pages using HTML elements, semantic markup, links, images, lists, tables, forms and modern HTML5 features.",
+  "learning_objectives": [
+    "Understand HTML document structure",
+    "Use headings, paragraphs and text elements",
+    "Create links, lists, images and tables",
+    "Understand semantic HTML",
+    "Create HTML forms",
+    "Use common HTML5 elements",
+    "Build a basic structured web page"
+  ],
+  "lesson_count": 8,
+  "mock_test": {
+    "question_count": 20,
+    "duration_minutes": 12,
+    "passing_score": 60
+  }
+}

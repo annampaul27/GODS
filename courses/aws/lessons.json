@@ -1,0 +1,271 @@
+{
+  "course_id": "aws_fundamentals",
+  "lessons": [
+    {
+      "lesson_id": "aws_01",
+      "title": "Introduction to Cloud Computing and AWS",
+      "duration_minutes": 12,
+      "topics": ["Cloud computing", "AWS", "IaaS", "PaaS", "SaaS"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Cloud Computing",
+          "text": "Cloud computing provides computing resources such as servers, storage and databases over the internet instead of requiring users to maintain all infrastructure locally."
+        },
+        {
+          "type": "explanation",
+          "title": "Amazon Web Services",
+          "text": "AWS is a cloud platform that provides many services for computing, storage, databases, networking, security, analytics and application development."
+        },
+        {
+          "type": "explanation",
+          "title": "Infrastructure as a Service",
+          "text": "IaaS provides infrastructure resources such as virtual machines, storage and networking that users can configure and manage."
+        },
+        {
+          "type": "explanation",
+          "title": "Platform as a Service",
+          "text": "PaaS provides a managed platform for developing and deploying applications without requiring users to manage all underlying infrastructure."
+        },
+        {
+          "type": "explanation",
+          "title": "Software as a Service",
+          "text": "SaaS provides complete software applications through the internet."
+        }
+      ],
+      "key_points": [
+        "Cloud computing provides resources over the internet.",
+        "AWS provides many cloud services.",
+        "IaaS provides infrastructure resources.",
+        "PaaS provides managed application platforms.",
+        "SaaS provides complete software applications."
+      ]
+    },
+    {
+      "lesson_id": "aws_02",
+      "title": "AWS Global Infrastructure",
+      "duration_minutes": 12,
+      "topics": ["Regions", "Availability Zones", "Edge locations"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "AWS Regions",
+          "text": "An AWS Region is a separate geographic area containing AWS infrastructure."
+        },
+        {
+          "type": "explanation",
+          "title": "Availability Zones",
+          "text": "Availability Zones are isolated locations within an AWS Region. Using multiple Availability Zones can improve application availability."
+        },
+        {
+          "type": "explanation",
+          "title": "Choosing a Region",
+          "text": "Region selection can depend on latency, service availability, regulatory requirements and cost."
+        },
+        {
+          "type": "explanation",
+          "title": "Edge Locations",
+          "text": "Edge locations support AWS services that deliver content and other resources closer to end users."
+        }
+      ],
+      "key_points": [
+        "Regions represent geographic areas.",
+        "Availability Zones are isolated locations within Regions.",
+        "Multiple Availability Zones can improve availability.",
+        "Region selection affects latency and service availability."
+      ]
+    },
+    {
+      "lesson_id": "aws_03",
+      "title": "Amazon EC2 and Cloud Computing",
+      "duration_minutes": 13,
+      "topics": ["EC2", "Instances", "AMI", "Instance types"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "What is EC2?",
+          "text": "Amazon EC2 provides resizable virtual computing capacity in the AWS cloud."
+        },
+        {
+          "type": "explanation",
+          "title": "EC2 Instances",
+          "text": "An EC2 instance is a virtual server running in AWS. Users can select instance configurations according to application requirements."
+        },
+        {
+          "type": "explanation",
+          "title": "Amazon Machine Images",
+          "text": "An AMI provides the information required to launch an EC2 instance, including the operating system and other configuration information."
+        },
+        {
+          "type": "explanation",
+          "title": "Instance Types",
+          "text": "Different EC2 instance families are designed for different workloads, including general purpose, compute optimized and memory optimized workloads."
+        },
+        {
+          "type": "explanation",
+          "title": "Security Groups",
+          "text": "Security groups act as virtual firewalls that control network traffic to and from EC2 instances."
+        }
+      ],
+      "key_points": [
+        "EC2 provides virtual computing capacity.",
+        "Instances are virtual servers.",
+        "AMIs are used to launch instances.",
+        "Instance types are designed for different workloads.",
+        "Security groups control network traffic."
+      ]
+    },
+    {
+      "lesson_id": "aws_04",
+      "title": "Amazon S3 and Cloud Storage",
+      "duration_minutes": 13,
+      "topics": ["S3", "Buckets", "Objects", "Storage classes"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "What is S3?",
+          "text": "Amazon Simple Storage Service, or S3, is an object storage service designed to store and retrieve data."
+        },
+        {
+          "type": "explanation",
+          "title": "Buckets",
+          "text": "S3 stores objects inside containers called buckets. Bucket names must follow AWS naming requirements."
+        },
+        {
+          "type": "explanation",
+          "title": "Objects",
+          "text": "An S3 object consists of data and associated metadata. Objects are stored within buckets."
+        },
+        {
+          "type": "explanation",
+          "title": "Storage Classes",
+          "text": "S3 provides different storage classes designed for different access patterns and storage requirements."
+        },
+        {
+          "type": "explanation",
+          "title": "Common Uses",
+          "text": "S3 can be used for backups, datasets, application assets, static website files and other forms of object storage."
+        }
+      ],
+      "key_points": [
+        "S3 is an object storage service.",
+        "Objects are stored in buckets.",
+        "S3 provides multiple storage classes.",
+        "S3 can store backups and application data."
+      ]
+    },
+    {
+      "lesson_id": "aws_05",
+      "title": "AWS Databases",
+      "duration_minutes": 13,
+      "topics": ["RDS", "DynamoDB", "Relational databases", "NoSQL"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Amazon RDS",
+          "text": "Amazon Relational Database Service helps users set up, operate and scale relational databases in AWS."
+        },
+        {
+          "type": "explanation",
+          "title": "Relational Databases",
+          "text": "Relational databases organize structured data into tables and use relationships between data entities."
+        },
+        {
+          "type": "explanation",
+          "title": "DynamoDB",
+          "text": "Amazon DynamoDB is a managed NoSQL database service designed for applications requiring scalable and low-latency data access."
+        },
+        {
+          "type": "explanation",
+          "title": "RDS vs DynamoDB",
+          "text": "RDS is designed for relational database workloads, while DynamoDB is a NoSQL database service."
+        }
+      ],
+      "key_points": [
+        "RDS is a managed relational database service.",
+        "Relational databases organize data into tables.",
+        "DynamoDB is a managed NoSQL database.",
+        "Database choice depends on application requirements."
+      ]
+    },
+    {
+      "lesson_id": "aws_06",
+      "title": "IAM and AWS Security",
+      "duration_minutes": 13,
+      "topics": ["IAM", "Users", "Roles", "Policies", "Least privilege"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "What is IAM?",
+          "text": "AWS Identity and Access Management controls authentication and authorization for AWS resources."
+        },
+        {
+          "type": "explanation",
+          "title": "IAM Users",
+          "text": "IAM users represent identities that can be given permissions to access AWS resources."
+        },
+        {
+          "type": "explanation",
+          "title": "IAM Roles",
+          "text": "IAM roles provide permissions that can be assumed by trusted entities such as applications or AWS services."
+        },
+        {
+          "type": "explanation",
+          "title": "Policies",
+          "text": "IAM policies define permissions describing which actions are allowed or denied on specified resources."
+        },
+        {
+          "type": "explanation",
+          "title": "Least Privilege",
+          "text": "The principle of least privilege means providing only the permissions required to perform a task."
+        }
+      ],
+      "key_points": [
+        "IAM manages access to AWS resources.",
+        "Users represent identities.",
+        "Roles provide permissions that can be assumed.",
+        "Policies define permissions.",
+        "Least privilege reduces unnecessary access."
+      ]
+    },
+    {
+      "lesson_id": "aws_07",
+      "title": "AWS Lambda and Serverless Computing",
+      "duration_minutes": 14,
+      "topics": ["Lambda", "Serverless", "Functions", "Events"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "What is AWS Lambda?",
+          "text": "AWS Lambda is a serverless compute service that runs code in response to events without requiring users to manage servers."
+        },
+        {
+          "type": "explanation",
+          "title": "Lambda Functions",
+          "text": "A Lambda function contains the code executed when the function is invoked."
+        },
+        {
+          "type": "explanation",
+          "title": "Event Driven Execution",
+          "text": "Lambda functions can be invoked by events from AWS services or applications."
+        },
+        {
+          "type": "explanation",
+          "title": "Serverless",
+          "text": "Serverless computing allows developers to focus on application code while the cloud provider manages the underlying infrastructure."
+        },
+        {
+          "type": "explanation",
+          "title": "Common Uses",
+          "text": "Lambda can be used for APIs, data processing, automation, scheduled tasks and event-driven applications."
+        }
+      ],
+      "key_points": [
+        "Lambda runs code without requiring server management.",
+        "Functions can be triggered by events.",
+        "Serverless reduces infrastructure management.",
+        "Lambda is useful for event-driven applications."
+      ]
+    }
+  ]
+}

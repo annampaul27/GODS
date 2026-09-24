@@ -1,0 +1,24 @@
+{
+  "course_id": "javascript_fundamentals",
+  "title": "JavaScript Fundamentals",
+  "subject": "JavaScript",
+  "difficulty": "Beginner",
+  "duration_minutes": 120,
+  "description": "Learn JavaScript fundamentals including variables, data types, functions, arrays, objects, DOM manipulation, events and modern JavaScript concepts.",
+  "learning_objectives": [
+    "Understand JavaScript syntax and variables",
+    "Work with JavaScript data types and operators",
+    "Use conditional statements and loops",
+    "Create and use functions",
+    "Work with arrays and objects",
+    "Understand DOM manipulation",
+    "Handle browser events",
+    "Understand basic modern JavaScript concepts"
+  ],
+  "lesson_count": 8,
+  "mock_test": {
+    "question_count": 20,
+    "duration_minutes": 12,
+    "passing_score": 60
+  }
+}

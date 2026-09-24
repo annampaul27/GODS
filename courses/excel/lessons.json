@@ -1,0 +1,291 @@
+{
+  "course_id": "excel_fundamentals",
+  "lessons": [
+    {
+      "lesson_id": "excel_01",
+      "title": "Excel Basics and Cell References",
+      "duration_minutes": 12,
+      "topics": ["Workbook", "Worksheet", "Cells", "Rows", "Columns", "Cell references"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Excel Basics",
+          "text": "Microsoft Excel is a spreadsheet application used to store, organize, calculate and analyze data."
+        },
+        {
+          "type": "explanation",
+          "title": "Workbook and Worksheet",
+          "text": "A workbook is an Excel file that can contain multiple worksheets. A worksheet contains rows and columns of cells."
+        },
+        {
+          "type": "explanation",
+          "title": "Cell References",
+          "text": "A cell reference identifies a cell using its column letter and row number, such as A1 or C5."
+        },
+        {
+          "type": "code_example",
+          "title": "Basic Formula",
+          "language": "excel",
+          "code": "=A1+B1"
+        },
+        {
+          "type": "explanation",
+          "title": "Relative and Absolute References",
+          "text": "Relative references change when a formula is copied. Absolute references use $ to keep a row or column fixed, such as $A$1."
+        }
+      ],
+      "key_points": [
+        "A workbook can contain multiple worksheets.",
+        "Cells are identified using column letters and row numbers.",
+        "Formulas begin with =.",
+        "Absolute references use $."
+      ]
+    },
+    {
+      "lesson_id": "excel_02",
+      "title": "Formulas and Functions",
+      "duration_minutes": 13,
+      "topics": ["SUM", "AVERAGE", "COUNT", "MIN", "MAX"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Functions",
+          "text": "Excel functions are predefined formulas that perform calculations on data."
+        },
+        {
+          "type": "code_example",
+          "title": "SUM",
+          "language": "excel",
+          "code": "=SUM(B2:B10)"
+        },
+        {
+          "type": "code_example",
+          "title": "AVERAGE",
+          "language": "excel",
+          "code": "=AVERAGE(B2:B10)"
+        },
+        {
+          "type": "code_example",
+          "title": "COUNT",
+          "language": "excel",
+          "code": "=COUNT(B2:B10)"
+        },
+        {
+          "type": "code_example",
+          "title": "MIN and MAX",
+          "language": "excel",
+          "code": "=MIN(B2:B10)\n=MAX(B2:B10)"
+        }
+      ],
+      "key_points": [
+        "SUM calculates a total.",
+        "AVERAGE calculates the arithmetic mean.",
+        "COUNT counts numeric values.",
+        "MIN returns the smallest value.",
+        "MAX returns the largest value."
+      ]
+    },
+    {
+      "lesson_id": "excel_03",
+      "title": "Logical Functions and Conditional Analysis",
+      "duration_minutes": 13,
+      "topics": ["IF", "AND", "OR", "IFS"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "IF Function",
+          "text": "The IF function returns one result when a condition is true and another result when it is false."
+        },
+        {
+          "type": "code_example",
+          "title": "IF Example",
+          "language": "excel",
+          "code": "=IF(B2>=50,\"Pass\",\"Fail\")"
+        },
+        {
+          "type": "code_example",
+          "title": "AND",
+          "language": "excel",
+          "code": "=IF(AND(B2>=50,C2>=50),\"Pass\",\"Fail\")"
+        },
+        {
+          "type": "code_example",
+          "title": "OR",
+          "language": "excel",
+          "code": "=IF(OR(B2>=90,C2>=90),\"High\",\"Normal\")"
+        },
+        {
+          "type": "explanation",
+          "title": "Conditional Analysis",
+          "text": "Logical functions are useful for classification, validation and rule-based analysis."
+        }
+      ],
+      "key_points": [
+        "IF evaluates a condition.",
+        "AND requires all conditions to be true.",
+        "OR requires at least one condition to be true.",
+        "Logical formulas can classify data."
+      ]
+    },
+    {
+      "lesson_id": "excel_04",
+      "title": "Sorting, Filtering and Data Cleaning",
+      "duration_minutes": 13,
+      "topics": ["Sort", "Filter", "Remove duplicates", "Data cleaning"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Sorting",
+          "text": "Sorting arranges data according to values, such as smallest to largest or alphabetically."
+        },
+        {
+          "type": "explanation",
+          "title": "Filtering",
+          "text": "Filtering temporarily displays only rows that satisfy selected conditions."
+        },
+        {
+          "type": "explanation",
+          "title": "Remove Duplicates",
+          "text": "Excel provides a Remove Duplicates feature for identifying and removing repeated records."
+        },
+        {
+          "type": "explanation",
+          "title": "Data Cleaning",
+          "text": "Common cleaning tasks include removing duplicates, handling missing values, correcting inconsistent formats and standardizing text."
+        },
+        {
+          "type": "explanation",
+          "title": "Find and Replace",
+          "text": "Find and Replace can quickly locate specific values and replace them with corrected or standardized values."
+        }
+      ],
+      "key_points": [
+        "Sorting changes the order of displayed records.",
+        "Filtering displays records matching criteria.",
+        "Duplicate records can be removed.",
+        "Cleaning improves data quality before analysis."
+      ]
+    },
+    {
+      "lesson_id": "excel_05",
+      "title": "Lookup Functions",
+      "duration_minutes": 13,
+      "topics": ["XLOOKUP", "VLOOKUP", "INDEX", "MATCH"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Lookup Functions",
+          "text": "Lookup functions find information in a table based on a matching value."
+        },
+        {
+          "type": "code_example",
+          "title": "XLOOKUP",
+          "language": "excel",
+          "code": "=XLOOKUP(E2,A2:A100,B2:B100,\"Not Found\")"
+        },
+        {
+          "type": "code_example",
+          "title": "VLOOKUP",
+          "language": "excel",
+          "code": "=VLOOKUP(E2,A2:C100,3,FALSE)"
+        },
+        {
+          "type": "code_example",
+          "title": "INDEX and MATCH",
+          "language": "excel",
+          "code": "=INDEX(C2:C100,MATCH(E2,A2:A100,0))"
+        },
+        {
+          "type": "explanation",
+          "title": "Choosing a Lookup",
+          "text": "XLOOKUP is a modern lookup function, while VLOOKUP is widely used in existing spreadsheets."
+        }
+      ],
+      "key_points": [
+        "Lookup functions retrieve related information.",
+        "XLOOKUP provides flexible lookup functionality.",
+        "VLOOKUP searches vertically.",
+        "INDEX and MATCH can be combined for flexible lookups."
+      ]
+    },
+    {
+      "lesson_id": "excel_06",
+      "title": "Charts and Data Visualization",
+      "duration_minutes": 13,
+      "topics": ["Charts", "Bar chart", "Line chart", "Pie chart", "Visualization"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Why Use Charts?",
+          "text": "Charts convert numerical data into visual representations that can make patterns and comparisons easier to understand."
+        },
+        {
+          "type": "explanation",
+          "title": "Column and Bar Charts",
+          "text": "Column and bar charts are useful for comparing values across categories."
+        },
+        {
+          "type": "explanation",
+          "title": "Line Charts",
+          "text": "Line charts are useful for showing trends over time."
+        },
+        {
+          "type": "explanation",
+          "title": "Pie Charts",
+          "text": "Pie charts can show the relative contribution of categories to a whole, particularly when there are few categories."
+        },
+        {
+          "type": "explanation",
+          "title": "Good Visualization",
+          "text": "A useful chart should have an appropriate chart type, clear labels, meaningful titles and minimal unnecessary decoration."
+        }
+      ],
+      "key_points": [
+        "Charts help communicate patterns.",
+        "Bar and column charts compare categories.",
+        "Line charts show trends.",
+        "Chart selection should match the analytical question."
+      ]
+    },
+    {
+      "lesson_id": "excel_07",
+      "title": "PivotTables and Data Analysis",
+      "duration_minutes": 13,
+      "topics": ["PivotTables", "Aggregation", "Grouping", "Summarization"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "What is a PivotTable?",
+          "text": "A PivotTable summarizes large datasets by grouping and aggregating values."
+        },
+        {
+          "type": "explanation",
+          "title": "PivotTable Areas",
+          "text": "The main areas are Rows, Columns, Values and Filters. Fields can be dragged into these areas to build a summary."
+        },
+        {
+          "type": "explanation",
+          "title": "Aggregation",
+          "text": "Values can be summarized using calculations such as Sum, Count and Average."
+        },
+        {
+          "type": "explanation",
+          "title": "Example",
+          "text": "A sales dataset can be summarized by placing Region in Rows and Sales in Values to calculate sales by region."
+        },
+        {
+          "type": "explanation",
+          "title": "PivotCharts",
+          "text": "PivotCharts provide visual representations of PivotTable summaries and can help explore aggregated data."
+        }
+      ],
+      "key_points": [
+        "PivotTables summarize datasets.",
+        "Rows and Columns define grouping.",
+        "Values contain calculations.",
+        "Filters allow focused analysis.",
+        "PivotCharts visualize PivotTable results."
+      ]
+    }
+  ]
+}

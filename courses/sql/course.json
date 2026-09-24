@@ -1,0 +1,24 @@
+{
+  "course_id": "sql_fundamentals",
+  "title": "SQL Fundamentals",
+  "subject": "SQL",
+  "difficulty": "Beginner",
+  "duration_minutes": 120,
+  "description": "A beginner-friendly course covering relational databases, SQL queries, filtering, sorting, aggregation, joins, subqueries and basic data manipulation.",
+  "learning_objectives": [
+    "Understand relational databases and tables",
+    "Write basic SELECT queries",
+    "Filter and sort data",
+    "Use aggregate functions and GROUP BY",
+    "Understand SQL joins",
+    "Use subqueries",
+    "Insert, update and delete records",
+    "Understand basic database constraints"
+  ],
+  "lesson_count": 8,
+  "mock_test": {
+    "question_count": 20,
+    "duration_minutes": 12,
+    "passing_score": 60
+  }
+}
