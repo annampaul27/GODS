@@ -1,42 +1,78 @@
 from app.models.ats import ResumeSchema, JDSchema, ComparisonResultSchema
 
+def _normalize_skill(skill: str) -> str:
+    s = skill.strip().lower()
+    aliases = {
+        "postgres": "postgresql",
+        "react.js": "react",
+        "reactjs": "react",
+        "nextjs": "next.js",
+        "k8s": "kubernetes",
+        "ts": "typescript",
+        "js": "javascript",
+    }
+    return aliases.get(s, s)
+
+def _skills_match(r_skill: str, j_skill: str) -> bool:
+    r = _normalize_skill(r_skill)
+    j = _normalize_skill(j_skill)
+    if r == j:
+        return True
+    if "react" in r and "react" in j:
+        return True
+    if (r in j and len(r) >= 5) or (j in r and len(j) >= 5):
+        return True
+    return False
+
 def compare_resume_to_jd(resume: ResumeSchema, jd: JDSchema) -> ComparisonResultSchema:
     """
     Deterministic Skill Gap Analysis & Weighted Deficit Resistance Model (E2, E3, E4).
     Categorizes skills into Critical (weight=3.0) and Optional (weight=1.0).
     Segments candidate into Job-Ready (>=85%), Bridgeable (60-84%), or Mismatch (<60%).
     """
-    # Convert lists to sets with lowercasing for case-insensitive comparison
-    resume_skills_set = {skill.strip().lower() for skill in resume.skills if skill.strip()}
-    jd_mandatory_set = {skill.strip().lower() for skill in jd.mandatory_skills if skill.strip()}
-    jd_nice_to_have_set = {skill.strip().lower() for skill in jd.nice_to_have_skills if skill.strip()}
-    jd_all_skills_set = jd_mandatory_set.union(jd_nice_to_have_set)
+    # Clean inputs
+    resume_skills = [s.strip() for s in resume.skills if s.strip()]
+    jd_mandatory = [s.strip() for s in jd.mandatory_skills if s.strip()]
+    jd_nice = [s.strip() for s in jd.nice_to_have_skills if s.strip()]
     
-    # Create mapping to return original casing based on the input words
-    resume_skill_map = {skill.strip().lower(): skill.strip() for skill in resume.skills if skill.strip()}
-    jd_mandatory_map = {skill.strip().lower(): skill.strip() for skill in jd.mandatory_skills if skill.strip()}
-    jd_nice_map = {skill.strip().lower(): skill.strip() for skill in jd.nice_to_have_skills if skill.strip()}
-    
-    matched_lower = resume_skills_set.intersection(jd_mandatory_set)
-    missing_lower = jd_mandatory_set.difference(resume_skills_set)
-    bonus_lower = resume_skills_set.difference(jd_all_skills_set)
-    
-    # Map back to original casing
-    matched_skills = [jd_mandatory_map[s] for s in matched_lower]
-    missing_skills = [jd_mandatory_map[s] for s in missing_lower]
-    bonus_skills = [resume_skill_map[s] for s in bonus_lower]
+    # 1. Match Mandatory Skills
+    matched_skills = []
+    missing_skills = []
+    for j_req in jd_mandatory:
+        matched = False
+        for r_sk in resume_skills:
+            if _skills_match(r_sk, j_req):
+                matched = True
+                matched_skills.append(j_req)
+                break
+        if not matched:
+            missing_skills.append(j_req)
+            
+    # 2. Match Nice-to-Have Skills
+    matched_nice_count = 0
+    for j_opt in jd_nice:
+        for r_sk in resume_skills:
+            if _skills_match(r_sk, j_opt):
+                matched_nice_count += 1
+                break
+                
+    # 3. Bonus Skills (Candidate skills that do not match mandatory or optional)
+    bonus_skills = []
+    all_jd_skills = jd_mandatory + jd_nice
+    for r_sk in resume_skills:
+        if not any(_skills_match(r_sk, j) for j in all_jd_skills):
+            bonus_skills.append(r_sk)
     
     # Weighted Score calculation (E2: Critical weight=3.0 (80%), Optional weight=1.0 (20%))
     mandatory_score = 0.0
-    if jd_mandatory_set:
-        mandatory_score = (len(matched_lower) / len(jd_mandatory_set)) * 80.0
+    if jd_mandatory:
+        mandatory_score = (len(matched_skills) / len(jd_mandatory)) * 80.0
     else:
         mandatory_score = 80.0 # If no mandatory skills specified, award full baseline
         
-    nice_to_have_matched = resume_skills_set.intersection(jd_nice_to_have_set)
     nice_to_have_score = 0.0
-    if jd_nice_to_have_set:
-        nice_to_have_score = (len(nice_to_have_matched) / len(jd_nice_to_have_set)) * 20.0
+    if jd_nice:
+        nice_to_have_score = (matched_nice_count / len(jd_nice)) * 20.0
     else:
         nice_to_have_score = 20.0 # Full points if no nice to have
         

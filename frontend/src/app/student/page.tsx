@@ -10,6 +10,7 @@ import SprintModal from "@/components/student/SprintModal";
 import ResumeUploadDrawer from "@/components/student/ResumeUploadDrawer";
 import SkillVerificationModal from "@/components/student/SkillVerificationModal";
 import ATSResumeManagerModal from "@/components/student/ATSResumeManagerModal";
+import DynamicSandboxModal from "@/components/student/DynamicSandboxModal";
 import {
   GraduationCap,
   UploadCloud,
@@ -22,6 +23,7 @@ import {
   Award,
   FileText,
   Clock,
+  Terminal,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -32,6 +34,7 @@ export default function StudentPage() {
   const [isResumeDrawerOpen, setIsResumeDrawerOpen] = useState(false);
   const [isVerificationModalOpen, setIsVerificationModalOpen] = useState(false);
   const [isATSResumeModalOpen, setIsATSResumeModalOpen] = useState(false);
+  const [isSandboxModalOpen, setIsSandboxModalOpen] = useState(false);
   const [verificationSkillId, setVerificationSkillId] = useState("postgresql");
   const [verificationSkillName, setVerificationSkillName] = useState("PostgreSQL Optimization & Architecture");
 
@@ -101,6 +104,16 @@ export default function StudentPage() {
           >
             <FileText className="w-4 h-4" />
             <span>ATS Resume Studio (FR-02)</span>
+          </button>
+
+          {/* Dynamic Bug-Fixer Sandbox Engine */}
+          <button
+            id="btn-open-dynamic-sandbox"
+            onClick={() => setIsSandboxModalOpen(true)}
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold bg-gradient-to-r from-purple-500 via-indigo-600 to-blue-600 hover:from-purple-400 hover:to-blue-500 text-white shadow-lg shadow-indigo-950/40 transition-all border border-indigo-400/40"
+          >
+            <Terminal className="w-4 h-4 text-emerald-300" />
+            <span>⚡ Bug-Fix Sandbox</span>
           </button>
 
           <button
@@ -273,6 +286,13 @@ export default function StudentPage() {
 
       {isResumeDrawerOpen && (
         <ResumeUploadDrawer onClose={() => setIsResumeDrawerOpen(false)} />
+      )}
+
+      {isSandboxModalOpen && (
+        <DynamicSandboxModal
+          isOpen={isSandboxModalOpen}
+          onClose={() => setIsSandboxModalOpen(false)}
+        />
       )}
     </div>
   );

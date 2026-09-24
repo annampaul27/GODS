@@ -34,6 +34,8 @@ ENV/
 htmlcov/
 chroma_db/
 */chroma_db/
+*.db
+*.sqlite3
 
 # Environment variables & secrets
 .env

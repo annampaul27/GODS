@@ -25,6 +25,7 @@ app.add_middleware(
 
 from app.api.v1.assessments import router as assessments_router
 from app.api.v1.resume import router as resume_router
+from app.api.v1.sandbox import router as sandbox_router
 from app.db.database import init_db
 
 # Mount API V1 Routers
@@ -38,6 +39,8 @@ app.include_router(
 )
 app.include_router(assessments_router, prefix=settings.API_V1_STR)
 app.include_router(resume_router, prefix=settings.API_V1_STR)
+app.include_router(sandbox_router, prefix=settings.API_V1_STR)
+app.include_router(sandbox_router, prefix="/api")
 
 @app.on_event("startup")
 async def on_startup():
