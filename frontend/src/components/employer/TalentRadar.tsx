@@ -7,6 +7,7 @@ import {
   Radar,
   Sparkles,
   Zap,
+  Shield,
   ShieldCheck,
   AlertTriangle,
   XCircle,
@@ -14,6 +15,10 @@ import {
   Send,
   ArrowRight,
   TrendingUp,
+  Eye,
+  EyeOff,
+  Check,
+  Mail,
 } from "lucide-react";
 
 interface TalentRadarProps {
@@ -27,7 +32,15 @@ export default function TalentRadar({
   onSelectCandidate,
   onAuditCredential,
 }: TalentRadarProps) {
-  const { isAnonymizedScreening, dispatchGapSprint, completeGapSprint, activeJob } = useStore();
+  const {
+    isAnonymizedScreening,
+    setIsAnonymizedScreening,
+    addToast,
+    dispatchGapSprint,
+    completeGapSprint,
+    updateCandidatePipelineStatus,
+    activeJob,
+  } = useStore();
   const [selectedTier, setSelectedTier] = useState<ReadinessTier | "all" | "bridgeable_only">("all");
 
   const jobReadyList = candidates.filter((c) => c.currentTier === "job_ready");
@@ -40,6 +53,26 @@ export default function TalentRadar({
       return c.currentTier === "bridgeable" && c.missingCompetencies.length <= 2;
     return c.currentTier === selectedTier;
   });
+
+  const handleToggleBlindScreening = () => {
+    const nextVal = !isAnonymizedScreening;
+    setIsAnonymizedScreening(nextVal);
+    if (nextVal) {
+      addToast({
+        type: "info",
+        title: "Blind Merit Screening Activated",
+        message:
+          "Candidate names, photos, and colleges are now anonymized to eliminate pedigree bias.",
+      });
+    } else {
+      addToast({
+        type: "info",
+        title: "Blind Merit Screening Deactivated",
+        message:
+          "Candidate names, photos, and colleges are now visible.",
+      });
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -98,8 +131,8 @@ export default function TalentRadar({
         </div>
       </div>
 
-      {/* Filter and Radar Controls (E4, E5) */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-2xl glass-panel border-slate-800">
+      {/* Filter and Radar Controls (E4, E5, Blind Merit Screening) */}
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 p-4 rounded-2xl glass-panel border-slate-800">
         <div className="flex items-center gap-2">
           <Filter className="w-4 h-4 text-slate-400" />
           <span className="text-xs font-semibold uppercase tracking-wider text-slate-300 font-mono">
@@ -107,56 +140,97 @@ export default function TalentRadar({
           </span>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center gap-3">
+          <div className="flex flex-wrap items-center gap-2">
+            <button
+              onClick={() => setSelectedTier("all")}
+              className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-all ${
+                selectedTier === "all"
+                  ? "bg-slate-700 text-white border border-slate-600 shadow"
+                  : "bg-slate-900/80 text-slate-400 hover:text-slate-200 border border-slate-800"
+              }`}
+            >
+              All Applicants ({candidates.length})
+            </button>
+            <button
+              onClick={() => setSelectedTier("job_ready")}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium transition-all ${
+                selectedTier === "job_ready"
+                  ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/50 shadow-sm shadow-emerald-500/10"
+                  : "bg-slate-900/80 text-slate-400 hover:text-emerald-300 border border-slate-800"
+              }`}
+            >
+              <span className="w-2 h-2 rounded-full bg-emerald-400" />
+              Job-Ready ({jobReadyList.length})
+            </button>
+            <button
+              onClick={() => setSelectedTier("bridgeable_only")}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium transition-all ${
+                selectedTier === "bridgeable_only"
+                  ? "bg-amber-500/25 text-amber-200 border border-amber-500/60 shadow-md shadow-amber-500/20"
+                  : "bg-slate-900/80 text-amber-400 hover:text-amber-200 border border-slate-800"
+              }`}
+              title="E5: Dedicated Bridgeable Candidates diagnostic filter isolating applicants missing 1-2 competencies"
+            >
+              <Zap className="w-3.5 h-3.5 text-amber-400" />
+              <span className="font-semibold">Bridgeable Diagnostic Filter (E5)</span>
+              <span className="text-[10px] font-mono px-1.5 py-0.2 bg-amber-950/80 rounded border border-amber-800/80 text-amber-300">
+                {bridgeableList.length}
+              </span>
+            </button>
+            <button
+              onClick={() => setSelectedTier("mismatch")}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium transition-all ${
+                selectedTier === "mismatch"
+                  ? "bg-red-500/20 text-red-300 border border-red-500/50"
+                  : "bg-slate-900/80 text-slate-400 hover:text-slate-200 border border-slate-800"
+              }`}
+            >
+              <span className="w-2 h-2 rounded-full bg-red-400" />
+              Mismatch ({mismatchList.length})
+            </button>
+          </div>
+
+          <div className="h-5 w-px bg-slate-800 hidden sm:block" />
+
+          {/* Prominent Blind DEI / Merit-First Screening Toggle */}
           <button
-            onClick={() => setSelectedTier("all")}
-            className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-all ${
-              selectedTier === "all"
-                ? "bg-slate-700 text-white border border-slate-600 shadow"
-                : "bg-slate-900/80 text-slate-400 hover:text-slate-200 border border-slate-800"
+            id="btn-blind-merit-screening-toggle"
+            onClick={handleToggleBlindScreening}
+            className={`cursor-pointer transition-all flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs ${
+              isAnonymizedScreening
+                ? "bg-cyan-950/80 border border-cyan-500/60 text-cyan-300 shadow-lg shadow-cyan-950/50 font-bold"
+                : "bg-slate-900/80 border border-slate-700 text-slate-400 hover:text-white font-medium"
             }`}
+            title="Toggle Blind DEI / Merit-First Candidate Evaluation"
           >
-            All Applicants ({candidates.length})
-          </button>
-          <button
-            onClick={() => setSelectedTier("job_ready")}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium transition-all ${
-              selectedTier === "job_ready"
-                ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/50 shadow-sm shadow-emerald-500/10"
-                : "bg-slate-900/80 text-slate-400 hover:text-emerald-300 border border-slate-800"
-            }`}
-          >
-            <span className="w-2 h-2 rounded-full bg-emerald-400" />
-            Job-Ready ({jobReadyList.length})
-          </button>
-          <button
-            onClick={() => setSelectedTier("bridgeable_only")}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium transition-all ${
-              selectedTier === "bridgeable_only"
-                ? "bg-amber-500/25 text-amber-200 border border-amber-500/60 shadow-md shadow-amber-500/20"
-                : "bg-slate-900/80 text-amber-400 hover:text-amber-200 border border-slate-800"
-            }`}
-            title="E5: Dedicated Bridgeable Candidates diagnostic filter isolating applicants missing 1-2 competencies"
-          >
-            <Zap className="w-3.5 h-3.5 text-amber-400" />
-            <span className="font-semibold">Bridgeable Diagnostic Filter (E5)</span>
-            <span className="text-[10px] font-mono px-1.5 py-0.2 bg-amber-950/80 rounded border border-amber-800/80 text-amber-300">
-              {bridgeableList.length}
-            </span>
-          </button>
-          <button
-            onClick={() => setSelectedTier("mismatch")}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium transition-all ${
-              selectedTier === "mismatch"
-                ? "bg-red-500/20 text-red-300 border border-red-500/50"
-                : "bg-slate-900/80 text-slate-400 hover:text-slate-200 border border-slate-800"
-            }`}
-          >
-            <span className="w-2 h-2 rounded-full bg-red-400" />
-            Mismatch ({mismatchList.length})
+            {isAnonymizedScreening ? (
+              <>
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <Shield className="w-3.5 h-3.5 text-cyan-400" />
+                <span>Blind Merit Screening: ACTIVE</span>
+              </>
+            ) : (
+              <>
+                <Eye className="w-3.5 h-3.5 text-slate-400" />
+                <span>Blind Merit Screening: OFF</span>
+              </>
+            )}
           </button>
         </div>
       </div>
+
+      {/* Contextual Explanatory Banner (When Active) */}
+      {isAnonymizedScreening && (
+        <div className="p-4 rounded-2xl border border-cyan-500/30 bg-gradient-to-r from-cyan-950/40 via-slate-900/60 to-cyan-950/30 flex items-center gap-3.5 text-xs text-cyan-200 shadow-lg shadow-cyan-950/30 animate-in fade-in duration-300">
+          <div className="w-8 h-8 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 shrink-0">
+            <Shield className="w-4 h-4" />
+          </div>
+          <p className="leading-relaxed">
+            <strong className="text-cyan-300 font-semibold">🛡️ Blind Merit Mode Active:</strong> Institutional pedigree and demographic identifiers are hidden. Candidate ranking is driven purely by ChromaDB semantic similarity and cryptographically verified proof-of-work badges.
+          </p>
+        </div>
+      )}
 
       {/* Bridgeable Diagnostic Filter Callout Banner (E5) */}
       {selectedTier === "bridgeable_only" && (
@@ -189,10 +263,10 @@ export default function TalentRadar({
           const isJobReady = candidate.currentTier === "job_ready";
           const isBridgeable = candidate.currentTier === "bridgeable";
           const displayName = isAnonymizedScreening
-            ? candidate.anonymizedId
+            ? `Candidate #${candidate.id.slice(-4).toUpperCase()}`
             : candidate.fullName;
           const displayCollege = isAnonymizedScreening
-            ? candidate.anonymizedCollege
+            ? "Accredited Institution (Tier-Agnostic)"
             : candidate.college;
 
           return (
@@ -211,14 +285,14 @@ export default function TalentRadar({
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex items-center gap-3">
                     {isAnonymizedScreening ? (
-                      <div className="w-10 h-10 rounded-xl bg-slate-800/80 border border-slate-700 flex items-center justify-center font-mono text-cyan-400 font-bold text-xs">
-                        {candidate.anonymizedId.replace("Candidate #", "#")}
+                      <div className="w-12 h-12 rounded-xl bg-cyan-950/60 border border-cyan-500/40 flex items-center justify-center shrink-0 shadow-sm shadow-cyan-950/50">
+                        <Shield className="w-8 h-8 text-cyan-400" />
                       </div>
                     ) : (
                       <img
                         src={candidate.avatarUrl}
                         alt={candidate.fullName}
-                        className="w-10 h-10 rounded-xl object-cover border border-slate-700"
+                        className="w-12 h-12 rounded-xl object-cover border border-slate-700 shrink-0"
                       />
                     )}
                     <div>
@@ -277,26 +351,29 @@ export default function TalentRadar({
                   </div>
                 </div>
 
-                {/* Verified Credentials Pills (E7) */}
+                {/* Verified Credentials Pills (E7) - Always 100% visible & highlighted */}
                 <div className="mt-3.5 space-y-1.5">
                   <span className="text-[10px] uppercase font-mono text-slate-400 font-semibold block">
                     Cryptographic Proofs ({candidate.credentials.length})
                   </span>
                   <div className="flex flex-wrap gap-1.5">
                     {candidate.credentials.length > 0 ? (
-                      candidate.credentials.map((cred) => (
-                        <button
-                          key={cred.hash}
-                          onClick={() => onAuditCredential(cred, candidate)}
-                          className="flex items-center gap-1 px-2 py-0.5 rounded-md bg-cyan-950/80 text-cyan-300 border border-cyan-800/60 hover:bg-cyan-900 text-[10px] font-mono transition-colors"
-                          title="Click to inspect SHA-256 cryptographic audit modal"
-                        >
-                          <ShieldCheck className="w-3 h-3 text-cyan-400" />
-                          <span>{cred.skillName.split(" ")[0]} ({cred.score}%)</span>
-                        </button>
-                      ))
+                      candidate.credentials.map((cred) => {
+                        const tier = cred.score >= 90 ? "Platinum" : cred.score >= 80 ? "Gold" : "Silver";
+                        return (
+                          <button
+                            key={cred.hash}
+                            onClick={() => onAuditCredential(cred, candidate)}
+                            className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-cyan-950/80 text-cyan-300 border border-cyan-500/40 hover:bg-cyan-900/80 text-[10px] font-mono font-semibold transition-all shadow-sm shadow-cyan-950/40"
+                            title="Click to inspect SHA-256 cryptographic audit modal"
+                          >
+                            <ShieldCheck className="w-3.5 h-3.5 text-cyan-400" />
+                            <span>✔ {cred.skillName.split(" ")[0]} Verified - {tier}</span>
+                          </button>
+                        );
+                      })
                     ) : (
-                      <span className="text-[10px] text-slate-500 italic">
+                      <span className="text-[10px] text-slate-500 italic font-mono">
                         No cryptographic proofs minted yet
                       </span>
                     )}
@@ -309,9 +386,16 @@ export default function TalentRadar({
                     <span className="text-[10px] font-mono uppercase text-amber-400 font-semibold block mb-1">
                       Delta: Missing {candidate.missingCompetencies.length} Competency
                     </span>
-                    <p className="text-[11px] text-slate-300">
-                      {candidate.missingCompetencies.join(", ")}
-                    </p>
+                    <div className="flex flex-wrap gap-1.5 mt-1">
+                      {candidate.missingCompetencies.map((skill, idx) => (
+                        <span
+                          key={idx}
+                          className="px-2 py-0.5 rounded bg-amber-950/80 border border-amber-800/60 text-amber-300 text-[10px] font-mono"
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 )}
 
@@ -330,12 +414,39 @@ export default function TalentRadar({
 
               {/* Card Actions (E6, E9, E10) */}
               <div className="mt-4 pt-3 border-t border-slate-800/80 flex flex-wrap items-center justify-between gap-2">
-                <button
-                  onClick={() => onSelectCandidate(candidate)}
-                  className="text-xs text-slate-400 hover:text-cyan-300 font-medium flex items-center gap-1 transition-colors"
-                >
-                  Inspect Profile <ArrowRight className="w-3 h-3" />
-                </button>
+                <div className="flex items-center gap-1.5">
+                  {candidate.credentials.length > 0 ? (
+                    <button
+                      onClick={() => onAuditCredential(candidate.credentials[0], candidate)}
+                      className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-cyan-950/80 hover:bg-cyan-900/80 text-cyan-300 border border-cyan-800/60 text-[11px] font-mono font-medium transition-colors"
+                      title="Inspect cryptographic proof audit"
+                    >
+                      <span>🔍 Audit Proof</span>
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => onSelectCandidate(candidate)}
+                      className="text-xs text-slate-400 hover:text-cyan-300 font-medium flex items-center gap-1 transition-colors"
+                    >
+                      Inspect Profile <ArrowRight className="w-3 h-3" />
+                    </button>
+                  )}
+
+                  <button
+                    onClick={() => {
+                      updateCandidatePipelineStatus(candidate.id, "shortlisted", "Recruiter Shortlist Action");
+                    }}
+                    className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold transition-all border ${
+                      candidate.pipelineStatus === "shortlisted"
+                        ? "bg-purple-950/80 text-purple-300 border-purple-800/70"
+                        : "bg-slate-900 hover:bg-purple-950/50 text-slate-300 hover:text-purple-300 border-slate-800"
+                    }`}
+                    title="Shortlist candidate"
+                  >
+                    <Mail className="w-3 h-3" />
+                    <span>{candidate.pipelineStatus === "shortlisted" ? "Shortlisted ✓" : "✉ Shortlist"}</span>
+                  </button>
+                </div>
 
                 {/* E6 & E9 Gap Sprint Handling */}
                 {candidate.sprintAssigned?.status === "pending" ? (
@@ -360,7 +471,7 @@ export default function TalentRadar({
                   </div>
                 ) : candidate.sprintAssigned?.status === "passed" ? (
                   <span className="text-[11px] font-mono text-emerald-400 font-semibold flex items-center gap-1 px-2.5 py-1 rounded-lg bg-emerald-500/15 border border-emerald-500/30">
-                    <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" /> Gap Closed & Elevated (E9)
+                    <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" /> Gap Closed &amp; Elevated (E9)
                   </span>
                 ) : isBridgeable ? (
                   <button
@@ -371,11 +482,11 @@ export default function TalentRadar({
                         candidate.missingCompetencies[0] || "PostgreSQL Indexing & Optimization"
                       )
                     }
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/50 text-[11px] font-semibold transition-all shadow-sm shadow-amber-500/10 hover:scale-[1.02]"
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gradient-to-r from-amber-500/30 to-amber-600/30 hover:from-amber-500/40 hover:to-amber-600/40 text-amber-200 border border-amber-500/60 text-[11px] font-bold transition-all shadow-md shadow-amber-500/20 hover:scale-[1.02]"
                     title="E6: Trigger automated targeted challenge invitation to close skill delta"
                   >
-                    <Send className="w-3 h-3" />
-                    <span>1-Click Sprint (E6)</span>
+                    <Zap className="w-3 h-3 text-amber-400" />
+                    <span>⚡ Dispatch Sprint</span>
                   </button>
                 ) : isJobReady ? (
                   <span className="text-[10px] font-mono text-emerald-400 font-semibold flex items-center gap-1">

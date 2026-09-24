@@ -17,6 +17,7 @@ import {
   Users,
   Eye,
   EyeOff,
+  Shield,
   Share2,
   Check,
 } from "lucide-react";
@@ -89,22 +90,42 @@ export default function EmployerPage() {
         <div className="flex flex-wrap items-center gap-3">
           {/* Anonymized Screening Toggle (E17) */}
           <button
-            onClick={() => setIsAnonymizedScreening(!isAnonymizedScreening)}
-            className={`flex items-center gap-2 px-3.5 py-2 rounded-xl border text-xs font-semibold transition-all ${
+            id="btn-blind-merit-screening-toggle-top"
+            onClick={() => {
+              const nextVal = !isAnonymizedScreening;
+              setIsAnonymizedScreening(nextVal);
+              if (nextVal) {
+                addToast({
+                  type: "info",
+                  title: "Blind Merit Screening Activated",
+                  message:
+                    "Candidate names, photos, and colleges are now anonymized to eliminate pedigree bias.",
+                });
+              } else {
+                addToast({
+                  type: "info",
+                  title: "Blind Merit Screening Deactivated",
+                  message: "Candidate identities and institutions are now visible.",
+                });
+              }
+            }}
+            className={`transition-all flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs cursor-pointer ${
               isAnonymizedScreening
-                ? "bg-amber-500/20 border-amber-500/50 text-amber-300 shadow-md shadow-amber-500/10"
-                : "bg-slate-900 border-slate-800 text-slate-300 hover:text-white"
+                ? "bg-cyan-950/80 border border-cyan-500/60 text-cyan-300 shadow-lg shadow-cyan-950/50 font-bold"
+                : "bg-slate-900/80 border border-slate-700 text-slate-400 hover:text-white font-medium"
             }`}
+            title="Toggle Blind DEI / Merit-First Candidate Evaluation"
           >
             {isAnonymizedScreening ? (
               <>
-                <EyeOff className="w-4 h-4 text-amber-400" />
-                <span>Blind Mode: ON (E17)</span>
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <Shield className="w-3.5 h-3.5 text-cyan-400" />
+                <span>Blind Merit Screening: ACTIVE</span>
               </>
             ) : (
               <>
-                <Eye className="w-4 h-4" />
-                <span>Blind Mode: OFF</span>
+                <Eye className="w-3.5 h-3.5 text-slate-400" />
+                <span>Blind Merit Screening: OFF</span>
               </>
             )}
           </button>
