@@ -27,7 +27,7 @@ export default function TalentRadar({
   onSelectCandidate,
   onAuditCredential,
 }: TalentRadarProps) {
-  const { isAnonymizedScreening, dispatchGapSprint, activeJob } = useStore();
+  const { isAnonymizedScreening, dispatchGapSprint, completeGapSprint, activeJob } = useStore();
   const [selectedTier, setSelectedTier] = useState<ReadinessTier | "all" | "bridgeable_only">("all");
 
   const jobReadyList = candidates.filter((c) => c.currentTier === "job_ready");
@@ -157,6 +157,31 @@ export default function TalentRadar({
           </button>
         </div>
       </div>
+
+      {/* Bridgeable Diagnostic Filter Callout Banner (E5) */}
+      {selectedTier === "bridgeable_only" && (
+        <div className="p-4 rounded-2xl bg-gradient-to-r from-amber-950/40 via-slate-900 to-amber-950/20 border border-amber-500/50 flex flex-col sm:flex-row sm:items-center justify-between gap-4 animate-in fade-in duration-300">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-300 shrink-0">
+              <Zap className="w-5 h-5" />
+            </div>
+            <div>
+              <h4 className="text-xs font-bold text-amber-200 flex items-center gap-2">
+                Bridgeable Diagnostic Wedge (E5)
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-amber-950 text-amber-300 border border-amber-800">
+                  {bridgeableList.length} High-Potential Candidates
+                </span>
+              </h4>
+              <p className="text-[11px] text-slate-300 mt-0.5">
+                These candidates are missing only 1 to 2 discrete skills. Dispatch a 1-Click Gap Sprint (E6) to close the delta; passing elevates them to Job-Ready in real-time (E9).
+              </p>
+            </div>
+          </div>
+          <span className="text-[11px] font-mono text-amber-300 bg-amber-950/90 px-3 py-1.5 rounded-xl border border-amber-800/80 font-semibold self-start sm:self-auto shrink-0">
+            ⚡ Quickest Reqs To Fill
+          </span>
+        </div>
+      )}
 
       {/* Candidate Grid (E3, E4, E6) */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -289,10 +314,22 @@ export default function TalentRadar({
                     </p>
                   </div>
                 )}
+
+                {/* In-Flight Gap Sprint Status (E6) */}
+                {candidate.sprintAssigned?.status === "pending" && (
+                  <div className="mt-2.5 p-2 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-between">
+                    <span className="text-[10px] font-mono text-amber-300 flex items-center gap-1.5 truncate">
+                      <Zap className="w-3 h-3 text-amber-400 animate-pulse shrink-0" /> Sprint In Flight: {candidate.sprintAssigned.skillName}
+                    </span>
+                    <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-amber-950 text-amber-400 border border-amber-800 shrink-0">
+                      E6 Dispatched
+                    </span>
+                  </div>
+                )}
               </div>
 
-              {/* Card Actions (E6, E10) */}
-              <div className="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between gap-2">
+              {/* Card Actions (E6, E9, E10) */}
+              <div className="mt-4 pt-3 border-t border-slate-800/80 flex flex-wrap items-center justify-between gap-2">
                 <button
                   onClick={() => onSelectCandidate(candidate)}
                   className="text-xs text-slate-400 hover:text-cyan-300 font-medium flex items-center gap-1 transition-colors"
@@ -300,28 +337,51 @@ export default function TalentRadar({
                   Inspect Profile <ArrowRight className="w-3 h-3" />
                 </button>
 
-                {isBridgeable && (
+                {/* E6 & E9 Gap Sprint Handling */}
+                {candidate.sprintAssigned?.status === "pending" ? (
+                  <div className="flex items-center gap-2">
+                    <span className="flex items-center gap-1 text-[10px] font-mono px-2 py-1 rounded-md bg-amber-500/20 text-amber-300 border border-amber-500/40 animate-pulse">
+                      <Zap className="w-3 h-3 text-amber-400" /> Sprint Sent (E6)
+                    </span>
+                    <button
+                      onClick={() =>
+                        completeGapSprint(
+                          candidate.id,
+                          candidate.sprintAssigned?.skillId || "postgres_optimization",
+                          94
+                        )
+                      }
+                      className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-emerald-500/25 hover:bg-emerald-500/35 text-emerald-200 border border-emerald-500/50 text-[11px] font-bold transition-all shadow-sm shadow-emerald-500/20 hover:scale-[1.02]"
+                      title="E9: Simulate candidate passing targeted 10-min challenge & elevate to Job-Ready"
+                    >
+                      <Sparkles className="w-3 h-3 text-emerald-300" />
+                      <span>Simulate Pass (E9)</span>
+                    </button>
+                  </div>
+                ) : candidate.sprintAssigned?.status === "passed" ? (
+                  <span className="text-[11px] font-mono text-emerald-400 font-semibold flex items-center gap-1 px-2.5 py-1 rounded-lg bg-emerald-500/15 border border-emerald-500/30">
+                    <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" /> Gap Closed & Elevated (E9)
+                  </span>
+                ) : isBridgeable ? (
                   <button
                     onClick={() =>
                       dispatchGapSprint(
                         candidate.id,
-                        "postgres_optimization",
-                        candidate.missingCompetencies[0] || "Target Skill"
+                        candidate.missingCompetencies[0]?.toLowerCase().replace(/\s+/g, "_") || "postgres_optimization",
+                        candidate.missingCompetencies[0] || "PostgreSQL Indexing & Optimization"
                       )
                     }
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/50 text-[11px] font-semibold transition-all shadow-sm shadow-amber-500/10"
-                    title="E6: Trigger automated targeted challenge invitation"
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/50 text-[11px] font-semibold transition-all shadow-sm shadow-amber-500/10 hover:scale-[1.02]"
+                    title="E6: Trigger automated targeted challenge invitation to close skill delta"
                   >
                     <Send className="w-3 h-3" />
                     <span>1-Click Sprint (E6)</span>
                   </button>
-                )}
-
-                {isJobReady && (
+                ) : isJobReady ? (
                   <span className="text-[10px] font-mono text-emerald-400 font-semibold flex items-center gap-1">
                     <ShieldCheck className="w-3.5 h-3.5" /> High Readiness
                   </span>
-                )}
+                ) : null}
               </div>
             </div>
           );

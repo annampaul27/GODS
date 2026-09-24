@@ -45,7 +45,8 @@ interface StoreContextType {
   candidates: Candidate[];
   isAnonymizedScreening: boolean;
   setIsAnonymizedScreening: (val: boolean) => void;
-  dispatchGapSprint: (candidateId: string, skillId: string, skillName: string) => void;
+  dispatchGapSprint: (candidateId: string, skillId: string, skillName: string) => Promise<void>;
+  completeGapSprint: (candidateId: string, skillId: string, score?: number) => Promise<void>;
   updateCandidatePipelineStatus: (
     candidateId: string,
     newStatus: Candidate["pipelineStatus"],
@@ -209,7 +210,29 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     });
   };
 
-  const dispatchGapSprint = (candidateId: string, skillId: string, skillName: string) => {
+  const dispatchGapSprint = async (candidateId: string, skillId: string, skillName: string) => {
+    const cand = candidates.find((c) => c.id === candidateId);
+    if (!cand) return;
+
+    // Call FastAPI Sprint Dispatch API (E6)
+    try {
+      await fetch("http://localhost:8000/api/v1/sprints/dispatch", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          candidate_id: candidateId,
+          candidate_name: cand.fullName,
+          candidate_email: cand.email,
+          skill_id: skillId,
+          skill_name: skillName,
+          org_id: currentOrg.id,
+          job_id: activeJobId,
+        }),
+      });
+    } catch (err) {
+      console.warn("Backend offline, dispatching via local state (NF2):", err);
+    }
+
     setCandidates((prev) =>
       prev.map((c) => {
         if (c.id !== candidateId) return c;
@@ -225,13 +248,163 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       })
     );
 
-    const cand = candidates.find((c) => c.id === candidateId);
     addToast({
       type: "info",
-      title: "1-Click Gap Sprint Dispatched",
-      message: `Sent targeted challenge invitation for "${skillName}" to ${
-        isAnonymizedScreening ? cand?.anonymizedId : cand?.fullName
-      }.`,
+      title: "1-Click Gap Sprint Dispatched (E6)",
+      message: `Sent targeted 10-min challenge for "${skillName}" to ${
+        isAnonymizedScreening ? cand.anonymizedId : cand.fullName
+      }. Real-time score elevation triggers when passed (E9).`,
+    });
+  };
+
+  const completeGapSprint = async (
+    candidateId: string,
+    skillId: string,
+    customScore?: number
+  ) => {
+    const cand = candidates.find((c) => c.id === candidateId);
+    if (!cand) return;
+
+    const skillName =
+      cand.sprintAssigned?.skillName ||
+      cand.missingCompetencies[0] ||
+      "Target Competency";
+    const score = customScore || 92;
+
+    let hash = "";
+    let boostedScore = 92;
+    let newTier: ReadinessTier = "job_ready";
+
+    // Call FastAPI Sprint Complete API (E9)
+    try {
+      const res = await fetch("http://localhost:8000/api/v1/sprints/complete", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          candidate_id: candidateId,
+          candidate_name: cand.fullName,
+          candidate_email: cand.email,
+          skill_id: skillId,
+          skill_name: skillName,
+          score: score,
+        }),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        hash = data.credential_hash;
+        boostedScore = data.boosted_score;
+        newTier = data.new_tier as ReadinessTier;
+      }
+    } catch (err) {
+      console.warn("Backend offline, calculating liquidity locally (NF2):", err);
+    }
+
+    if (!hash) {
+      const canonicalPayload = canonicalizeJSON({
+        candidateEmail: cand.email,
+        candidateId: cand.id,
+        issuedAt: new Date().toISOString(),
+        score,
+        skillId,
+      });
+      hash = await computeSHA256(canonicalPayload);
+    }
+
+    const issuedAt = new Date().toISOString();
+    const newCred: ProofOfWorkCredential = {
+      hash,
+      candidateId: cand.id,
+      candidateName: cand.fullName,
+      candidateEmail: cand.email,
+      skillId,
+      skillName,
+      score,
+      passedQuestions: 3,
+      totalQuestions: 3,
+      issuedAt,
+      issuerOrg: "SkillSetu Trust Engine",
+      isSponsored: false,
+      canonicalPayload: hash,
+      answersLog: [
+        {
+          questionId: "q-1",
+          question: `Production verification challenge on ${skillName}`,
+          selectedOption: "Selected verified industrial answer.",
+          isCorrect: true,
+          timeSpentSeconds: 45,
+        },
+      ],
+      antiCheatAudit: {
+        tabBlurEvents: 0,
+        flagged: false,
+      },
+    };
+
+    setCredentials((prev) => [newCred, ...prev]);
+
+    // Real-Time Pipeline Liquidity Update (E9)
+    setCandidates((prev) => {
+      const updated = prev.map((c) => {
+        if (c.id !== candidateId) return c;
+
+        const updatedSkills = c.skills.map((s) => {
+          if (s.skillId === skillId) {
+            return {
+              ...s,
+              isVerified: true,
+              credentialHash: hash,
+              verifiedAt: issuedAt.split("T")[0],
+              score,
+            };
+          }
+          return s;
+        });
+
+        const exists = updatedSkills.some((s) => s.skillId === skillId);
+        if (!exists) {
+          updatedSkills.push({
+            skillId,
+            skillName,
+            category: "backend",
+            level: "Advanced",
+            isVerified: true,
+            credentialHash: hash,
+            verifiedAt: issuedAt.split("T")[0],
+            score,
+          });
+        }
+
+        const updatedMissing = c.missingCompetencies.filter(
+          (m) => m.toLowerCase() !== skillName.toLowerCase()
+        );
+
+        return {
+          ...c,
+          skills: updatedSkills,
+          missingCompetencies: updatedMissing,
+          readinessScore: boostedScore,
+          currentTier: newTier,
+          credentials: [newCred, ...c.credentials],
+          sprintAssigned: {
+            skillId,
+            skillName,
+            dispatchedAt: c.sprintAssigned?.dispatchedAt || new Date().toLocaleString(),
+            status: "passed" as const,
+          },
+        };
+      });
+
+      // Automatically re-sort candidates so elevated candidate floats to top (E3, E9)
+      return [...updated].sort((a, b) => b.readinessScore - a.readinessScore);
+    });
+
+    addToast({
+      type: "credential",
+      title: "Real-Time Talent Liquidity (E9) ⚡",
+      message: `${
+        isAnonymizedScreening ? cand.anonymizedId : cand.fullName
+      } passed "${skillName}" sprint! Readiness boosted to ${boostedScore}% (${newTier.toUpperCase()}). Elevated on recruiter Talent Radar!`,
     });
   };
 
@@ -300,6 +473,22 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     };
 
     setCredentials((prev) => [newCred, ...prev]);
+
+    // Notify backend sprint registry (E9)
+    try {
+      fetch("http://localhost:8000/api/v1/sprints/complete", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          candidate_id: credData.candidateId,
+          candidate_name: credData.candidateName,
+          candidate_email: credData.candidateEmail,
+          skill_id: credData.skillId,
+          skill_name: credData.skillName,
+          score: credData.score,
+        }),
+      }).catch((e) => console.warn("Backend sprint sync offline:", e));
+    } catch (e) {}
 
     // Automatically boost candidate profile (S12, E9)
     setCandidates((prev) =>
@@ -411,6 +600,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         isAnonymizedScreening,
         setIsAnonymizedScreening,
         dispatchGapSprint,
+        completeGapSprint,
         updateCandidatePipelineStatus,
         credentials,
         mintCredential,

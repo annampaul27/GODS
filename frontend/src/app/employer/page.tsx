@@ -209,7 +209,9 @@ export default function EmployerPage() {
       {/* Modals & Drawers */}
       {selectedCandidate && (
         <CandidateDrawer
-          candidate={selectedCandidate}
+          candidate={
+            candidates.find((c) => c.id === selectedCandidate.id) || selectedCandidate
+          }
           onClose={() => setSelectedCandidate(null)}
           onAuditCredential={(cred) => handleAudit(cred, selectedCandidate)}
           onDispatchSprint={(candId, skillId, skillName) => {

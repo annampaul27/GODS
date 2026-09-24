@@ -15,6 +15,8 @@ import {
   GraduationCap,
   Calendar,
   Send,
+  Sparkles,
+  Zap,
 } from "lucide-react";
 
 interface CandidateDrawerProps {
@@ -30,7 +32,7 @@ export default function CandidateDrawer({
   onAuditCredential,
   onDispatchSprint,
 }: CandidateDrawerProps) {
-  const { isAnonymizedScreening } = useStore();
+  const { isAnonymizedScreening, completeGapSprint } = useStore();
 
   const displayName = isAnonymizedScreening ? candidate.anonymizedId : candidate.fullName;
   const displayCollege = isAnonymizedScreening
@@ -133,19 +135,47 @@ export default function CandidateDrawer({
               .
             </p>
             <div className="mt-3">
-              <button
-                onClick={() =>
-                  onDispatchSprint(
-                    candidate.id,
-                    "postgres_optimization",
-                    candidate.missingCompetencies[0]
-                  )
-                }
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/50 text-amber-300 text-xs font-medium transition-all"
-              >
-                <Send className="w-3.5 h-3.5" />
-                <span>Dispatch 1-Click Gap Sprint (E6)</span>
-              </button>
+              {candidate.sprintAssigned?.status === "pending" ? (
+                <div className="flex flex-wrap items-center justify-between gap-3 p-3 rounded-xl bg-amber-500/15 border border-amber-500/40">
+                  <span className="text-xs font-mono text-amber-300 flex items-center gap-1.5">
+                    <Zap className="w-3.5 h-3.5 text-amber-400 animate-pulse shrink-0" />
+                    Sprint Active: {candidate.sprintAssigned.skillName} (E6)
+                  </span>
+                  <button
+                    onClick={() =>
+                      completeGapSprint(
+                        candidate.id,
+                        candidate.sprintAssigned?.skillId || "postgres_optimization",
+                        94
+                      )
+                    }
+                    className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-emerald-500/25 hover:bg-emerald-500/35 text-emerald-200 border border-emerald-500/50 text-xs font-bold transition-all shadow-sm shadow-emerald-500/20 hover:scale-[1.02]"
+                    title="E9: Simulate candidate passing targeted 10-min challenge & elevate to Job-Ready"
+                  >
+                    <Sparkles className="w-3.5 h-3.5 text-emerald-300" />
+                    <span>Simulate Pass (E9)</span>
+                  </button>
+                </div>
+              ) : candidate.sprintAssigned?.status === "passed" ? (
+                <div className="flex items-center gap-2 p-2.5 rounded-xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-300 text-xs font-medium">
+                  <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+                  <span>Gap Closed & Verified! Candidate elevated to Job-Ready (E9).</span>
+                </div>
+              ) : (
+                <button
+                  onClick={() =>
+                    onDispatchSprint(
+                      candidate.id,
+                      candidate.missingCompetencies[0]?.toLowerCase().replace(/\s+/g, "_") || "postgres_optimization",
+                      candidate.missingCompetencies[0] || "PostgreSQL Indexing & Optimization"
+                    )
+                  }
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/50 text-amber-300 text-xs font-medium transition-all"
+                >
+                  <Send className="w-3.5 h-3.5" />
+                  <span>Dispatch 1-Click Gap Sprint (E6)</span>
+                </button>
+              )}
             </div>
           </div>
         )}

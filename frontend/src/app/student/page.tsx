@@ -89,6 +89,37 @@ export default function StudentPage() {
         </div>
       </div>
 
+      {/* Employer-Dispatched Sprint Alert Banner (E6, S5, S6) */}
+      {currentStudent.sprintAssigned?.status === "pending" && (
+        <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-amber-950/60 via-slate-900 to-amber-950/40 border-2 border-amber-500/60 flex flex-col sm:flex-row sm:items-center justify-between gap-4 animate-in fade-in duration-300 shadow-xl shadow-amber-950/40">
+          <div className="flex items-center gap-3.5">
+            <div className="w-12 h-12 rounded-xl bg-amber-500/20 border border-amber-500/50 flex items-center justify-center text-amber-300 shrink-0">
+              <Zap className="w-6 h-6 animate-pulse" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 font-bold uppercase">
+                  ⚡ 1-Click Gap Sprint Received (E6)
+                </span>
+                <span className="text-xs text-slate-400">
+                  Target: <strong className="text-white">{currentStudent.sprintAssigned.skillName}</strong>
+                </span>
+              </div>
+              <p className="text-xs text-slate-300 mt-1 leading-relaxed">
+                An employer shortlisted you as <strong>Bridgeable</strong> and requested this 10-minute micro-assessment. Passing (≥80%) mints a SHA-256 proof and immediately elevates you to <strong>Job-Ready</strong> on their Radar (E9)!
+              </p>
+            </div>
+          </div>
+          <button
+            onClick={() => handleLaunchSprint(currentStudent.sprintAssigned!.skillId)}
+            className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-slate-950 font-bold text-xs flex items-center gap-2 shadow-lg shadow-amber-500/25 shrink-0 transition-transform active:scale-95"
+          >
+            <Zap className="w-4 h-4 fill-slate-950" />
+            <span>Complete Challenge Now (S6)</span>
+          </button>
+        </div>
+      )}
+
       {/* Tabs */}
       <div className="flex items-center justify-between border-b border-slate-800 pb-3">
         <div className="flex items-center gap-2">
