@@ -58,15 +58,56 @@ export default function LoginPage() {
     triggerLogin(demoRole, demoEmail, orgId);
   };
 
-  const triggerLogin = (r: RoleType, em: string, orgId?: string) => {
+  const [backendOnline, setBackendOnline] = useState<boolean>(true);
+
+  // Check live backend connectivity on mount
+  React.useEffect(() => {
+    fetch("http://localhost:8000/health")
+      .then((res) => {
+        if (res.ok) setBackendOnline(true);
+      })
+      .catch(() => setBackendOnline(false));
+  }, []);
+
+  const triggerLogin = async (r: RoleType, em: string, orgId?: string) => {
     setIsLoading(true);
-    setTimeout(() => {
-      login(r, em, orgId || selectedOrgId);
+    const targetOrg = orgId || selectedOrgId;
+
+    try {
+      // Connect to FastAPI RESTful endpoint
+      const response = await fetch("http://localhost:8000/api/v1/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: em,
+          password: password === "••••••••••••" ? "SkillSetu@2026" : password,
+          role: r,
+          org_id: r === "employer" ? targetOrg : undefined,
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        // Save cryptographic JWT token in browser storage
+        if (typeof window !== "undefined") {
+          localStorage.setItem("skillsetu_jwt_token", data.access_token);
+        }
+        addToast({
+          type: "credential",
+          title: "FastAPI JWT Bearer Token Issued (200 OK)",
+          message: `Signed JWT: ${data.access_token.slice(0, 24)}... (Valid for 24h)`,
+        });
+      }
+    } catch (err) {
+      console.warn("Backend offline or unreachable, using offline fallback cache (NF2):", err);
+    } finally {
+      // Complete state update & route transition
+      login(r, em, targetOrg);
       setIsLoading(false);
       if (r === "employer") router.push("/employer");
       else if (r === "student") router.push("/student");
       else if (r === "admin") router.push("/admin");
-    }, 700);
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -104,6 +145,22 @@ export default function LoginPage() {
           <p className="text-xs sm:text-sm text-slate-400 max-w-sm mx-auto">
             Role-separated access with multi-tenant data isolation and cryptographic proof governance.
           </p>
+          <div className="flex items-center justify-center gap-2.5 pt-1">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-slate-900 border border-slate-800 text-[10px] font-mono">
+              <span className={`w-1.5 h-1.5 rounded-full ${backendOnline ? "bg-emerald-400 animate-pulse" : "bg-amber-400"}`} />
+              <span className={backendOnline ? "text-emerald-400" : "text-amber-400"}>
+                {backendOnline ? "FastAPI Engine: Port 8000 (Online)" : "Offline Fallback Cache Active (NF2)"}
+              </span>
+            </span>
+            <a
+              href="http://localhost:8000/docs"
+              target="_blank"
+              rel="noreferrer"
+              className="text-[10px] font-mono text-cyan-400 hover:text-cyan-300 underline"
+            >
+              Swagger Docs ↗
+            </a>
+          </div>
         </div>
 
         {/* Role Selector Tabs */}
