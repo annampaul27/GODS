@@ -1,0 +1,1382 @@
+[
+  {
+    "job_id": "ROLE-001-JNR",
+    "job_title": "Junior AI Engineer",
+    "category": "AI",
+    "experience_level": "Entry-Level",
+    "raw_description": "We are looking for a motivated Junior AI Engineer to join our AI team. You will be responsible for assisting senior team members, writing foundational code, and learning industry best practices. Strong foundational knowledge in Python and OpenAI API is required.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "Python",
+        "OpenAI API",
+        "LangChain",
+        "Git",
+        "Basic Troubleshooting"
+      ],
+      "soft_skills": [
+        "Eagerness to learn",
+        "Team collaboration",
+        "Adaptability"
+      ],
+      "experience_years": 1
+    }
+  },
+  {
+    "job_id": "ROLE-002-SNR",
+    "job_title": "Senior AI Engineer",
+    "category": "AI",
+    "experience_level": "Experienced",
+    "raw_description": "Join our advanced AI division as a Senior AI Engineer. In this role, you will lead the architecture, design, and deployment of complex systems. You must have deep expertise in LangChain and Vector Databases, mentoring junior team members, and driving strategic technical decisions.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "Python",
+        "OpenAI API",
+        "LangChain",
+        "Vector Databases",
+        "System Architecture",
+        "Mentorship",
+        "Advanced Debugging"
+      ],
+      "soft_skills": [
+        "Leadership",
+        "Strategic thinking",
+        "Stakeholder management"
+      ],
+      "experience_years": 5
+    }
+  },
+  {
+    "job_id": "ROLE-003-JNR",
+    "job_title": "Junior Machine Learning Engineer",
+    "category": "AI/ML",
+    "experience_level": "Entry-Level",
+    "raw_description": "We are looking for a motivated Junior Machine Learning Engineer to join our AI/ML team. You will be responsible for assisting senior team members, writing foundational code, and learning industry best practices. Strong foundational knowledge in Python and Scikit-Learn is required.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "Python",
+        "Scikit-Learn",
+        "TensorFlow",
+        "Git",
+        "Basic Troubleshooting"
+      ],
+      "soft_skills": [
+        "Eagerness to learn",
+        "Team collaboration",
+        "Adaptability"
+      ],
+      "experience_years": 1
+    }
+  },
+  {
+    "job_id": "ROLE-004-SNR",
+    "job_title": "Senior Machine Learning Engineer",
+    "category": "AI/ML",
+    "experience_level": "Experienced",
+    "raw_description": "Join our advanced AI/ML division as a Senior Machine Learning Engineer. In this role, you will lead the architecture, design, and deployment of complex systems. You must have deep expertise in TensorFlow and Pandas, mentoring junior team members, and driving strategic technical decisions.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "Python",
+        "Scikit-Learn",
+        "TensorFlow",
+        "Pandas",
+        "System Architecture",
+        "Mentorship",
+        "Advanced Debugging"
+      ],
+      "soft_skills": [
+        "Leadership",
+        "Strategic thinking",
+        "Stakeholder management"
+      ],
+      "experience_years": 5
+    }
+  },
+  {
+    "job_id": "ROLE-005-JNR",
+    "job_title": "Junior Data Engineer",
+    "category": "Data",
+    "experience_level": "Entry-Level",
+    "raw_description": "We are looking for a motivated Junior Data Engineer to join our Data team. You will be responsible for assisting senior team members, writing foundational code, and learning industry best practices. Strong foundational knowledge in SQL and Python is required.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "SQL",
+        "Python",
+        "ETL",
+        "Git",
+        "Basic Troubleshooting"
+      ],
+      "soft_skills": [
+        "Eagerness to learn",
+        "Team collaboration",
+        "Adaptability"
+      ],
+      "experience_years": 1
+    }
+  },
+  {
+    "job_id": "ROLE-006-SNR",
+    "job_title": "Senior Data Engineer",
+    "category": "Data",
+    "experience_level": "Experienced",
+    "raw_description": "Join our advanced Data division as a Senior Data Engineer. In this role, you will lead the architecture, design, and deployment of complex systems. You must have deep expertise in ETL and Apache Spark, mentoring junior team members, and driving strategic technical decisions.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "SQL",
+        "Python",
+        "ETL",
+        "Apache Spark",
+        "System Architecture",
+        "Mentorship",
+        "Advanced Debugging"
+      ],
+      "soft_skills": [
+        "Leadership",
+        "Strategic thinking",
+        "Stakeholder management"
+      ],
+      "experience_years": 5
+    }
+  },
+  {
+    "job_id": "ROLE-007-JNR",
+    "job_title": "Junior Data Analyst",
+    "category": "Data",
+    "experience_level": "Entry-Level",
+    "raw_description": "We are looking for a motivated Junior Data Analyst to join our Data team. You will be responsible for assisting senior team members, writing foundational code, and learning industry best practices. Strong foundational knowledge in SQL and Excel is required.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "SQL",
+        "Excel",
+        "Tableau",
+        "Git",
+        "Basic Troubleshooting"
+      ],
+      "soft_skills": [
+        "Eagerness to learn",
+        "Team collaboration",
+        "Adaptability"
+      ],
+      "experience_years": 1
+    }
+  },
+  {
+    "job_id": "ROLE-008-SNR",
+    "job_title": "Senior Data Analyst",
+    "category": "Data",
+    "experience_level": "Experienced",
+    "raw_description": "Join our advanced Data division as a Senior Data Analyst. In this role, you will lead the architecture, design, and deployment of complex systems. You must have deep expertise in Tableau and Basic Statistics, mentoring junior team members, and driving strategic technical decisions.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "SQL",
+        "Excel",
+        "Tableau",
+        "Basic Statistics",
+        "System Architecture",
+        "Mentorship",
+        "Advanced Debugging"
+      ],
+      "soft_skills": [
+        "Leadership",
+        "Strategic thinking",
+        "Stakeholder management"
+      ],
+      "experience_years": 5
+    }
+  },
+  {
+    "job_id": "ROLE-009-JNR",
+    "job_title": "Junior DevOps Engineer",
+    "category": "Infrastructure",
+    "experience_level": "Entry-Level",
+    "raw_description": "We are looking for a motivated Junior DevOps Engineer to join our Infrastructure team. You will be responsible for assisting senior team members, writing foundational code, and learning industry best practices. Strong foundational knowledge in Linux/Bash and Git is required.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "Linux/Bash",
+        "Git",
+        "Docker",
+        "Git",
+        "Basic Troubleshooting"
+      ],
+      "soft_skills": [
+        "Eagerness to learn",
+        "Team collaboration",
+        "Adaptability"
+      ],
+      "experience_years": 1
+    }
+  },
+  {
+    "job_id": "ROLE-010-SNR",
+    "job_title": "Senior DevOps Engineer",
+    "category": "Infrastructure",
+    "experience_level": "Experienced",
+    "raw_description": "Join our advanced Infrastructure division as a Senior DevOps Engineer. In this role, you will lead the architecture, design, and deployment of complex systems. You must have deep expertise in Docker and AWS, mentoring junior team members, and driving strategic technical decisions.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "Linux/Bash",
+        "Git",
+        "Docker",
+        "AWS",
+        "System Architecture",
+        "Mentorship",
+        "Advanced Debugging"
+      ],
+      "soft_skills": [
+        "Leadership",
+        "Strategic thinking",
+        "Stakeholder management"
+      ],
+      "experience_years": 5
+    }
+  },
+  {
+    "job_id": "ROLE-011-JNR",
+    "job_title": "Junior MLOps Engineer",
+    "category": "AI/ML",
+    "experience_level": "Entry-Level",
+    "raw_description": "We are looking for a motivated Junior MLOps Engineer to join our AI/ML team. You will be responsible for assisting senior team members, writing foundational code, and learning industry best practices. Strong foundational knowledge in Python and MLflow is required.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "Python",
+        "MLflow",
+        "Kubernetes",
+        "Git",
+        "Basic Troubleshooting"
+      ],
+      "soft_skills": [
+        "Eagerness to learn",
+        "Team collaboration",
+        "Adaptability"
+      ],
+      "experience_years": 1
+    }
+  },
+  {
+    "job_id": "ROLE-012-SNR",
+    "job_title": "Senior MLOps Engineer",
+    "category": "AI/ML",
+    "experience_level": "Experienced",
+    "raw_description": "Join our advanced AI/ML division as a Senior MLOps Engineer. In this role, you will lead the architecture, design, and deployment of complex systems. You must have deep expertise in Kubernetes and CI/CD for ML, mentoring junior team members, and driving strategic technical decisions.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "Python",
+        "MLflow",
+        "Kubernetes",
+        "CI/CD for ML",
+        "System Architecture",
+        "Mentorship",
+        "Advanced Debugging"
+      ],
+      "soft_skills": [
+        "Leadership",
+        "Strategic thinking",
+        "Stakeholder management"
+      ],
+      "experience_years": 5
+    }
+  },
+  {
+    "job_id": "ROLE-013-JNR",
+    "job_title": "Junior Cloud Engineer",
+    "category": "Infrastructure",
+    "experience_level": "Entry-Level",
+    "raw_description": "We are looking for a motivated Junior Cloud Engineer to join our Infrastructure team. You will be responsible for assisting senior team members, writing foundational code, and learning industry best practices. Strong foundational knowledge in AWS/Azure/GCP and Terraform is required.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "AWS/Azure/GCP",
+        "Terraform",
+        "Networking",
+        "Git",
+        "Basic Troubleshooting"
+      ],
+      "soft_skills": [
+        "Eagerness to learn",
+        "Team collaboration",
+        "Adaptability"
+      ],
+      "experience_years": 1
+    }
+  },
+  {
+    "job_id": "ROLE-014-SNR",
+    "job_title": "Senior Cloud Engineer",
+    "category": "Infrastructure",
+    "experience_level": "Experienced",
+    "raw_description": "Join our advanced Infrastructure division as a Senior Cloud Engineer. In this role, you will lead the architecture, design, and deployment of complex systems. You must have deep expertise in Networking and Linux, mentoring junior team members, and driving strategic technical decisions.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "AWS/Azure/GCP",
+        "Terraform",
+        "Networking",
+        "Linux",
+        "System Architecture",
+        "Mentorship",
+        "Advanced Debugging"
+      ],
+      "soft_skills": [
+        "Leadership",
+        "Strategic thinking",
+        "Stakeholder management"
+      ],
+      "experience_years": 5
+    }
+  },
+  {
+    "job_id": "ROLE-015-JNR",
+    "job_title": "Junior Platform Engineer",
+    "category": "Infrastructure",
+    "experience_level": "Entry-Level",
+    "raw_description": "We are looking for a motivated Junior Platform Engineer to join our Infrastructure team. You will be responsible for assisting senior team members, writing foundational code, and learning industry best practices. Strong foundational knowledge in Kubernetes and Go/Python is required.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "Kubernetes",
+        "Go/Python",
+        "ArgoCD",
+        "Git",
+        "Basic Troubleshooting"
+      ],
+      "soft_skills": [
+        "Eagerness to learn",
+        "Team collaboration",
+        "Adaptability"
+      ],
+      "experience_years": 1
+    }
+  },
+  {
+    "job_id": "ROLE-016-SNR",
+    "job_title": "Senior Platform Engineer",
+    "category": "Infrastructure",
+    "experience_level": "Experienced",
+    "raw_description": "Join our advanced Infrastructure division as a Senior Platform Engineer. In this role, you will lead the architecture, design, and deployment of complex systems. You must have deep expertise in ArgoCD and Infrastructure as Code, mentoring junior team members, and driving strategic technical decisions.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "Kubernetes",
+        "Go/Python",
+        "ArgoCD",
+        "Infrastructure as Code",
+        "System Architecture",
+        "Mentorship",
+        "Advanced Debugging"
+      ],
+      "soft_skills": [
+        "Leadership",
+        "Strategic thinking",
+        "Stakeholder management"
+      ],
+      "experience_years": 5
+    }
+  },
+  {
+    "job_id": "ROLE-017-JNR",
+    "job_title": "Junior BI Developer",
+    "category": "Data",
+    "experience_level": "Entry-Level",
+    "raw_description": "We are looking for a motivated Junior BI Developer to join our Data team. You will be responsible for assisting senior team members, writing foundational code, and learning industry best practices. Strong foundational knowledge in Power BI and SQL is required.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "Power BI",
+        "SQL",
+        "DAX",
+        "Git",
+        "Basic Troubleshooting"
+      ],
+      "soft_skills": [
+        "Eagerness to learn",
+        "Team collaboration",
+        "Adaptability"
+      ],
+      "experience_years": 1
+    }
+  },
+  {
+    "job_id": "ROLE-018-SNR",
+    "job_title": "Senior BI Developer",
+    "category": "Data",
+    "experience_level": "Experienced",
+    "raw_description": "Join our advanced Data division as a Senior BI Developer. In this role, you will lead the architecture, design, and deployment of complex systems. You must have deep expertise in DAX and Data Modeling, mentoring junior team members, and driving strategic technical decisions.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "Power BI",
+        "SQL",
+        "DAX",
+        "Data Modeling",
+        "System Architecture",
+        "Mentorship",
+        "Advanced Debugging"
+      ],
+      "soft_skills": [
+        "Leadership",
+        "Strategic thinking",
+        "Stakeholder management"
+      ],
+      "experience_years": 5
+    }
+  },
+  {
+    "job_id": "ROLE-019-JNR",
+    "job_title": "Junior Data Scientist",
+    "category": "Data",
+    "experience_level": "Entry-Level",
+    "raw_description": "We are looking for a motivated Junior Data Scientist to join our Data team. You will be responsible for assisting senior team members, writing foundational code, and learning industry best practices. Strong foundational knowledge in Python/R and Machine Learning is required.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "Python/R",
+        "Machine Learning",
+        "Statistical Modeling",
+        "Git",
+        "Basic Troubleshooting"
+      ],
+      "soft_skills": [
+        "Eagerness to learn",
+        "Team collaboration",
+        "Adaptability"
+      ],
+      "experience_years": 1
+    }
+  },
+  {
+    "job_id": "ROLE-020-SNR",
+    "job_title": "Senior Data Scientist",
+    "category": "Data",
+    "experience_level": "Experienced",
+    "raw_description": "Join our advanced Data division as a Senior Data Scientist. In this role, you will lead the architecture, design, and deployment of complex systems. You must have deep expertise in Statistical Modeling and SQL, mentoring junior team members, and driving strategic technical decisions.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "Python/R",
+        "Machine Learning",
+        "Statistical Modeling",
+        "SQL",
+        "System Architecture",
+        "Mentorship",
+        "Advanced Debugging"
+      ],
+      "soft_skills": [
+        "Leadership",
+        "Strategic thinking",
+        "Stakeholder management"
+      ],
+      "experience_years": 5
+    }
+  },
+  {
+    "job_id": "ROLE-021-JNR",
+    "job_title": "Junior Prompt Engineer",
+    "category": "AI",
+    "experience_level": "Entry-Level",
+    "raw_description": "We are looking for a motivated Junior Prompt Engineer to join our AI team. You will be responsible for assisting senior team members, writing foundational code, and learning industry best practices. Strong foundational knowledge in LLMs and Prompt Optimization is required.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "LLMs",
+        "Prompt Optimization",
+        "Python",
+        "Git",
+        "Basic Troubleshooting"
+      ],
+      "soft_skills": [
+        "Eagerness to learn",
+        "Team collaboration",
+        "Adaptability"
+      ],
+      "experience_years": 1
+    }
+  },
+  {
+    "job_id": "ROLE-022-SNR",
+    "job_title": "Senior Prompt Engineer",
+    "category": "AI",
+    "experience_level": "Experienced",
+    "raw_description": "Join our advanced AI division as a Senior Prompt Engineer. In this role, you will lead the architecture, design, and deployment of complex systems. You must have deep expertise in Python and Evaluation Frameworks, mentoring junior team members, and driving strategic technical decisions.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "LLMs",
+        "Prompt Optimization",
+        "Python",
+        "Evaluation Frameworks",
+        "System Architecture",
+        "Mentorship",
+        "Advanced Debugging"
+      ],
+      "soft_skills": [
+        "Leadership",
+        "Strategic thinking",
+        "Stakeholder management"
+      ],
+      "experience_years": 5
+    }
+  },
+  {
+    "job_id": "ROLE-023-JNR",
+    "job_title": "Junior Full Stack AI Developer",
+    "category": "Software",
+    "experience_level": "Entry-Level",
+    "raw_description": "We are looking for a motivated Junior Full Stack AI Developer to join our Software team. You will be responsible for assisting senior team members, writing foundational code, and learning industry best practices. Strong foundational knowledge in React and Node.js is required.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "React",
+        "Node.js",
+        "Python",
+        "Git",
+        "Basic Troubleshooting"
+      ],
+      "soft_skills": [
+        "Eagerness to learn",
+        "Team collaboration",
+        "Adaptability"
+      ],
+      "experience_years": 1
+    }
+  },
+  {
+    "job_id": "ROLE-024-SNR",
+    "job_title": "Senior Full Stack AI Developer",
+    "category": "Software",
+    "experience_level": "Experienced",
+    "raw_description": "Join our advanced Software division as a Senior Full Stack AI Developer. In this role, you will lead the architecture, design, and deployment of complex systems. You must have deep expertise in Python and AI API Integration, mentoring junior team members, and driving strategic technical decisions.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "React",
+        "Node.js",
+        "Python",
+        "AI API Integration",
+        "System Architecture",
+        "Mentorship",
+        "Advanced Debugging"
+      ],
+      "soft_skills": [
+        "Leadership",
+        "Strategic thinking",
+        "Stakeholder management"
+      ],
+      "experience_years": 5
+    }
+  },
+  {
+    "job_id": "ROLE-025-JNR",
+    "job_title": "Junior NLP Engineer",
+    "category": "AI",
+    "experience_level": "Entry-Level",
+    "raw_description": "We are looking for a motivated Junior NLP Engineer to join our AI team. You will be responsible for assisting senior team members, writing foundational code, and learning industry best practices. Strong foundational knowledge in Python and Hugging Face is required.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "Python",
+        "Hugging Face",
+        "PyTorch",
+        "Git",
+        "Basic Troubleshooting"
+      ],
+      "soft_skills": [
+        "Eagerness to learn",
+        "Team collaboration",
+        "Adaptability"
+      ],
+      "experience_years": 1
+    }
+  },
+  {
+    "job_id": "ROLE-026-SNR",
+    "job_title": "Senior NLP Engineer",
+    "category": "AI",
+    "experience_level": "Experienced",
+    "raw_description": "Join our advanced AI division as a Senior NLP Engineer. In this role, you will lead the architecture, design, and deployment of complex systems. You must have deep expertise in PyTorch and Text Processing, mentoring junior team members, and driving strategic technical decisions.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "Python",
+        "Hugging Face",
+        "PyTorch",
+        "Text Processing",
+        "System Architecture",
+        "Mentorship",
+        "Advanced Debugging"
+      ],
+      "soft_skills": [
+        "Leadership",
+        "Strategic thinking",
+        "Stakeholder management"
+      ],
+      "experience_years": 5
+    }
+  },
+  {
+    "job_id": "ROLE-027-JNR",
+    "job_title": "Junior Computer Vision Engineer",
+    "category": "AI",
+    "experience_level": "Entry-Level",
+    "raw_description": "We are looking for a motivated Junior Computer Vision Engineer to join our AI team. You will be responsible for assisting senior team members, writing foundational code, and learning industry best practices. Strong foundational knowledge in Python and OpenCV is required.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "Python",
+        "OpenCV",
+        "PyTorch",
+        "Git",
+        "Basic Troubleshooting"
+      ],
+      "soft_skills": [
+        "Eagerness to learn",
+        "Team collaboration",
+        "Adaptability"
+      ],
+      "experience_years": 1
+    }
+  },
+  {
+    "job_id": "ROLE-028-SNR",
+    "job_title": "Senior Computer Vision Engineer",
+    "category": "AI",
+    "experience_level": "Experienced",
+    "raw_description": "Join our advanced AI division as a Senior Computer Vision Engineer. In this role, you will lead the architecture, design, and deployment of complex systems. You must have deep expertise in PyTorch and Image Processing, mentoring junior team members, and driving strategic technical decisions.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "Python",
+        "OpenCV",
+        "PyTorch",
+        "Image Processing",
+        "System Architecture",
+        "Mentorship",
+        "Advanced Debugging"
+      ],
+      "soft_skills": [
+        "Leadership",
+        "Strategic thinking",
+        "Stakeholder management"
+      ],
+      "experience_years": 5
+    }
+  },
+  {
+    "job_id": "ROLE-029-JNR",
+    "job_title": "Junior Analytics Engineer",
+    "category": "Data",
+    "experience_level": "Entry-Level",
+    "raw_description": "We are looking for a motivated Junior Analytics Engineer to join our Data team. You will be responsible for assisting senior team members, writing foundational code, and learning industry best practices. Strong foundational knowledge in SQL and dbt is required.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "SQL",
+        "dbt",
+        "Snowflake",
+        "Git",
+        "Basic Troubleshooting"
+      ],
+      "soft_skills": [
+        "Eagerness to learn",
+        "Team collaboration",
+        "Adaptability"
+      ],
+      "experience_years": 1
+    }
+  },
+  {
+    "job_id": "ROLE-030-SNR",
+    "job_title": "Senior Analytics Engineer",
+    "category": "Data",
+    "experience_level": "Experienced",
+    "raw_description": "Join our advanced Data division as a Senior Analytics Engineer. In this role, you will lead the architecture, design, and deployment of complex systems. You must have deep expertise in Snowflake and Data Warehousing, mentoring junior team members, and driving strategic technical decisions.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "SQL",
+        "dbt",
+        "Snowflake",
+        "Data Warehousing",
+        "System Architecture",
+        "Mentorship",
+        "Advanced Debugging"
+      ],
+      "soft_skills": [
+        "Leadership",
+        "Strategic thinking",
+        "Stakeholder management"
+      ],
+      "experience_years": 5
+    }
+  },
+  {
+    "job_id": "ROLE-031-JNR",
+    "job_title": "Junior Site Reliability Engineer (SRE)",
+    "category": "Infrastructure",
+    "experience_level": "Entry-Level",
+    "raw_description": "We are looking for a motivated Junior Site Reliability Engineer (SRE) to join our Infrastructure team. You will be responsible for assisting senior team members, writing foundational code, and learning industry best practices. Strong foundational knowledge in Python/Go and Kubernetes is required.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "Python/Go",
+        "Kubernetes",
+        "Observability/Prometheus",
+        "Git",
+        "Basic Troubleshooting"
+      ],
+      "soft_skills": [
+        "Eagerness to learn",
+        "Team collaboration",
+        "Adaptability"
+      ],
+      "experience_years": 1
+    }
+  },
+  {
+    "job_id": "ROLE-032-SNR",
+    "job_title": "Senior Site Reliability Engineer (SRE)",
+    "category": "Infrastructure",
+    "experience_level": "Experienced",
+    "raw_description": "Join our advanced Infrastructure division as a Senior Site Reliability Engineer (SRE). In this role, you will lead the architecture, design, and deployment of complex systems. You must have deep expertise in Observability/Prometheus and Incident Management, mentoring junior team members, and driving strategic technical decisions.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "Python/Go",
+        "Kubernetes",
+        "Observability/Prometheus",
+        "Incident Management",
+        "System Architecture",
+        "Mentorship",
+        "Advanced Debugging"
+      ],
+      "soft_skills": [
+        "Leadership",
+        "Strategic thinking",
+        "Stakeholder management"
+      ],
+      "experience_years": 5
+    }
+  },
+  {
+    "job_id": "ROLE-033-JNR",
+    "job_title": "Junior Data Architect",
+    "category": "Data",
+    "experience_level": "Entry-Level",
+    "raw_description": "We are looking for a motivated Junior Data Architect to join our Data team. You will be responsible for assisting senior team members, writing foundational code, and learning industry best practices. Strong foundational knowledge in Data Modeling and Cloud Data Warehouses is required.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "Data Modeling",
+        "Cloud Data Warehouses",
+        "Data Governance",
+        "Git",
+        "Basic Troubleshooting"
+      ],
+      "soft_skills": [
+        "Eagerness to learn",
+        "Team collaboration",
+        "Adaptability"
+      ],
+      "experience_years": 1
+    }
+  },
+  {
+    "job_id": "ROLE-034-SNR",
+    "job_title": "Senior Data Architect",
+    "category": "Data",
+    "experience_level": "Experienced",
+    "raw_description": "Join our advanced Data division as a Senior Data Architect. In this role, you will lead the architecture, design, and deployment of complex systems. You must have deep expertise in Data Governance and System Design, mentoring junior team members, and driving strategic technical decisions.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "Data Modeling",
+        "Cloud Data Warehouses",
+        "Data Governance",
+        "System Design",
+        "System Architecture",
+        "Mentorship",
+        "Advanced Debugging"
+      ],
+      "soft_skills": [
+        "Leadership",
+        "Strategic thinking",
+        "Stakeholder management"
+      ],
+      "experience_years": 5
+    }
+  },
+  {
+    "job_id": "ROLE-035-JNR",
+    "job_title": "Junior Big Data Engineer",
+    "category": "Data",
+    "experience_level": "Entry-Level",
+    "raw_description": "We are looking for a motivated Junior Big Data Engineer to join our Data team. You will be responsible for assisting senior team members, writing foundational code, and learning industry best practices. Strong foundational knowledge in Hadoop and Spark is required.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "Hadoop",
+        "Spark",
+        "Kafka",
+        "Git",
+        "Basic Troubleshooting"
+      ],
+      "soft_skills": [
+        "Eagerness to learn",
+        "Team collaboration",
+        "Adaptability"
+      ],
+      "experience_years": 1
+    }
+  },
+  {
+    "job_id": "ROLE-036-SNR",
+    "job_title": "Senior Big Data Engineer",
+    "category": "Data",
+    "experience_level": "Experienced",
+    "raw_description": "Join our advanced Data division as a Senior Big Data Engineer. In this role, you will lead the architecture, design, and deployment of complex systems. You must have deep expertise in Kafka and Scala, mentoring junior team members, and driving strategic technical decisions.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "Hadoop",
+        "Spark",
+        "Kafka",
+        "Scala",
+        "System Architecture",
+        "Mentorship",
+        "Advanced Debugging"
+      ],
+      "soft_skills": [
+        "Leadership",
+        "Strategic thinking",
+        "Stakeholder management"
+      ],
+      "experience_years": 5
+    }
+  },
+  {
+    "job_id": "ROLE-037-JNR",
+    "job_title": "Junior QA Automation Engineer",
+    "category": "Software",
+    "experience_level": "Entry-Level",
+    "raw_description": "We are looking for a motivated Junior QA Automation Engineer to join our Software team. You will be responsible for assisting senior team members, writing foundational code, and learning industry best practices. Strong foundational knowledge in Selenium and Python/Java is required.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "Selenium",
+        "Python/Java",
+        "CI/CD",
+        "Git",
+        "Basic Troubleshooting"
+      ],
+      "soft_skills": [
+        "Eagerness to learn",
+        "Team collaboration",
+        "Adaptability"
+      ],
+      "experience_years": 1
+    }
+  },
+  {
+    "job_id": "ROLE-038-SNR",
+    "job_title": "Senior QA Automation Engineer",
+    "category": "Software",
+    "experience_level": "Experienced",
+    "raw_description": "Join our advanced Software division as a Senior QA Automation Engineer. In this role, you will lead the architecture, design, and deployment of complex systems. You must have deep expertise in CI/CD and API Testing, mentoring junior team members, and driving strategic technical decisions.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "Selenium",
+        "Python/Java",
+        "CI/CD",
+        "API Testing",
+        "System Architecture",
+        "Mentorship",
+        "Advanced Debugging"
+      ],
+      "soft_skills": [
+        "Leadership",
+        "Strategic thinking",
+        "Stakeholder management"
+      ],
+      "experience_years": 5
+    }
+  },
+  {
+    "job_id": "ROLE-039-JNR",
+    "job_title": "Junior Cloud Architect",
+    "category": "Infrastructure",
+    "experience_level": "Entry-Level",
+    "raw_description": "We are looking for a motivated Junior Cloud Architect to join our Infrastructure team. You will be responsible for assisting senior team members, writing foundational code, and learning industry best practices. Strong foundational knowledge in Cloud Strategy and AWS/Azure Solutions is required.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "Cloud Strategy",
+        "AWS/Azure Solutions",
+        "Security",
+        "Git",
+        "Basic Troubleshooting"
+      ],
+      "soft_skills": [
+        "Eagerness to learn",
+        "Team collaboration",
+        "Adaptability"
+      ],
+      "experience_years": 1
+    }
+  },
+  {
+    "job_id": "ROLE-040-SNR",
+    "job_title": "Senior Cloud Architect",
+    "category": "Infrastructure",
+    "experience_level": "Experienced",
+    "raw_description": "Join our advanced Infrastructure division as a Senior Cloud Architect. In this role, you will lead the architecture, design, and deployment of complex systems. You must have deep expertise in Security and Microservices, mentoring junior team members, and driving strategic technical decisions.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "Cloud Strategy",
+        "AWS/Azure Solutions",
+        "Security",
+        "Microservices",
+        "System Architecture",
+        "Mentorship",
+        "Advanced Debugging"
+      ],
+      "soft_skills": [
+        "Leadership",
+        "Strategic thinking",
+        "Stakeholder management"
+      ],
+      "experience_years": 5
+    }
+  },
+  {
+    "job_id": "ROLE-041-JNR",
+    "job_title": "Junior Systems Engineer",
+    "category": "Infrastructure",
+    "experience_level": "Entry-Level",
+    "raw_description": "We are looking for a motivated Junior Systems Engineer to join our Infrastructure team. You will be responsible for assisting senior team members, writing foundational code, and learning industry best practices. Strong foundational knowledge in Linux/Windows Admin and Networking is required.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "Linux/Windows Admin",
+        "Networking",
+        "Active Directory",
+        "Git",
+        "Basic Troubleshooting"
+      ],
+      "soft_skills": [
+        "Eagerness to learn",
+        "Team collaboration",
+        "Adaptability"
+      ],
+      "experience_years": 1
+    }
+  },
+  {
+    "job_id": "ROLE-042-SNR",
+    "job_title": "Senior Systems Engineer",
+    "category": "Infrastructure",
+    "experience_level": "Experienced",
+    "raw_description": "Join our advanced Infrastructure division as a Senior Systems Engineer. In this role, you will lead the architecture, design, and deployment of complex systems. You must have deep expertise in Active Directory and Scripting, mentoring junior team members, and driving strategic technical decisions.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "Linux/Windows Admin",
+        "Networking",
+        "Active Directory",
+        "Scripting",
+        "System Architecture",
+        "Mentorship",
+        "Advanced Debugging"
+      ],
+      "soft_skills": [
+        "Leadership",
+        "Strategic thinking",
+        "Stakeholder management"
+      ],
+      "experience_years": 5
+    }
+  },
+  {
+    "job_id": "ROLE-043-JNR",
+    "job_title": "Junior Business Intelligence Analyst",
+    "category": "Data",
+    "experience_level": "Entry-Level",
+    "raw_description": "We are looking for a motivated Junior Business Intelligence Analyst to join our Data team. You will be responsible for assisting senior team members, writing foundational code, and learning industry best practices. Strong foundational knowledge in SQL and Looker/Tableau is required.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "SQL",
+        "Looker/Tableau",
+        "Business Acumen",
+        "Git",
+        "Basic Troubleshooting"
+      ],
+      "soft_skills": [
+        "Eagerness to learn",
+        "Team collaboration",
+        "Adaptability"
+      ],
+      "experience_years": 1
+    }
+  },
+  {
+    "job_id": "ROLE-044-SNR",
+    "job_title": "Senior Business Intelligence Analyst",
+    "category": "Data",
+    "experience_level": "Experienced",
+    "raw_description": "Join our advanced Data division as a Senior Business Intelligence Analyst. In this role, you will lead the architecture, design, and deployment of complex systems. You must have deep expertise in Business Acumen and Reporting, mentoring junior team members, and driving strategic technical decisions.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "SQL",
+        "Looker/Tableau",
+        "Business Acumen",
+        "Reporting",
+        "System Architecture",
+        "Mentorship",
+        "Advanced Debugging"
+      ],
+      "soft_skills": [
+        "Leadership",
+        "Strategic thinking",
+        "Stakeholder management"
+      ],
+      "experience_years": 5
+    }
+  },
+  {
+    "job_id": "ROLE-045-JNR",
+    "job_title": "Junior Database Administrator",
+    "category": "Data",
+    "experience_level": "Entry-Level",
+    "raw_description": "We are looking for a motivated Junior Database Administrator to join our Data team. You will be responsible for assisting senior team members, writing foundational code, and learning industry best practices. Strong foundational knowledge in PostgreSQL/Oracle and Performance Tuning is required.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "PostgreSQL/Oracle",
+        "Performance Tuning",
+        "Backup & Recovery",
+        "Git",
+        "Basic Troubleshooting"
+      ],
+      "soft_skills": [
+        "Eagerness to learn",
+        "Team collaboration",
+        "Adaptability"
+      ],
+      "experience_years": 1
+    }
+  },
+  {
+    "job_id": "ROLE-046-SNR",
+    "job_title": "Senior Database Administrator",
+    "category": "Data",
+    "experience_level": "Experienced",
+    "raw_description": "Join our advanced Data division as a Senior Database Administrator. In this role, you will lead the architecture, design, and deployment of complex systems. You must have deep expertise in Backup & Recovery and SQL, mentoring junior team members, and driving strategic technical decisions.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "PostgreSQL/Oracle",
+        "Performance Tuning",
+        "Backup & Recovery",
+        "SQL",
+        "System Architecture",
+        "Mentorship",
+        "Advanced Debugging"
+      ],
+      "soft_skills": [
+        "Leadership",
+        "Strategic thinking",
+        "Stakeholder management"
+      ],
+      "experience_years": 5
+    }
+  },
+  {
+    "job_id": "ROLE-047-JNR",
+    "job_title": "Junior AI Solutions Architect",
+    "category": "AI",
+    "experience_level": "Entry-Level",
+    "raw_description": "We are looking for a motivated Junior AI Solutions Architect to join our AI team. You will be responsible for assisting senior team members, writing foundational code, and learning industry best practices. Strong foundational knowledge in AI System Design and Cloud Architecture is required.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "AI System Design",
+        "Cloud Architecture",
+        "ML Lifecycle",
+        "Git",
+        "Basic Troubleshooting"
+      ],
+      "soft_skills": [
+        "Eagerness to learn",
+        "Team collaboration",
+        "Adaptability"
+      ],
+      "experience_years": 1
+    }
+  },
+  {
+    "job_id": "ROLE-048-SNR",
+    "job_title": "Senior AI Solutions Architect",
+    "category": "AI",
+    "experience_level": "Experienced",
+    "raw_description": "Join our advanced AI division as a Senior AI Solutions Architect. In this role, you will lead the architecture, design, and deployment of complex systems. You must have deep expertise in ML Lifecycle and Client Management, mentoring junior team members, and driving strategic technical decisions.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "AI System Design",
+        "Cloud Architecture",
+        "ML Lifecycle",
+        "Client Management",
+        "System Architecture",
+        "Mentorship",
+        "Advanced Debugging"
+      ],
+      "soft_skills": [
+        "Leadership",
+        "Strategic thinking",
+        "Stakeholder management"
+      ],
+      "experience_years": 5
+    }
+  },
+  {
+    "job_id": "ROLE-049-JNR",
+    "job_title": "Junior Data Security Analyst",
+    "category": "Security",
+    "experience_level": "Entry-Level",
+    "raw_description": "We are looking for a motivated Junior Data Security Analyst to join our Security team. You will be responsible for assisting senior team members, writing foundational code, and learning industry best practices. Strong foundational knowledge in Data Privacy and Encryption is required.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "Data Privacy",
+        "Encryption",
+        "Compliance (GDPR)",
+        "Git",
+        "Basic Troubleshooting"
+      ],
+      "soft_skills": [
+        "Eagerness to learn",
+        "Team collaboration",
+        "Adaptability"
+      ],
+      "experience_years": 1
+    }
+  },
+  {
+    "job_id": "ROLE-050-SNR",
+    "job_title": "Senior Data Security Analyst",
+    "category": "Security",
+    "experience_level": "Experienced",
+    "raw_description": "Join our advanced Security division as a Senior Data Security Analyst. In this role, you will lead the architecture, design, and deployment of complex systems. You must have deep expertise in Compliance (GDPR) and Risk Assessment, mentoring junior team members, and driving strategic technical decisions.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "Data Privacy",
+        "Encryption",
+        "Compliance (GDPR)",
+        "Risk Assessment",
+        "System Architecture",
+        "Mentorship",
+        "Advanced Debugging"
+      ],
+      "soft_skills": [
+        "Leadership",
+        "Strategic thinking",
+        "Stakeholder management"
+      ],
+      "experience_years": 5
+    }
+  },
+  {
+    "job_id": "ROLE-051-JNR",
+    "job_title": "Junior Cybersecurity Engineer",
+    "category": "Security",
+    "experience_level": "Entry-Level",
+    "raw_description": "We are looking for a motivated Junior Cybersecurity Engineer to join our Security team. You will be responsible for assisting senior team members, writing foundational code, and learning industry best practices. Strong foundational knowledge in Network Security and Threat Modeling is required.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "Network Security",
+        "Threat Modeling",
+        "SIEM",
+        "Git",
+        "Basic Troubleshooting"
+      ],
+      "soft_skills": [
+        "Eagerness to learn",
+        "Team collaboration",
+        "Adaptability"
+      ],
+      "experience_years": 1
+    }
+  },
+  {
+    "job_id": "ROLE-052-SNR",
+    "job_title": "Senior Cybersecurity Engineer",
+    "category": "Security",
+    "experience_level": "Experienced",
+    "raw_description": "Join our advanced Security division as a Senior Cybersecurity Engineer. In this role, you will lead the architecture, design, and deployment of complex systems. You must have deep expertise in SIEM and Incident Response, mentoring junior team members, and driving strategic technical decisions.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "Network Security",
+        "Threat Modeling",
+        "SIEM",
+        "Incident Response",
+        "System Architecture",
+        "Mentorship",
+        "Advanced Debugging"
+      ],
+      "soft_skills": [
+        "Leadership",
+        "Strategic thinking",
+        "Stakeholder management"
+      ],
+      "experience_years": 5
+    }
+  },
+  {
+    "job_id": "ROLE-053-JNR",
+    "job_title": "Junior Software Architect",
+    "category": "Software",
+    "experience_level": "Entry-Level",
+    "raw_description": "We are looking for a motivated Junior Software Architect to join our Software team. You will be responsible for assisting senior team members, writing foundational code, and learning industry best practices. Strong foundational knowledge in System Design and Microservices is required.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "System Design",
+        "Microservices",
+        "Java/C#",
+        "Git",
+        "Basic Troubleshooting"
+      ],
+      "soft_skills": [
+        "Eagerness to learn",
+        "Team collaboration",
+        "Adaptability"
+      ],
+      "experience_years": 1
+    }
+  },
+  {
+    "job_id": "ROLE-054-SNR",
+    "job_title": "Senior Software Architect",
+    "category": "Software",
+    "experience_level": "Experienced",
+    "raw_description": "Join our advanced Software division as a Senior Software Architect. In this role, you will lead the architecture, design, and deployment of complex systems. You must have deep expertise in Java/C# and Cloud Native, mentoring junior team members, and driving strategic technical decisions.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "System Design",
+        "Microservices",
+        "Java/C#",
+        "Cloud Native",
+        "System Architecture",
+        "Mentorship",
+        "Advanced Debugging"
+      ],
+      "soft_skills": [
+        "Leadership",
+        "Strategic thinking",
+        "Stakeholder management"
+      ],
+      "experience_years": 5
+    }
+  },
+  {
+    "job_id": "ROLE-055-JNR",
+    "job_title": "Junior AI Ethics Specialist",
+    "category": "AI",
+    "experience_level": "Entry-Level",
+    "raw_description": "We are looking for a motivated Junior AI Ethics Specialist to join our AI team. You will be responsible for assisting senior team members, writing foundational code, and learning industry best practices. Strong foundational knowledge in AI Bias Detection and Regulatory Compliance is required.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "AI Bias Detection",
+        "Regulatory Compliance",
+        "Data Privacy laws",
+        "Git",
+        "Basic Troubleshooting"
+      ],
+      "soft_skills": [
+        "Eagerness to learn",
+        "Team collaboration",
+        "Adaptability"
+      ],
+      "experience_years": 1
+    }
+  },
+  {
+    "job_id": "ROLE-056-SNR",
+    "job_title": "Senior AI Ethics Specialist",
+    "category": "AI",
+    "experience_level": "Experienced",
+    "raw_description": "Join our advanced AI division as a Senior AI Ethics Specialist. In this role, you will lead the architecture, design, and deployment of complex systems. You must have deep expertise in Data Privacy laws and Risk Assessment, mentoring junior team members, and driving strategic technical decisions.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "AI Bias Detection",
+        "Regulatory Compliance",
+        "Data Privacy laws",
+        "Risk Assessment",
+        "System Architecture",
+        "Mentorship",
+        "Advanced Debugging"
+      ],
+      "soft_skills": [
+        "Leadership",
+        "Strategic thinking",
+        "Stakeholder management"
+      ],
+      "experience_years": 5
+    }
+  },
+  {
+    "job_id": "ROLE-057-JNR",
+    "job_title": "Junior Data Warehouse Architect",
+    "category": "Data",
+    "experience_level": "Entry-Level",
+    "raw_description": "We are looking for a motivated Junior Data Warehouse Architect to join our Data team. You will be responsible for assisting senior team members, writing foundational code, and learning industry best practices. Strong foundational knowledge in Snowflake/Redshift and ETL Design is required.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "Snowflake/Redshift",
+        "ETL Design",
+        "Data Modeling",
+        "Git",
+        "Basic Troubleshooting"
+      ],
+      "soft_skills": [
+        "Eagerness to learn",
+        "Team collaboration",
+        "Adaptability"
+      ],
+      "experience_years": 1
+    }
+  },
+  {
+    "job_id": "ROLE-058-SNR",
+    "job_title": "Senior Data Warehouse Architect",
+    "category": "Data",
+    "experience_level": "Experienced",
+    "raw_description": "Join our advanced Data division as a Senior Data Warehouse Architect. In this role, you will lead the architecture, design, and deployment of complex systems. You must have deep expertise in Data Modeling and SQL Tuning, mentoring junior team members, and driving strategic technical decisions.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "Snowflake/Redshift",
+        "ETL Design",
+        "Data Modeling",
+        "SQL Tuning",
+        "System Architecture",
+        "Mentorship",
+        "Advanced Debugging"
+      ],
+      "soft_skills": [
+        "Leadership",
+        "Strategic thinking",
+        "Stakeholder management"
+      ],
+      "experience_years": 5
+    }
+  },
+  {
+    "job_id": "ROLE-059-JNR",
+    "job_title": "Junior AI Research Scientist",
+    "category": "AI",
+    "experience_level": "Entry-Level",
+    "raw_description": "We are looking for a motivated Junior AI Research Scientist to join our AI team. You will be responsible for assisting senior team members, writing foundational code, and learning industry best practices. Strong foundational knowledge in Deep Learning and Mathematics is required.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "Deep Learning",
+        "Mathematics",
+        "PyTorch/TensorFlow",
+        "Git",
+        "Basic Troubleshooting"
+      ],
+      "soft_skills": [
+        "Eagerness to learn",
+        "Team collaboration",
+        "Adaptability"
+      ],
+      "experience_years": 1
+    }
+  },
+  {
+    "job_id": "ROLE-060-SNR",
+    "job_title": "Senior AI Research Scientist",
+    "category": "AI",
+    "experience_level": "Experienced",
+    "raw_description": "Join our advanced AI division as a Senior AI Research Scientist. In this role, you will lead the architecture, design, and deployment of complex systems. You must have deep expertise in PyTorch/TensorFlow and Research Publication, mentoring junior team members, and driving strategic technical decisions.",
+    "extracted_requirements": {
+      "hard_skills": [
+        "Deep Learning",
+        "Mathematics",
+        "PyTorch/TensorFlow",
+        "Research Publication",
+        "System Architecture",
+        "Mentorship",
+        "Advanced Debugging"
+      ],
+      "soft_skills": [
+        "Leadership",
+        "Strategic thinking",
+        "Stakeholder management"
+      ],
+      "experience_years": 5
+    }
+  }
+]
