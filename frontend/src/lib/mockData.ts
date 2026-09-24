@@ -417,6 +417,29 @@ export const INITIAL_CANDIDATES: Candidate[] = [
         link: "https://github.com/adityaverma-eng/nextflow",
       },
     ],
+    workExperience: [
+      {
+        company: "HyperScale Systems",
+        title: "Full-Stack Software Engineer",
+        startDate: "Jan 2024",
+        endDate: "Present",
+        bulletPoints: [
+          "Engineered async FastAPI REST endpoints with strict Pydantic v2 validation.",
+          "Implemented Next.js 15 App Router frontend with sub-50ms interaction latency.",
+          "Configured Redis cluster caching layers for high-throughput endpoints.",
+        ],
+      },
+      {
+        company: "CodeCraft Labs",
+        title: "Backend Engineering Intern",
+        startDate: "Jun 2023",
+        endDate: "Dec 2023",
+        bulletPoints: [
+          "Developed automated PostgreSQL migration pipelines using Alembic.",
+          "Integrated OAuth2 JWT cryptographic bearer tokens for multi-tenant microservices.",
+        ],
+      },
+    ],
     credentials: [INITIAL_CREDENTIALS[0], INITIAL_CREDENTIALS[1]],
   },
   {
@@ -436,6 +459,18 @@ export const INITIAL_CANDIDATES: Candidate[] = [
     linkedinUrl: "https://linkedin.com/in/poojasundaram",
     portfolioUrl: "https://pooja.codes",
     experienceYears: 3.2,
+    workExperience: [
+      {
+        company: "DataScale Enterprise",
+        title: "Senior Backend Engineer",
+        startDate: "Jul 2023",
+        endDate: "Present",
+        bulletPoints: [
+          "Optimized PostgreSQL complex queries and partial indexes saving 40% IOPS.",
+          "Designed multi-tenant data isolation and role-separated access patterns.",
+        ],
+      },
+    ],
     pipelineStatus: "shortlisted",
     statusHistory: [
       { status: "applied", timestamp: "2026-09-08 11:20", updatedBy: "System" },

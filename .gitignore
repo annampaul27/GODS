@@ -32,6 +32,8 @@ ENV/
 .pytest_cache/
 .coverage
 htmlcov/
+chroma_db/
+*/chroma_db/
 
 # Environment variables & secrets
 .env

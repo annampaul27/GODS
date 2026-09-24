@@ -37,6 +37,41 @@ export default function ResumeUploadDrawer({ onClose }: ResumeUploadDrawerProps)
   const [linkedinUrl, setLinkedinUrl] = useState(currentStudent.linkedinUrl);
   const [experienceYears, setExperienceYears] = useState(currentStudent.experienceYears);
 
+  const handleFileUpload = async (file: File) => {
+    setIsParsing(true);
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const response = await fetch("http://localhost:8000/api/v1/ats/parse-resume", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.name) setFullName(data.name);
+        if (data.email) setEmail(data.email);
+        if (data.college) setCollege(data.college);
+        if (data.github_url) setGithubUrl(data.github_url);
+        if (data.linkedin_url) setLinkedinUrl(data.linkedin_url);
+        if (data.experience_years) setExperienceYears(data.experience_years);
+
+        addToast({
+          type: "success",
+          title: "ATS Parser Ingestion Complete (E10, S1, S2)",
+          message: `Extracted ${data.skills?.length || 0} skills & candidate profile into database via ATS engine (Annam Paul).`,
+        });
+        setIsParsing(false);
+        return;
+      }
+    } catch (err) {
+      console.warn("Backend ATS offline, using simulated parser (NF2):", err);
+    }
+
+    handleSimulateResumeDrop();
+  };
+
   const handleSimulateResumeDrop = () => {
     setIsParsing(true);
     setTimeout(() => {
@@ -103,8 +138,19 @@ export default function ResumeUploadDrawer({ onClose }: ResumeUploadDrawerProps)
 
         {/* Drag & Drop Upload Zone (S1) */}
         <div className="mt-4">
+          <input
+            type="file"
+            id="resume-file-input"
+            accept=".pdf,.docx,.txt"
+            className="hidden"
+            onChange={(e) => {
+              if (e.target.files && e.target.files[0]) {
+                handleFileUpload(e.target.files[0]);
+              }
+            }}
+          />
           <div
-            onClick={handleSimulateResumeDrop}
+            onClick={() => document.getElementById("resume-file-input")?.click()}
             className="p-6 rounded-2xl border-2 border-dashed border-slate-700 hover:border-cyan-500/60 bg-slate-900/40 hover:bg-slate-900/80 cursor-pointer transition-all text-center space-y-2 group"
           >
             <div className="w-12 h-12 rounded-xl bg-slate-800 group-hover:bg-cyan-500/10 flex items-center justify-center mx-auto text-slate-400 group-hover:text-cyan-400 transition-colors">
@@ -112,10 +158,10 @@ export default function ResumeUploadDrawer({ onClose }: ResumeUploadDrawerProps)
             </div>
             <div>
               <p className="text-xs font-semibold text-slate-200">
-                {isParsing ? "Parsing Resume via Spatial Layout Model..." : "Drop PDF Resume here or Click to Ingest"}
+                {isParsing ? "Parsing Resume via ATS Model..." : "Drop PDF/DOCX Resume here or Click to Browse"}
               </p>
               <p className="text-[11px] text-slate-400 mt-0.5">
-                Accepts PDF, DOCX • Auto-populates all S13 profile fields (S14)
+                FastAPI ATS Engine (Annam Paul) • Auto-populates all S13 profile fields (S14)
               </p>
             </div>
             {isParsing && (
@@ -123,6 +169,15 @@ export default function ResumeUploadDrawer({ onClose }: ResumeUploadDrawerProps)
                 <div className="w-full h-full bg-cyan-400 animate-pulse" />
               </div>
             )}
+          </div>
+          <div className="flex justify-end mt-1.5">
+            <button
+              type="button"
+              onClick={handleSimulateResumeDrop}
+              className="text-[11px] font-mono text-cyan-400 hover:text-cyan-300 underline"
+            >
+              Or load sample demo resume (NF2)
+            </button>
           </div>
         </div>
 

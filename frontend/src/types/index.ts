@@ -43,6 +43,14 @@ export interface CandidateSkill {
   score?: number;
 }
 
+export interface WorkExperience {
+  company: string;
+  title: string;
+  startDate: string;
+  endDate?: string;
+  bulletPoints: string[];
+}
+
 export interface Candidate {
   id: string;
   fullName: string;
@@ -61,6 +69,7 @@ export interface Candidate {
   linkedinUrl: string;
   portfolioUrl?: string;
   experienceYears: number;
+  workExperience?: WorkExperience[];
   projects: {
     title: string;
     description: string;

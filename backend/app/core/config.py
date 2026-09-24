@@ -19,7 +19,16 @@ class Settings(BaseSettings):
         "http://127.0.0.1:3001",
     ]
 
+    # ATS & AI Services Settings
+    GROQ_API_KEY: str = ""
+    GEMINI_API_KEY: str = ""
+    CHROMA_DB_PATH: str = "./chroma_db"
+    USE_OFFLINE_CACHE: bool = True
+
     class Config:
         case_sensitive = True
+        extra = "allow"
+        env_file = (".env", "backend/.env")
+        env_file_encoding = "utf-8"
 
 settings = Settings()

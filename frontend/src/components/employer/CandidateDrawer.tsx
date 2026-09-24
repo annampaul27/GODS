@@ -213,6 +213,44 @@ export default function CandidateDrawer({
           </div>
         </div>
 
+        {/* Parsed Work Experience (E10) */}
+        {candidate.workExperience && candidate.workExperience.length > 0 && (
+          <div className="mt-6 space-y-3">
+            <h4 className="text-xs uppercase font-mono tracking-wider text-slate-400 font-semibold flex items-center gap-1.5">
+              <Briefcase className="w-3.5 h-3.5 text-indigo-400" />
+              Parsed Work Experience ({candidate.workExperience.length}) (E10)
+            </h4>
+            <div className="space-y-2.5">
+              {candidate.workExperience.map((exp, idx) => (
+                <div
+                  key={idx}
+                  className="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800 space-y-2 text-xs"
+                >
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <span className="font-semibold text-white block">{exp.title}</span>
+                      <span className="text-slate-400 text-[11px]">{exp.company}</span>
+                    </div>
+                    <span className="text-[10px] font-mono text-cyan-400 flex items-center gap-1 bg-slate-950 px-2 py-0.5 rounded border border-slate-800">
+                      <Calendar className="w-3 h-3 text-slate-500" />
+                      {exp.startDate} - {exp.endDate || "Present"}
+                    </span>
+                  </div>
+                  {exp.bulletPoints && exp.bulletPoints.length > 0 && (
+                    <ul className="list-disc list-inside space-y-1 text-slate-300 text-[11px] pt-1">
+                      {exp.bulletPoints.map((bp, bidx) => (
+                        <li key={bidx} className="leading-relaxed">
+                          {bp}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Parsed Projects (E10) */}
         <div className="mt-6 space-y-3">
           <h4 className="text-xs uppercase font-mono tracking-wider text-slate-400 font-semibold flex items-center gap-1.5">

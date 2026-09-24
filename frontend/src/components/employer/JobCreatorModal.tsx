@@ -64,7 +64,7 @@ const TEMPLATES = [
 ];
 
 export default function JobCreatorModal({ onClose }: JobCreatorModalProps) {
-  const { addNewJob, currentOrg } = useStore();
+  const { addNewJob, currentOrg, addToast } = useStore();
   const [tab, setTab] = useState<"template" | "raw">("template");
 
   // Form states
@@ -89,71 +89,114 @@ export default function JobCreatorModal({ onClose }: JobCreatorModalProps) {
     setOptionalSkills(tmpl.optional);
   };
 
-  const handleParseRawJD = () => {
+  const handleParseRawJD = async () => {
     if (!rawJDText.trim()) return;
     setIsParsing(true);
-    setTimeout(() => {
-      // Deterministic NLP extraction simulation based on common keywords
-      const foundCritical: SkillNode[] = [];
-      const foundOptional: SkillNode[] = [];
 
-      if (/react|next|frontend/i.test(rawJDText)) {
-        foundCritical.push({
-          id: "react_server_components",
-          name: "React Server Components & Streaming",
-          category: "frontend",
+    try {
+      // Connect to FastAPI ATS RESTful endpoint
+      const response = await fetch("http://localhost:8000/api/v1/ats/parse-jd", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ raw_text: rawJDText }),
+      });
+
+      if (response.ok) {
+        const jdData = await response.json();
+        
+        // Map mandatory skills -> Critical (weight=3.0) (E2)
+        const parsedCritical: SkillNode[] = (jdData.mandatory_skills || []).map((skillName: string, idx: number) => ({
+          id: `crit_${skillName.toLowerCase().replace(/[^a-z0-9]/g, "_")}_${idx}`,
+          name: skillName,
+          category: skillName.toLowerCase().includes("react") || skillName.toLowerCase().includes("next") ? "frontend" : "backend",
           weight: 3.0,
           isCritical: true,
-        });
-      }
-      if (/fastapi|python|backend/i.test(rawJDText)) {
-        foundCritical.push({
-          id: "fastapi_async",
-          name: "FastAPI Async Architecture",
-          category: "backend",
-          weight: 3.0,
-          isCritical: true,
-        });
-      }
-      if (/postgres|sql|database/i.test(rawJDText)) {
-        foundCritical.push({
-          id: "postgres_optimization",
-          name: "PostgreSQL Indexing & Query Tuning",
-          category: "backend",
-          weight: 3.0,
-          isCritical: true,
-        });
-      }
-      if (/redis|cache/i.test(rawJDText)) {
-        foundOptional.push({
-          id: "redis_caching",
-          name: "Redis Distributed Locks & Caching",
-          category: "backend",
+        }));
+
+        // Map nice-to-have skills -> Optional (weight=1.0) (E2)
+        const parsedOptional: SkillNode[] = (jdData.nice_to_have_skills || []).map((skillName: string, idx: number) => ({
+          id: `opt_${skillName.toLowerCase().replace(/[^a-z0-9]/g, "_")}_${idx}`,
+          name: skillName,
+          category: skillName.toLowerCase().includes("docker") || skillName.toLowerCase().includes("k8s") ? "devops" : "backend",
           weight: 1.0,
           isCritical: false,
-        });
-      }
-      if (/docker|container|k8s/i.test(rawJDText)) {
-        foundOptional.push({
-          id: "docker_containerization",
-          name: "Docker Multi-stage Builds",
-          category: "devops",
-          weight: 1.0,
-          isCritical: false,
-        });
-      }
+        }));
 
-      setCriticalSkills(
-        foundCritical.length > 0 ? foundCritical : TEMPLATES[0].critical
-      );
-      setOptionalSkills(
-        foundOptional.length > 0 ? foundOptional : TEMPLATES[0].optional
-      );
-      setTitle("Custom Ingested Requisition: Lead Engineer");
-      setDescription(rawJDText.slice(0, 180) + "...");
-      setIsParsing(false);
-      setTab("template");
-    }, 700);
+        if (parsedCritical.length > 0) setCriticalSkills(parsedCritical);
+        if (parsedOptional.length > 0) setOptionalSkills(parsedOptional);
+        if (jdData.job_title) setTitle(jdData.job_title);
+        if (jdData.description_summary) setDescription(jdData.description_summary);
+        if (jdData.years_of_experience_required) setExperienceMinYears(jdData.years_of_experience_required);
+
+        addToast({
+          type: "success",
+          title: "ATS JD Parser Active (E1, E2)",
+          message: `Parsed ${parsedCritical.length} Critical (3.0w) and ${parsedOptional.length} Optional (1.0w) hiring benchmarks via ATS engine (Annam Paul).`,
+        });
+        setIsParsing(false);
+        setTab("template");
+        return;
+      }
+    } catch (err) {
+      console.warn("Backend ATS offline, using local parser fallback (NF2):", err);
+    }
+
+    // Local deterministic fallback (NF2 Offline Mode)
+    const foundCritical: SkillNode[] = [];
+    const foundOptional: SkillNode[] = [];
+
+    if (/react|next|frontend/i.test(rawJDText)) {
+      foundCritical.push({
+        id: "react_server_components",
+        name: "React Server Components & Streaming",
+        category: "frontend",
+        weight: 3.0,
+        isCritical: true,
+      });
+    }
+    if (/fastapi|python|backend/i.test(rawJDText)) {
+      foundCritical.push({
+        id: "fastapi_async",
+        name: "FastAPI Async Architecture",
+        category: "backend",
+        weight: 3.0,
+        isCritical: true,
+      });
+    }
+    if (/postgres|sql|database/i.test(rawJDText)) {
+      foundCritical.push({
+        id: "postgres_optimization",
+        name: "PostgreSQL Indexing & Query Tuning",
+        category: "backend",
+        weight: 3.0,
+        isCritical: true,
+      });
+    }
+    if (/redis|cache/i.test(rawJDText)) {
+      foundOptional.push({
+        id: "redis_caching",
+        name: "Redis Distributed Locks & Caching",
+        category: "backend",
+        weight: 1.0,
+        isCritical: false,
+      });
+    }
+    if (/docker|container|k8s/i.test(rawJDText)) {
+      foundOptional.push({
+        id: "docker_containerization",
+        name: "Docker Multi-stage Builds",
+        category: "devops",
+        weight: 1.0,
+        isCritical: false,
+      });
+    }
+
+    setCriticalSkills(foundCritical.length > 0 ? foundCritical : TEMPLATES[0].critical);
+    setOptionalSkills(foundOptional.length > 0 ? foundOptional : TEMPLATES[0].optional);
+    setTitle("Lead Full-Stack Systems Engineer");
+    setDescription(rawJDText.slice(0, 180) + "...");
+    setIsParsing(false);
+    setTab("template");
   };
 
   const handleSubmit = (e: React.FormEvent) => {
