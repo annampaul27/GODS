@@ -21,6 +21,7 @@ import {
   User,
 } from "lucide-react";
 import { RoleType } from "@/types";
+import NotificationCenter from "./NotificationCenter";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -204,6 +205,9 @@ export default function Navbar() {
             <Hash className="w-3.5 h-3.5" />
             <span className="hidden lg:inline">Verify Credential</span>
           </Link>
+
+          {/* FR-04: Deadlines & Strategic Application Notification Center */}
+          <NotificationCenter userId="cand-1" />
 
           {/* User Authentication Status / Sign In Button */}
           {isAuthenticated && currentUser ? (

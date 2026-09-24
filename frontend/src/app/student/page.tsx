@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useStore } from "@/lib/store";
 import { MICRO_SPRINTS } from "@/lib/mockData";
-import { MicroSprintData } from "@/types";
+import { MicroSprintData, UserNotification } from "@/types";
 import SkillGapRadar from "@/components/student/SkillGapRadar";
 import ReadinessRoadmap from "@/components/student/ReadinessRoadmap";
 import SprintModal from "@/components/student/SprintModal";
@@ -11,6 +11,8 @@ import ResumeUploadDrawer from "@/components/student/ResumeUploadDrawer";
 import SkillVerificationModal from "@/components/student/SkillVerificationModal";
 import ATSResumeManagerModal from "@/components/student/ATSResumeManagerModal";
 import DynamicSandboxModal from "@/components/student/DynamicSandboxModal";
+import RealtimeJobAlerts from "@/components/student/RealtimeJobAlerts";
+import JobDetailsModal from "@/components/student/JobDetailsModal";
 import {
   GraduationCap,
   UploadCloud,
@@ -24,6 +26,8 @@ import {
   FileText,
   Clock,
   Terminal,
+  AlertTriangle,
+  ArrowRight,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -35,8 +39,41 @@ export default function StudentPage() {
   const [isVerificationModalOpen, setIsVerificationModalOpen] = useState(false);
   const [isATSResumeModalOpen, setIsATSResumeModalOpen] = useState(false);
   const [isSandboxModalOpen, setIsSandboxModalOpen] = useState(false);
+  const [selectedJobModalId, setSelectedJobModalId] = useState<string | null>(null);
+  const [deadlineAlerts, setDeadlineAlerts] = useState<UserNotification[]>([]);
   const [verificationSkillId, setVerificationSkillId] = useState("postgresql");
   const [verificationSkillName, setVerificationSkillName] = useState("PostgreSQL Optimization & Architecture");
+
+  useEffect(() => {
+    async function fetchDeadlines() {
+      try {
+        const res = await fetch("http://localhost:8000/api/v1/notifications?user_id=cand-1");
+        if (res.ok) {
+          const data = await res.json();
+          const deadlines = (data.notifications || []).filter(
+            (n: UserNotification) => n.notification_type === "deadline_warning"
+          );
+          setDeadlineAlerts(deadlines);
+        }
+      } catch (e) {
+        console.warn("Unable to fetch deadline alerts:", e);
+      }
+    }
+    fetchDeadlines();
+  }, []);
+
+  const handleMarkAlertRead = async (notifId: string) => {
+    try {
+      await fetch(`http://localhost:8000/api/v1/notifications/${notifId}/read`, {
+        method: "PATCH",
+      });
+      setDeadlineAlerts((prev) =>
+        prev.map((a) => (a.id === notifId ? { ...a, is_read: true } : a))
+      );
+    } catch (e) {
+      console.warn("Failed to mark alert as read:", e);
+    }
+  };
 
   const handleLaunchSprint = (skillId: string) => {
     // Select sprint from library, or fallback to postgres_optimization
@@ -125,6 +162,80 @@ export default function StudentPage() {
           </button>
         </div>
       </div>
+
+      {/* FR-05: Real-Time Eligibility Job Matching Alerts (Realtime Live Updates & Actionable Alert) */}
+      <RealtimeJobAlerts
+        userId={currentStudent.id}
+        onOpenJobDetails={(jobId) => setSelectedJobModalId(jobId)}
+      />
+
+      {/* FR-04: Deadlines & Strategic Application Notification Widget */}
+      {deadlineAlerts.length > 0 && (
+        <div id="deadline-alerts-banner" className="space-y-3">
+          {deadlineAlerts.map((alert) => (
+            <div
+              key={alert.id}
+              className={`p-4 rounded-2xl border transition-all duration-300 flex flex-col md:flex-row md:items-center justify-between gap-4 ${
+                !alert.is_read
+                  ? "bg-gradient-to-r from-rose-950/40 via-slate-900/90 to-amber-950/20 border-rose-500/40 shadow-xl shadow-rose-950/20"
+                  : "bg-slate-950/60 border-slate-800/80 opacity-75"
+              }`}
+            >
+              <div className="flex items-start sm:items-center gap-3.5">
+                <div
+                  className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 border ${
+                    !alert.is_read
+                      ? "bg-rose-500/20 border-rose-500/40 text-rose-300"
+                      : "bg-slate-800 border-slate-700 text-slate-400"
+                  }`}
+                >
+                  <AlertTriangle className="w-5 h-5 animate-pulse" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="text-[10px] font-mono font-bold uppercase px-2 py-0.5 rounded-full bg-rose-950 text-rose-300 border border-rose-800">
+                      Deadline Warning
+                    </span>
+                    <span className="text-xs font-semibold text-white">
+                      {alert.job_title}
+                    </span>
+                    {!alert.is_read && (
+                      <span className="w-2 h-2 rounded-full bg-rose-400 animate-ping" />
+                    )}
+                  </div>
+                  <p className="text-xs text-slate-300 mt-1">
+                    {alert.message}
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3 shrink-0 self-end md:self-center">
+                {!alert.is_read ? (
+                  <button
+                    onClick={() => handleMarkAlertRead(alert.id)}
+                    className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-rose-500/20 hover:bg-rose-500/30 text-rose-200 border border-rose-500/40 transition-colors"
+                  >
+                    Mark as Read
+                  </button>
+                ) : (
+                  <span className="text-xs text-slate-500 flex items-center gap-1 font-mono">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> Acknowledged
+                  </span>
+                )}
+                <button
+                  onClick={() => {
+                    setActiveTab("roadmap");
+                  }}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 transition-colors"
+                >
+                  <span>Accelerate Prep</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
 
       {/* Employer-Dispatched Sprint Alert Banner (E6, S5, S6) */}
       {currentStudent.sprintAssigned?.status === "pending" && (
@@ -292,6 +403,13 @@ export default function StudentPage() {
         <DynamicSandboxModal
           isOpen={isSandboxModalOpen}
           onClose={() => setIsSandboxModalOpen(false)}
+        />
+      )}
+
+      {selectedJobModalId && (
+        <JobDetailsModal
+          jobId={selectedJobModalId}
+          onClose={() => setSelectedJobModalId(null)}
         />
       )}
     </div>
