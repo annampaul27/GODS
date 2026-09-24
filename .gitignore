@@ -1,0 +1,50 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+
+# Unit test / coverage reports
+.pytest_cache/
+.coverage
+
+# Environments & Secrets
+.env
+.env.*
+*.env
+!.env.example
+.venv/
+venv/
+env/
+ENV/
+
+# ChromaDB / Local vector data
+chroma_db/
+*.sqlite3
+*.db
+
+# Node & Next.js dependencies / build
+node_modules/
+/.next/
+/out/
+*.tsbuildinfo
+next-env.d.ts
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+.vercel
+
+# IDE & Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
