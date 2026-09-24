@@ -58,6 +58,18 @@ interface StoreContextType {
   ) => Promise<ProofOfWorkCredential>;
   getCredentialByHash: (hash: string) => ProofOfWorkCredential | undefined;
 
+  // Authentication state
+  isAuthenticated: boolean;
+  currentUser: {
+    name: string;
+    email: string;
+    role: RoleType;
+    avatarUrl?: string;
+    orgName?: string;
+  } | null;
+  login: (role: RoleType, email: string, orgId?: string) => void;
+  logout: () => void;
+
   // Student specific
   currentStudent: Candidate;
   updateStudentProfile: (updates: Partial<Candidate>) => void;
@@ -94,6 +106,76 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   // The logged-in student persona defaults to cand-1 ("Aditya Verma", Bridgeable at 78%)
   const [currentStudentId, setCurrentStudentId] = useState<string>("cand-1");
+
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
+  const [currentUser, setCurrentUser] = useState<{
+    name: string;
+    email: string;
+    role: RoleType;
+    avatarUrl?: string;
+    orgName?: string;
+  } | null>({
+    name: "Priya Sharma",
+    email: "priya.sharma@acme.com",
+    role: "employer",
+    orgName: "Acme HyperScale Systems",
+    avatarUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80",
+  });
+
+  const login = (newRole: RoleType, email: string, orgId?: string) => {
+    setRole(newRole);
+    setIsAuthenticated(true);
+
+    if (newRole === "employer") {
+      const selectedOrg = organizations.find((o) => o.id === orgId) || organizations[0];
+      setCurrentOrg(selectedOrg);
+      setCurrentUser({
+        name: "Priya Sharma",
+        email: email || "priya.sharma@acme.com",
+        role: "employer",
+        orgName: selectedOrg.name,
+        avatarUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80",
+      });
+      addToast({
+        type: "success",
+        title: "Authenticated as Employer / Recruiter",
+        message: `Signed in to ${selectedOrg.name}. Talent Radar and screening pipelines loaded.`,
+      });
+    } else if (newRole === "student") {
+      setCurrentUser({
+        name: currentStudent.fullName,
+        email: email || currentStudent.email,
+        role: "student",
+        avatarUrl: currentStudent.avatarUrl,
+      });
+      addToast({
+        type: "success",
+        title: "Authenticated as Student / Candidate",
+        message: `Welcome back, ${currentStudent.fullName}. Target role delta benchmarks ready.`,
+      });
+    } else if (newRole === "admin") {
+      setCurrentUser({
+        name: "Platform Superuser",
+        email: email || "root@skillsetu.ai",
+        role: "admin",
+      });
+      addToast({
+        type: "success",
+        title: "Superuser Session Initialized (Root)",
+        message: "Full administrative oversight, cryptographic ledger audit, and multi-tenant controls active.",
+      });
+    }
+  };
+
+  const logout = () => {
+    setIsAuthenticated(false);
+    setCurrentUser(null);
+    addToast({
+      type: "info",
+      title: "Session Terminated",
+      message: "You have securely logged out of SkillSetu AI.",
+    });
+  };
 
   const activeJob = jobs.find((j) => j.id === activeJobId) || jobs[0];
   const currentStudent = candidates.find((c) => c.id === currentStudentId) || candidates[0];
@@ -333,6 +415,10 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         credentials,
         mintCredential,
         getCredentialByHash,
+        isAuthenticated,
+        currentUser,
+        login,
+        logout,
         currentStudent,
         updateStudentProfile,
         studentPrivacyHideAttempts,

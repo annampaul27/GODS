@@ -16,6 +16,9 @@ import {
   Search,
   CheckCircle,
   Hash,
+  LogIn,
+  LogOut,
+  User,
 } from "lucide-react";
 import { RoleType } from "@/types";
 
@@ -31,6 +34,9 @@ export default function Navbar() {
     isAnonymizedScreening,
     setIsAnonymizedScreening,
     credentials,
+    isAuthenticated,
+    currentUser,
+    logout,
   } = useStore();
 
   const [orgDropdownOpen, setOrgDropdownOpen] = useState(false);
@@ -198,6 +204,47 @@ export default function Navbar() {
             <Hash className="w-3.5 h-3.5" />
             <span className="hidden lg:inline">Verify Credential</span>
           </Link>
+
+          {/* User Authentication Status / Sign In Button */}
+          {isAuthenticated && currentUser ? (
+            <div className="flex items-center gap-2 pl-1 border-l border-slate-800">
+              <Link
+                href="/login"
+                className="flex items-center gap-2 p-1 rounded-xl bg-slate-900/60 hover:bg-slate-800 border border-slate-800 text-xs text-slate-300 transition-all group"
+                title="Switch Account / Terminal Session"
+              >
+                {currentUser.avatarUrl ? (
+                  <img
+                    src={currentUser.avatarUrl}
+                    alt={currentUser.name}
+                    className="w-6 h-6 rounded-lg object-cover"
+                  />
+                ) : (
+                  <div className="w-6 h-6 rounded-lg bg-cyan-950 border border-cyan-800 flex items-center justify-center text-[10px] font-mono text-cyan-400 font-bold">
+                    {currentUser.name[0]}
+                  </div>
+                )}
+                <span className="hidden xl:inline text-[11px] font-medium pr-1 group-hover:text-cyan-300">
+                  {currentUser.name.split(" ")[0]}
+                </span>
+              </Link>
+              <button
+                onClick={logout}
+                className="p-1.5 rounded-xl hover:bg-slate-800 text-slate-400 hover:text-rose-400 transition-colors"
+                title="Terminate Session (Sign Out)"
+              >
+                <LogOut className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          ) : (
+            <Link
+              href="/login"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-500 hover:from-cyan-400 hover:to-indigo-400 text-slate-950 font-semibold text-xs shadow-sm shadow-cyan-500/10 transition-all"
+            >
+              <LogIn className="w-3.5 h-3.5" />
+              <span>Sign In</span>
+            </Link>
+          )}
         </div>
       </div>
     </header>
