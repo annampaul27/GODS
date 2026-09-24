@@ -265,8 +265,8 @@ export default function Navbar() {
 
       {/* Contributors Modal */}
       {contributorsOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-in fade-in">
-          <div className="w-full max-w-xl bg-[#090d1a] border border-slate-800 rounded-2xl p-6 shadow-2xl space-y-5 animate-in zoom-in-95 duration-200">
+        <div className="fixed inset-0 z-50 flex items-start justify-center p-4 sm:p-6 py-10 bg-black/80 backdrop-blur-md overflow-y-auto animate-in fade-in">
+          <div className="w-full max-w-2xl bg-[#090d1a] border border-slate-800 rounded-2xl p-6 shadow-2xl space-y-4 animate-in zoom-in-95 duration-200 my-auto">
             <div className="flex items-start justify-between pb-3 border-b border-slate-800">
               <div className="flex items-center gap-2.5">
                 <div className="w-9 h-9 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
