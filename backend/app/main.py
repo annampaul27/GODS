@@ -4,6 +4,7 @@ from app.core.config import settings
 from app.api.v1.auth import router as auth_router
 from app.api.v1.ats import router as ats_router
 from app.api.v1.sprints import router as sprints_router
+from app.api.v1.career_compass import router as career_compass_router
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
@@ -26,6 +27,11 @@ app.add_middleware(
 app.include_router(auth_router, prefix=settings.API_V1_STR)
 app.include_router(ats_router, prefix=settings.API_V1_STR)
 app.include_router(sprints_router, prefix=settings.API_V1_STR)
+app.include_router(
+    career_compass_router,
+    prefix=settings.API_V1_STR + "/career-compass",
+    tags=["CareerCompass Features (Jayasree A B)"]
+)
 
 @app.get("/health", tags=["System Telemetry"])
 async def health_check():

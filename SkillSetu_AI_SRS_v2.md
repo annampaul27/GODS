@@ -4,6 +4,13 @@
 
 ---
 
+## 👥 Contributors & Feature Attribution
+* **Jayasree A B** (`@jayasreeab2004`, `jayasreeab2004@gmail.com`) — **Feature Architect (CareerCompass Modules)**: Engineered the 7 core feature modules in `backend/features/` covering personalized 90-day roadmaps (`career_roadmap.py`), GitHub project complexity extraction (`github_analysis.py`), AI interview coach and scoring (`interview_coach.py`), job market demand analysis (`job_market_analysis.py`), portfolio generator (`portfolio_builder.py`), deep resume diagnostics (`resume_analysis.py`), and multi-area skill gap evaluation (`skill_gap_analysis.py`).
+* **Annam Paul** (`@annampaul27`, `annampaul000@gmail.com`) — **Core Feature Architect (ATS Engine)**: Engineered the FastAPI ATS microservices (`/api/v1/ats/*`), Groq LLM parsing (`ResumeSchema`, `JDSchema`), ChromaDB persistent applicant vector store, and deterministic deficit-resistance scoring logic (**E1, E2, E3, E4, E10**).
+* **Core Engineering Team** (`@rdnk2004`) — **Platform Architects**: Multi-tenant infrastructure, Next.js 15 client, SHA-256 cryptographic trust chain, and real-time gap closing sprints.
+
+---
+
 ## SECTION 1: EMPLOYER / ORGANIZATION REQUIREMENTS (THE BUYER WORKFLOW)
 
 | Sl.No | Requirement Specification | Functional/ Non-Functional | Essential/ Desirable | Comments / Impact |

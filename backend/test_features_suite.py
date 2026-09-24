@@ -1,0 +1,215 @@
+"""
+Unit & Integration Test Suite for CareerCompass Feature Modules
+Authored by Jayasree A B (branch: features)
+"""
+
+import pytest
+from fastapi.testclient import TestClient
+from app.main import app
+
+from features.career_roadmap import (
+    prepare_career_roadmap,
+    create_roadmap_phase,
+    get_career_roadmap_requirements,
+)
+from features.github_analysis import (
+    prepare_github_analysis,
+    get_github_analysis_requirements,
+)
+from features.interview_coach import (
+    prepare_interview_question,
+    build_interview_question,
+    prepare_answer_evaluation,
+    build_interview_evaluation,
+)
+from features.job_market_analysis import (
+    prepare_job_market_analysis,
+    classify_demand,
+    build_market_result,
+)
+from features.portfolio_builder import prepare_portfolio
+from features.resume_analysis import (
+    prepare_resume_analysis,
+    get_resume_analysis_requirements,
+)
+from features.skill_gap_analysis import (
+    prepare_skill_gap_analysis,
+    build_competency_area,
+)
+
+client = TestClient(app)
+
+
+def test_career_roadmap_module():
+    res = prepare_career_roadmap(
+        target_role="Full Stack Engineer",
+        current_skills=["React", "TypeScript", "Node.js"],
+        skill_gaps=[{"skill": "PostgreSQL Optimization", "priority": "High"}],
+        candidate_profile="Junior developer seeking promotion",
+    )
+    assert res["target_role"] == "Full Stack Engineer"
+    assert res["roadmap_requirements"]["duration_days"] == 90
+    assert len(res["current_skills"]) == 3
+
+    phase = create_roadmap_phase(
+        phase_name="Core DB",
+        duration="30 days",
+        goals=["Learn indexing"],
+        skills=["Postgres"],
+        activities=["Optimize slow queries"],
+    )
+    assert phase["phase"] == "Core DB"
+
+    reqs = get_career_roadmap_requirements()
+    assert reqs["duration"] == "90 days"
+    assert "Foundation" in reqs["suggested_phases"]
+
+
+def test_github_analysis_module():
+    res = prepare_github_analysis(
+        repository_name="skill-verification",
+        repository_url="https://github.com/test/skill-verification",
+        files=["main.py", "README.md"],
+        file_content="print('Skill Verification')",
+    )
+    assert res["repository_name"] == "skill-verification"
+    assert res["analysis_requirements"]["assess_complexity"] is True
+
+    reqs = get_github_analysis_requirements()
+    assert "Complexity rating" in reqs
+    assert "Resume bullet points" in reqs
+
+
+def test_interview_coach_module():
+    prep = prepare_interview_question(
+        role="Backend Architect",
+        topic="Database Indexing & Concurrency",
+    )
+    assert prep["role"] == "Backend Architect"
+
+    q = build_interview_question(
+        question_id="q-001",
+        question_text="Explain MVCC in PostgreSQL.",
+        expected_keywords=["WAL", "vacuum", "snapshots", "isolation"],
+        hints=["Think about isolation levels.", "Consider VACUUM cleanups."],
+    )
+    assert q["question_id"] == "q-001"
+
+    ans_prep = prepare_answer_evaluation(
+        question_text="Explain MVCC",
+        transcript="Postgres keeps multiple row versions for concurrent readers.",
+    )
+    assert ans_prep["evaluation_requirements"]["technical_accuracy"] is True
+
+    eval_out = build_interview_evaluation(
+        overall_score=90.0,
+        clarity=92.0,
+        technical_accuracy=88.0,
+        confidence_estimate=0.95,
+        what_went_well=["Accurate concept"],
+        what_to_improve=["Add detail about vacuuming"],
+        better_answer="PostgreSQL uses MVCC to allow concurrent read and write operations...",
+    )
+    assert eval_out["overall_score"] == 90.0
+    assert eval_out["metrics"]["clarity"] == 92.0
+
+
+def test_job_market_analysis_module():
+    prep = prepare_job_market_analysis(
+        role_title="Machine Learning Engineer",
+        location="Bengaluru / Remote",
+    )
+    assert prep["role_title"] == "Machine Learning Engineer"
+
+    assert classify_demand(60000) == "High"
+    assert classify_demand(25000) == "Medium"
+    assert classify_demand(5000) == "Low"
+
+    res = build_market_result(job_count=45000, source="LinkedIn/Naukri")
+    assert res["demand"] == "Medium"
+    assert res["count"] == 45000
+
+
+def test_portfolio_builder_module():
+    portfolio = prepare_portfolio(
+        candidate_data={"name": "Alex", "headline": "Software Craftsman"},
+        color_theme="emerald",
+        mode="Dark",
+        layout_style="Split",
+        font_vibe="tech-mono",
+        contact_email="alex@dev.io",
+    )
+    assert portfolio["preferences"]["color_theme"] == "emerald"
+    assert portfolio["preferences"]["layout_style"] == "Split"
+    assert portfolio["candidate_data"]["name"] == "Alex"
+
+
+def test_resume_analysis_module():
+    res = prepare_resume_analysis(
+        resume_text="Experienced engineer in distributed caching and Python microservices.",
+        job_description="Looking for Senior Python Developer",
+    )
+    assert res["analysis_requirements"]["evaluate_role_relevance"] is True
+    assert res["analysis_requirements"]["identify_strengths"] is True
+
+    reqs = get_resume_analysis_requirements()
+    assert "Strengths" in reqs
+    assert "Weaknesses" in reqs
+
+
+def test_skill_gap_analysis_module():
+    res = prepare_skill_gap_analysis(
+        candidate_profile="Solid TypeScript and React, lacking GraphQL and Docker",
+        target_role="Senior Full Stack Engineer",
+    )
+    assert res["analysis_requirements"]["minimum_gap_skills"] == 5
+    assert "Expert" in res["analysis_requirements"]["skill_levels"]
+
+    comp = build_competency_area(
+        area_name="Frontend Architecture",
+        skills=[
+            {
+                "name": "React",
+                "level": "Advanced",
+                "evidence_source": "GitHub",
+                "evidence_comment": "Built multiple production SPA apps",
+            },
+            {
+                "name": "TypeScript",
+                "level": "Intermediate",
+                "evidence_source": "GitHub",
+                "evidence_comment": "Used in enterprise frontend refactor",
+            },
+        ],
+    )
+    assert comp["area"] == "Frontend Architecture"
+
+
+def test_career_compass_fastapi_endpoints():
+    # Test Roadmap Endpoint
+    roadmap_resp = client.post(
+        "/api/v1/career-compass/roadmap",
+        json={
+            "target_role": "Backend Engineer",
+            "current_skills": ["Python", "Docker"],
+            "skill_gaps": [{"skill": "PostgreSQL Optimization", "priority": "High"}],
+        },
+    )
+    assert roadmap_resp.status_code == 200
+    assert roadmap_resp.json()["target_role"] == "Backend Engineer"
+
+    # Test Job Market Endpoint
+    market_resp = client.get("/api/v1/career-compass/job-market?role_title=Backend+Engineer")
+    assert market_resp.status_code == 200
+    assert market_resp.json()["market_demand"]["demand"] in ["High", "Medium", "Low"]
+
+    # Test Interview Evaluate Endpoint
+    interview_resp = client.post(
+        "/api/v1/career-compass/interview/evaluate",
+        json={
+            "question_text": "What is connection pooling?",
+            "candidate_answer": "Connection pooling reuses database connections to avoid TCP overhead.",
+        },
+    )
+    assert interview_resp.status_code == 200
+    assert interview_resp.json()["evaluation"]["overall_score"] >= 80
