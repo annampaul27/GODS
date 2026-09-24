@@ -1,0 +1,205 @@
+{
+  "course_id": "flask_fundamentals",
+  "title": "Flask Fundamentals Mock Test",
+  "duration_minutes": 12,
+  "question_count": 20,
+  "total_marks": 20,
+  "passing_score": 60,
+  "questions": [
+    {
+      "question_id": 1,
+      "question": "What is Flask?",
+      "options": [
+        "A Python web framework",
+        "A database",
+        "A CSS framework",
+        "A JavaScript runtime"
+      ],
+      "correct_answer": 0,
+      "explanation": "Flask is a lightweight Python web framework."
+    },
+    {
+      "question_id": 2,
+      "question": "Which package is used to install Flask?",
+      "options": ["flask", "django-flask", "python-web", "flask-python-only"],
+      "correct_answer": 0,
+      "explanation": "Flask is installed using the flask package."
+    },
+    {
+      "question_id": 3,
+      "question": "How is a Flask application commonly created?",
+      "options": [
+        "Flask(__name__)",
+        "Django(__name__)",
+        "WebApp.create()",
+        "FlaskApp.start()"
+      ],
+      "correct_answer": 0,
+      "explanation": "A Flask application is commonly initialized using Flask(__name__)."
+    },
+    {
+      "question_id": 4,
+      "question": "Which decorator defines a Flask route?",
+      "options": [
+        "@app.route()",
+        "@app.url()",
+        "@route.path()",
+        "@flask.url()"
+      ],
+      "correct_answer": 0,
+      "explanation": "@app.route() associates a URL with a view function."
+    },
+    {
+      "question_id": 5,
+      "question": "What does app.run() do during development?",
+      "options": [
+        "Starts the development server",
+        "Creates a database",
+        "Installs Flask",
+        "Creates an HTML file"
+      ],
+      "correct_answer": 0,
+      "explanation": "app.run() starts the Flask development server."
+    },
+    {
+      "question_id": 6,
+      "question": "Which HTTP method is commonly used to retrieve data?",
+      "options": ["GET", "POST", "DELETE", "PATCH_ONLY"],
+      "correct_answer": 0,
+      "explanation": "GET is commonly used to retrieve resources."
+    },
+    {
+      "question_id": 7,
+      "question": "Which HTTP method is commonly used to submit data?",
+      "options": ["POST", "GET", "READ", "FETCH"],
+      "correct_answer": 0,
+      "explanation": "POST is commonly used to submit data."
+    },
+    {
+      "question_id": 8,
+      "question": "Which Flask function renders an HTML template?",
+      "options": [
+        "render_template()",
+        "render_html()",
+        "show_template()",
+        "display_page()"
+      ],
+      "correct_answer": 0,
+      "explanation": "render_template() renders a Jinja template."
+    },
+    {
+      "question_id": 9,
+      "question": "Which template engine does Flask commonly use?",
+      "options": ["Jinja", "Django Templates", "Handlebars only", "React"],
+      "correct_answer": 0,
+      "explanation": "Flask uses Jinja as its template engine."
+    },
+    {
+      "question_id": 10,
+      "question": "Which object provides access to incoming request data?",
+      "options": ["request", "response", "server", "browser"],
+      "correct_answer": 0,
+      "explanation": "Flask's request object provides access to incoming request information."
+    },
+    {
+      "question_id": 11,
+      "question": "Which property accesses submitted form data?",
+      "options": ["request.form", "request.dataform", "request.input", "request.fields"],
+      "correct_answer": 0,
+      "explanation": "request.form contains submitted form data."
+    },
+    {
+      "question_id": 12,
+      "question": "Which property accesses URL query parameters?",
+      "options": ["request.args", "request.queryonly", "request.params_only", "request.url_data"],
+      "correct_answer": 0,
+      "explanation": "request.args provides access to query-string parameters."
+    },
+    {
+      "question_id": 13,
+      "question": "Which Flask function is commonly used to return JSON?",
+      "options": ["jsonify()", "json_response_only()", "return_json()", "make_json_page()"],
+      "correct_answer": 0,
+      "explanation": "jsonify() creates a JSON response."
+    },
+    {
+      "question_id": 14,
+      "question": "Which method can read JSON from a request body?",
+      "options": [
+        "request.get_json()",
+        "request.read_json_only()",
+        "request.body_json()",
+        "request.json_data()"
+      ],
+      "correct_answer": 0,
+      "explanation": "request.get_json() parses JSON request data."
+    },
+    {
+      "question_id": 15,
+      "question": "What does REST commonly describe?",
+      "options": [
+        "An architectural style for networked applications",
+        "A Python database",
+        "A CSS syntax",
+        "A Flask template"
+      ],
+      "correct_answer": 0,
+      "explanation": "REST is an architectural style commonly used for web APIs."
+    },
+    {
+      "question_id": 16,
+      "question": "Which database is commonly convenient for small Flask projects?",
+      "options": ["SQLite", "Only Oracle", "Only MongoDB", "Only Redis"],
+      "correct_answer": 0,
+      "explanation": "SQLite is lightweight and convenient for small applications."
+    },
+    {
+      "question_id": 17,
+      "question": "What is SQLAlchemy?",
+      "options": [
+        "A Python SQL toolkit and ORM",
+        "A CSS framework",
+        "A JavaScript compiler",
+        "A Flask server"
+      ],
+      "correct_answer": 0,
+      "explanation": "SQLAlchemy provides SQL toolkit and ORM functionality in Python."
+    },
+    {
+      "question_id": 18,
+      "question": "What are Flask Blueprints useful for?",
+      "options": [
+        "Organizing related application components",
+        "Creating database backups only",
+        "Styling HTML",
+        "Compiling Python"
+      ],
+      "correct_answer": 0,
+      "explanation": "Blueprints help organize related routes and functionality."
+    },
+    {
+      "question_id": 19,
+      "question": "Where should API keys normally be stored?",
+      "options": [
+        "Environment variables",
+        "Public HTML",
+        "CSS files",
+        "Git commit messages"
+      ],
+      "correct_answer": 0,
+      "explanation": "Sensitive credentials should be kept outside source code, commonly in environment variables."
+    },
+    {
+      "question_id": 20,
+      "question": "What is an important Flask development practice?",
+      "options": [
+        "Separate application components as the project grows",
+        "Put every route in HTML",
+        "Hard-code every secret",
+        "Avoid using functions"
+      ],
+      "correct_answer": 0,
+      "explanation": "Modular organization makes growing Flask applications easier to maintain."
+    }
+  ]
+}

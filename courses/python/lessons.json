@@ -1,0 +1,434 @@
+{
+  "course_id": "python_fundamentals",
+  "lessons": [
+    {
+      "lesson_id": "python_01",
+      "title": "Introduction to Python",
+      "duration_minutes": 20,
+      "topics": [
+        "What is Python?",
+        "Python use cases",
+        "Python syntax",
+        "Running Python programs",
+        "Comments"
+      ],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "What is Python?",
+          "text": "Python is a high-level, general-purpose programming language known for readable syntax and a large ecosystem of libraries. It is widely used in web development, automation, data analysis, artificial intelligence, scientific computing and scripting."
+        },
+        {
+          "type": "explanation",
+          "title": "Python Syntax",
+          "text": "Python uses indentation to define blocks of code. Unlike languages that use braces, Python relies on consistent indentation."
+        },
+        {
+          "type": "code_example",
+          "title": "First Python Program",
+          "language": "python",
+          "code": "print(\"Hello, World!\")"
+        },
+        {
+          "type": "code_example",
+          "title": "Comments",
+          "language": "python",
+          "code": "# This is a comment\nprint(\"Hello\")"
+        }
+      ],
+      "key_points": [
+        "Python is a general-purpose programming language.",
+        "Python code is designed to be readable.",
+        "Indentation is significant in Python.",
+        "Comments begin with #."
+      ]
+    },
+    {
+      "lesson_id": "python_02",
+      "title": "Variables and Data Types",
+      "duration_minutes": 20,
+      "topics": [
+        "Variables",
+        "Integers",
+        "Floats",
+        "Strings",
+        "Booleans",
+        "Type checking"
+      ],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Variables",
+          "text": "A variable is a name that refers to a value. Python variables do not require an explicit type declaration."
+        },
+        {
+          "type": "code_example",
+          "title": "Creating Variables",
+          "language": "python",
+          "code": "name = \"Jayasree\"\nage = 22\nscore = 87.5\nis_student = True"
+        },
+        {
+          "type": "explanation",
+          "title": "Common Data Types",
+          "text": "Common built-in Python types include int for whole numbers, float for decimal numbers, str for text, bool for True or False values, list for ordered collections, tuple for immutable ordered collections, set for unique values and dict for key-value pairs."
+        },
+        {
+          "type": "code_example",
+          "title": "Checking a Type",
+          "language": "python",
+          "code": "age = 22\nprint(type(age))"
+        }
+      ],
+      "key_points": [
+        "Python variables are created through assignment.",
+        "Python is dynamically typed.",
+        "Strings are written using quotes.",
+        "Boolean values are True and False."
+      ]
+    },
+    {
+      "lesson_id": "python_03",
+      "title": "Operators and Input",
+      "duration_minutes": 15,
+      "topics": [
+        "Arithmetic operators",
+        "Comparison operators",
+        "Logical operators",
+        "Assignment operators",
+        "User input"
+      ],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Arithmetic Operators",
+          "text": "Python supports arithmetic operators such as +, -, *, /, //, %, and **."
+        },
+        {
+          "type": "code_example",
+          "title": "Arithmetic",
+          "language": "python",
+          "code": "a = 10\nb = 3\nprint(a + b)\nprint(a // b)\nprint(a % b)\nprint(a ** b)"
+        },
+        {
+          "type": "explanation",
+          "title": "Comparison and Logical Operators",
+          "text": "Comparison operators such as ==, !=, >, <, >= and <= compare values. Logical operators and, or and not combine or reverse conditions."
+        },
+        {
+          "type": "code_example",
+          "title": "Input",
+          "language": "python",
+          "code": "name = input(\"Enter your name: \")\nprint(\"Hello\", name)"
+        }
+      ],
+      "key_points": [
+        "The / operator performs division.",
+        "// performs floor division.",
+        "% returns the remainder.",
+        "input() reads user input as a string."
+      ]
+    },
+    {
+      "lesson_id": "python_04",
+      "title": "Conditional Statements",
+      "duration_minutes": 20,
+      "topics": [
+        "if",
+        "elif",
+        "else",
+        "Nested conditions",
+        "Boolean expressions"
+      ],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "if Statements",
+          "text": "An if statement executes a block of code when its condition evaluates to True."
+        },
+        {
+          "type": "code_example",
+          "title": "Basic Condition",
+          "language": "python",
+          "code": "age = 20\n\nif age >= 18:\n    print(\"Adult\")"
+        },
+        {
+          "type": "code_example",
+          "title": "if, elif and else",
+          "language": "python",
+          "code": "score = 75\n\nif score >= 90:\n    print(\"A\")\nelif score >= 60:\n    print(\"B\")\nelse:\n    print(\"C\")"
+        },
+        {
+          "type": "explanation",
+          "title": "Nested Conditions",
+          "text": "An if statement can contain another conditional statement. However, deeply nested conditions should be avoided when simpler logic is possible."
+        }
+      ],
+      "key_points": [
+        "if tests a condition.",
+        "elif allows additional conditions.",
+        "else handles the remaining case.",
+        "Indentation defines the conditional block."
+      ]
+    },
+    {
+      "lesson_id": "python_05",
+      "title": "Loops",
+      "duration_minutes": 25,
+      "topics": [
+        "for loops",
+        "while loops",
+        "range()",
+        "break",
+        "continue"
+      ],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "for Loops",
+          "text": "A for loop iterates over items in an iterable such as a list, string, tuple or range."
+        },
+        {
+          "type": "code_example",
+          "title": "for Loop",
+          "language": "python",
+          "code": "for number in [1, 2, 3]:\n    print(number)"
+        },
+        {
+          "type": "code_example",
+          "title": "range()",
+          "language": "python",
+          "code": "for i in range(5):\n    print(i)"
+        },
+        {
+          "type": "explanation",
+          "title": "while Loops",
+          "text": "A while loop repeatedly executes its block while a condition remains True."
+        },
+        {
+          "type": "code_example",
+          "title": "while Loop",
+          "language": "python",
+          "code": "count = 1\nwhile count <= 3:\n    print(count)\n    count += 1"
+        },
+        {
+          "type": "explanation",
+          "title": "break and continue",
+          "text": "break terminates the loop immediately. continue skips the remaining statements in the current iteration and proceeds to the next iteration."
+        }
+      ],
+      "key_points": [
+        "for loops iterate over iterables.",
+        "range() commonly generates sequences of numbers.",
+        "while loops continue while their condition is true.",
+        "break exits a loop.",
+        "continue skips to the next iteration."
+      ]
+    },
+    {
+      "lesson_id": "python_06",
+      "title": "Lists, Tuples and Sets",
+      "duration_minutes": 25,
+      "topics": [
+        "Lists",
+        "Indexing",
+        "Slicing",
+        "Tuples",
+        "Sets"
+      ],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Lists",
+          "text": "A list is an ordered, mutable collection that can contain multiple values."
+        },
+        {
+          "type": "code_example",
+          "title": "List Example",
+          "language": "python",
+          "code": "numbers = [10, 20, 30]\nprint(numbers[0])\nnumbers.append(40)"
+        },
+        {
+          "type": "explanation",
+          "title": "Indexing and Slicing",
+          "text": "Python sequences use zero-based indexing. Slicing can extract a portion of a sequence using start:stop:step."
+        },
+        {
+          "type": "code_example",
+          "title": "Slicing",
+          "language": "python",
+          "code": "numbers = [10, 20, 30, 40, 50]\nprint(numbers[1:4])"
+        },
+        {
+          "type": "explanation",
+          "title": "Tuples",
+          "text": "A tuple is an ordered collection that cannot be modified after creation."
+        },
+        {
+          "type": "code_example",
+          "title": "Tuple",
+          "language": "python",
+          "code": "coordinates = (10, 20)"
+        },
+        {
+          "type": "explanation",
+          "title": "Sets",
+          "text": "A set is an unordered collection of unique elements. Sets are useful for membership testing and removing duplicate values."
+        }
+      ],
+      "key_points": [
+        "Lists are mutable.",
+        "Tuples are immutable.",
+        "Sequence indexing starts at zero.",
+        "Sets contain unique elements."
+      ]
+    },
+    {
+      "lesson_id": "python_07",
+      "title": "Dictionaries and Strings",
+      "duration_minutes": 20,
+      "topics": [
+        "Dictionaries",
+        "Keys and values",
+        "String indexing",
+        "String methods",
+        "Formatted strings"
+      ],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Dictionaries",
+          "text": "A dictionary stores data as key-value pairs. Keys are used to retrieve associated values."
+        },
+        {
+          "type": "code_example",
+          "title": "Dictionary Example",
+          "language": "python",
+          "code": "student = {\n    \"name\": \"Jayasree\",\n    \"age\": 22,\n    \"course\": \"Computer Science\"\n}\nprint(student[\"name\"])"
+        },
+        {
+          "type": "explanation",
+          "title": "Strings",
+          "text": "A string is a sequence of characters. Strings support indexing, slicing and many useful methods."
+        },
+        {
+          "type": "code_example",
+          "title": "String Methods",
+          "language": "python",
+          "code": "text = \"hello python\"\nprint(text.upper())\nprint(text.replace(\"python\", \"world\"))"
+        },
+        {
+          "type": "code_example",
+          "title": "Formatted Strings",
+          "language": "python",
+          "code": "name = \"Jayasree\"\nage = 22\nprint(f\"My name is {name} and I am {age} years old.\")"
+        }
+      ],
+      "key_points": [
+        "Dictionaries store key-value pairs.",
+        "Dictionary keys are used to access values.",
+        "Strings support indexing and slicing.",
+        "String methods can transform or inspect text."
+      ]
+    },
+    {
+      "lesson_id": "python_08",
+      "title": "Functions",
+      "duration_minutes": 20,
+      "topics": [
+        "Defining functions",
+        "Parameters",
+        "Arguments",
+        "Return values",
+        "Default parameters"
+      ],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "What is a Function?",
+          "text": "A function is a reusable block of code designed to perform a particular task. Functions help organize programs and reduce repeated code."
+        },
+        {
+          "type": "code_example",
+          "title": "Defining a Function",
+          "language": "python",
+          "code": "def greet(name):\n    return f\"Hello, {name}!\"\n\nmessage = greet(\"Jayasree\")\nprint(message)"
+        },
+        {
+          "type": "explanation",
+          "title": "Parameters and Arguments",
+          "text": "A parameter is a variable defined in a function declaration. An argument is the value supplied when calling the function."
+        },
+        {
+          "type": "code_example",
+          "title": "Default Parameter",
+          "language": "python",
+          "code": "def greet(name=\"Guest\"):\n    print(\"Hello\", name)\n\ngreet()\ngreet(\"Jayasree\")"
+        },
+        {
+          "type": "explanation",
+          "title": "Return Values",
+          "text": "The return statement sends a value back to the code that called the function."
+        }
+      ],
+      "key_points": [
+        "Functions are defined using def.",
+        "Parameters receive values.",
+        "return sends a value back.",
+        "Functions improve code reuse."
+      ]
+    },
+    {
+      "lesson_id": "python_09",
+      "title": "Exceptions, Modules and Files",
+      "duration_minutes": 15,
+      "topics": [
+        "Exceptions",
+        "try and except",
+        "Modules",
+        "Imports",
+        "File handling"
+      ],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Exceptions",
+          "text": "Exceptions are errors detected during program execution. Python provides try and except blocks for handling expected errors."
+        },
+        {
+          "type": "code_example",
+          "title": "Exception Handling",
+          "language": "python",
+          "code": "try:\n    number = int(input(\"Enter a number: \"))\n    print(number)\nexcept ValueError:\n    print(\"Please enter a valid number.\")"
+        },
+        {
+          "type": "explanation",
+          "title": "Modules",
+          "text": "A module is a Python file containing definitions and statements that can be imported and reused in another program."
+        },
+        {
+          "type": "code_example",
+          "title": "Importing a Module",
+          "language": "python",
+          "code": "import math\nprint(math.sqrt(25))"
+        },
+        {
+          "type": "explanation",
+          "title": "Basic File Handling",
+          "text": "Python can open files using the open() function. The with statement is commonly used because it ensures that the file is properly closed."
+        },
+        {
+          "type": "code_example",
+          "title": "Reading a File",
+          "language": "python",
+          "code": "with open(\"data.txt\", \"r\") as file:\n    content = file.read()\n    print(content)"
+        }
+      ],
+      "key_points": [
+        "try and except can handle exceptions.",
+        "Modules allow code to be reused.",
+        "import loads a module.",
+        "The with statement is useful for resource management."
+      ]
+    }
+  ]
+}

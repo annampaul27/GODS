@@ -1,0 +1,200 @@
+{
+  "course_id": "excel_fundamentals",
+  "title": "Excel for Data Analysis Mock Test",
+  "duration_minutes": 12,
+  "question_count": 20,
+  "total_marks": 20,
+  "passing_score": 60,
+  "questions": [
+    {
+      "question_id": 1,
+      "question": "What is an Excel workbook?",
+      "options": [
+        "An Excel file that can contain worksheets",
+        "A single cell",
+        "A chart only",
+        "A formula"
+      ],
+      "correct_answer": 0,
+      "explanation": "A workbook is an Excel file that can contain one or more worksheets."
+    },
+    {
+      "question_id": 2,
+      "question": "Which symbol begins an Excel formula?",
+      "options": ["=", "#", "@", "$"],
+      "correct_answer": 0,
+      "explanation": "Excel formulas normally begin with the equals sign."
+    },
+    {
+      "question_id": 3,
+      "question": "What does the cell reference A1 identify?",
+      "options": [
+        "Column A, row 1",
+        "Row A, column 1",
+        "Worksheet A, cell 1",
+        "The first formula"
+      ],
+      "correct_answer": 0,
+      "explanation": "A1 means column A and row 1."
+    },
+    {
+      "question_id": 4,
+      "question": "Which function calculates a total?",
+      "options": ["SUM", "TOTAL_ONLY", "ADD_ALL", "CALCULATE"],
+      "correct_answer": 0,
+      "explanation": "SUM adds the values in a range."
+    },
+    {
+      "question_id": 5,
+      "question": "Which function calculates the arithmetic mean?",
+      "options": ["AVERAGE", "MEAN_VALUE_ONLY", "AVG_TOTAL", "CENTER"],
+      "correct_answer": 0,
+      "explanation": "AVERAGE calculates the arithmetic mean."
+    },
+    {
+      "question_id": 6,
+      "question": "What does COUNT normally count?",
+      "options": [
+        "Numeric values",
+        "Only blank cells",
+        "Only charts",
+        "Only formulas"
+      ],
+      "correct_answer": 0,
+      "explanation": "COUNT counts cells containing numeric values."
+    },
+    {
+      "question_id": 7,
+      "question": "What does the IF function do?",
+      "options": [
+        "Evaluates a condition and returns a result",
+        "Creates a chart",
+        "Sorts a worksheet",
+        "Deletes duplicate rows"
+      ],
+      "correct_answer": 0,
+      "explanation": "IF evaluates a logical condition and returns different results depending on whether it is true or false."
+    },
+    {
+      "question_id": 8,
+      "question": "Which function requires all supplied conditions to be true?",
+      "options": ["AND", "OR", "IFONLY", "ALLTEXT"],
+      "correct_answer": 0,
+      "explanation": "AND returns TRUE when all its conditions are true."
+    },
+    {
+      "question_id": 9,
+      "question": "What does filtering do?",
+      "options": [
+        "Displays rows that meet selected criteria",
+        "Permanently deletes every other row",
+        "Changes formulas into values",
+        "Creates a new workbook"
+      ],
+      "correct_answer": 0,
+      "explanation": "Filtering displays only records that meet the selected criteria."
+    },
+    {
+      "question_id": 10,
+      "question": "What is sorting used for?",
+      "options": [
+        "Arranging data according to values",
+        "Creating formulas",
+        "Removing all data",
+        "Changing file formats"
+      ],
+      "correct_answer": 0,
+      "explanation": "Sorting arranges records according to selected values."
+    },
+    {
+      "question_id": 11,
+      "question": "Which feature can remove repeated records?",
+      "options": ["Remove Duplicates", "Delete Copies", "Clean Rows", "Unique Delete"],
+      "correct_answer": 0,
+      "explanation": "Excel provides a Remove Duplicates feature."
+    },
+    {
+      "question_id": 12,
+      "question": "Which function is a modern lookup function?",
+      "options": ["XLOOKUP", "XSEARCH", "LOOKDATA", "FINDVALUE"],
+      "correct_answer": 0,
+      "explanation": "XLOOKUP is a modern Excel lookup function."
+    },
+    {
+      "question_id": 13,
+      "question": "What does VLOOKUP traditionally perform?",
+      "options": [
+        "A vertical lookup",
+        "A chart calculation",
+        "A data cleaning operation",
+        "A worksheet backup"
+      ],
+      "correct_answer": 0,
+      "explanation": "VLOOKUP searches for a value in the first column of a table and returns a value from another column."
+    },
+    {
+      "question_id": 14,
+      "question": "Which chart is generally useful for showing trends over time?",
+      "options": ["Line chart", "Pie chart", "Radar chart only", "Picture chart"],
+      "correct_answer": 0,
+      "explanation": "Line charts are commonly used to display trends over time."
+    },
+    {
+      "question_id": 15,
+      "question": "Which chart is commonly useful for comparing categories?",
+      "options": ["Bar chart", "Line chart only", "Pie chart only", "Area map"],
+      "correct_answer": 0,
+      "explanation": "Bar and column charts are commonly used for category comparisons."
+    },
+    {
+      "question_id": 16,
+      "question": "What is a PivotTable mainly used for?",
+      "options": [
+        "Summarizing and analyzing data",
+        "Writing Python code",
+        "Editing images",
+        "Creating web pages"
+      ],
+      "correct_answer": 0,
+      "explanation": "PivotTables summarize large datasets through grouping and aggregation."
+    },
+    {
+      "question_id": 17,
+      "question": "Which area of a PivotTable normally contains calculations?",
+      "options": ["Values", "Rows only", "Columns only", "Workbook"],
+      "correct_answer": 0,
+      "explanation": "The Values area contains calculations such as Sum, Count and Average."
+    },
+    {
+      "question_id": 18,
+      "question": "What does an absolute reference such as $A$1 do?",
+      "options": [
+        "Keeps the row and column fixed when copied",
+        "Deletes the cell",
+        "Makes the cell hidden",
+        "Converts the value to text"
+      ],
+      "correct_answer": 0,
+      "explanation": "The dollar signs make both the column and row absolute."
+    },
+    {
+      "question_id": 19,
+      "question": "Which function can retrieve a value based on a matching position?",
+      "options": ["INDEX", "TOTAL", "CHART", "SORTONLY"],
+      "correct_answer": 0,
+      "explanation": "INDEX returns a value from a specified position in a range."
+    },
+    {
+      "question_id": 20,
+      "question": "Why is data cleaning important before analysis?",
+      "options": [
+        "It improves data quality and consistency",
+        "It always increases the number of rows",
+        "It automatically creates a dashboard",
+        "It replaces the need for analysis"
+      ],
+      "correct_answer": 0,
+      "explanation": "Cleaning helps ensure that analysis is performed on accurate and consistent data."
+    }
+  ]
+}

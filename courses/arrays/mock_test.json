@@ -1,0 +1,250 @@
+{
+  "course_id": "arrays_fundamentals",
+  "title": "Arrays Fundamentals Mock Test",
+  "duration_minutes": 12,
+  "question_count": 20,
+  "total_marks": 20,
+  "passing_score": 60,
+  "questions": [
+    {
+      "question_id": 1,
+      "question": "What is an array?",
+      "options": [
+        "A collection of elements stored in a sequence",
+        "A database server",
+        "A programming language",
+        "A network protocol"
+      ],
+      "correct_answer": 0,
+      "explanation": "An array stores multiple elements in a sequence."
+    },
+    {
+      "question_id": 2,
+      "question": "What is the index of the first element in most programming languages?",
+      "options": [
+        "0",
+        "1",
+        "-1",
+        "10"
+      ],
+      "correct_answer": 0,
+      "explanation": "Most common programming languages use zero-based indexing."
+    },
+    {
+      "question_id": 3,
+      "question": "What is the complexity of direct array access by index?",
+      "options": [
+        "O(1)",
+        "O(n)",
+        "O(log n)",
+        "O(n²)"
+      ],
+      "correct_answer": 0,
+      "explanation": "An element can generally be accessed directly using its index."
+    },
+    {
+      "question_id": 4,
+      "question": "What does array traversal mean?",
+      "options": [
+        "Visiting the elements of an array",
+        "Deleting an array",
+        "Sorting a database",
+        "Creating a class"
+      ],
+      "correct_answer": 0,
+      "explanation": "Traversal means visiting array elements."
+    },
+    {
+      "question_id": 5,
+      "question": "What is the typical complexity of traversing all elements?",
+      "options": [
+        "O(n)",
+        "O(1)",
+        "O(log n)",
+        "O(n²)"
+      ],
+      "correct_answer": 0,
+      "explanation": "Every element must be visited, resulting in O(n)."
+    },
+    {
+      "question_id": 6,
+      "question": "Which search checks elements one by one?",
+      "options": [
+        "Linear search",
+        "Binary search",
+        "Hash search",
+        "Tree search"
+      ],
+      "correct_answer": 0,
+      "explanation": "Linear search checks elements sequentially."
+    },
+    {
+      "question_id": 7,
+      "question": "What is the worst-case complexity of linear search?",
+      "options": [
+        "O(n)",
+        "O(1)",
+        "O(log n)",
+        "O(n²)"
+      ],
+      "correct_answer": 0,
+      "explanation": "Linear search may need to inspect every element."
+    },
+    {
+      "question_id": 8,
+      "question": "What requirement does binary search normally have?",
+      "options": [
+        "The data must be sorted",
+        "The data must contain strings",
+        "The array must have exactly 10 elements",
+        "The data must be random"
+      ],
+      "correct_answer": 0,
+      "explanation": "Binary search relies on sorted data."
+    },
+    {
+      "question_id": 9,
+      "question": "What is the typical complexity of binary search?",
+      "options": [
+        "O(log n)",
+        "O(n)",
+        "O(1)",
+        "O(n²)"
+      ],
+      "correct_answer": 0,
+      "explanation": "Binary search eliminates approximately half of the search space each step."
+    },
+    {
+      "question_id": 10,
+      "question": "What can happen when inserting into the middle of an array?",
+      "options": [
+        "Elements may need to be shifted",
+        "The computer shuts down",
+        "The array becomes a database",
+        "Nothing changes"
+      ],
+      "correct_answer": 0,
+      "explanation": "Elements after the insertion position may need to move."
+    },
+    {
+      "question_id": 11,
+      "question": "Which operation removes an element?",
+      "options": [
+        "Deletion",
+        "Traversal",
+        "Sorting",
+        "Indexing"
+      ],
+      "correct_answer": 0,
+      "explanation": "Deletion removes an element."
+    },
+    {
+      "question_id": 12,
+      "question": "What does bubble sort repeatedly compare?",
+      "options": [
+        "Adjacent elements",
+        "Only the first and last elements",
+        "Database tables",
+        "Random variables"
+      ],
+      "correct_answer": 0,
+      "explanation": "Bubble sort repeatedly compares adjacent elements."
+    },
+    {
+      "question_id": 13,
+      "question": "What is the main purpose of sorting?",
+      "options": [
+        "Arrange elements in an order",
+        "Delete every element",
+        "Increase memory",
+        "Create a database"
+      ],
+      "correct_answer": 0,
+      "explanation": "Sorting arranges elements according to a chosen ordering."
+    },
+    {
+      "question_id": 14,
+      "question": "Which approach can be used to find the maximum value?",
+      "options": [
+        "Traverse the array while tracking the largest value",
+        "Always select the first element",
+        "Delete all elements",
+        "Use a network connection"
+      ],
+      "correct_answer": 0,
+      "explanation": "A single traversal can track the maximum value."
+    },
+    {
+      "question_id": 15,
+      "question": "What is the complexity of finding the maximum through one traversal?",
+      "options": [
+        "O(n)",
+        "O(1)",
+        "O(log n)",
+        "O(n²)"
+      ],
+      "correct_answer": 0,
+      "explanation": "Every element may need to be examined."
+    },
+    {
+      "question_id": 16,
+      "question": "Which structure can help detect duplicates efficiently?",
+      "options": [
+        "Set",
+        "Printer",
+        "File",
+        "Router"
+      ],
+      "correct_answer": 0,
+      "explanation": "A set can track values that have already been encountered."
+    },
+    {
+      "question_id": 17,
+      "question": "What does O(n) generally mean?",
+      "options": [
+        "Work grows approximately with input size",
+        "Work never changes",
+        "Work always takes one operation",
+        "Work grows exponentially"
+      ],
+      "correct_answer": 0,
+      "explanation": "O(n) describes linear growth relative to input size."
+    },
+    {
+      "question_id": 18,
+      "question": "Which algorithm is generally faster for searching a sorted large array?",
+      "options": [
+        "Binary search",
+        "Linear search",
+        "Bubble sort",
+        "Insertion sort"
+      ],
+      "correct_answer": 0,
+      "explanation": "Binary search reduces the search space by half at each step."
+    },
+    {
+      "question_id": 19,
+      "question": "What does zero-based indexing mean?",
+      "options": [
+        "The first element has index 0",
+        "The first element has index 1",
+        "Arrays cannot contain zero",
+        "Arrays have no indexes"
+      ],
+      "correct_answer": 0,
+      "explanation": "Zero-based indexing starts counting positions from 0."
+    },
+    {
+      "question_id": 20,
+      "question": "Which factor should influence the choice of an array algorithm?",
+      "options": [
+        "Input characteristics and required operation",
+        "The computer's wallpaper",
+        "The monitor size",
+        "The keyboard brand"
+      ],
+      "correct_answer": 0,
+      "explanation": "The input and required operation determine which algorithm is appropriate."
+    }
+  ]
+}

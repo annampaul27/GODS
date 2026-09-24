@@ -1,0 +1,24 @@
+{
+  "course_id": "django_fundamentals",
+  "title": "Django Fundamentals",
+  "subject": "Django",
+  "difficulty": "Beginner",
+  "duration_minutes": 120,
+  "description": "Learn the fundamentals of Django web development including projects, apps, URLs, views, templates, models, forms, the admin panel and basic CRUD operations.",
+  "learning_objectives": [
+    "Understand Django architecture",
+    "Create Django projects and applications",
+    "Configure URLs and views",
+    "Create dynamic templates",
+    "Work with Django models and databases",
+    "Use Django forms",
+    "Use the Django admin panel",
+    "Build basic CRUD functionality"
+  ],
+  "lesson_count": 8,
+  "mock_test": {
+    "question_count": 20,
+    "duration_minutes": 12,
+    "passing_score": 60
+  }
+}

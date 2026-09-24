@@ -1,0 +1,230 @@
+{
+  "course_id": "django_fundamentals",
+  "title": "Django Fundamentals Mock Test",
+  "duration_minutes": 12,
+  "question_count": 20,
+  "total_marks": 20,
+  "passing_score": 60,
+  "questions": [
+    {
+      "question_id": 1,
+      "question": "What is Django?",
+      "options": [
+        "A Python web framework",
+        "A database",
+        "A CSS library",
+        "A JavaScript compiler"
+      ],
+      "correct_answer": 0,
+      "explanation": "Django is a Python web framework."
+    },
+    {
+      "question_id": 2,
+      "question": "Which architecture is Django commonly associated with?",
+      "options": [
+        "Model-View-Template",
+        "Model-Only-Table",
+        "Controller-Database-View",
+        "HTML-CSS-JavaScript"
+      ],
+      "correct_answer": 0,
+      "explanation": "Django commonly uses a Model-View-Template architecture."
+    },
+    {
+      "question_id": 3,
+      "question": "Which command creates a Django project?",
+      "options": [
+        "django-admin startproject",
+        "django-create project",
+        "python create-django",
+        "django new"
+      ],
+      "correct_answer": 0,
+      "explanation": "django-admin startproject creates a Django project."
+    },
+    {
+      "question_id": 4,
+      "question": "Which command creates a Django application?",
+      "options": [
+        "python manage.py startapp",
+        "python manage.py newapp",
+        "django-admin app",
+        "django createapp"
+      ],
+      "correct_answer": 0,
+      "explanation": "python manage.py startapp creates an application."
+    },
+    {
+      "question_id": 5,
+      "question": "Where are Django applications normally registered?",
+      "options": [
+        "INSTALLED_APPS",
+        "REGISTERED_APPS",
+        "DJANGO_APPS",
+        "APPLICATIONS"
+      ],
+      "correct_answer": 0,
+      "explanation": "Applications are registered in INSTALLED_APPS."
+    },
+    {
+      "question_id": 6,
+      "question": "What does a Django view generally do?",
+      "options": [
+        "Processes a request and returns a response",
+        "Only creates database tables",
+        "Only styles HTML",
+        "Compiles Python"
+      ],
+      "correct_answer": 0,
+      "explanation": "A view receives a request and returns a response."
+    },
+    {
+      "question_id": 7,
+      "question": "Which function can return an HTML response directly?",
+      "options": [
+        "HttpResponse",
+        "HTMLResponseOnly",
+        "PageResponse",
+        "BrowserResponse"
+      ],
+      "correct_answer": 0,
+      "explanation": "HttpResponse can return content directly to the client."
+    },
+    {
+      "question_id": 8,
+      "question": "Which function is commonly used to render a Django template?",
+      "options": ["render()", "template()", "show()", "html()"],
+      "correct_answer": 0,
+      "explanation": "The render() shortcut renders a template with context."
+    },
+    {
+      "question_id": 9,
+      "question": "Which syntax displays a variable in a Django template?",
+      "options": ["{{ variable }}", "[[ variable ]]", "<% variable %>", "(( variable ))"],
+      "correct_answer": 0,
+      "explanation": "Django template variables use double curly braces."
+    },
+    {
+      "question_id": 10,
+      "question": "What is a Django model?",
+      "options": [
+        "A Python class representing data",
+        "An HTML page",
+        "A CSS selector",
+        "A JavaScript function"
+      ],
+      "correct_answer": 0,
+      "explanation": "Django models represent database data using Python classes."
+    },
+    {
+      "question_id": 11,
+      "question": "What does Django ORM allow developers to do?",
+      "options": [
+        "Work with database data using Python objects",
+        "Style web pages",
+        "Compile JavaScript",
+        "Create CSS animations"
+      ],
+      "correct_answer": 0,
+      "explanation": "The ORM provides Python abstractions for database operations."
+    },
+    {
+      "question_id": 12,
+      "question": "Which command creates migration files after model changes?",
+      "options": [
+        "python manage.py makemigrations",
+        "python manage.py migration",
+        "python manage.py create-db",
+        "django makemodel"
+      ],
+      "correct_answer": 0,
+      "explanation": "makemigrations creates migration files."
+    },
+    {
+      "question_id": 13,
+      "question": "Which command applies migrations to the database?",
+      "options": [
+        "python manage.py migrate",
+        "python manage.py apply",
+        "python manage.py updatedb",
+        "django migrate-db"
+      ],
+      "correct_answer": 0,
+      "explanation": "migrate applies migrations to the database."
+    },
+    {
+      "question_id": 14,
+      "question": "What is a ModelForm?",
+      "options": [
+        "A form connected to a Django model",
+        "A database server",
+        "A CSS framework",
+        "A template engine"
+      ],
+      "correct_answer": 0,
+      "explanation": "ModelForm can generate form fields based on a model."
+    },
+    {
+      "question_id": 15,
+      "question": "Which command creates a Django superuser?",
+      "options": [
+        "python manage.py createsuperuser",
+        "python manage.py adminuser",
+        "django createadmin",
+        "python create admin"
+      ],
+      "correct_answer": 0,
+      "explanation": "createsuperuser creates an administrative account."
+    },
+    {
+      "question_id": 16,
+      "question": "How can a model be made available in the Django admin?",
+      "options": [
+        "Register it with admin.site.register()",
+        "Add it to HTML",
+        "Put it in CSS",
+        "Call model.admin()"
+      ],
+      "correct_answer": 0,
+      "explanation": "Models can be registered using admin.site.register()."
+    },
+    {
+      "question_id": 17,
+      "question": "What does CRUD stand for?",
+      "options": [
+        "Create, Read, Update, Delete",
+        "Compile, Run, Upload, Download",
+        "Create, Render, Use, Deploy",
+        "Code, Read, Update, Debug"
+      ],
+      "correct_answer": 0,
+      "explanation": "CRUD stands for Create, Read, Update and Delete."
+    },
+    {
+      "question_id": 18,
+      "question": "Which method saves changes to a Django model instance?",
+      "options": ["save()", "store()", "commit_model()", "write()"],
+      "correct_answer": 0,
+      "explanation": "save() persists changes to the database."
+    },
+    {
+      "question_id": 19,
+      "question": "Which method deletes a Django model instance?",
+      "options": ["delete()", "remove_db()", "destroy()", "erase()"],
+      "correct_answer": 0,
+      "explanation": "delete() removes the model instance from the database."
+    },
+    {
+      "question_id": 20,
+      "question": "Which file commonly contains project configuration such as INSTALLED_APPS?",
+      "options": [
+        "settings.py",
+        "models.html",
+        "database.css",
+        "config.js"
+      ],
+      "correct_answer": 0,
+      "explanation": "settings.py contains important Django project configuration."
+    }
+  ]
+}

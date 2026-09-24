@@ -1,0 +1,24 @@
+{
+  "course_id": "excel_fundamentals",
+  "title": "Excel for Data Analysis",
+  "subject": "Excel",
+  "difficulty": "Beginner",
+  "duration_minutes": 90,
+  "description": "Learn the essential Excel skills used for organizing, cleaning, analyzing and presenting data.",
+  "learning_objectives": [
+    "Understand Excel worksheets and cell references",
+    "Use formulas and functions",
+    "Apply conditional logic",
+    "Sort and filter data",
+    "Clean and organize datasets",
+    "Create charts and visualizations",
+    "Use PivotTables",
+    "Apply basic data analysis techniques"
+  ],
+  "lesson_count": 7,
+  "mock_test": {
+    "question_count": 20,
+    "duration_minutes": 12,
+    "passing_score": 60
+  }
+}

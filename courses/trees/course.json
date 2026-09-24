@@ -1,0 +1,23 @@
+{
+  "course_id": "trees_fundamentals",
+  "title": "Trees and Tree Data Structures",
+  "subject": "Trees",
+  "difficulty": "Beginner",
+  "duration_minutes": 120,
+  "description": "Learn the fundamentals of tree data structures, binary trees, binary search trees, tree traversal, searching, insertion and common applications.",
+  "learning_objectives": [
+    "Understand tree data structures and terminology",
+    "Understand binary trees",
+    "Perform preorder, inorder and postorder traversal",
+    "Understand binary search trees",
+    "Search and insert values in a BST",
+    "Understand tree height and depth",
+    "Understand common applications of trees"
+  ],
+  "lesson_count": 8,
+  "mock_test": {
+    "question_count": 20,
+    "duration_minutes": 12,
+    "passing_score": 60
+  }
+}

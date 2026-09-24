@@ -1,0 +1,245 @@
+{
+  "course_id": "aws_fundamentals",
+  "title": "AWS Cloud Fundamentals Mock Test",
+  "duration_minutes": 12,
+  "question_count": 20,
+  "total_marks": 20,
+  "passing_score": 60,
+  "questions": [
+    {
+      "question_id": 1,
+      "question": "What does AWS provide?",
+      "options": [
+        "Cloud computing services",
+        "Only desktop applications",
+        "Only physical computers",
+        "Only spreadsheet software"
+      ],
+      "correct_answer": 0,
+      "explanation": "AWS provides a broad collection of cloud services."
+    },
+    {
+      "question_id": 2,
+      "question": "What is cloud computing?",
+      "options": [
+        "Providing computing resources over a network",
+        "Only storing files on a USB drive",
+        "Building a personal computer",
+        "Writing code without a computer"
+      ],
+      "correct_answer": 0,
+      "explanation": "Cloud computing provides computing resources such as servers and storage over a network."
+    },
+    {
+      "question_id": 3,
+      "question": "What is an AWS Region?",
+      "options": [
+        "A geographic area containing AWS infrastructure",
+        "A single EC2 instance",
+        "An IAM user",
+        "An S3 object"
+      ],
+      "correct_answer": 0,
+      "explanation": "An AWS Region is a separate geographic area containing AWS infrastructure."
+    },
+    {
+      "question_id": 4,
+      "question": "What is an Availability Zone?",
+      "options": [
+        "An isolated location within an AWS Region",
+        "A database table",
+        "An IAM policy",
+        "An S3 bucket"
+      ],
+      "correct_answer": 0,
+      "explanation": "Availability Zones are isolated locations within an AWS Region."
+    },
+    {
+      "question_id": 5,
+      "question": "What does Amazon EC2 provide?",
+      "options": [
+        "Virtual computing capacity",
+        "Only object storage",
+        "Only database tables",
+        "Email accounts"
+      ],
+      "correct_answer": 0,
+      "explanation": "EC2 provides virtual computing capacity through instances."
+    },
+    {
+      "question_id": 6,
+      "question": "What is an EC2 instance?",
+      "options": [
+        "A virtual server",
+        "An S3 bucket",
+        "An IAM policy",
+        "A database column"
+      ],
+      "correct_answer": 0,
+      "explanation": "An EC2 instance is a virtual server running in AWS."
+    },
+    {
+      "question_id": 7,
+      "question": "What is an AMI used for?",
+      "options": [
+        "Launching EC2 instances",
+        "Creating Excel files",
+        "Managing IAM passwords only",
+        "Creating S3 buckets only"
+      ],
+      "correct_answer": 0,
+      "explanation": "An AMI contains information needed to launch an EC2 instance."
+    },
+    {
+      "question_id": 8,
+      "question": "What is Amazon S3?",
+      "options": [
+        "An object storage service",
+        "A virtual machine service",
+        "A relational database only",
+        "An identity management service"
+      ],
+      "correct_answer": 0,
+      "explanation": "S3 is an object storage service."
+    },
+    {
+      "question_id": 9,
+      "question": "Where are S3 objects stored?",
+      "options": [
+        "Buckets",
+        "Regions only",
+        "IAM users",
+        "EC2 security groups"
+      ],
+      "correct_answer": 0,
+      "explanation": "S3 objects are stored in buckets."
+    },
+    {
+      "question_id": 10,
+      "question": "Which AWS service is designed for relational databases?",
+      "options": [
+        "Amazon RDS",
+        "Amazon S3",
+        "Amazon EC2",
+        "AWS IAM"
+      ],
+      "correct_answer": 0,
+      "explanation": "Amazon RDS is a managed relational database service."
+    },
+    {
+      "question_id": 11,
+      "question": "Which service is a managed NoSQL database?",
+      "options": [
+        "Amazon DynamoDB",
+        "Amazon RDS",
+        "Amazon S3",
+        "Amazon EC2"
+      ],
+      "correct_answer": 0,
+      "explanation": "DynamoDB is a managed NoSQL database service."
+    },
+    {
+      "question_id": 12,
+      "question": "What is AWS IAM used for?",
+      "options": [
+        "Managing access to AWS resources",
+        "Storing objects",
+        "Running virtual machines",
+        "Creating charts"
+      ],
+      "correct_answer": 0,
+      "explanation": "IAM manages authentication and authorization for AWS resources."
+    },
+    {
+      "question_id": 13,
+      "question": "What does an IAM policy define?",
+      "options": [
+        "Permissions",
+        "Database rows",
+        "CPU speed",
+        "S3 storage capacity"
+      ],
+      "correct_answer": 0,
+      "explanation": "IAM policies define which actions are allowed or denied."
+    },
+    {
+      "question_id": 14,
+      "question": "What is the principle of least privilege?",
+      "options": [
+        "Giving only the permissions required",
+        "Giving every user administrator access",
+        "Disabling all security",
+        "Giving access to every AWS service"
+      ],
+      "correct_answer": 0,
+      "explanation": "Least privilege means providing only the access necessary to perform a task."
+    },
+    {
+      "question_id": 15,
+      "question": "What is an IAM role?",
+      "options": [
+        "An identity with permissions that can be assumed",
+        "A storage bucket",
+        "A virtual machine",
+        "A database table"
+      ],
+      "correct_answer": 0,
+      "explanation": "IAM roles provide permissions that can be assumed by trusted entities."
+    },
+    {
+      "question_id": 16,
+      "question": "What is AWS Lambda?",
+      "options": [
+        "A serverless compute service",
+        "An object storage service",
+        "A relational database",
+        "A spreadsheet service"
+      ],
+      "correct_answer": 0,
+      "explanation": "Lambda runs code without requiring users to manage servers."
+    },
+    {
+      "question_id": 17,
+      "question": "What can trigger a Lambda function?",
+      "options": [
+        "Events",
+        "Only manual server restarts",
+        "Only Excel formulas",
+        "Only S3 bucket names"
+      ],
+      "correct_answer": 0,
+      "explanation": "Lambda functions can be invoked by events from AWS services or applications."
+    },
+    {
+      "question_id": 18,
+      "question": "Which service is commonly used for object storage?",
+      "options": ["Amazon S3", "Amazon EC2", "Amazon RDS", "AWS IAM"],
+      "correct_answer": 0,
+      "explanation": "Amazon S3 is AWS object storage."
+    },
+    {
+      "question_id": 19,
+      "question": "Why might an application use multiple Availability Zones?",
+      "options": [
+        "To improve availability",
+        "To delete all backups",
+        "To remove IAM permissions",
+        "To convert SQL into HTML"
+      ],
+      "correct_answer": 0,
+      "explanation": "Using multiple Availability Zones can help improve application availability."
+    },
+    {
+      "question_id": 20,
+      "question": "Which AWS service lets developers run code without managing servers?",
+      "options": [
+        "AWS Lambda",
+        "Amazon S3",
+        "Amazon RDS",
+        "Amazon IAM"
+      ],
+      "correct_answer": 0,
+      "explanation": "AWS Lambda provides serverless code execution."
+    }
+  ]
+}

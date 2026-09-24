@@ -1,0 +1,304 @@
+{
+  "course_id": "html_fundamentals",
+  "lessons": [
+    {
+      "lesson_id": "html_01",
+      "title": "Introduction to HTML",
+      "duration_minutes": 15,
+      "topics": ["HTML", "Web pages", "Elements", "Tags", "Attributes"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "What is HTML?",
+          "text": "HTML stands for HyperText Markup Language. It is used to structure the content of web pages."
+        },
+        {
+          "type": "explanation",
+          "title": "HTML Elements",
+          "text": "HTML documents are made up of elements. Elements are commonly written using an opening tag, content and a closing tag."
+        },
+        {
+          "type": "code_example",
+          "title": "Basic Element",
+          "language": "html",
+          "code": "<p>Hello World!</p>"
+        },
+        {
+          "type": "explanation",
+          "title": "Attributes",
+          "text": "Attributes provide additional information about an HTML element and are normally written inside the opening tag."
+        },
+        {
+          "type": "code_example",
+          "title": "Attribute Example",
+          "language": "html",
+          "code": "<p class=\"intro\">Welcome!</p>"
+        }
+      ],
+      "key_points": [
+        "HTML structures web page content.",
+        "HTML uses elements and tags.",
+        "Attributes provide additional information."
+      ]
+    },
+    {
+      "lesson_id": "html_02",
+      "title": "HTML Document Structure",
+      "duration_minutes": 15,
+      "topics": ["DOCTYPE", "html", "head", "body", "title"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Basic Document",
+          "text": "An HTML document normally contains a DOCTYPE declaration, an html element, a head section and a body section."
+        },
+        {
+          "type": "code_example",
+          "title": "HTML Document",
+          "language": "html",
+          "code": "<!DOCTYPE html>\n<html>\n<head>\n  <title>My Page</title>\n</head>\n<body>\n  <h1>Hello</h1>\n  <p>Welcome to my page.</p>\n</body>\n</html>"
+        },
+        {
+          "type": "explanation",
+          "title": "Head",
+          "text": "The head contains information about the document such as its title, metadata and links to external resources."
+        },
+        {
+          "type": "explanation",
+          "title": "Body",
+          "text": "The body contains the visible content of the web page."
+        }
+      ],
+      "key_points": [
+        "DOCTYPE identifies the document type.",
+        "The head contains document metadata.",
+        "The body contains visible page content."
+      ]
+    },
+    {
+      "lesson_id": "html_03",
+      "title": "Text, Headings and Lists",
+      "duration_minutes": 15,
+      "topics": ["Headings", "Paragraphs", "Bold", "Italic", "Lists"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Headings",
+          "text": "HTML provides six heading levels from h1 to h6. h1 represents the highest-level heading."
+        },
+        {
+          "type": "code_example",
+          "title": "Headings",
+          "language": "html",
+          "code": "<h1>Main Heading</h1>\n<h2>Section Heading</h2>\n<h3>Subsection Heading</h3>"
+        },
+        {
+          "type": "explanation",
+          "title": "Paragraphs",
+          "text": "The p element is used to represent a paragraph of text."
+        },
+        {
+          "type": "explanation",
+          "title": "Lists",
+          "text": "Unordered lists use ul and li elements. Ordered lists use ol and li elements."
+        },
+        {
+          "type": "code_example",
+          "title": "Lists",
+          "language": "html",
+          "code": "<ul>\n  <li>Python</li>\n  <li>SQL</li>\n</ul>\n\n<ol>\n  <li>First</li>\n  <li>Second</li>\n</ol>"
+        }
+      ],
+      "key_points": [
+        "Use h1 through h6 for headings.",
+        "Use p for paragraphs.",
+        "Use ul for unordered lists.",
+        "Use ol for ordered lists."
+      ]
+    },
+    {
+      "lesson_id": "html_04",
+      "title": "Links, Images and Tables",
+      "duration_minutes": 15,
+      "topics": ["Links", "Images", "Tables", "href", "src", "alt"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Links",
+          "text": "The anchor element creates hyperlinks. The href attribute specifies the destination."
+        },
+        {
+          "type": "code_example",
+          "title": "Link",
+          "language": "html",
+          "code": "<a href=\"https://example.com\">Visit Example</a>"
+        },
+        {
+          "type": "explanation",
+          "title": "Images",
+          "text": "The img element displays an image. The src attribute specifies the image source and alt provides alternative text."
+        },
+        {
+          "type": "code_example",
+          "title": "Image",
+          "language": "html",
+          "code": "<img src=\"photo.jpg\" alt=\"A profile photo\">"
+        },
+        {
+          "type": "explanation",
+          "title": "Tables",
+          "text": "Tables use table, tr, th and td elements to represent tabular data."
+        },
+        {
+          "type": "code_example",
+          "title": "Table",
+          "language": "html",
+          "code": "<table>\n  <tr>\n    <th>Name</th>\n    <th>Score</th>\n  </tr>\n  <tr>\n    <td>Alex</td>\n    <td>90</td>\n  </tr>\n</table>"
+        }
+      ],
+      "key_points": [
+        "a creates hyperlinks.",
+        "img displays images.",
+        "alt provides alternative image text.",
+        "Tables organize tabular data."
+      ]
+    },
+    {
+      "lesson_id": "html_05",
+      "title": "Semantic HTML",
+      "duration_minutes": 15,
+      "topics": ["Semantic HTML", "header", "nav", "main", "section", "article", "footer"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Semantic Elements",
+          "text": "Semantic HTML elements describe the purpose of their content instead of using generic containers everywhere."
+        },
+        {
+          "type": "code_example",
+          "title": "Semantic Layout",
+          "language": "html",
+          "code": "<header>Site Header</header>\n<nav>Navigation</nav>\n<main>\n  <section>\n    <article>Article content</article>\n  </section>\n</main>\n<footer>Footer</footer>"
+        },
+        {
+          "type": "explanation",
+          "title": "Why Semantic HTML?",
+          "text": "Semantic markup improves document structure, accessibility and maintainability."
+        }
+      ],
+      "key_points": [
+        "Semantic elements communicate meaning.",
+        "header represents introductory content.",
+        "nav represents navigation.",
+        "main represents the main page content.",
+        "footer represents footer content."
+      ]
+    },
+    {
+      "lesson_id": "html_06",
+      "title": "HTML Forms",
+      "duration_minutes": 20,
+      "topics": ["Forms", "Input", "Label", "Button", "Form controls"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Forms",
+          "text": "HTML forms allow users to enter information that can be submitted to a server."
+        },
+        {
+          "type": "code_example",
+          "title": "Basic Form",
+          "language": "html",
+          "code": "<form>\n  <label for=\"name\">Name:</label>\n  <input type=\"text\" id=\"name\" name=\"name\">\n  <button type=\"submit\">Submit</button>\n</form>"
+        },
+        {
+          "type": "explanation",
+          "title": "Input Types",
+          "text": "The input element supports different types such as text, email, password, number, date and checkbox."
+        },
+        {
+          "type": "code_example",
+          "title": "Input Types",
+          "language": "html",
+          "code": "<input type=\"email\" name=\"email\">\n<input type=\"password\" name=\"password\">\n<input type=\"number\" name=\"age\">\n<input type=\"checkbox\" name=\"agree\">"
+        },
+        {
+          "type": "explanation",
+          "title": "Labels",
+          "text": "Labels describe form controls and improve usability and accessibility."
+        }
+      ],
+      "key_points": [
+        "Forms collect user input.",
+        "Input type determines the kind of data expected.",
+        "Labels describe form controls.",
+        "Buttons can submit forms."
+      ]
+    },
+    {
+      "lesson_id": "html_07",
+      "title": "HTML5 and Modern HTML",
+      "duration_minutes": 15,
+      "topics": ["HTML5", "Audio", "Video", "Data attributes", "Accessibility"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "HTML5",
+          "text": "HTML5 introduced many semantic elements and native support for multimedia and modern web applications."
+        },
+        {
+          "type": "code_example",
+          "title": "Video",
+          "language": "html",
+          "code": "<video controls>\n  <source src=\"video.mp4\" type=\"video/mp4\">\n</video>"
+        },
+        {
+          "type": "code_example",
+          "title": "Audio",
+          "language": "html",
+          "code": "<audio controls>\n  <source src=\"audio.mp3\" type=\"audio/mpeg\">\n</audio>"
+        },
+        {
+          "type": "explanation",
+          "title": "Accessibility",
+          "text": "Good HTML should be structured clearly and use appropriate labels, alternative text and semantic elements."
+        }
+      ],
+      "key_points": [
+        "HTML5 provides modern semantic and multimedia features.",
+        "Audio and video can be embedded natively.",
+        "Accessible HTML uses meaningful structure and labels."
+      ]
+    },
+    {
+      "lesson_id": "html_08",
+      "title": "Building a Basic Web Page",
+      "duration_minutes": 15,
+      "topics": ["HTML structure", "Semantic layout", "Forms", "Links", "Images"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Putting It Together",
+          "text": "A basic web page combines document structure, semantic elements, text, links, images and forms."
+        },
+        {
+          "type": "code_example",
+          "title": "Mini Web Page",
+          "language": "html",
+          "code": "<!DOCTYPE html>\n<html>\n<head>\n  <title>My Portfolio</title>\n</head>\n<body>\n  <header>\n    <h1>My Portfolio</h1>\n  </header>\n\n  <main>\n    <section>\n      <h2>About Me</h2>\n      <p>I am learning web development.</p>\n      <a href=\"projects.html\">My Projects</a>\n    </section>\n  </main>\n\n  <footer>\n    <p>Copyright 2026</p>\n  </footer>\n</body>\n</html>"
+        },
+        {
+          "type": "explanation",
+          "title": "Next Step",
+          "text": "HTML provides the structure of a web page. CSS is then used to control its visual appearance and layout."
+        }
+      ],
+      "key_points": [
+        "HTML provides page structure.",
+        "Semantic elements improve organization.",
+        "CSS can be added to style the HTML.",
+        "JavaScript can later add behavior and interactivity."
+      ]
+    }
+  ]
+}

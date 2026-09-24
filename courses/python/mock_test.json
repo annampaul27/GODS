@@ -1,0 +1,250 @@
+{
+  "course_id": "python_fundamentals",
+  "title": "Python Fundamentals Mock Test",
+  "duration_minutes": 12,
+  "question_count": 20,
+  "total_marks": 20,
+  "passing_score": 60,
+  "questions": [
+    {
+      "question_id": 1,
+      "question": "Which of the following is used to display output in Python?",
+      "options": [
+        "input()",
+        "print()",
+        "display()",
+        "output()"
+      ],
+      "correct_answer": 1,
+      "explanation": "The print() function is used to display output in Python."
+    },
+    {
+      "question_id": 2,
+      "question": "Which of the following is a valid Python variable assignment?",
+      "options": [
+        "int x = 10",
+        "x := 10",
+        "x = 10",
+        "var x = 10"
+      ],
+      "correct_answer": 2,
+      "explanation": "Python variables are created by assigning a value using the = operator."
+    },
+    {
+      "question_id": 3,
+      "question": "What is the data type of the value 10.5?",
+      "options": [
+        "int",
+        "str",
+        "float",
+        "bool"
+      ],
+      "correct_answer": 2,
+      "explanation": "Decimal numbers such as 10.5 are represented using the float type."
+    },
+    {
+      "question_id": 4,
+      "question": "Which operator is used for floor division in Python?",
+      "options": [
+        "/",
+        "//",
+        "%",
+        "**"
+      ],
+      "correct_answer": 1,
+      "explanation": "The // operator performs floor division."
+    },
+    {
+      "question_id": 5,
+      "question": "What does the % operator return?",
+      "options": [
+        "The quotient",
+        "The remainder",
+        "The power",
+        "The rounded value"
+      ],
+      "correct_answer": 1,
+      "explanation": "The % operator returns the remainder after division."
+    },
+    {
+      "question_id": 6,
+      "question": "Which keyword is used to define a conditional statement?",
+      "options": [
+        "when",
+        "condition",
+        "if",
+        "check"
+      ],
+      "correct_answer": 2,
+      "explanation": "Python uses the if keyword to start a conditional statement."
+    },
+    {
+      "question_id": 7,
+      "question": "Which loop is commonly used to iterate over a list?",
+      "options": [
+        "repeat",
+        "for",
+        "iterate",
+        "loop"
+      ],
+      "correct_answer": 1,
+      "explanation": "A for loop can iterate directly over the elements of a list."
+    },
+    {
+      "question_id": 8,
+      "question": "What values are produced by range(3)?",
+      "options": [
+        "1, 2, 3",
+        "0, 1, 2",
+        "0, 1, 2, 3",
+        "3, 2, 1"
+      ],
+      "correct_answer": 1,
+      "explanation": "range(3) starts at 0 and stops before 3, producing 0, 1 and 2."
+    },
+    {
+      "question_id": 9,
+      "question": "Which keyword immediately exits a loop?",
+      "options": [
+        "stop",
+        "exit",
+        "break",
+        "continue"
+      ],
+      "correct_answer": 2,
+      "explanation": "The break statement terminates the loop immediately."
+    },
+    {
+      "question_id": 10,
+      "question": "Which Python collection is mutable?",
+      "options": [
+        "tuple",
+        "string",
+        "list",
+        "integer"
+      ],
+      "correct_answer": 2,
+      "explanation": "Lists are mutable, meaning their elements can be changed after creation."
+    },
+    {
+      "question_id": 11,
+      "question": "What is the first index of a Python list?",
+      "options": [
+        "0",
+        "1",
+        "-1",
+        "None"
+      ],
+      "correct_answer": 0,
+      "explanation": "Python sequences use zero-based indexing, so the first element has index 0."
+    },
+    {
+      "question_id": 12,
+      "question": "Which collection stores unique elements?",
+      "options": [
+        "list",
+        "tuple",
+        "set",
+        "string"
+      ],
+      "correct_answer": 2,
+      "explanation": "A set stores unique elements and automatically removes duplicates."
+    },
+    {
+      "question_id": 13,
+      "question": "Which data structure stores key-value pairs?",
+      "options": [
+        "list",
+        "tuple",
+        "set",
+        "dictionary"
+      ],
+      "correct_answer": 3,
+      "explanation": "A dictionary stores data as key-value pairs."
+    },
+    {
+      "question_id": 14,
+      "question": "Which method converts a string to uppercase?",
+      "options": [
+        "upper()",
+        "uppercase()",
+        "toUpper()",
+        "up()"
+      ],
+      "correct_answer": 0,
+      "explanation": "The upper() string method returns an uppercase version of the string."
+    },
+    {
+      "question_id": 15,
+      "question": "Which keyword is used to define a function?",
+      "options": [
+        "function",
+        "define",
+        "def",
+        "func"
+      ],
+      "correct_answer": 2,
+      "explanation": "Python functions are defined using the def keyword."
+    },
+    {
+      "question_id": 16,
+      "question": "Which keyword sends a value back from a function?",
+      "options": [
+        "send",
+        "return",
+        "output",
+        "yield_value"
+      ],
+      "correct_answer": 1,
+      "explanation": "The return statement sends a value back to the caller."
+    },
+    {
+      "question_id": 17,
+      "question": "Which block is commonly used to handle exceptions?",
+      "options": [
+        "try-except",
+        "check-error",
+        "error-handle",
+        "catch-error"
+      ],
+      "correct_answer": 0,
+      "explanation": "Python uses try and except blocks to handle exceptions."
+    },
+    {
+      "question_id": 18,
+      "question": "Which keyword is used to import a module?",
+      "options": [
+        "include",
+        "using",
+        "import",
+        "module"
+      ],
+      "correct_answer": 2,
+      "explanation": "The import keyword loads a module so its functionality can be used."
+    },
+    {
+      "question_id": 19,
+      "question": "Which function is commonly used to open a file?",
+      "options": [
+        "file()",
+        "open()",
+        "read()",
+        "load()"
+      ],
+      "correct_answer": 1,
+      "explanation": "The open() function is used to open files in Python."
+    },
+    {
+      "question_id": 20,
+      "question": "What is the main purpose of indentation in Python?",
+      "options": [
+        "To improve screen resolution",
+        "To define blocks of code",
+        "To declare variables",
+        "To import modules"
+      ],
+      "correct_answer": 1,
+      "explanation": "Python uses indentation to define the structure and blocks of code."
+    }
+  ]
+}

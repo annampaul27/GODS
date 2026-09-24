@@ -1,0 +1,23 @@
+{
+  "course_id": "llm_fundamentals",
+  "title": "Large Language Models (LLM) Fundamentals",
+  "subject": "LLM",
+  "difficulty": "Beginner",
+  "duration_minutes": 120,
+  "description": "An introductory course covering the fundamentals of large language models, tokens, transformers, prompting, embeddings, context windows, RAG and responsible AI.",
+  "learning_objectives": [
+    "Understand what large language models are",
+    "Understand tokens and context windows",
+    "Explain the basic idea behind transformer models",
+    "Understand prompting and prompt engineering",
+    "Understand embeddings and semantic similarity",
+    "Understand retrieval-augmented generation",
+    "Recognize common LLM limitations and risks"
+  ],
+  "lesson_count": 7,
+  "mock_test": {
+    "question_count": 20,
+    "duration_minutes": 12,
+    "passing_score": 60
+  }
+}

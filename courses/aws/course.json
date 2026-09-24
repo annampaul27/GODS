@@ -1,0 +1,24 @@
+{
+  "course_id": "aws_fundamentals",
+  "title": "AWS Cloud Fundamentals",
+  "subject": "AWS",
+  "difficulty": "Beginner",
+  "duration_minutes": 90,
+  "description": "Learn the fundamentals of cloud computing and the main AWS services used for storage, computing, databases, networking and security.",
+  "learning_objectives": [
+    "Understand cloud computing and AWS",
+    "Understand AWS Regions and Availability Zones",
+    "Learn EC2 fundamentals",
+    "Learn S3 storage fundamentals",
+    "Understand AWS databases",
+    "Understand IAM and cloud security",
+    "Understand AWS networking basics",
+    "Understand serverless computing with Lambda"
+  ],
+  "lesson_count": 7,
+  "mock_test": {
+    "question_count": 20,
+    "duration_minutes": 12,
+    "passing_score": 60
+  }
+}

@@ -1,0 +1,369 @@
+{
+  "course_id": "javascript_fundamentals",
+  "lessons": [
+    {
+      "lesson_id": "js_01",
+      "title": "JavaScript Basics",
+      "duration_minutes": 15,
+      "topics": ["JavaScript", "Syntax", "Variables", "Comments"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "What is JavaScript?",
+          "text": "JavaScript is a programming language commonly used to add interactivity and dynamic behavior to web pages. It can run in browsers and also on servers using environments such as Node.js."
+        },
+        {
+          "type": "explanation",
+          "title": "JavaScript Syntax",
+          "text": "JavaScript programs consist of statements and expressions. Statements can be separated using semicolons, although semicolons are often optional because JavaScript has automatic semicolon insertion."
+        },
+        {
+          "type": "code_example",
+          "title": "Hello World",
+          "language": "javascript",
+          "code": "console.log(\"Hello, World!\");"
+        },
+        {
+          "type": "explanation",
+          "title": "Variables",
+          "text": "Variables store values. Modern JavaScript commonly uses let for values that may change and const for values that should not be reassigned."
+        },
+        {
+          "type": "code_example",
+          "title": "Variables",
+          "language": "javascript",
+          "code": "let age = 22;\nconst name = \"Alex\";\n\nconsole.log(name);\nconsole.log(age);"
+        }
+      ],
+      "key_points": [
+        "JavaScript adds behavior and interactivity to web applications.",
+        "console.log() can display information.",
+        "let is used for variables that may be reassigned.",
+        "const is used for bindings that should not be reassigned."
+      ]
+    },
+    {
+      "lesson_id": "js_02",
+      "title": "Data Types and Operators",
+      "duration_minutes": 15,
+      "topics": ["Strings", "Numbers", "Booleans", "Null", "Undefined", "Operators"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Common Data Types",
+          "text": "Common JavaScript data types include string, number, boolean, undefined, null, object and symbol. BigInt is also available for integers outside the safe range of Number."
+        },
+        {
+          "type": "code_example",
+          "title": "Data Types",
+          "language": "javascript",
+          "code": "let name = \"Alex\";\nlet age = 22;\nlet active = true;\nlet value = null;\nlet result;\n\nconsole.log(typeof name);\nconsole.log(typeof age);\nconsole.log(typeof active);"
+        },
+        {
+          "type": "explanation",
+          "title": "Arithmetic Operators",
+          "text": "JavaScript supports arithmetic operators such as +, -, *, / and %."
+        },
+        {
+          "type": "code_example",
+          "title": "Arithmetic",
+          "language": "javascript",
+          "code": "let a = 10;\nlet b = 3;\n\nconsole.log(a + b);\nconsole.log(a - b);\nconsole.log(a * b);\nconsole.log(a / b);\nconsole.log(a % b);"
+        },
+        {
+          "type": "explanation",
+          "title": "Comparison Operators",
+          "text": "Comparison operators compare values. Strict equality === checks both value and type, while strict inequality !== checks that either value or type differs."
+        }
+      ],
+      "key_points": [
+        "JavaScript has several primitive data types.",
+        "typeof can be used to inspect a value's type.",
+        "Arithmetic operators perform mathematical operations.",
+        "Prefer strict equality === when comparing values."
+      ]
+    },
+    {
+      "lesson_id": "js_03",
+      "title": "Conditions and Loops",
+      "duration_minutes": 15,
+      "topics": ["if", "else", "switch", "for", "while"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Conditional Statements",
+          "text": "Conditional statements allow a program to execute different code depending on whether a condition is true or false."
+        },
+        {
+          "type": "code_example",
+          "title": "If Else",
+          "language": "javascript",
+          "code": "let age = 20;\n\nif (age >= 18) {\n  console.log(\"Adult\");\n} else {\n  console.log(\"Minor\");\n}"
+        },
+        {
+          "type": "explanation",
+          "title": "Switch",
+          "text": "A switch statement can be useful when comparing one expression against multiple possible cases."
+        },
+        {
+          "type": "code_example",
+          "title": "Switch",
+          "language": "javascript",
+          "code": "let day = 1;\n\nswitch (day) {\n  case 1:\n    console.log(\"Monday\");\n    break;\n  case 2:\n    console.log(\"Tuesday\");\n    break;\n  default:\n    console.log(\"Other day\");\n}"
+        },
+        {
+          "type": "explanation",
+          "title": "Loops",
+          "text": "Loops repeat code. Common JavaScript loops include for, while and for...of."
+        },
+        {
+          "type": "code_example",
+          "title": "For Loop",
+          "language": "javascript",
+          "code": "for (let i = 0; i < 5; i++) {\n  console.log(i);\n}"
+        }
+      ],
+      "key_points": [
+        "if and else execute code conditionally.",
+        "switch handles multiple possible cases.",
+        "for loops are useful when the number of iterations is known.",
+        "while loops continue while a condition is true."
+      ]
+    },
+    {
+      "lesson_id": "js_04",
+      "title": "Functions",
+      "duration_minutes": 15,
+      "topics": ["Functions", "Parameters", "Return values", "Arrow functions"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "What is a Function?",
+          "text": "A function is a reusable block of code designed to perform a particular task."
+        },
+        {
+          "type": "code_example",
+          "title": "Basic Function",
+          "language": "javascript",
+          "code": "function greet(name) {\n  return \"Hello \" + name;\n}\n\nconsole.log(greet(\"Alex\"));"
+        },
+        {
+          "type": "explanation",
+          "title": "Parameters",
+          "text": "Parameters allow functions to receive input values. A return statement sends a result back to the caller."
+        },
+        {
+          "type": "code_example",
+          "title": "Function Parameters",
+          "language": "javascript",
+          "code": "function add(a, b) {\n  return a + b;\n}\n\nlet result = add(10, 5);\nconsole.log(result);"
+        },
+        {
+          "type": "explanation",
+          "title": "Arrow Functions",
+          "text": "Arrow functions provide a shorter syntax for writing functions and are commonly used with array methods."
+        },
+        {
+          "type": "code_example",
+          "title": "Arrow Function",
+          "language": "javascript",
+          "code": "const square = (number) => number * number;\n\nconsole.log(square(5));"
+        }
+      ],
+      "key_points": [
+        "Functions allow code reuse.",
+        "Parameters provide input.",
+        "return provides an output.",
+        "Arrow functions provide concise function syntax."
+      ]
+    },
+    {
+      "lesson_id": "js_05",
+      "title": "Arrays",
+      "duration_minutes": 15,
+      "topics": ["Arrays", "Indexing", "push", "map", "filter"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "What is an Array?",
+          "text": "An array is an ordered collection of values. Array indexes start at zero."
+        },
+        {
+          "type": "code_example",
+          "title": "Creating an Array",
+          "language": "javascript",
+          "code": "const fruits = [\"Apple\", \"Banana\", \"Orange\"];\n\nconsole.log(fruits[0]);\nconsole.log(fruits.length);"
+        },
+        {
+          "type": "explanation",
+          "title": "Adding Items",
+          "text": "The push() method adds one or more elements to the end of an array."
+        },
+        {
+          "type": "code_example",
+          "title": "Push",
+          "language": "javascript",
+          "code": "const numbers = [1, 2, 3];\nnumbers.push(4);\n\nconsole.log(numbers);"
+        },
+        {
+          "type": "explanation",
+          "title": "Map",
+          "text": "map() creates a new array by applying a function to each element."
+        },
+        {
+          "type": "code_example",
+          "title": "Map",
+          "language": "javascript",
+          "code": "const numbers = [1, 2, 3];\nconst doubled = numbers.map(n => n * 2);\n\nconsole.log(doubled);"
+        },
+        {
+          "type": "explanation",
+          "title": "Filter",
+          "text": "filter() creates a new array containing elements that satisfy a condition."
+        }
+      ],
+      "key_points": [
+        "Array indexes begin at zero.",
+        "length gives the number of elements.",
+        "push() adds elements to the end.",
+        "map() transforms array elements.",
+        "filter() selects elements based on a condition."
+      ]
+    },
+    {
+      "lesson_id": "js_06",
+      "title": "Objects",
+      "duration_minutes": 15,
+      "topics": ["Objects", "Properties", "Methods", "Destructuring"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "What is an Object?",
+          "text": "An object stores related data using key-value pairs. Objects are commonly used to represent entities such as users, products and employees."
+        },
+        {
+          "type": "code_example",
+          "title": "Object",
+          "language": "javascript",
+          "code": "const user = {\n  name: \"Alex\",\n  age: 22,\n  role: \"Developer\"\n};\n\nconsole.log(user.name);\nconsole.log(user.role);"
+        },
+        {
+          "type": "explanation",
+          "title": "Changing Properties",
+          "text": "Properties of an object can be accessed and changed using dot notation or bracket notation."
+        },
+        {
+          "type": "code_example",
+          "title": "Updating an Object",
+          "language": "javascript",
+          "code": "const user = {\n  name: \"Alex\",\n  age: 22\n};\n\nuser.age = 23;\nuser.role = \"Developer\";\n\nconsole.log(user);"
+        },
+        {
+          "type": "explanation",
+          "title": "Object Methods",
+          "text": "A function stored as an object property is commonly called a method."
+        }
+      ],
+      "key_points": [
+        "Objects store key-value pairs.",
+        "Properties can be accessed using dot notation.",
+        "Object properties can be changed.",
+        "Objects can contain functions as methods."
+      ]
+    },
+    {
+      "lesson_id": "js_07",
+      "title": "DOM Manipulation and Events",
+      "duration_minutes": 20,
+      "topics": ["DOM", "querySelector", "Events", "Event listeners"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "What is the DOM?",
+          "text": "The Document Object Model represents an HTML document as a tree of objects. JavaScript can use the DOM to read and modify page content."
+        },
+        {
+          "type": "code_example",
+          "title": "Selecting an Element",
+          "language": "javascript",
+          "code": "const heading = document.querySelector(\"h1\");\nheading.textContent = \"Welcome!\";"
+        },
+        {
+          "type": "explanation",
+          "title": "Changing Styles",
+          "text": "JavaScript can modify an element's properties and styles through the DOM."
+        },
+        {
+          "type": "code_example",
+          "title": "Changing a Style",
+          "language": "javascript",
+          "code": "const heading = document.querySelector(\"h1\");\nheading.style.color = \"blue\";"
+        },
+        {
+          "type": "explanation",
+          "title": "Events",
+          "text": "Events occur when users or the browser perform actions such as clicking, typing or submitting a form."
+        },
+        {
+          "type": "code_example",
+          "title": "Click Event",
+          "language": "javascript",
+          "code": "const button = document.querySelector(\"button\");\n\nbutton.addEventListener(\"click\", () => {\n  alert(\"Button clicked!\");\n});"
+        }
+      ],
+      "key_points": [
+        "The DOM represents an HTML document as objects.",
+        "querySelector() can select elements.",
+        "textContent can change text.",
+        "addEventListener() can respond to events."
+      ]
+    },
+    {
+      "lesson_id": "js_08",
+      "title": "Modern JavaScript Basics",
+      "duration_minutes": 15,
+      "topics": ["Template literals", "Destructuring", "Spread", "Modules"],
+      "content": [
+        {
+          "type": "explanation",
+          "title": "Template Literals",
+          "text": "Template literals use backticks and allow expressions to be embedded using ${}."
+        },
+        {
+          "type": "code_example",
+          "title": "Template Literal",
+          "language": "javascript",
+          "code": "const name = \"Alex\";\nconst age = 22;\n\nconst message = `My name is ${name} and I am ${age}.`;\nconsole.log(message);"
+        },
+        {
+          "type": "explanation",
+          "title": "Destructuring",
+          "text": "Destructuring allows values to be extracted from arrays or properties from objects into variables."
+        },
+        {
+          "type": "code_example",
+          "title": "Object Destructuring",
+          "language": "javascript",
+          "code": "const user = {\n  name: \"Alex\",\n  age: 22\n};\n\nconst { name, age } = user;\nconsole.log(name, age);"
+        },
+        {
+          "type": "explanation",
+          "title": "Spread Syntax",
+          "text": "The spread operator ... can expand elements from arrays or properties from objects."
+        },
+        {
+          "type": "code_example",
+          "title": "Spread",
+          "language": "javascript",
+          "code": "const first = [1, 2];\nconst second = [3, 4];\n\nconst combined = [...first, ...second];\nconsole.log(combined);"
+        }
+      ],
+      "key_points": [
+        "Template literals make string interpolation easier.",
+        "Destructuring extracts values conveniently.",
+        "Spread syntax expands arrays or objects.",
+        "Modern JavaScript provides concise syntax for common operations."
+      ]
+    }
+  ]
+}
