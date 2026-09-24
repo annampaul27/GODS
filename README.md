@@ -15,6 +15,7 @@ SkillSetu AI bridges the gap between talent supply (students) and employer deman
 
 | Contributor | GitHub | Role & Subsystems Engineered |
 |---|---|---|
+| **Nandana** | [@mnandana520](https://github.com/mnandana520) | **Feature Architect — Skill Verification & ATS Resume Studio**<br>• Designed & implemented the Skill Verification Engine (**FR-01**)<br>• 20-question, 12-minute timed assessment with automatic grading & multi-tier badge issuance (Bronze, Silver, Gold, Platinum)<br>• ATS-Friendly Tailored Resume Studio (**FR-02**) with AI spatial parsing and real-time schema editing<br>• SQLite persistence layer (`backend/app/db/database.py`) and FastAPI endpoints (`/api/v1/assessments`, `/api/v1/resume`) |
 | **Jayasree A B** | [@jayasreeab2004](https://github.com/jayasreeab2004) | **Feature Architect — CareerCompass AI Modules**<br>• Designed & implemented the 7 CareerCompass feature modules (`backend/features/`)<br>• Personalized 90-Day Career Roadmap generator (`career_roadmap.py`)<br>• AI GitHub repository project analyzer & complexity assessor (`github_analysis.py`)<br>• Dynamic mock interview coach & answer evaluation scoring (`interview_coach.py`)<br>• Real-time job market demand classifier (`job_market_analysis.py`)<br>• Automated personal developer portfolio website builder (`portfolio_builder.py`)<br>• Deep resume highlights, strengths & weakness extractor (`resume_analysis.py`)<br>• Multidimensional competency & skill gap analyzer (`skill_gap_analysis.py`) |
 | **Annam Paul** | [@annampaul27](https://github.com/annampaul27) | **Core Feature Architect — ATS Engine**<br>• Designed & implemented the ATS FastAPI microservices (`/api/v1/ats/*`)<br>• Structured LLM parsing pipeline via Groq + Instructor (`ResumeSchema`, `JDSchema`)<br>• ChromaDB persistent vector repository & semantic applicant retrieval<br>• Deterministic skill gap comparison & tier segmentation (**E1, E2, E3, E4, E10**) |
 | **Core Engineering Team** | [@rdnk2004](https://github.com/rdnk2004) | **Platform & Trust Engine Architects**<br>• Multi-tenant role-separated architecture (Corporate, University, Staffing)<br>• Next.js 15 App Router interface & Talent Radar<br>• SHA-256 cryptographic proof-of-work credential ledger & public verification portal<br>• Timed assessment anti-cheat execution runner |
@@ -22,6 +23,10 @@ SkillSetu AI bridges the gap between talent supply (students) and employer deman
 ---
 
 ## 🚀 Key Modules & Requirement Coverage
+
+### Skill Verification & ATS Resume Studio (Nandana)
+* **FR-01 (Skill Verification Engine):** 20-question, 12-minute timed assessment per skill with anti-cheat state persistence, automated scoring (≥70% passing threshold), and multi-tier cryptographic badge issuance (Bronze, Silver, Gold, Platinum).
+* **FR-02 (ATS-Friendly Tailored Resume Studio):** AI spatial parser transforming PDF resumes into standard ATS schemas, keyword density scoring, real-time section-by-section interactive editor, and persistent SQLite profile storage.
 
 ### Employer Workflow (ATS & Talent Radar)
 * **E1 (Active Job Requisition Ingestion):** Employers input openings via pre-configured tech templates or raw text paste.
