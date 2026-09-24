@@ -6,12 +6,13 @@ load_dotenv()
 from fastapi import FastAPI, UploadFile, File, Form, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+from typing import List
 import uvicorn
 import uuid
 from contextlib import asynccontextmanager
 
-from schemas import ResumeSchema, JDSchema, ComparisonResultSchema
-from services.parser_service import extract_text, parse_resume, parse_jd
+from schemas import ResumeSchema, JDSchema, ComparisonResultSchema, InterviewQuestionsSchema
+from services.parser_service import extract_text, parse_resume, parse_jd, generate_interview_questions
 from services.vector_service import store_resume, store_jd, compare_resume_to_jd, query_matching_resumes, query_matching_jds
 
 @asynccontextmanager
@@ -167,6 +168,24 @@ async def api_query_jds(request: QueryRequest):
     """Find job descriptions that semantically match a given resume text"""
     try:
         return query_matching_jds(request.query_text, request.n_results)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+class QuestionRequest(BaseModel):
+    job_title: str
+    matched_skills: List[str]
+    missing_skills: List[str]
+
+@app.post("/api/generate-questions", response_model=InterviewQuestionsSchema)
+async def api_generate_questions(request: QuestionRequest):
+    """Generate targeted interview questions based on matched and missing skills"""
+    try:
+        questions = generate_interview_questions(
+            matched_skills=request.matched_skills,
+            missing_skills=request.missing_skills,
+            job_title=request.job_title
+        )
+        return questions
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 

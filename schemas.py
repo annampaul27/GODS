@@ -73,3 +73,16 @@ class ComparisonResultSchema(BaseModel):
     missing_mandatory_skills: List[str] = Field(default=[])
     bonus_skills: List[str] = Field(default=[])
 
+
+class InterviewQuestion(BaseModel):
+    question: str = Field(description="The technical or situational interview question")
+    category: str = Field(description="Category of the question, e.g., 'Technical Strength' or 'Skill Gap Probe'")
+    target_skill: str = Field(description="The specific skill being targeted or probed")
+    purpose: str = Field(description="The rationale or objective behind asking this question")
+
+
+class InterviewQuestionsSchema(BaseModel):
+    questions: List[InterviewQuestion] = Field(
+        default=[], description="List of structured interview questions"
+    )
+
