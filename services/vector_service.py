@@ -29,47 +29,57 @@ def store_jd(jd_id: str, jd_data: JDSchema):
         ids=[jd_id]
     )
 
-def compare_resume_to_jd(resume: ResumeSchema, jd: JDSchema) -> ComparisonResultSchema:
-    # Deterministic set operations for exact skill gap analysis
-    resume_skills_set = {skill.lower() for skill in resume.skills}
-    jd_mandatory_set = {skill.lower() for skill in jd.mandatory_skills}
-    jd_nice_to_have_set = {skill.lower() for skill in jd.nice_to_have_skills}
-    jd_all_skills_set = jd_mandatory_set.union(jd_nice_to_have_set)
-    
-    # Create mapping to return original casing based on the input words
-    resume_skill_map = {skill.lower(): skill for skill in resume.skills}
-    jd_mandatory_map = {skill.lower(): skill for skill in jd.mandatory_skills}
-    
-    matched_lower = resume_skills_set.intersection(jd_mandatory_set)
-    missing_lower = jd_mandatory_set.difference(resume_skills_set)
-    bonus_lower = resume_skills_set.difference(jd_all_skills_set)
-    
-    matched_skills = [jd_mandatory_map[s] for s in matched_lower]
-    missing_skills = [jd_mandatory_map[s] for s in missing_lower]
-    bonus_skills = [resume_skill_map[s] for s in bonus_lower]
-    
-    # Score calculation
-    mandatory_score = 0.0
-    if jd_mandatory_set:
-        mandatory_score = (len(matched_lower) / len(jd_mandatory_set)) * 80.0
-    else:
-        mandatory_score = 80.0
-        
-    nice_to_have_matched = resume_skills_set.intersection(jd_nice_to_have_set)
-    nice_to_have_score = 0.0
-    if jd_nice_to_have_set:
-        nice_to_have_score = (len(nice_to_have_matched) / len(jd_nice_to_have_set)) * 20.0
-    else:
-        nice_to_have_score = 20.0
-        
-    total_score = round(mandatory_score + nice_to_have_score, 2)
-    
-    return ComparisonResultSchema(
-        match_score=total_score,
-        matched_skills=matched_skills,
-        missing_skills=missing_skills,
-        bonus_skills=bonus_skills
+def calculate_weighted_match(resume_skills: list, jd_data: JDSchema) -> ComparisonResultSchema:
+    res_skills_lower = {s.lower() for s in resume_skills}
+
+    mandatory = jd_data.mandatory_skills
+    optional = jd_data.nice_to_have_skills
+
+    matched_mand = [s for s in mandatory if s.lower() in res_skills_lower]
+    missing_mand = [s for s in mandatory if s.lower() not in res_skills_lower]
+    matched_opt = [s for s in optional if s.lower() in res_skills_lower]
+
+    bonus = [
+        s
+        for s in resume_skills
+        if s.lower()
+        not in {m.lower() for m in mandatory + optional}
+    ]
+
+    weight_mand = 3.0
+    weight_opt = 1.0
+
+    max_possible_score = (len(mandatory) * weight_mand) + (
+        len(optional) * weight_opt
     )
+
+    if max_possible_score > 0:
+        earned_score = (len(matched_mand) * weight_mand) + (
+            len(matched_opt) * weight_opt
+        )
+        match_score = round((earned_score / max_possible_score) * 100, 2)
+    else:
+        match_score = 0.0
+
+    if match_score >= 85.0:
+        tier = "Job-Ready"
+    elif match_score >= 60.0:
+        tier = "Bridgeable"
+    else:
+        tier = "Mismatch"
+
+    return ComparisonResultSchema(
+        match_score=match_score,
+        tier=tier,
+        matched_mandatory_skills=matched_mand,
+        matched_optional_skills=matched_opt,
+        missing_mandatory_skills=missing_mand,
+        bonus_skills=bonus,
+    )
+
+def compare_resume_to_jd(resume: ResumeSchema, jd: JDSchema) -> ComparisonResultSchema:
+    return calculate_weighted_match(resume.skills, jd)
+
 
 def query_matching_jds(resume_summary: str, n_results: int = 5):
     """Query ChromaDB for similar Job Descriptions"""
