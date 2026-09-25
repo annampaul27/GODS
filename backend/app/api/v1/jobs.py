@@ -152,6 +152,77 @@ async def ingest_incoming_job(
         "threshold": payload.threshold
     }
 
+@router.get("/match-feed")
+async def get_60_jd_match_feed(candidate_skills: Optional[str] = "Python,FastAPI,SQL,Docker"):
+    """
+    Evaluates candidate skills against the 60 curated industry Job Descriptions in job_descriptions_60.json.
+    Computes match percentage, missing high-ROI skills, and salary bands.
+    """
+    from pathlib import Path
+    
+    # Locate job_descriptions_60.json
+    paths_to_check = [
+        Path("job_descriptions_60.json"),
+        Path.cwd() / "job_descriptions_60.json",
+        Path(__file__).resolve().parents[4] / "job_descriptions_60.json",
+        Path(__file__).resolve().parents[3] / "job_descriptions_60.json",
+    ]
+    jd_file = None
+    for p in paths_to_check:
+        if p.exists():
+            jd_file = p
+            break
+
+    jds = []
+    if jd_file:
+        try:
+            with open(jd_file, "r", encoding="utf-8") as f:
+                jds = json.load(f)
+        except Exception as e:
+            logger.error(f"Error loading {jd_file}: {e}")
+
+    parsed_skills = [s.strip().lower() for s in (candidate_skills or "").split(",") if s.strip()]
+    
+    matches = []
+    for jd in jds:
+        hard_skills = jd.get("extracted_requirements", {}).get("hard_skills", [])
+        matched = [s for s in hard_skills if any(c in s.lower() or s.lower() in c for c in parsed_skills)]
+        missing = [s for s in hard_skills if s not in matched]
+        
+        match_pct = round((len(matched) / max(len(hard_skills), 1)) * 100) if hard_skills else 50
+        
+        # Estimate Indian LPA CTC band
+        exp = jd.get("experience_level", "Entry-Level")
+        if "Senior" in jd.get("job_title", "") or exp == "Experienced":
+            salary_lpa = "₹18 - ₹32 LPA"
+        elif "Mid" in exp or "Mid" in jd.get("job_title", ""):
+            salary_lpa = "₹12 - ₹20 LPA"
+        else:
+            salary_lpa = "₹6.5 - ₹11 LPA"
+
+        matches.append({
+            "job_id": jd.get("job_id"),
+            "job_title": jd.get("job_title"),
+            "category": jd.get("category"),
+            "experience_level": exp,
+            "salary_lpa": salary_lpa,
+            "required_hard_skills": hard_skills,
+            "matched_skills": matched,
+            "missing_skills": missing,
+            "match_percentage": match_pct,
+            "raw_description": jd.get("raw_description"),
+        })
+
+    # Sort descending by match percentage
+    matches.sort(key=lambda x: x["match_percentage"], reverse=True)
+
+    return {
+        "status": "success",
+        "total_jds": len(jds),
+        "evaluated_skills": parsed_skills,
+        "matches": matches,
+    }
+
 @router.get("/{job_id}")
 async def get_job_details(job_id: str):
     """

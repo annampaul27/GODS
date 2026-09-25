@@ -127,6 +127,7 @@ async def mark_all_notifications_as_read(
     }
 
 @router.post("/trigger-cron")
+@router.post("/trigger-worker")
 async def trigger_cron_worker():
     """
     Manually trigger the 3-week deadline and opening notification worker.
