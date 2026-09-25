@@ -171,6 +171,23 @@ export default function StudentPage() {
             <span>🐙 GitHub Verifier</span>
           </button>
 
+          <Link
+            href="/student/github-security"
+            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-gradient-to-r from-emerald-700 via-teal-700 to-emerald-800 hover:from-emerald-600 hover:to-teal-600 text-white transition-all shadow-sm border border-emerald-500/40"
+            title="Audit public repos for secret leaks and 1-click auto-remediate"
+          >
+            <ShieldCheck className="w-3.5 h-3.5 text-emerald-200" />
+            <span>🛡️ Repo Secret Shield</span>
+          </Link>
+
+          <Link
+            href="/hub"
+            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-gradient-to-r from-purple-900 to-indigo-900 hover:from-purple-800 hover:to-indigo-800 text-purple-200 border border-purple-700/60 shadow-sm transition-all"
+            title="Open Backend AI Suite & 13-Course Academy"
+          >
+            <span>🧠 13 Courses & AI Suite</span>
+          </Link>
+
           <button
             onClick={() => setIsResumeDrawerOpen(true)}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-gray-800 hover:bg-gray-700 border border-gray-700 text-gray-300 transition-colors"
@@ -280,6 +297,38 @@ export default function StudentPage() {
           </button>
         </div>
       )}
+
+      {/* Student GitHub Health & Secret Shield Card */}
+      <div className="p-4 rounded-xl bg-gradient-to-r from-purple-950/40 via-slate-900 to-indigo-950/40 border border-purple-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-sm">
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 rounded-lg bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-300 shrink-0">
+            <GithubIcon className="w-5 h-5" />
+          </div>
+          <div>
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30 uppercase">
+                Pre-Recruiter Defense
+              </span>
+              <span className="text-xs font-semibold text-white">
+                GitHub Health & Leaked Secret Shield
+              </span>
+            </div>
+            <p className="text-xs text-gray-400 mt-0.5">
+              Audit public repositories for hardcoded API keys (OpenAI, AWS, PATs), verify .gitignore coverage, and apply 1-click zero-risk fixes before recruiters review your code.
+            </p>
+          </div>
+        </div>
+        <div className="flex items-center gap-2 shrink-0">
+          <Link
+            href="/student/github-security"
+            className="px-3.5 py-2 rounded-lg bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-semibold text-xs flex items-center gap-1.5 transition-all shadow-sm"
+          >
+            <ShieldCheck className="w-3.5 h-3.5" />
+            <span>Audit & Fix Repos</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
+        </div>
+      </div>
 
       {/* Tabs */}
       <div className="flex items-center justify-between border-b border-gray-800 pb-2.5">

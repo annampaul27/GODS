@@ -37,6 +37,7 @@ import {
 import GithubIcon from "@/components/icons/GithubIcon";
 import AIInterviewerModal from "@/components/student/AIInterviewerModal";
 import { GitHubAnalysisModal } from "@/components/student/GitHubAnalysisModal";
+import BackendEngineTabs from "@/components/hub/BackendEngineTabs";
 
 export default function LivePitchCockpitPage() {
   const {
@@ -1068,6 +1069,11 @@ async def process_payment(amount: float):
             </div>
           </div>
         </div>
+
+        {/* ⚡ Live Backend Engine Modules (10 FastAPI Routers Connected) */}
+        <section id="live-backend-engine-section" className="mt-12 pt-8 border-t border-gray-800 space-y-4">
+          <BackendEngineTabs initialTab={1} />
+        </section>
       </main>
 
       {/* USP Explainer Modal */}

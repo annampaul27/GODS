@@ -15,6 +15,8 @@ import {
   LogIn,
   LogOut,
   CheckCircle,
+  Brain,
+  ShieldCheck,
 } from "lucide-react";
 import GithubIcon from "@/components/icons/GithubIcon";
 import { RoleType } from "@/types";
@@ -170,6 +172,20 @@ export default function Navbar() {
             <span>⚡ Live Pitch Cockpit</span>
           </Link>
 
+          {/* AI Suite & 13 Courses Link */}
+          <Link
+            href="/hub"
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all border ${
+              pathname === "/hub"
+                ? "bg-gradient-to-r from-purple-600 to-indigo-600 border-purple-400 text-white shadow-purple-500/25 shadow-md ring-1 ring-purple-400"
+                : "bg-purple-950/40 border-purple-700/50 text-purple-200 hover:text-white hover:bg-purple-900/50 shadow-sm"
+            }`}
+            title="Open Backend AI Suite & 13-Course Micro-Academy"
+          >
+            <Brain className="w-3.5 h-3.5 text-purple-300" />
+            <span>🧠 AI Suite & 13 Courses</span>
+          </Link>
+
           {/* GitHub AST Analysis Link */}
           <Link
             href="/github-analysis"
@@ -182,6 +198,20 @@ export default function Navbar() {
           >
             <GithubIcon className="w-3.5 h-3.5 text-purple-400" />
             <span>🐙 GitHub Verifier</span>
+          </Link>
+
+          {/* Student Repo Secret Shield Link */}
+          <Link
+            href="/student/github-security"
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all border ${
+              pathname === "/student/github-security"
+                ? "bg-emerald-600 border-emerald-500 text-white shadow-emerald-500/25 shadow-md"
+                : "bg-emerald-950/30 border-emerald-800/40 text-emerald-300 hover:text-white hover:bg-emerald-900/40"
+            }`}
+            title="Student GitHub Health & Secret Shield"
+          >
+            <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+            <span>🛡️ Repo Shield</span>
           </Link>
 
           {/* Blind Screening Toggle — employer only */}
