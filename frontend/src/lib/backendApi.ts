@@ -259,10 +259,16 @@ const API_BASE_URL =
 async function fetchWithTimeout(
   url: string,
   options: RequestInit = {},
-  timeoutMs: number = 2500
+  timeoutMs: number = 7000
 ): Promise<Response> {
   const controller = new AbortController();
-  const id = setTimeout(() => controller.abort(), timeoutMs);
+  const id = setTimeout(() => {
+    try {
+      controller.abort(new DOMException(`Request timed out after ${timeoutMs}ms`, "TimeoutError"));
+    } catch {
+      controller.abort();
+    }
+  }, timeoutMs);
 
   try {
     const res = await fetch(url, {
@@ -450,7 +456,7 @@ export async function fetchAllCourses(): Promise<CourseOverview[]> {
       }
     }
   } catch (err) {
-    console.warn("Backend /courses offline, using catalog fallback:", err);
+    console.debug("[Offline Fallback] /courses, using catalog fallback");
   }
   return ALL_13_COURSES_FALLBACK;
 }
@@ -462,7 +468,7 @@ export async function fetchCourseDetails(slug: string): Promise<CourseOverview> 
       return await res.json();
     }
   } catch (err) {
-    console.warn(`Backend /courses/${slug} offline, using fallback:`, err);
+    console.debug(`[Offline Fallback] /courses/${slug}, using fallback`);
   }
   const match = ALL_13_COURSES_FALLBACK.find((c) => c.slug === slug || c.course_id === slug);
   return match || ALL_13_COURSES_FALLBACK[0];
@@ -475,7 +481,7 @@ export async function fetchCourseLessons(slug: string): Promise<{ course_id: str
       return await res.json();
     }
   } catch (err) {
-    console.warn(`Backend /courses/${slug}/lessons offline, using fallback:`, err);
+    console.debug(`[Offline Fallback] /courses/${slug}/lessons, using fallback`);
   }
 
   // Realistic Fallback Lessons
@@ -532,7 +538,7 @@ export async function fetchCourseMockTest(
       return await res.json();
     }
   } catch (err) {
-    console.warn(`Backend /courses/${slug}/mock-test offline, using fallback:`, err);
+    console.debug(`[Offline Fallback] /courses/${slug}/mock-test, using fallback`);
   }
 
   // Realistic 5-Question Fallback Test
@@ -609,7 +615,7 @@ export async function submitCourseMockTest(
       return await res.json();
     }
   } catch (err) {
-    console.warn(`Backend /courses/${slug}/mock-test/submit offline, calculating local grade:`, err);
+    console.debug(`[Offline Fallback] /courses/${slug}/mock-test/submit offline, calculating local grade`);
   }
 
   // Calculate local evaluation
@@ -772,7 +778,7 @@ export async function generate90DayCareerCompass(
       };
     }
   } catch (err) {
-    console.warn("Backend /career-compass/roadmap offline, using verified fallback:", err);
+    console.debug("[Offline Fallback] /career-compass/roadmap, using verified fallback");
   }
 
   // Guaranteed fallback
@@ -917,7 +923,7 @@ export async function runGitHubAnalysis(
       return await res.json();
     }
   } catch (err) {
-    console.warn("Backend /career-compass/github-analysis offline, using fallback:", err);
+    console.debug("[Offline Fallback] /career-compass/github-analysis, using fallback");
   }
 
   return {
@@ -1113,7 +1119,7 @@ export async function runAIInterviewCoach(
       await res.json();
     }
   } catch (err) {
-    console.warn("Backend /career-compass/interview/question offline, using grill suite fallback:", err);
+    console.debug("[Offline Fallback] /career-compass/interview/question, using grill suite fallback");
   }
 
   // 5 targeted technical grill questions with trap follow-ups & model answers
@@ -1188,7 +1194,7 @@ export async function runPortfolioBuilder(
       await res.json();
     }
   } catch (err) {
-    console.warn("Backend /career-compass/portfolio offline, using capstone blueprints fallback:", err);
+    console.debug("[Offline Fallback] /career-compass/portfolio, using capstone blueprints fallback");
   }
 
   return [
@@ -1259,7 +1265,7 @@ export async function runMarketSalaryIntelligence(
       await res.json();
     }
   } catch (err) {
-    console.warn("Backend /career-compass/job-market offline, using Indian CTC intelligence fallback:", err);
+    console.debug("[Offline Fallback] /career-compass/job-market, using Indian CTC intelligence fallback");
   }
 
   return {
@@ -1330,7 +1336,7 @@ export async function match60JobDescriptions(
       }
     }
   } catch (err) {
-    console.warn("Backend /jobs/match-feed offline, using 60-JD engine fallback:", err);
+    console.debug("[Offline Fallback] /jobs/match-feed, using 60-JD engine fallback");
   }
 
   // Realistic fallback matching 60 JDs dataset
@@ -1434,7 +1440,7 @@ export async function triggerFR04DeadlineWorker(): Promise<FR04WorkerSweepResult
       };
     }
   } catch (err) {
-    console.warn("Backend /notifications/trigger-worker offline, running client sweep simulation:", err);
+    console.debug("[Offline Fallback] /notifications/trigger-worker, running client sweep simulation");
   }
 
   // Simulated worker sweep

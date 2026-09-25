@@ -61,7 +61,7 @@ export default function ResumeUploadDrawer({ onClose }: ResumeUploadDrawerProps)
         return;
       }
     } catch (err) {
-      console.warn("Backend ATS offline, using simulated parser:", err);
+      console.debug("[Offline Fallback] ATS offline, using simulated parser");
     }
 
     handleSimulateResumeDrop();

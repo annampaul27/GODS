@@ -29,6 +29,7 @@ import {
   FileCheck,
   Award,
   BookOpen,
+  Crown,
 } from "lucide-react";
 import GithubIcon from "@/components/icons/GithubIcon";
 import { RoleType } from "@/types";
@@ -264,6 +265,18 @@ export default function Navbar() {
                 <Award className="w-3.5 h-3.5 text-purple-300" />
                 <span>My Credentials</span>
               </Link>
+
+              <Link
+                href="/pricing"
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                  pathname === "/pricing" || pathname === "/revenue"
+                    ? "bg-purple-600 text-white shadow-sm"
+                    : "text-amber-400 hover:text-amber-300 hover:bg-slate-800/60"
+                }`}
+              >
+                <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                <span>Pro (₹299)</span>
+              </Link>
             </div>
           )}
 
@@ -317,6 +330,18 @@ export default function Navbar() {
                 <Sliders className="w-3.5 h-3.5 text-blue-300" />
                 <span>Hiring Preferences</span>
               </Link>
+
+              <Link
+                href="/pricing"
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                  pathname === "/pricing" || pathname === "/revenue"
+                    ? "bg-blue-600 text-white shadow-sm"
+                    : "text-slate-400 hover:text-white hover:bg-slate-800/60"
+                }`}
+              >
+                <Crown className="w-3.5 h-3.5 text-amber-400" />
+                <span>Pricing & Plans</span>
+              </Link>
             </div>
           )}
 
@@ -368,6 +393,9 @@ export default function Navbar() {
               </Link>
               <Link href="/hub" className="hover:text-white transition-colors">
                 Courses & AI Suite
+              </Link>
+              <Link href="/pricing" className="text-slate-300 hover:text-white transition-colors">
+                Pricing & Revenue
               </Link>
               <Link href={`/verify/${sampleHash}`} className="hover:text-white transition-colors">
                 Verify Credential
@@ -493,6 +521,14 @@ export default function Navbar() {
                     <span>My Profile & Settings</span>
                   </Link>
 
+                  <Link
+                    href="/pricing"
+                    className="w-full flex items-center gap-2 p-2 rounded-lg text-xs text-amber-300 hover:text-amber-200 hover:bg-slate-800 transition-colors font-medium"
+                  >
+                    <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                    <span>Monetization & Plans</span>
+                  </Link>
+
                   {/* Additional Role-Specific Quick Links */}
                   {currentUser.role === "student" && (
                     <>
@@ -602,6 +638,13 @@ export default function Navbar() {
               >
                 <Award className="w-4 h-4 text-purple-300" />
                 <span>My Credentials</span>
+              </Link>
+              <Link
+                href="/pricing"
+                className="flex items-center gap-2 p-2.5 rounded-xl bg-purple-950/40 border border-purple-500/30 text-xs font-semibold text-purple-300"
+              >
+                <Sparkles className="w-4 h-4 text-amber-400" />
+                <span>Pro Upskilling (₹299/mo)</span>
               </Link>
             </div>
           )}

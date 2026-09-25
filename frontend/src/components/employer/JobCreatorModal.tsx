@@ -131,7 +131,7 @@ export default function JobCreatorModal({ onClose }: JobCreatorModalProps) {
         return;
       }
     } catch (err) {
-      console.warn("Backend ATS offline, using local parser fallback:", err);
+      console.debug("[Offline Fallback] ATS offline, using local parser fallback");
     }
 
     // Local deterministic fallback

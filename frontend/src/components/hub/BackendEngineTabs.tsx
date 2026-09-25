@@ -119,34 +119,52 @@ export default function BackendEngineTabs({
   const [routerStatuses, setRouterStatuses] = useState<RouterHealthStatus[]>([]);
   const [workerLoading, setWorkerLoading] = useState(false);
 
-  // Initial load
+  // Initial load with progressive staging
   useEffect(() => {
+    let isMounted = true;
+
     async function loadInitial() {
       try {
-        const [cList, rMap, gAudit, iCoach, cPrints, mInt, jds, rHealth] = await Promise.all([
+        // Stage 1: Load courses and router telemetry immediately
+        const [cList, rHealth] = await Promise.all([
           fetchAllCourses(),
+          checkBackendRoutersHealth(),
+        ]);
+        if (!isMounted) return;
+        setCourses(cList);
+        setSelectedCourse(cList[0] || ALL_13_COURSES_FALLBACK[0]);
+        setRouterStatuses(rHealth);
+
+        // Stage 2: Load roadmap, github audit, and interview coach
+        const [rMap, gAudit, iCoach] = await Promise.all([
           generate90DayCareerCompass(candidateRole),
           runDeepGitHubAudit("aaravsharma-dev"),
           runAIInterviewCoach(candidateRole),
-          runPortfolioBuilder(["FastAPI", "Docker", "Kafka"], candidateRole),
-          runMarketSalaryIntelligence(candidateRole),
-          match60JobDescriptions(candidateSkills),
-          checkBackendRoutersHealth(),
         ]);
-        setCourses(cList);
-        setSelectedCourse(cList[0] || ALL_13_COURSES_FALLBACK[0]);
+        if (!isMounted) return;
         setRoadmapData(rMap);
         setGithubAudit(gAudit);
         setInterviewData(iCoach);
+
+        // Stage 3: Load capstone blueprints, salary intelligence, and JD matches
+        const [cPrints, mInt, jds] = await Promise.all([
+          runPortfolioBuilder(["FastAPI", "Docker", "Kafka"], candidateRole),
+          runMarketSalaryIntelligence(candidateRole),
+          match60JobDescriptions(candidateSkills),
+        ]);
+        if (!isMounted) return;
         setCapstoneBlueprints(cPrints);
         setMarketIntelligence(mInt);
         setJdMatches(jds);
-        setRouterStatuses(rHealth);
       } catch (err) {
-        console.error("Initial load error:", err);
+        console.debug("[Hub] Initial load fallback applied");
       }
     }
+
     loadInitial();
+    return () => {
+      isMounted = false;
+    };
   }, [candidateRole, candidateSkills]);
 
   // Tab 1: Lesson Open
