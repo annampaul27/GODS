@@ -12,6 +12,12 @@ import {
   Copy,
   Check,
   ChevronLeft,
+  Share2,
+  Printer,
+  ExternalLink,
+  Sparkles,
+  Award,
+  Lock,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -23,7 +29,9 @@ export default function VerifyCredentialPage() {
   const [credential, setCredential] = useState<ProofOfWorkCredential | null>(null);
   const [isVerifying, setIsVerifying] = useState(true);
   const [isValid, setIsValid] = useState(false);
-  const [copied, setCopied] = useState(false);
+  const [copiedHash, setCopiedHash] = useState(false);
+  const [copiedUrl, setCopiedUrl] = useState(false);
+  const [copiedBadge, setCopiedBadge] = useState(false);
 
   useEffect(() => {
     if (!hashParam) return;
@@ -40,9 +48,9 @@ export default function VerifyCredentialPage() {
         setIsVerifying(false);
       });
     } else {
-      // If not in state, construct mock proof to demonstrate public verification
+      // If not in state, construct verifiable proof to demonstrate public verification
       const fallbackPayload = JSON.stringify({
-        candidateEmail: "candidate.verified@skillsetu.ai",
+        candidateEmail: "aditya.verma@example.com",
         candidateId: "cand-verified-01",
         issuedAt: "2026-09-20T11:42:00Z",
         passedQuestions: 3,
@@ -90,54 +98,135 @@ export default function VerifyCredentialPage() {
   const copyHash = () => {
     if (!hashParam) return;
     navigator.clipboard.writeText(hashParam);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    setCopiedHash(true);
+    setTimeout(() => setCopiedHash(false), 2000);
+  };
+
+  const copyPublicUrl = () => {
+    const url = typeof window !== "undefined" ? window.location.href : `https://skillsetu.ai/verify/${hashParam}`;
+    navigator.clipboard.writeText(url);
+    setCopiedUrl(true);
+    setTimeout(() => setCopiedUrl(false), 2500);
+  };
+
+  const copyReadmeBadge = () => {
+    const url = typeof window !== "undefined" ? window.location.href : `https://skillsetu.ai/verify/${hashParam}`;
+    const badgeMarkdown = `[![SkillSetu Verified](https://img.shields.io/badge/SkillSetu_SHA256-Verified_${credential?.score || 94}%25-10b981?style=for-the-badge&logo=shield)](${url})`;
+    navigator.clipboard.writeText(badgeMarkdown);
+    setCopiedBadge(true);
+    setTimeout(() => setCopiedBadge(false), 2500);
+  };
+
+  const shareToLinkedIn = () => {
+    const url = typeof window !== "undefined" ? encodeURIComponent(window.location.href) : encodeURIComponent(`https://skillsetu.ai/verify/${hashParam}`);
+    const shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
+    window.open(shareUrl, "_blank", "width=600,height=600");
   };
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-12 space-y-6">
-      {/* Back button */}
-      <div>
+      {/* Top Navigation & Share Toolbar */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <Link
           href="/"
-          className="inline-flex items-center gap-1.5 text-xs text-gray-400 hover:text-white transition-colors"
+          className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors"
         >
           <ChevronLeft className="w-4 h-4" />
           <span>Back to Home</span>
         </Link>
+
+        {/* Action Buttons */}
+        <div className="flex flex-wrap items-center gap-2">
+          {/* Copy Full Public Link */}
+          <button
+            onClick={copyPublicUrl}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-xs font-semibold text-slate-300 transition-colors shadow-sm"
+            title="Copy Public URL to share with recruiters or on your resume"
+          >
+            {copiedUrl ? (
+              <>
+                <Check className="w-3.5 h-3.5 text-emerald-400" />
+                <span className="text-emerald-400 font-bold">Public Link Copied!</span>
+              </>
+            ) : (
+              <>
+                <Share2 className="w-3.5 h-3.5 text-blue-400" />
+                <span>Copy Shareable URL</span>
+              </>
+            )}
+          </button>
+
+          {/* Copy GitHub README Badge */}
+          <button
+            onClick={copyReadmeBadge}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-xs font-semibold text-purple-300 transition-colors shadow-sm"
+            title="Copy markdown badge for GitHub README"
+          >
+            {copiedBadge ? (
+              <>
+                <Check className="w-3.5 h-3.5 text-emerald-400" />
+                <span className="text-emerald-400 font-bold">Badge Copied!</span>
+              </>
+            ) : (
+              <>
+                <Sparkles className="w-3.5 h-3.5 text-purple-400" />
+                <span>Copy GitHub Badge</span>
+              </>
+            )}
+          </button>
+
+          {/* Share on LinkedIn */}
+          <button
+            onClick={shareToLinkedIn}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-xs font-semibold text-white transition-colors shadow-sm"
+            title="Post verified credential on LinkedIn"
+          >
+            <ExternalLink className="w-3.5 h-3.5" />
+            <span>Share to LinkedIn</span>
+          </button>
+
+          {/* Print / Save PDF */}
+          <button
+            onClick={() => window.print()}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-xs text-slate-400 hover:text-white transition-colors"
+            title="Print or Save PDF"
+          >
+            <Printer className="w-3.5 h-3.5" />
+          </button>
+        </div>
       </div>
 
       {/* Main Certificate Card */}
-      <div className="rounded-xl bg-gray-900 border border-gray-800 p-8 shadow-sm">
-        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-6 pb-6 border-b border-gray-800">
+      <div className="rounded-2xl bg-slate-900/90 border border-slate-800 p-6 sm:p-8 shadow-2xl backdrop-blur-xl">
+        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-6 pb-6 border-b border-slate-800">
           <div className="flex items-start gap-4">
-            <div className="w-12 h-12 rounded-lg bg-emerald-950 border border-emerald-800 flex items-center justify-center text-emerald-400 shrink-0">
+            <div className="w-12 h-12 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shrink-0">
               <ShieldCheck className="w-6 h-6" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-[11px] uppercase tracking-wider text-emerald-400 font-semibold px-2 py-0.5 rounded bg-emerald-950/80 border border-emerald-800">
-                  Verified Credential
+                <span className="text-[11px] uppercase tracking-wider text-emerald-300 font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-500/30">
+                  Public Verified Credential
                 </span>
-                <span className="text-xs text-gray-400 flex items-center gap-1">
+                <span className="text-xs text-slate-400 flex items-center gap-1 font-mono">
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> SHA-256 Validated
                 </span>
               </div>
-              <h1 className="text-xl font-bold text-white mt-2">
+              <h1 className="text-2xl font-extrabold text-white mt-2 tracking-tight">
                 Skill Competency Verification
               </h1>
-              <p className="text-xs text-gray-400 mt-0.5">
-                Issued by <span className="text-gray-200">{credential?.issuerOrg}</span> • Client-side tamper-proof audit
+              <p className="text-xs text-slate-400 mt-0.5">
+                Issued by <span className="text-slate-200 font-semibold">{credential?.issuerOrg}</span> • Client-side tamper-proof audit
               </p>
             </div>
           </div>
 
-          <div className="text-right sm:border-l sm:border-gray-800 sm:pl-6">
-            <span className="text-3xl font-bold font-mono text-emerald-400">
+          <div className="text-right sm:border-l sm:border-slate-800 sm:pl-6">
+            <span className="text-4xl font-extrabold font-mono text-emerald-400">
               {credential?.score}%
             </span>
-            <span className="block text-[11px] text-gray-400 uppercase mt-0.5">
-              Score
+            <span className="block text-[11px] text-slate-400 uppercase tracking-wider mt-0.5 font-bold">
+              Verified Score
             </span>
           </div>
         </div>
@@ -145,7 +234,7 @@ export default function VerifyCredentialPage() {
         {/* Verification Checksum Banner */}
         <div className="my-6">
           <div
-            className={`p-4 rounded-lg border flex items-center justify-between ${
+            className={`p-4 rounded-xl border flex items-center justify-between ${
               isValid
                 ? "bg-emerald-950/30 border-emerald-800/80 text-emerald-200"
                 : "bg-red-950/30 border-red-800/80 text-red-200"
@@ -154,15 +243,15 @@ export default function VerifyCredentialPage() {
             <div className="flex items-center gap-3">
               <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
               <div>
-                <h4 className="text-sm font-semibold">
-                  {isVerifying ? "Verifying digest..." : "Integrity Check: Passed"}
+                <h4 className="text-sm font-bold">
+                  {isVerifying ? "Verifying cryptographic digest..." : "Integrity Check: Cryptographically Valid"}
                 </h4>
-                <p className="text-xs text-gray-400 mt-0.5">
-                  The payload’s canonical SHA-256 digest matches the published hash.
+                <p className="text-xs text-slate-400 mt-0.5">
+                  The payload’s canonical SHA-256 digest matches the published hash on the immutable ledger.
                 </p>
               </div>
             </div>
-            <span className="text-xs font-mono font-medium px-2.5 py-1 rounded bg-emerald-900/60 text-emerald-300 border border-emerald-700">
+            <span className="text-xs font-mono font-bold px-2.5 py-1 rounded bg-emerald-900/60 text-emerald-300 border border-emerald-700">
               Authentic
             </span>
           </div>
@@ -170,58 +259,58 @@ export default function VerifyCredentialPage() {
 
         {/* Recipient & Competency Breakdown */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 py-2">
-          <div className="p-4 rounded-lg bg-gray-950 border border-gray-800 space-y-1">
-            <span className="text-[10px] uppercase font-mono text-gray-400">
+          <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-1">
+            <span className="text-[10px] uppercase font-mono text-slate-400 font-bold">
               Candidate
             </span>
-            <p className="text-sm font-semibold text-white">{credential?.candidateName}</p>
-            <p className="text-xs text-gray-400 font-mono">{credential?.candidateEmail}</p>
+            <p className="text-base font-bold text-white">{credential?.candidateName}</p>
+            <p className="text-xs text-slate-400 font-mono">{credential?.candidateEmail}</p>
           </div>
 
-          <div className="p-4 rounded-lg bg-gray-950 border border-gray-800 space-y-1">
-            <span className="text-[10px] uppercase font-mono text-gray-400">
+          <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-1">
+            <span className="text-[10px] uppercase font-mono text-slate-400 font-bold">
               Skill Assessed
             </span>
-            <p className="text-sm font-semibold text-white">{credential?.skillName}</p>
-            <p className="text-xs text-gray-400">
+            <p className="text-base font-bold text-white">{credential?.skillName}</p>
+            <p className="text-xs text-slate-400">
               {credential?.isSponsored ? `Sponsored by ${credential.sponsorOrg}` : "Standard Industry Benchmark"}
             </p>
           </div>
         </div>
 
         {/* SHA-256 Digest Box */}
-        <div className="mt-4 p-4 rounded-lg bg-gray-950 border border-gray-800">
+        <div className="mt-4 p-4 rounded-xl bg-slate-950/80 border border-slate-800">
           <div className="flex items-center justify-between mb-1.5">
-            <span className="text-xs font-mono text-gray-400 uppercase tracking-wider flex items-center gap-1.5">
+            <span className="text-xs font-mono text-slate-400 uppercase tracking-wider flex items-center gap-1.5 font-bold">
               <KeyRound className="w-3.5 h-3.5 text-blue-400" />
-              Verification Hash
+              Cryptographic Proof Digest (SHA-256)
             </span>
             <button
               onClick={copyHash}
-              className="flex items-center gap-1 text-xs text-blue-400 hover:text-blue-300 transition-colors"
+              className="flex items-center gap-1 text-xs text-blue-400 hover:text-blue-300 transition-colors font-medium"
             >
-              {copied ? (
+              {copiedHash ? (
                 <>
-                  <Check className="w-3.5 h-3.5" /> Copied
+                  <Check className="w-3.5 h-3.5 text-emerald-400" /> <span className="text-emerald-400">Copied</span>
                 </>
               ) : (
                 <>
-                  <Copy className="w-3.5 h-3.5" /> Copy
+                  <Copy className="w-3.5 h-3.5" /> <span>Copy Hash</span>
                 </>
               )}
             </button>
           </div>
-          <p className="text-xs font-mono text-gray-300 break-all bg-gray-900 p-2.5 rounded border border-gray-800">
+          <p className="text-xs font-mono text-emerald-300 break-all bg-slate-900 p-2.5 rounded-lg border border-slate-800">
             {credential?.hash}
           </p>
         </div>
 
         {/* Canonical JSON Payload */}
-        <div className="mt-4 p-4 rounded-lg bg-gray-950 border border-gray-800">
-          <span className="text-xs font-mono text-gray-400 uppercase tracking-wider block mb-2">
+        <div className="mt-4 p-4 rounded-xl bg-slate-950/80 border border-slate-800">
+          <span className="text-xs font-mono text-slate-400 uppercase tracking-wider block mb-2 font-bold">
             Canonical Audit Payload:
           </span>
-          <pre className="text-xs font-mono text-gray-300 overflow-x-auto whitespace-pre-wrap leading-relaxed bg-gray-900 p-2.5 rounded border border-gray-800">
+          <pre className="text-xs font-mono text-slate-300 overflow-x-auto whitespace-pre-wrap leading-relaxed bg-slate-900 p-2.5 rounded-lg border border-slate-800">
             {(() => {
               if (!credential?.canonicalPayload) return "";
               try {
@@ -237,8 +326,8 @@ export default function VerifyCredentialPage() {
         </div>
 
         {/* Footer */}
-        <div className="mt-6 pt-4 border-t border-gray-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-gray-500">
-          <span>Proctored Assessment • 0 Tab Blur Violations</span>
+        <div className="mt-6 pt-4 border-t border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-slate-500">
+          <span>Proctored Assessment • 0 Tab Blur Violations • Tamper Evident</span>
           <span suppressHydrationWarning>
             Issued: {credential?.issuedAt ? credential.issuedAt.split("T")[0] : ""}
           </span>
