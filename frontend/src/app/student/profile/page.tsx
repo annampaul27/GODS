@@ -27,6 +27,7 @@ import {
   Check,
 } from "lucide-react";
 import GithubIcon from "@/components/icons/GithubIcon";
+import RoleGuard from "@/components/auth/RoleGuard";
 
 export default function StudentProfilePage() {
   const router = useRouter();
@@ -91,7 +92,8 @@ export default function StudentProfilePage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 py-8 px-4 sm:px-6 lg:px-8">
+    <RoleGuard allowedRoles={["student", "admin"]} portalName="Student Profile & Credential Vault">
+      <div className="min-h-screen bg-slate-950 text-slate-100 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto space-y-6">
         {/* Navigation & Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -543,12 +545,12 @@ export default function StudentProfilePage() {
                 </Link>
 
                 <Link
-                  href="/demo"
+                  href="/student"
                   className="w-full p-2.5 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-800 text-xs font-medium text-slate-300 hover:text-white flex items-center justify-between transition-colors"
                 >
                   <span className="flex items-center gap-2">
-                    <Award className="w-4 h-4 text-amber-400" />
-                    <span>Live Hackathon Cockpit</span>
+                    <GraduationCap className="w-4 h-4 text-emerald-400" />
+                    <span>Skill Gap Radar & Sandbox</span>
                   </span>
                   <ExternalLink className="w-3.5 h-3.5 text-slate-500" />
                 </Link>
@@ -557,6 +559,7 @@ export default function StudentProfilePage() {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </RoleGuard>
   );
 }

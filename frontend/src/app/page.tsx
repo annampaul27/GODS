@@ -15,10 +15,11 @@ import {
   Cpu,
   Zap,
   LogIn,
+  User,
 } from "lucide-react";
 
 export default function HomePage() {
-  const { setRole, credentials } = useStore();
+  const { credentials, isAuthenticated, currentUser } = useStore();
 
   const sampleHash =
     credentials[0]?.hash ||
@@ -31,7 +32,7 @@ export default function HomePage() {
         <div className="max-w-2xl space-y-5">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-medium">
             <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
-            <span>Now in Beta</span>
+            <span>Verifiable Skills Intelligence</span>
           </div>
 
           <h1 className="text-3xl sm:text-4xl font-bold text-white tracking-tight leading-tight">
@@ -46,41 +47,113 @@ export default function HomePage() {
             skill gaps.
           </p>
 
+          {/* Role-Aware Primary Action Buttons */}
           <div className="pt-2 flex flex-wrap items-center gap-3">
-            <Link
-              href="/login"
-              className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-bold bg-gradient-to-r from-purple-600 via-indigo-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white transition-all shadow-lg shadow-purple-950/60"
-            >
-              <LogIn className="w-4 h-4" />
-              <span>Sign In / Register</span>
-            </Link>
+            {isAuthenticated && currentUser?.role === "student" ? (
+              <>
+                <Link
+                  href="/student"
+                  className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-bold bg-emerald-600 hover:bg-emerald-500 text-white transition-all shadow-lg shadow-emerald-950/60"
+                >
+                  <GraduationCap className="w-4 h-4" />
+                  <span>My Student Dashboard</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
 
-            <Link
-              href="/employer"
-              onClick={() => setRole("employer")}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium bg-blue-600 hover:bg-blue-500 text-white transition-colors"
-            >
-              <Briefcase className="w-4 h-4" />
-              <span>Employer Dashboard</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
+                <Link
+                  href="/student/profile"
+                  className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold bg-gray-800 hover:bg-gray-700 border border-gray-700 text-white transition-colors"
+                >
+                  <Award className="w-4 h-4 text-purple-400" />
+                  <span>My Verified Credentials</span>
+                </Link>
 
-            <Link
-              href="/student"
-              onClick={() => setRole("student")}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium bg-gray-800 hover:bg-gray-700 border border-gray-700 text-white transition-colors"
-            >
-              <GraduationCap className="w-4 h-4 text-emerald-400" />
-              <span>Student Dashboard</span>
-            </Link>
+                <Link
+                  href="/hub"
+                  className="flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium text-gray-400 hover:text-white border border-gray-800 hover:border-gray-700 transition-colors"
+                >
+                  <Zap className="w-4 h-4 text-purple-400" />
+                  <span>13 Courses & Labs</span>
+                </Link>
+              </>
+            ) : isAuthenticated && currentUser?.role === "employer" ? (
+              <>
+                <Link
+                  href="/employer"
+                  className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-bold bg-blue-600 hover:bg-blue-500 text-white transition-all shadow-lg shadow-blue-950/60"
+                >
+                  <Briefcase className="w-4 h-4" />
+                  <span>Employer ATS Dashboard</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
 
-            <Link
-              href={`/verify/${sampleHash}`}
-              className="flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium text-gray-400 hover:text-white border border-gray-800 hover:border-gray-700 transition-colors"
-            >
-              <ShieldCheck className="w-4 h-4" />
-              <span>Verify Credential</span>
-            </Link>
+                <Link
+                  href="/employer/profile"
+                  className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold bg-gray-800 hover:bg-gray-700 border border-gray-700 text-white transition-colors"
+                >
+                  <span>Hiring Preferences</span>
+                </Link>
+
+                <Link
+                  href="/demo"
+                  className="flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-bold bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/30 transition-colors"
+                >
+                  <span>⚡ Live Evaluation</span>
+                </Link>
+              </>
+            ) : isAuthenticated && currentUser?.role === "admin" ? (
+              <>
+                <Link
+                  href="/admin"
+                  className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-bold bg-purple-600 hover:bg-purple-500 text-white transition-all shadow-lg shadow-purple-950/60"
+                >
+                  <Shield className="w-4 h-4" />
+                  <span>Governance Console</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+
+                <Link
+                  href="/admin/profile"
+                  className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold bg-gray-800 hover:bg-gray-700 border border-gray-700 text-white transition-colors"
+                >
+                  <span>Key Authority & Telemetry</span>
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/login"
+                  className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-bold bg-gradient-to-r from-purple-600 via-indigo-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white transition-all shadow-lg shadow-purple-950/60"
+                >
+                  <LogIn className="w-4 h-4" />
+                  <span>Sign In / Register</span>
+                </Link>
+
+                <Link
+                  href="/student"
+                  className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium bg-gray-800 hover:bg-gray-700 border border-gray-700 text-white transition-colors"
+                >
+                  <GraduationCap className="w-4 h-4 text-emerald-400" />
+                  <span>For Students</span>
+                </Link>
+
+                <Link
+                  href="/employer"
+                  className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium bg-blue-600 hover:bg-blue-500 text-white transition-colors"
+                >
+                  <Briefcase className="w-4 h-4" />
+                  <span>For Employers</span>
+                </Link>
+
+                <Link
+                  href={`/verify/${sampleHash}`}
+                  className="flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium text-gray-400 hover:text-white border border-gray-800 hover:border-gray-700 transition-colors"
+                >
+                  <ShieldCheck className="w-4 h-4" />
+                  <span>Verify Credential</span>
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </div>
@@ -90,7 +163,6 @@ export default function HomePage() {
         {/* Employer */}
         <Link
           href="/employer"
-          onClick={() => setRole("employer")}
           className="group p-6 rounded-2xl bg-gray-900 border border-gray-800 hover:border-gray-700 transition-all duration-200 flex flex-col justify-between"
         >
           <div className="space-y-4">
@@ -136,7 +208,6 @@ export default function HomePage() {
         {/* Student */}
         <Link
           href="/student"
-          onClick={() => setRole("student")}
           className="group p-6 rounded-2xl bg-gray-900 border border-gray-800 hover:border-gray-700 transition-all duration-200 flex flex-col justify-between"
         >
           <div className="space-y-4">
@@ -183,7 +254,6 @@ export default function HomePage() {
         {/* Admin */}
         <Link
           href="/admin"
-          onClick={() => setRole("admin")}
           className="group p-6 rounded-2xl bg-gray-900 border border-gray-800 hover:border-gray-700 transition-all duration-200 flex flex-col justify-between"
         >
           <div className="space-y-4">

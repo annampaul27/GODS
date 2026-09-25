@@ -27,6 +27,7 @@ import {
   RefreshCw,
   ExternalLink,
 } from "lucide-react";
+import RoleGuard from "@/components/auth/RoleGuard";
 
 export default function AdminProfilePage() {
   const router = useRouter();
@@ -76,7 +77,8 @@ export default function AdminProfilePage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 py-8 px-4 sm:px-6 lg:px-8">
+    <RoleGuard allowedRoles={["admin"]} portalName="Super Admin Key Authority & Profile">
+      <div className="min-h-screen bg-slate-950 text-slate-100 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto space-y-6">
         {/* Navigation & Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -350,6 +352,7 @@ export default function AdminProfilePage() {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </RoleGuard>
   );
 }

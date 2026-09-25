@@ -22,6 +22,7 @@ import {
   Check,
   Settings,
 } from "lucide-react";
+import RoleGuard from "@/components/auth/RoleGuard";
 
 export default function EmployerPage() {
   const {
@@ -60,7 +61,8 @@ export default function EmployerPage() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+    <RoleGuard allowedRoles={["employer", "admin"]} portalName="Employer ATS Portal">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-5 rounded-xl bg-gray-900 border border-gray-800">
         <div className="flex items-center gap-3.5">
@@ -245,6 +247,7 @@ export default function EmployerPage() {
       {isJobModalOpen && (
         <JobCreatorModal onClose={() => setIsJobModalOpen(false)} />
       )}
-    </div>
+      </div>
+    </RoleGuard>
   );
 }

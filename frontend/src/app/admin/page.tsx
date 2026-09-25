@@ -14,6 +14,7 @@ import {
   AlertTriangle,
   KeyRound,
 } from "lucide-react";
+import RoleGuard from "@/components/auth/RoleGuard";
 
 export default function AdminPage() {
   const { candidates, jobs, credentials, organizations, anomalies } = useStore();
@@ -22,7 +23,8 @@ export default function AdminPage() {
   const pendingAnomalies = anomalies.filter((a) => !a.resolved);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+    <RoleGuard allowedRoles={["admin"]} portalName="Superuser Platform Governance">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
       {/* Header */}
       <div className="p-5 rounded-xl bg-gray-900 border border-gray-800">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -157,6 +159,7 @@ export default function AdminPage() {
       {activeTab === "taxonomy" && <SkillTaxonomyTable />}
       {activeTab === "orgs" && <OrgManager />}
       {activeTab === "anomalies" && <AnomalyMonitor />}
-    </div>
+      </div>
+    </RoleGuard>
   );
 }

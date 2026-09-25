@@ -28,6 +28,7 @@ import {
   KeyRound,
   FileCheck,
   Award,
+  BookOpen,
 } from "lucide-react";
 import GithubIcon from "@/components/icons/GithubIcon";
 import { RoleType } from "@/types";
@@ -38,7 +39,6 @@ export default function Navbar() {
   const router = useRouter();
   const {
     role,
-    setRole,
     currentOrg,
     setCurrentOrg,
     organizations,
@@ -47,7 +47,6 @@ export default function Navbar() {
     credentials,
     isAuthenticated,
     currentUser,
-    login,
     logout,
   } = useStore();
 
@@ -83,34 +82,19 @@ export default function Navbar() {
     credentials[0]?.hash ||
     "a4f89d3810c92bf2234e405e6081297e68cfb939e6a0d0a52479e0237d45f3ba";
 
-  // Determine effective role based on current active route, or fall back to store role
-  const isStudentRoute = pathname.startsWith("/student");
-  const isEmployerRoute = pathname.startsWith("/employer");
-  const isAdminRoute = pathname.startsWith("/admin");
+  // STRICT RBAC:
+  // If the user is logged in, their role is SOLELY dictated by their authenticated session.
+  // A student never becomes an employer just by navigating to an employer URL or /hub.
+  const effectiveRole: RoleType =
+    isAuthenticated && currentUser
+      ? currentUser.role
+      : pathname.startsWith("/employer")
+      ? "employer"
+      : pathname.startsWith("/admin")
+      ? "admin"
+      : "student";
+
   const isPublicLanding = pathname === "/" && !isAuthenticated;
-
-  const effectiveRole: RoleType = isStudentRoute
-    ? "student"
-    : isEmployerRoute
-    ? "employer"
-    : isAdminRoute
-    ? "admin"
-    : role || "student";
-
-  const handleRoleSwitch = (newRole: RoleType) => {
-    setRole(newRole);
-    if (newRole === "employer") {
-      login("employer", "priya.sharma@acme.com", organizations[0].id);
-      router.push("/employer");
-    } else if (newRole === "student") {
-      login("student", "aditya.verma@example.com");
-      router.push("/student");
-    } else if (newRole === "admin") {
-      login("admin", "root@skillsetu.ai");
-      router.push("/admin");
-    }
-    setUserDropdownOpen(false);
-  };
 
   const profileUrl =
     effectiveRole === "student"
@@ -120,11 +104,11 @@ export default function Navbar() {
       : "/admin/profile";
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-slate-800/80 bg-slate-950/90 backdrop-blur-xl transition-all">
+    <header className="sticky top-0 z-50 w-full border-b border-slate-800/80 bg-slate-950/95 backdrop-blur-xl transition-all">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
         
         {/* ========================================================= */}
-        {/* LEFT: BRAND & ROLE PORTAL BADGE                           */}
+        {/* LEFT: BRAND & ROLE-ISOLATED PORTAL BADGE                  */}
         {/* ========================================================= */}
         <div className="flex items-center gap-4">
           <Link
@@ -147,26 +131,29 @@ export default function Navbar() {
                 Skill<span className="text-purple-400">Setu</span>
               </span>
 
-              {/* Role-Specific Portal Badge */}
+              {/* Strict Role Badges */}
               {effectiveRole === "student" && (
-                <span className="hidden sm:inline-block text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
-                  Student Portal
+                <span className="hidden sm:inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                  <span>Student Portal</span>
                 </span>
               )}
               {effectiveRole === "employer" && (
-                <span className="hidden sm:inline-block text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-500/15 text-blue-300 border border-blue-500/30">
-                  Employer ATS
+                <span className="hidden sm:inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-500/15 text-blue-300 border border-blue-500/30">
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+                  <span>Employer ATS</span>
                 </span>
               )}
               {effectiveRole === "admin" && (
-                <span className="hidden sm:inline-block text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-500/15 text-purple-300 border border-purple-500/30">
-                  Root Admin
+                <span className="hidden sm:inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-500/15 text-purple-300 border border-purple-500/30">
+                  <span className="w-1.5 h-1.5 rounded-full bg-purple-400" />
+                  <span>Root Admin</span>
                 </span>
               )}
             </div>
           </Link>
 
-          {/* Employer-Only Workspace Switcher */}
+          {/* Employer-Only Workspace Switcher (STRICTLY HIDDEN FROM STUDENTS) */}
           {effectiveRole === "employer" && (
             <div className="relative hidden xl:block" ref={orgRef}>
               <button
@@ -176,7 +163,11 @@ export default function Navbar() {
               >
                 <span className="text-sm leading-none">{currentOrg.logo}</span>
                 <span className="max-w-[130px] truncate">{currentOrg.name}</span>
-                <ChevronDown className={`w-3.5 h-3.5 text-slate-500 transition-transform ${orgDropdownOpen ? "rotate-180" : ""}`} />
+                <ChevronDown
+                  className={`w-3.5 h-3.5 text-slate-500 transition-transform ${
+                    orgDropdownOpen ? "rotate-180" : ""
+                  }`}
+                />
               </button>
 
               {orgDropdownOpen && (
@@ -234,8 +225,20 @@ export default function Navbar() {
                     : "text-slate-400 hover:text-white hover:bg-slate-800/60"
                 }`}
               >
-                <GraduationCap className="w-3.5 h-3.5" />
-                <span>Dashboard & Radar</span>
+                <GraduationCap className="w-3.5 h-3.5 text-emerald-400" />
+                <span>My Dashboard</span>
+              </Link>
+
+              <Link
+                href="/hub"
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                  pathname === "/hub"
+                    ? "bg-purple-600 text-white shadow-sm"
+                    : "text-slate-400 hover:text-white hover:bg-slate-800/60"
+                }`}
+              >
+                <Brain className="w-3.5 h-3.5 text-purple-400" />
+                <span>13 Courses & Labs</span>
               </Link>
 
               <Link
@@ -248,18 +251,6 @@ export default function Navbar() {
               >
                 <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
                 <span>GitHub Secret Shield</span>
-              </Link>
-
-              <Link
-                href="/hub"
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                  pathname === "/hub"
-                    ? "bg-purple-600 text-white shadow-sm"
-                    : "text-slate-400 hover:text-white hover:bg-slate-800/60"
-                }`}
-              >
-                <Brain className="w-3.5 h-3.5" />
-                <span>13 Courses & AI Suite</span>
               </Link>
 
               <Link
@@ -287,7 +278,7 @@ export default function Navbar() {
                     : "text-slate-400 hover:text-white hover:bg-slate-800/60"
                 }`}
               >
-                <Briefcase className="w-3.5 h-3.5" />
+                <Briefcase className="w-3.5 h-3.5 text-blue-400" />
                 <span>Talent Radar & Pipeline</span>
               </Link>
 
@@ -340,7 +331,7 @@ export default function Navbar() {
                     : "text-slate-400 hover:text-white hover:bg-slate-800/60"
                 }`}
               >
-                <Shield className="w-3.5 h-3.5" />
+                <Shield className="w-3.5 h-3.5 text-purple-400" />
                 <span>Governance Console</span>
               </Link>
 
@@ -386,27 +377,29 @@ export default function Navbar() {
         </nav>
 
         {/* ========================================================= */}
-        {/* RIGHT: ACTIONS, COCKPIT & ROLE-AWARE USER PROFILE         */}
+        {/* RIGHT: CONTEXTUAL ACTIONS, COCKPIT & USER PROFILE         */}
         {/* ========================================================= */}
         <div className="flex items-center gap-2.5">
-          {/* Live Pitch Cockpit Beacon (Always visible for presentations) */}
-          <Link
-            href="/demo"
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all shadow-md ${
-              pathname === "/demo"
-                ? "bg-amber-500 text-slate-950 ring-2 ring-amber-400/50 shadow-amber-500/20"
-                : "bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/30"
-            }`}
-            title="Open Live Pitch Cockpit"
-          >
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
-            </span>
-            <span>Live Pitch</span>
-          </Link>
+          {/* Employer/Admin-Only Live Pitch Cockpit Beacon (HIDDEN FROM STUDENTS) */}
+          {effectiveRole !== "student" && (
+            <Link
+              href="/demo"
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all shadow-md ${
+                pathname === "/demo"
+                  ? "bg-amber-500 text-slate-950 ring-2 ring-amber-400/50 shadow-amber-500/20"
+                  : "bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/30"
+              }`}
+              title="Open ATS Screening Cockpit"
+            >
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
+              </span>
+              <span>Live Pitch</span>
+            </Link>
+          )}
 
-          {/* Contextual Blind Screening Toggle (ONLY shown on Employer route) */}
+          {/* Contextual Blind Screening Toggle (ONLY shown on Employer portal) */}
           {effectiveRole === "employer" && (
             <button
               onClick={() => setIsAnonymizedScreening(!isAnonymizedScreening)}
@@ -432,15 +425,15 @@ export default function Navbar() {
           )}
 
           {/* Notification Center */}
-          <NotificationCenter userId="cand-1" />
+          <NotificationCenter userId={effectiveRole === "student" ? "cand-1" : "emp-1"} />
 
-          {/* Profile & Persona Account Menu */}
+          {/* Authenticated User Menu (STRICT ROLE PROFILE - NO ACCIDENTAL ROLE SWITCHER) */}
           {isAuthenticated && currentUser ? (
             <div className="relative" ref={userRef}>
               <button
                 onClick={() => setUserDropdownOpen(!userDropdownOpen)}
                 className="flex items-center gap-2 p-1 pl-1.5 pr-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-xs text-slate-300 transition-colors"
-                title="Account & Persona"
+                title="Account Menu"
               >
                 {currentUser.avatarUrl ? (
                   <img
@@ -456,7 +449,11 @@ export default function Navbar() {
                 <span className="hidden sm:inline font-semibold text-white text-xs max-w-[100px] truncate">
                   {currentUser.name.split(" ")[0]}
                 </span>
-                <ChevronDown className={`w-3 h-3 text-slate-500 transition-transform ${userDropdownOpen ? "rotate-180" : ""}`} />
+                <ChevronDown
+                  className={`w-3 h-3 text-slate-500 transition-transform ${
+                    userDropdownOpen ? "rotate-180" : ""
+                  }`}
+                />
               </button>
 
               {userDropdownOpen && (
@@ -465,9 +462,26 @@ export default function Navbar() {
                   <div className="px-3 py-2 border-b border-slate-800">
                     <p className="text-xs font-bold text-white truncate">{currentUser.name}</p>
                     <p className="text-[10px] text-slate-400 font-mono truncate">{currentUser.email}</p>
-                    <span className="inline-block mt-1 text-[9px] uppercase font-bold px-1.5 py-0.2 rounded bg-purple-500/10 text-purple-300 border border-purple-500/20">
-                      Logged in as {effectiveRole.toUpperCase()}
-                    </span>
+                    
+                    {/* Role Pill */}
+                    <div className="mt-1.5">
+                      {currentUser.role === "student" ? (
+                        <span className="inline-flex items-center gap-1 text-[9px] uppercase font-bold px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+                          <GraduationCap className="w-3 h-3" />
+                          <span>Student Account</span>
+                        </span>
+                      ) : currentUser.role === "employer" ? (
+                        <span className="inline-flex items-center gap-1 text-[9px] uppercase font-bold px-2 py-0.5 rounded-full bg-blue-500/15 text-blue-300 border border-blue-500/30">
+                          <Briefcase className="w-3 h-3" />
+                          <span>Recruiter / ATS</span>
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center gap-1 text-[9px] uppercase font-bold px-2 py-0.5 rounded-full bg-purple-500/15 text-purple-300 border border-purple-500/30">
+                          <Shield className="w-3 h-3" />
+                          <span>Root Super Admin</span>
+                        </span>
+                      )}
+                    </div>
                   </div>
 
                   {/* Profile Direct Link */}
@@ -479,57 +493,53 @@ export default function Navbar() {
                     <span>My Profile & Settings</span>
                   </Link>
 
-                  {/* Quick Switch Persona (Demo / Evaluation Helper) */}
-                  <div className="px-2 pt-1 border-t border-slate-800/80">
-                    <p className="text-[9px] uppercase tracking-wider text-slate-500 font-bold px-1 mb-1">
-                      Switch Role Context
-                    </p>
-                    <div className="grid grid-cols-3 gap-1">
-                      <button
-                        onClick={() => handleRoleSwitch("student")}
-                        className={`p-1.5 rounded-lg text-[10px] font-semibold border flex flex-col items-center gap-0.5 transition-colors ${
-                          effectiveRole === "student"
-                            ? "bg-emerald-500/20 text-emerald-300 border-emerald-500/40"
-                            : "bg-slate-950 text-slate-400 border-slate-800 hover:text-white"
-                        }`}
+                  {/* Additional Role-Specific Quick Links */}
+                  {currentUser.role === "student" && (
+                    <>
+                      <Link
+                        href="/student/github-security"
+                        className="w-full flex items-center gap-2 p-2 rounded-lg text-xs text-slate-300 hover:text-white hover:bg-slate-800 transition-colors"
                       >
-                        <GraduationCap className="w-3 h-3 text-emerald-400" />
-                        <span>Student</span>
-                      </button>
-
-                      <button
-                        onClick={() => handleRoleSwitch("employer")}
-                        className={`p-1.5 rounded-lg text-[10px] font-semibold border flex flex-col items-center gap-0.5 transition-colors ${
-                          effectiveRole === "employer"
-                            ? "bg-blue-500/20 text-blue-300 border-blue-500/40"
-                            : "bg-slate-950 text-slate-400 border-slate-800 hover:text-white"
-                        }`}
+                        <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+                        <span>GitHub Secret Shield</span>
+                      </Link>
+                      <Link
+                        href="/student"
+                        className="w-full flex items-center gap-2 p-2 rounded-lg text-xs text-slate-300 hover:text-white hover:bg-slate-800 transition-colors"
                       >
-                        <Briefcase className="w-3 h-3 text-blue-400" />
-                        <span>Employer</span>
-                      </button>
+                        <GraduationCap className="w-3.5 h-3.5 text-emerald-400" />
+                        <span>Skill Gap Radar</span>
+                      </Link>
+                    </>
+                  )}
 
-                      <button
-                        onClick={() => handleRoleSwitch("admin")}
-                        className={`p-1.5 rounded-lg text-[10px] font-semibold border flex flex-col items-center gap-0.5 transition-colors ${
-                          effectiveRole === "admin"
-                            ? "bg-purple-500/20 text-purple-300 border-purple-500/40"
-                            : "bg-slate-950 text-slate-400 border-slate-800 hover:text-white"
-                        }`}
-                      >
-                        <Shield className="w-3 h-3 text-purple-400" />
-                        <span>Admin</span>
-                      </button>
-                    </div>
-                  </div>
+                  {currentUser.role === "employer" && (
+                    <Link
+                      href="/employer"
+                      className="w-full flex items-center gap-2 p-2 rounded-lg text-xs text-slate-300 hover:text-white hover:bg-slate-800 transition-colors"
+                    >
+                      <Briefcase className="w-3.5 h-3.5 text-blue-400" />
+                      <span>Talent Radar & Pipeline</span>
+                    </Link>
+                  )}
 
-                  {/* Sign Out */}
+                  {currentUser.role === "admin" && (
+                    <Link
+                      href="/admin"
+                      className="w-full flex items-center gap-2 p-2 rounded-lg text-xs text-slate-300 hover:text-white hover:bg-slate-800 transition-colors"
+                    >
+                      <Shield className="w-3.5 h-3.5 text-purple-400" />
+                      <span>Governance Dashboard</span>
+                    </Link>
+                  )}
+
+                  {/* Sign Out (Clears session, prevents student from carrying session into employer) */}
                   <button
                     onClick={() => {
                       logout();
                       router.push("/login");
                     }}
-                    className="w-full flex items-center gap-2 p-2 rounded-lg text-xs text-rose-400 hover:text-rose-300 hover:bg-rose-950/30 transition-colors border-t border-slate-800/80"
+                    className="w-full flex items-center gap-2 p-2 rounded-lg text-xs text-rose-400 hover:text-rose-300 hover:bg-rose-950/30 transition-colors border-t border-slate-800/80 mt-1"
                   >
                     <LogOut className="w-3.5 h-3.5" />
                     <span>Sign Out</span>
@@ -540,7 +550,7 @@ export default function Navbar() {
           ) : (
             <Link
               href="/login"
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 text-white font-semibold text-xs shadow-md shadow-purple-950/40 transition-all"
+              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 text-white font-semibold text-xs shadow-md shadow-purple-950/40 transition-all"
             >
               <LogIn className="w-3.5 h-3.5" />
               <span>Sign In</span>
@@ -570,7 +580,14 @@ export default function Navbar() {
                 className="flex items-center gap-2 p-2.5 rounded-xl bg-slate-900 text-xs font-semibold text-white"
               >
                 <GraduationCap className="w-4 h-4 text-emerald-400" />
-                <span>Dashboard & Radar</span>
+                <span>My Dashboard</span>
+              </Link>
+              <Link
+                href="/hub"
+                className="flex items-center gap-2 p-2.5 rounded-xl bg-slate-900 text-xs font-semibold text-slate-300"
+              >
+                <Brain className="w-4 h-4 text-purple-400" />
+                <span>13 Courses & Labs</span>
               </Link>
               <Link
                 href="/student/github-security"
@@ -578,13 +595,6 @@ export default function Navbar() {
               >
                 <ShieldCheck className="w-4 h-4 text-emerald-400" />
                 <span>GitHub Secret Shield</span>
-              </Link>
-              <Link
-                href="/hub"
-                className="flex items-center gap-2 p-2.5 rounded-xl bg-slate-900 text-xs font-semibold text-slate-300"
-              >
-                <Brain className="w-4 h-4 text-purple-400" />
-                <span>13 Courses & AI Suite</span>
               </Link>
               <Link
                 href="/student/profile"
@@ -617,7 +627,7 @@ export default function Navbar() {
                 className="flex items-center gap-2 p-2.5 rounded-xl bg-slate-900 text-xs font-semibold text-slate-300"
               >
                 <Sliders className="w-4 h-4 text-blue-300" />
-                <span>Hiring Preferences & Workspace</span>
+                <span>Hiring Preferences</span>
               </Link>
             </div>
           )}
@@ -642,20 +652,32 @@ export default function Navbar() {
           )}
 
           <div className="pt-2 border-t border-slate-800 space-y-1 text-xs">
-            <Link
-              href="/demo"
-              className="flex items-center justify-between p-2 rounded-lg bg-amber-500/10 text-amber-300 font-bold"
-            >
-              <span>⚡ Live Pitch Cockpit</span>
-              <ChevronDown className="w-4 h-4 -rotate-90" />
-            </Link>
-            <Link
-              href={profileUrl}
-              className="flex items-center justify-between p-2 rounded-lg text-slate-300 hover:bg-slate-900"
-            >
-              <span>👤 Profile & Settings</span>
-              <ChevronDown className="w-4 h-4 -rotate-90 text-slate-600" />
-            </Link>
+            {effectiveRole !== "student" && (
+              <Link
+                href="/demo"
+                className="flex items-center justify-between p-2 rounded-lg bg-amber-500/10 text-amber-300 font-bold"
+              >
+                <span>⚡ Live Pitch Cockpit</span>
+                <ChevronDown className="w-4 h-4 -rotate-90" />
+              </Link>
+            )}
+            {isAuthenticated ? (
+              <Link
+                href={profileUrl}
+                className="flex items-center justify-between p-2 rounded-lg text-slate-300 hover:bg-slate-900"
+              >
+                <span>👤 My Profile & Settings</span>
+                <ChevronDown className="w-4 h-4 -rotate-90 text-slate-600" />
+              </Link>
+            ) : (
+              <Link
+                href="/login"
+                className="flex items-center justify-between p-2 rounded-lg bg-purple-600 text-white font-semibold"
+              >
+                <span>🔑 Sign In / Register</span>
+                <ChevronDown className="w-4 h-4 -rotate-90" />
+              </Link>
+            )}
           </div>
         </div>
       )}

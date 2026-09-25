@@ -138,6 +138,48 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     avatarUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80",
   });
 
+  // Restore persisted session on mount
+  useEffect(() => {
+    try {
+      const savedSession = localStorage.getItem("skillsetu_auth_session");
+      if (savedSession) {
+        const parsed = JSON.parse(savedSession);
+        if (parsed.role) setRole(parsed.role);
+        if (parsed.isAuthenticated !== undefined) setIsAuthenticated(parsed.isAuthenticated);
+        if (parsed.currentUser) setCurrentUser(parsed.currentUser);
+        if (parsed.currentStudentId) setCurrentStudentId(parsed.currentStudentId);
+      }
+    } catch (e) {
+      console.warn("Failed to restore session from localStorage", e);
+    }
+  }, []);
+
+  const persistSession = (
+    savedRole: RoleType,
+    userObj: {
+      name: string;
+      email: string;
+      role: RoleType;
+      avatarUrl?: string;
+      orgName?: string;
+    },
+    sId?: string
+  ) => {
+    try {
+      localStorage.setItem(
+        "skillsetu_auth_session",
+        JSON.stringify({
+          role: savedRole,
+          currentUser: userObj,
+          isAuthenticated: true,
+          currentStudentId: sId || currentStudentId,
+        })
+      );
+    } catch (e) {
+      console.warn("Failed to persist session", e);
+    }
+  };
+
   const login = (newRole: RoleType, email: string, orgId?: string) => {
     setRole(newRole);
     setIsAuthenticated(true);
@@ -145,36 +187,44 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     if (newRole === "employer") {
       const selectedOrg = organizations.find((o) => o.id === orgId) || organizations[0];
       setCurrentOrg(selectedOrg);
-      setCurrentUser({
+      const userObj = {
         name: "Priya Sharma",
         email: email || "priya.sharma@acme.com",
-        role: "employer",
+        role: "employer" as RoleType,
         orgName: selectedOrg.name,
         avatarUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80",
-      });
+      };
+      setCurrentUser(userObj);
+      persistSession("employer", userObj);
       addToast({
         type: "success",
         title: "Authenticated as Employer / Recruiter",
         message: `Signed in to ${selectedOrg.name}. Talent Radar and screening pipelines loaded.`,
       });
     } else if (newRole === "student") {
-      setCurrentUser({
-        name: currentStudent.fullName,
-        email: email || currentStudent.email,
-        role: "student",
-        avatarUrl: currentStudent.avatarUrl,
-      });
+      const targetStudent = candidates.find((c) => c.email === email) || currentStudent;
+      setCurrentStudentId(targetStudent.id);
+      const userObj = {
+        name: targetStudent.fullName,
+        email: email || targetStudent.email,
+        role: "student" as RoleType,
+        avatarUrl: targetStudent.avatarUrl,
+      };
+      setCurrentUser(userObj);
+      persistSession("student", userObj, targetStudent.id);
       addToast({
         type: "success",
         title: "Authenticated as Student / Candidate",
-        message: `Welcome back, ${currentStudent.fullName}. Target role delta benchmarks ready.`,
+        message: `Welcome back, ${targetStudent.fullName}. Target role delta benchmarks ready.`,
       });
     } else if (newRole === "admin") {
-      setCurrentUser({
+      const userObj = {
         name: "Platform Superuser",
         email: email || "root@skillsetu.ai",
-        role: "admin",
-      });
+        role: "admin" as RoleType,
+      };
+      setCurrentUser(userObj);
+      persistSession("admin", userObj);
       addToast({
         type: "success",
         title: "Superuser Session Initialized (Root)",
@@ -186,6 +236,9 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const logout = () => {
     setIsAuthenticated(false);
     setCurrentUser(null);
+    try {
+      localStorage.removeItem("skillsetu_auth_session");
+    } catch (e) {}
     addToast({
       type: "info",
       title: "Session Terminated",
@@ -263,12 +316,14 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     setCurrentStudentId(id);
     setRole("student");
     setIsAuthenticated(true);
-    setCurrentUser({
+    const userObj = {
       name: newCandidate.fullName,
       email: newCandidate.email,
-      role: "student",
+      role: "student" as RoleType,
       avatarUrl: newCandidate.avatarUrl,
-    });
+    };
+    setCurrentUser(userObj);
+    persistSession("student", userObj, id);
 
     addToast({
       type: "success",
