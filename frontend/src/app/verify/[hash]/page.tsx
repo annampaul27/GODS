@@ -222,11 +222,17 @@ export default function VerifyCredentialPage() {
             Canonical Audit Payload:
           </span>
           <pre className="text-xs font-mono text-gray-300 overflow-x-auto whitespace-pre-wrap leading-relaxed bg-gray-900 p-2.5 rounded border border-gray-800">
-            {credential?.canonicalPayload ? (
-              JSON.stringify(JSON.parse(credential.canonicalPayload), null, 2)
-            ) : (
-              ""
-            )}
+            {(() => {
+              if (!credential?.canonicalPayload) return "";
+              try {
+                const parsed = JSON.parse(credential.canonicalPayload);
+                return typeof parsed === "object" && parsed !== null
+                  ? JSON.stringify(parsed, null, 2)
+                  : String(credential.canonicalPayload);
+              } catch {
+                return String(credential.canonicalPayload);
+              }
+            })()}
           </pre>
         </div>
 

@@ -300,18 +300,21 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       console.warn("Backend offline, calculating liquidity locally (NF2):", err);
     }
 
+    const issuedAt = new Date().toISOString();
+    const canonicalPayload = canonicalizeJSON({
+      candidateEmail: cand.email,
+      candidateId: cand.id,
+      issuedAt,
+      passedQuestions: 3,
+      score,
+      skillId,
+      totalQuestions: 3,
+    });
+
     if (!hash) {
-      const canonicalPayload = canonicalizeJSON({
-        candidateEmail: cand.email,
-        candidateId: cand.id,
-        issuedAt: new Date().toISOString(),
-        score,
-        skillId,
-      });
       hash = await computeSHA256(canonicalPayload);
     }
 
-    const issuedAt = new Date().toISOString();
     const newCred: ProofOfWorkCredential = {
       hash,
       candidateId: cand.id,
@@ -325,7 +328,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       issuedAt,
       issuerOrg: "SkillSetu Trust Engine",
       isSponsored: false,
-      canonicalPayload: hash,
+      canonicalPayload: canonicalPayload,
       answersLog: [
         {
           questionId: "q-1",
