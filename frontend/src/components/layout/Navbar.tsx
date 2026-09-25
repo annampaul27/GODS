@@ -152,6 +152,23 @@ export default function Navbar() {
             </button>
           </nav>
 
+          {/* Live Pitch Cockpit Link */}
+          <Link
+            href="/demo"
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all shadow-md ${
+              pathname === "/demo"
+                ? "bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-amber-500/25 ring-1 ring-amber-400"
+                : "bg-gradient-to-r from-amber-500/15 to-orange-500/15 hover:from-amber-500/25 hover:to-orange-500/25 text-amber-300 hover:text-white border border-amber-500/40 shadow-amber-950/30"
+            }`}
+            title="Open Live Pitch Cockpit"
+          >
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
+            </span>
+            <span>⚡ Live Pitch Cockpit</span>
+          </Link>
+
           {/* Blind Screening Toggle — employer only */}
           {(pathname === "/employer" || role === "employer") && (
             <button

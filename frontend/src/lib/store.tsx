@@ -18,6 +18,7 @@ import {
   INITIAL_TAXONOMY,
   INITIAL_ANOMALIES,
 } from "./mockData";
+import { CAMPUS_25_CANDIDATES } from "./campusCandidatesSeed";
 import { computeSHA256, canonicalizeJSON } from "./crypto";
 
 interface ToastNotification {
@@ -43,6 +44,8 @@ interface StoreContextType {
   addNewJob: (job: Omit<JobOpening, "id" | "createdAt" | "applicantsCount">) => void;
 
   candidates: Candidate[];
+  setCandidates: React.Dispatch<React.SetStateAction<Candidate[]>>;
+  seedCampusCandidates: (injected?: Candidate[]) => void;
   isAnonymizedScreening: boolean;
   setIsAnonymizedScreening: (val: boolean) => void;
   dispatchGapSprint: (candidateId: string, skillId: string, skillName: string) => Promise<void>;
@@ -207,6 +210,16 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       type: "success",
       title: "Job Ingested Successfully",
       message: `"${newJob.title}" parsed with ${newJob.criticalSkills.length} critical skills and ${newJob.optionalSkills.length} optional skills.`,
+    });
+  };
+
+  const seedCampusCandidates = (injected?: Candidate[]) => {
+    const list = injected && injected.length > 0 ? injected : CAMPUS_25_CANDIDATES;
+    setCandidates(list);
+    addToast({
+      type: "success",
+      title: "25+ Campus Candidates Injected 🚀",
+      message: `Populated ${list.length} multi-tier engineering candidates across IIT, NIT, BITS, VIT, and Tier-3 colleges.`,
     });
   };
 
@@ -600,6 +613,8 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         activeJob,
         addNewJob,
         candidates,
+        setCandidates,
+        seedCampusCandidates,
         isAnonymizedScreening,
         setIsAnonymizedScreening,
         dispatchGapSprint,
