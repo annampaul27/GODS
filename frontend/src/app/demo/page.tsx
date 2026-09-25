@@ -32,7 +32,11 @@ import {
   CheckCircle,
   HelpCircle,
   TrendingUp,
+  Bot,
 } from "lucide-react";
+import GithubIcon from "@/components/icons/GithubIcon";
+import AIInterviewerModal from "@/components/student/AIInterviewerModal";
+import { GitHubAnalysisModal } from "@/components/student/GitHubAnalysisModal";
 
 export default function LivePitchCockpitPage() {
   const {
@@ -72,6 +76,8 @@ export default function LivePitchCockpitPage() {
   const [onlyBridgeableFilter, setOnlyBridgeableFilter] = useState<boolean>(false);
   const [selectedCandidateId, setSelectedCandidateId] = useState<string>("cand-aarav-hero");
   const [activeUSPModal, setActiveUSPModal] = useState<string | null>(null);
+  const [isAIInterviewerOpen, setIsAIInterviewerOpen] = useState<boolean>(false);
+  const [isGitHubAnalysisOpen, setIsGitHubAnalysisOpen] = useState<boolean>(false);
 
   // Zone B Sandbox State (Aarav Sharma)
   const [sandboxCodeTab, setSandboxCodeTab] = useState<"fastapi" | "docker">("fastapi");
@@ -407,6 +413,24 @@ async def process_payment(amount: float):
             >
               <Users className="w-3.5 h-3.5" />
               <span>🚀 Seed 25+ Live Campus Candidates</span>
+            </button>
+
+            <button
+              onClick={() => setIsAIInterviewerOpen(true)}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white transition-all shadow-sm shadow-purple-600/30"
+              title="Launch AI Interview Coach & Live Question Generator"
+            >
+              <Bot className="w-3.5 h-3.5" />
+              <span>🎙️ AI Interview Coach</span>
+            </button>
+
+            <button
+              onClick={() => setIsGitHubAnalysisOpen(true)}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-gradient-to-r from-purple-700 via-indigo-700 to-purple-800 hover:from-purple-600 hover:to-indigo-600 text-white transition-all shadow-sm border border-purple-500/40"
+              title="Launch GitHub AST Codebase & Commit Verifier"
+            >
+              <GithubIcon className="w-3.5 h-3.5 text-purple-200" />
+              <span>🐙 GitHub Verifier</span>
             </button>
 
             <button
@@ -1073,6 +1097,25 @@ async def process_payment(amount: float):
             </div>
           </div>
         </div>
+      )}
+
+      {/* AI Interviewer Modal */}
+      {isAIInterviewerOpen && (
+        <AIInterviewerModal
+          isOpen={isAIInterviewerOpen}
+          onClose={() => setIsAIInterviewerOpen(false)}
+          defaultRole="Senior FastAPI & Microservices Architect"
+        />
+      )}
+
+      {/* GitHub Analysis Modal */}
+      {isGitHubAnalysisOpen && (
+        <GitHubAnalysisModal
+          isOpen={isGitHubAnalysisOpen}
+          onClose={() => setIsGitHubAnalysisOpen(false)}
+          defaultUsername="aaravsharma-dev"
+          candidateName="Aarav Sharma"
+        />
       )}
     </div>
   );

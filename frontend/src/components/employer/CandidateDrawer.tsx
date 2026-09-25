@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { Candidate } from "@/types";
 import { useStore } from "@/lib/store";
 import {
@@ -19,6 +19,8 @@ import {
   Zap,
   Shield,
 } from "lucide-react";
+import GithubIcon from "@/components/icons/GithubIcon";
+import { GitHubAnalysisModal } from "@/components/student/GitHubAnalysisModal";
 
 interface CandidateDrawerProps {
   candidate: Candidate;
@@ -34,6 +36,7 @@ export default function CandidateDrawer({
   onDispatchSprint,
 }: CandidateDrawerProps) {
   const { isAnonymizedScreening, completeGapSprint } = useStore();
+  const [isGitHubAnalysisOpen, setIsGitHubAnalysisOpen] = useState(false);
 
   const displayName = isAnonymizedScreening ? candidate.anonymizedId : candidate.fullName;
   const displayCollege = isAnonymizedScreening
@@ -90,16 +93,27 @@ export default function CandidateDrawer({
         {!isAnonymizedScreening && (
           <div className="flex items-center gap-3 py-3 border-b border-gray-800 text-xs">
             {candidate.githubUrl && (
-              <a
-                href={candidate.githubUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gray-950 border border-gray-800 text-gray-300 hover:text-white transition-colors"
-              >
-                <Code2 className="w-3.5 h-3.5" />
-                <span>GitHub</span>
-                <ExternalLink className="w-3 h-3 ml-0.5" />
-              </a>
+              <>
+                <a
+                  href={candidate.githubUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gray-950 border border-gray-800 text-gray-300 hover:text-white transition-colors"
+                >
+                  <Code2 className="w-3.5 h-3.5" />
+                  <span>GitHub</span>
+                  <ExternalLink className="w-3 h-3 ml-0.5" />
+                </a>
+
+                <button
+                  onClick={() => setIsGitHubAnalysisOpen(true)}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-purple-950/40 border border-purple-800/50 text-purple-300 hover:text-white hover:bg-purple-900/40 transition-colors font-medium"
+                  title="Run Deep AST Codebase & Commit Verifier on candidate"
+                >
+                  <GithubIcon className="w-3.5 h-3.5 text-purple-400" />
+                  <span>AST Code Audit</span>
+                </button>
+              </>
             )}
             {candidate.linkedinUrl && (
               <a
@@ -344,6 +358,19 @@ export default function CandidateDrawer({
             ))}
           </div>
         </div>
+
+        {isGitHubAnalysisOpen && (
+          <GitHubAnalysisModal
+            isOpen={isGitHubAnalysisOpen}
+            onClose={() => setIsGitHubAnalysisOpen(false)}
+            defaultUsername={
+              candidate.githubUrl
+                ? candidate.githubUrl.split("/").filter(Boolean).pop() || "aaravsharma-dev"
+                : "aaravsharma-dev"
+            }
+            candidateName={displayName}
+          />
+        )}
       </div>
     </div>
   );

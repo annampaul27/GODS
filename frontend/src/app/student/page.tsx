@@ -13,6 +13,8 @@ import ATSResumeManagerModal from "@/components/student/ATSResumeManagerModal";
 import DynamicSandboxModal from "@/components/student/DynamicSandboxModal";
 import RealtimeJobAlerts from "@/components/student/RealtimeJobAlerts";
 import JobDetailsModal from "@/components/student/JobDetailsModal";
+import AIInterviewerModal from "@/components/student/AIInterviewerModal";
+import { GitHubAnalysisModal } from "@/components/student/GitHubAnalysisModal";
 import {
   UploadCloud,
   Compass,
@@ -26,7 +28,9 @@ import {
   Terminal,
   AlertTriangle,
   ArrowRight,
+  Bot,
 } from "lucide-react";
+import GithubIcon from "@/components/icons/GithubIcon";
 import Link from "next/link";
 
 export default function StudentPage() {
@@ -37,6 +41,8 @@ export default function StudentPage() {
   const [isVerificationModalOpen, setIsVerificationModalOpen] = useState(false);
   const [isATSResumeModalOpen, setIsATSResumeModalOpen] = useState(false);
   const [isSandboxModalOpen, setIsSandboxModalOpen] = useState(false);
+  const [isAIInterviewerOpen, setIsAIInterviewerOpen] = useState(false);
+  const [isGitHubAnalysisOpen, setIsGitHubAnalysisOpen] = useState(false);
   const [selectedJobModalId, setSelectedJobModalId] = useState<string | null>(null);
   const [deadlineAlerts, setDeadlineAlerts] = useState<UserNotification[]>([]);
   const [verificationSkillId, setVerificationSkillId] = useState("postgresql");
@@ -145,6 +151,24 @@ export default function StudentPage() {
           >
             <Terminal className="w-3.5 h-3.5" />
             <span>Bug-Fix Sandbox</span>
+          </button>
+
+          <button
+            id="btn-open-ai-interview-coach"
+            onClick={() => setIsAIInterviewerOpen(true)}
+            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-medium bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white transition-all shadow-sm"
+          >
+            <Bot className="w-3.5 h-3.5" />
+            <span>AI Interview Coach</span>
+          </button>
+
+          <button
+            id="btn-open-github-verifier"
+            onClick={() => setIsGitHubAnalysisOpen(true)}
+            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-gradient-to-r from-purple-700 via-indigo-700 to-purple-800 hover:from-purple-600 hover:to-indigo-600 text-white transition-all shadow-sm border border-purple-500/40"
+          >
+            <GithubIcon className="w-3.5 h-3.5 text-purple-200" />
+            <span>🐙 GitHub Verifier</span>
           </button>
 
           <button
@@ -397,6 +421,27 @@ export default function StudentPage() {
         <JobDetailsModal
           jobId={selectedJobModalId}
           onClose={() => setSelectedJobModalId(null)}
+        />
+      )}
+
+      {isAIInterviewerOpen && (
+        <AIInterviewerModal
+          isOpen={isAIInterviewerOpen}
+          onClose={() => setIsAIInterviewerOpen(false)}
+          defaultRole={currentStudent.targetRole || "Senior Backend Engineer"}
+        />
+      )}
+
+      {isGitHubAnalysisOpen && (
+        <GitHubAnalysisModal
+          isOpen={isGitHubAnalysisOpen}
+          onClose={() => setIsGitHubAnalysisOpen(false)}
+          defaultUsername={
+            currentStudent.githubUrl
+              ? currentStudent.githubUrl.split("/").filter(Boolean).pop() || "aaravsharma-dev"
+              : "aaravsharma-dev"
+          }
+          candidateName={currentStudent.fullName}
         />
       )}
     </div>

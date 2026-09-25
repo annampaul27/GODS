@@ -16,6 +16,7 @@ import {
   LogOut,
   CheckCircle,
 } from "lucide-react";
+import GithubIcon from "@/components/icons/GithubIcon";
 import { RoleType } from "@/types";
 import NotificationCenter from "./NotificationCenter";
 
@@ -167,6 +168,20 @@ export default function Navbar() {
               <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
             </span>
             <span>⚡ Live Pitch Cockpit</span>
+          </Link>
+
+          {/* GitHub AST Analysis Link */}
+          <Link
+            href="/github-analysis"
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all border ${
+              pathname === "/github-analysis"
+                ? "bg-purple-600 border-purple-500 text-white shadow-purple-500/25 shadow-md"
+                : "bg-purple-950/30 border-purple-800/40 text-purple-300 hover:text-white hover:bg-purple-900/40"
+            }`}
+            title="GitHub AST Codebase & Commit Verifier"
+          >
+            <GithubIcon className="w-3.5 h-3.5 text-purple-400" />
+            <span>🐙 GitHub Verifier</span>
           </Link>
 
           {/* Blind Screening Toggle — employer only */}
