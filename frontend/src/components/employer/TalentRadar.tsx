@@ -228,10 +228,10 @@ export default function TalentRadar({
           const isJobReady = candidate.currentTier === "job_ready";
           const isBridgeable = candidate.currentTier === "bridgeable";
           const displayName = isAnonymizedScreening
-            ? `Candidate #${candidate.id.slice(-4).toUpperCase()}`
+            ? candidate.anonymizedId || `Candidate #${candidate.id.slice(-4).toUpperCase()}`
             : candidate.fullName;
           const displayCollege = isAnonymizedScreening
-            ? "Accredited Institution"
+            ? candidate.anonymizedCollege || "Accredited Institution"
             : candidate.college;
 
           return (

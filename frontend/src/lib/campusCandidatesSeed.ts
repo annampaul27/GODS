@@ -231,11 +231,11 @@ export const CAMPUS_25_CANDIDATES: Candidate[] = [
     credentials: [],
   },
   {
-    id: "cand-seed-br-2",
+    id: "cand-1",
     fullName: "Aditya Verma",
     anonymizedId: "Candidate #4C1B",
     email: "aditya.verma@example.com",
-    college: "IIIT Allahabad",
+    college: "Indian Institute of Information Technology (IIIT)",
     anonymizedCollege: "Verified Accredited Institution (Tier-1 IIIT)",
     gradYear: 2026,
     avatarUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
