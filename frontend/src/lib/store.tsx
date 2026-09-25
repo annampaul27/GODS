@@ -21,7 +21,7 @@ import {
 import { CAMPUS_25_CANDIDATES } from "./campusCandidatesSeed";
 import { computeSHA256, canonicalizeJSON } from "./crypto";
 
-interface ToastNotification {
+export interface ToastNotification {
   id: string;
   type: "success" | "warning" | "info" | "credential";
   title: string;
@@ -359,12 +359,18 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const currentStudent = candidates.find((c) => c.id === currentStudentId) || candidates[0];
 
   const addToast = (toast: Omit<ToastNotification, "id" | "timestamp">) => {
+    const id = "toast-" + Date.now() + "-" + Math.random().toString(36).substring(2, 6);
     const newToast: ToastNotification = {
       ...toast,
-      id: "toast-" + Date.now() + "-" + Math.random().toString(36).substring(2, 6),
+      id,
       timestamp: new Date().toLocaleTimeString(),
     };
     setToasts((prev) => [newToast, ...prev.slice(0, 4)]);
+
+    // Auto-disappear after 4 seconds
+    setTimeout(() => {
+      setToasts((prev) => prev.filter((t) => t.id !== id));
+    }, 4000);
   };
 
   const dismissToast = (id: string) => {

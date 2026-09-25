@@ -48,6 +48,13 @@ export default function RealtimeJobAlerts({
         if (newlyArrived.length > 0) {
           newlyArrived.forEach((m) => seenIdsRef.current.add(m.id));
           setActiveToasts((prev) => [...newlyArrived, ...prev].slice(0, 3));
+
+          // Auto-disappear after 5 seconds
+          newlyArrived.forEach((toast) => {
+            setTimeout(() => {
+              setActiveToasts((prev) => prev.filter((t) => t.id !== toast.id));
+            }, 5000);
+          });
         }
       }
     } catch (err) {
