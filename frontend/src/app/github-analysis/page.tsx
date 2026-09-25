@@ -96,6 +96,14 @@ export default function GitHubAnalysisPage() {
 
           <div className="flex items-center gap-2">
             <Link
+              href="/student/github-security"
+              className="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-emerald-600 hover:bg-emerald-500 text-white transition-colors flex items-center gap-1.5 shadow-sm"
+              title="Audit public repos for secret leaks and 1-click auto-remediate"
+            >
+              <ShieldCheck className="w-3.5 h-3.5" />
+              <span>Secret Shield & 1-Click Fix</span>
+            </Link>
+            <Link
               href="/demo"
               className="px-3.5 py-1.5 rounded-lg text-xs font-medium bg-slate-900 border border-slate-800 hover:bg-slate-800 text-slate-300 transition-colors"
             >
