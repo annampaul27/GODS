@@ -555,27 +555,27 @@ export default function SkillVerificationModal({
   const answeredCount = Object.keys(selectedAnswers).length;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-black/85 backdrop-blur-md animate-in fade-in">
-      <div className="relative w-full max-w-4xl rounded-2xl glass-panel-elevated border-cyan-500/40 p-5 sm:p-6 shadow-2xl flex flex-col max-h-[95vh] bg-[#090f1a] overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-black/75 animate-in fade-in">
+      <div className="relative w-full max-w-4xl rounded-xl border border-gray-700 p-5 sm:p-6 shadow-2xl flex flex-col max-h-[95vh] bg-gray-900 overflow-hidden">
         
         {/* Top Header */}
-        <div className="flex items-center justify-between pb-4 border-b border-slate-800">
+        <div className="flex items-center justify-between pb-4 border-b border-gray-800">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
+            <div className="w-10 h-10 rounded-lg bg-blue-950 border border-blue-800 flex items-center justify-center text-blue-400">
               <Award className="w-5 h-5" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h3 className="text-base font-bold text-white tracking-tight">
-                  Skill Verification Engine (FR-01)
+                <h3 className="text-base font-semibold text-white">
+                  Skill Verification Assessment
                 </h3>
-                <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded-full bg-cyan-950 text-cyan-300 border border-cyan-800 font-semibold">
+                <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-blue-950 text-blue-300 border border-blue-800 font-medium">
                   20 Questions • 12-Min Countdown
                 </span>
               </div>
-              <p className="text-xs text-slate-400">
-                Evaluating: <span className="text-slate-200 font-medium">{skillName}</span> • Candidate:{" "}
-                <span className="text-slate-200">{currentStudent.fullName}</span> ({currentStudent.experienceYears >= 1 ? "Experienced" : "Fresher"})
+              <p className="text-xs text-gray-400 mt-0.5">
+                Evaluating: <span className="text-gray-200 font-medium">{skillName}</span> • Candidate:{" "}
+                <span className="text-gray-200">{currentStudent.fullName}</span> ({currentStudent.experienceYears >= 1 ? "Experienced" : "Fresher"})
               </p>
             </div>
           </div>

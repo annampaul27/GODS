@@ -311,33 +311,33 @@ export default function ATSResumeManagerModal({ onClose }: ATSResumeManagerModal
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-black/85 backdrop-blur-md animate-in fade-in">
-      <div className="relative w-full max-w-4xl rounded-2xl glass-panel-elevated border-cyan-500/40 p-5 sm:p-6 shadow-2xl flex flex-col max-h-[92vh] bg-[#090f1a] overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-black/75 animate-in fade-in">
+      <div className="relative w-full max-w-4xl rounded-xl border border-gray-700 p-5 sm:p-6 shadow-2xl flex flex-col max-h-[92vh] bg-gray-900 overflow-hidden">
         
         {/* Header */}
-        <div className="flex items-center justify-between pb-4 border-b border-slate-800">
+        <div className="flex items-center justify-between pb-4 border-b border-gray-800">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
+            <div className="w-10 h-10 rounded-lg bg-blue-950 border border-blue-800 flex items-center justify-center text-blue-400">
               <FileText className="w-5 h-5" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h3 className="text-base font-bold text-white tracking-tight">
-                  ATS Resume Parsing & Interactive Editor (FR-02)
+                <h3 className="text-base font-semibold text-white">
+                  ATS Resume Editor
                 </h3>
-                <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-800 font-semibold">
-                  ATS-100 Compliant Schema
+                <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-800 font-medium">
+                  ATS Optimized
                 </span>
               </div>
-              <p className="text-xs text-slate-400">
-                Extract PDF into structured JSON, customize content, and persist to user profile.
+              <p className="text-xs text-gray-400 mt-0.5">
+                Extract resume into structured data, edit sections, and update your profile.
               </p>
             </div>
           </div>
 
           <div className="flex items-center gap-3">
             {/* ATS Score Meter */}
-            <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 font-mono text-xs">
+            <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gray-950 border border-gray-800 text-xs">
               <span className="text-slate-400">ATS Match:</span>
               <span className="text-emerald-400 font-bold">{formData.ats_metadata.ats_score}%</span>
             </div>

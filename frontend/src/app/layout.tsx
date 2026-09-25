@@ -16,9 +16,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SkillSetu AI — Cryptographic Skill Gap & Verified Talent Engine",
+  title: "SkillSetu — AI-Powered Talent & Skill Assessment Platform",
   description:
-    "Role-Separated Multi-Tenant Talent Infrastructure: Employer Talent Radar, Proof-of-Work Credential Trust Chain, and Targeted 10-Minute Micro-Learning Sprints.",
+    "Connect employers with job-ready talent through verified skill assessments, intelligent candidate matching, and structured learning paths.",
 };
 
 export default function RootLayout({
@@ -28,12 +28,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} dark h-full`}>
-      <body className="min-h-screen bg-[#060913] text-slate-100 flex flex-col font-sans selection:bg-cyan-500/20 selection:text-cyan-200">
+      <body className="min-h-screen bg-[#0a0f1a] text-gray-100 flex flex-col font-sans antialiased">
         <StoreProvider>
-          <div className="relative min-h-screen flex flex-col bg-grid-pattern">
-            <div className="absolute inset-0 bg-radial-gradient pointer-events-none" />
+          <div className="relative min-h-screen flex flex-col">
             <Navbar />
-            <main className="flex-1 relative z-10">{children}</main>
+            <main className="flex-1 relative">{children}</main>
             <ToastContainer />
           </div>
         </StoreProvider>

@@ -14,7 +14,6 @@ import DynamicSandboxModal from "@/components/student/DynamicSandboxModal";
 import RealtimeJobAlerts from "@/components/student/RealtimeJobAlerts";
 import JobDetailsModal from "@/components/student/JobDetailsModal";
 import {
-  GraduationCap,
   UploadCloud,
   Compass,
   Radar,
@@ -24,7 +23,6 @@ import {
   ExternalLink,
   Award,
   FileText,
-  Clock,
   Terminal,
   AlertTriangle,
   ArrowRight,
@@ -76,7 +74,6 @@ export default function StudentPage() {
   };
 
   const handleLaunchSprint = (skillId: string) => {
-    // Select sprint from library, or fallback to postgres_optimization
     const sprint = MICRO_SPRINTS[skillId] || MICRO_SPRINTS["postgres_optimization"];
     setActiveSprint(sprint);
   };
@@ -84,42 +81,41 @@ export default function StudentPage() {
   const isJobReady = currentStudent.readinessScore >= 85;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-in fade-in">
-      {/* Student Welcome & Profile Summary Bar */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-6 rounded-3xl glass-panel border-emerald-500/20 bg-gradient-to-r from-slate-950 via-[#09151e] to-slate-950 shadow-2xl">
-        <div className="flex items-center gap-4">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+      {/* Profile Header */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-5 rounded-xl bg-gray-900 border border-gray-800">
+        <div className="flex items-center gap-3.5">
           <img
             src={currentStudent.avatarUrl}
             alt={currentStudent.fullName}
-            className="w-14 h-14 rounded-2xl object-cover border border-slate-700 shadow-md"
+            className="w-11 h-11 rounded-lg object-cover border border-gray-700"
           />
           <div>
-            <div className="flex items-center gap-2.5 flex-wrap">
-              <h2 className="text-xl font-bold text-white tracking-tight">
+            <div className="flex items-center gap-2 flex-wrap">
+              <h2 className="text-lg font-semibold text-white">
                 {currentStudent.fullName}
               </h2>
               <span
-                className={`text-[10px] font-mono uppercase px-2 py-0.5 rounded-full font-bold border ${
+                className={`text-[10px] font-medium px-2 py-0.5 rounded-full border ${
                   isJobReady
-                    ? "bg-emerald-950/80 text-emerald-400 border-emerald-800"
-                    : "bg-amber-950/80 text-amber-400 border-amber-800"
+                    ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
+                    : "bg-amber-500/10 text-amber-400 border-amber-500/20"
                 }`}
               >
                 {currentStudent.currentTier.replace("_", " ")} ({currentStudent.readinessScore}%)
               </span>
             </div>
-            <p className="text-xs text-slate-400 mt-1 flex items-center gap-2">
-              <span>{currentStudent.college}</span> • <span>Class of {currentStudent.gradYear}</span> •{" "}
-              <span className="text-cyan-400 font-mono">
-                {currentStudent.credentials.length} Cryptographic Proofs Minted
+            <p className="text-xs text-gray-400 mt-0.5">
+              {currentStudent.college} · Class of {currentStudent.gradYear} ·{" "}
+              <span className="text-gray-300">
+                {currentStudent.credentials.length} verified credentials
               </span>
             </p>
           </div>
         </div>
 
-        {/* Action Controls */}
-        <div className="flex flex-wrap items-center gap-3">
-          {/* FR-01: Skill Verification Engine (20 Qs, 12-min Timer) */}
+        {/* Actions */}
+        <div className="flex flex-wrap items-center gap-2">
           <button
             id="btn-start-verification-assessment"
             onClick={() => {
@@ -127,109 +123,102 @@ export default function StudentPage() {
               setVerificationSkillName("PostgreSQL Optimization & Architecture");
               setIsVerificationModalOpen(true);
             }}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 shadow-lg shadow-cyan-500/20 transition-all border border-cyan-400/40"
+            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-medium bg-blue-600 hover:bg-blue-500 text-white transition-colors"
           >
-            <Award className="w-4 h-4" />
-            <span>Verify Skill Assessment (FR-01: 20 Qs • 12-Min)</span>
+            <Award className="w-3.5 h-3.5" />
+            <span>Verify Skill</span>
           </button>
 
-          {/* FR-02: ATS-Friendly Tailored Resume Parser & Editor */}
           <button
             id="btn-open-ats-resume-studio"
             onClick={() => setIsATSResumeModalOpen(true)}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 shadow-lg shadow-emerald-500/20 transition-all border border-emerald-400/40"
+            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-medium bg-emerald-600 hover:bg-emerald-500 text-white transition-colors"
           >
-            <FileText className="w-4 h-4" />
-            <span>ATS Resume Studio (FR-02)</span>
+            <FileText className="w-3.5 h-3.5" />
+            <span>Resume Studio</span>
           </button>
 
-          {/* Dynamic Bug-Fixer Sandbox Engine */}
           <button
             id="btn-open-dynamic-sandbox"
             onClick={() => setIsSandboxModalOpen(true)}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold bg-gradient-to-r from-purple-500 via-indigo-600 to-blue-600 hover:from-purple-400 hover:to-blue-500 text-white shadow-lg shadow-indigo-950/40 transition-all border border-indigo-400/40"
+            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-medium bg-purple-600 hover:bg-purple-500 text-white transition-colors"
           >
-            <Terminal className="w-4 h-4 text-emerald-300" />
-            <span>⚡ Bug-Fix Sandbox</span>
+            <Terminal className="w-3.5 h-3.5" />
+            <span>Bug-Fix Sandbox</span>
           </button>
 
           <button
             onClick={() => setIsResumeDrawerOpen(true)}
-            className="flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-gray-800 hover:bg-gray-700 border border-gray-700 text-gray-300 transition-colors"
           >
-            <UploadCloud className="w-4 h-4 text-cyan-400" />
-            <span>Profile Drawer</span>
+            <UploadCloud className="w-3.5 h-3.5" />
+            <span>Profile</span>
           </button>
         </div>
       </div>
 
-      {/* FR-05: Real-Time Eligibility Job Matching Alerts (Realtime Live Updates & Actionable Alert) */}
+      {/* Job Alerts */}
       <RealtimeJobAlerts
         userId={currentStudent.id}
         onOpenJobDetails={(jobId) => setSelectedJobModalId(jobId)}
       />
 
-      {/* FR-04: Deadlines & Strategic Application Notification Widget */}
+      {/* Deadline Alerts */}
       {deadlineAlerts.length > 0 && (
-        <div id="deadline-alerts-banner" className="space-y-3">
+        <div id="deadline-alerts-banner" className="space-y-2">
           {deadlineAlerts.map((alert) => (
             <div
               key={alert.id}
-              className={`p-4 rounded-2xl border transition-all duration-300 flex flex-col md:flex-row md:items-center justify-between gap-4 ${
+              className={`p-4 rounded-xl border flex flex-col md:flex-row md:items-center justify-between gap-3 ${
                 !alert.is_read
-                  ? "bg-gradient-to-r from-rose-950/40 via-slate-900/90 to-amber-950/20 border-rose-500/40 shadow-xl shadow-rose-950/20"
-                  : "bg-slate-950/60 border-slate-800/80 opacity-75"
+                  ? "bg-red-500/5 border-red-500/20"
+                  : "bg-gray-900 border-gray-800 opacity-70"
               }`}
             >
-              <div className="flex items-start sm:items-center gap-3.5">
+              <div className="flex items-start sm:items-center gap-3">
                 <div
-                  className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 border ${
+                  className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${
                     !alert.is_read
-                      ? "bg-rose-500/20 border-rose-500/40 text-rose-300"
-                      : "bg-slate-800 border-slate-700 text-slate-400"
+                      ? "bg-red-500/10 text-red-400"
+                      : "bg-gray-800 text-gray-500"
                   }`}
                 >
-                  <AlertTriangle className="w-5 h-5 animate-pulse" />
+                  <AlertTriangle className="w-4 h-4" />
                 </div>
                 <div>
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="text-[10px] font-mono font-bold uppercase px-2 py-0.5 rounded-full bg-rose-950 text-rose-300 border border-rose-800">
-                      Deadline Warning
+                    <span className="text-[10px] font-medium uppercase px-1.5 py-0.5 rounded bg-red-500/10 text-red-400">
+                      Deadline
                     </span>
-                    <span className="text-xs font-semibold text-white">
+                    <span className="text-xs font-medium text-white">
                       {alert.job_title}
                     </span>
-                    {!alert.is_read && (
-                      <span className="w-2 h-2 rounded-full bg-rose-400 animate-ping" />
-                    )}
                   </div>
-                  <p className="text-xs text-slate-300 mt-1">
+                  <p className="text-xs text-gray-400 mt-0.5">
                     {alert.message}
                   </p>
                 </div>
               </div>
 
-              <div className="flex items-center gap-3 shrink-0 self-end md:self-center">
+              <div className="flex items-center gap-2 shrink-0 self-end md:self-center">
                 {!alert.is_read ? (
                   <button
                     onClick={() => handleMarkAlertRead(alert.id)}
-                    className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-rose-500/20 hover:bg-rose-500/30 text-rose-200 border border-rose-500/40 transition-colors"
+                    className="px-2.5 py-1 rounded-lg text-xs font-medium bg-gray-800 hover:bg-gray-700 text-gray-300 transition-colors"
                   >
-                    Mark as Read
+                    Dismiss
                   </button>
                 ) : (
-                  <span className="text-xs text-slate-500 flex items-center gap-1 font-mono">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> Acknowledged
+                  <span className="text-xs text-gray-500 flex items-center gap-1">
+                    <CheckCircle2 className="w-3 h-3 text-emerald-400" /> Read
                   </span>
                 )}
                 <button
-                  onClick={() => {
-                    setActiveTab("roadmap");
-                  }}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 transition-colors"
+                  onClick={() => setActiveTab("roadmap")}
+                  className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium bg-blue-500/10 text-blue-400 hover:bg-blue-500/20 transition-colors"
                 >
-                  <span>Accelerate Prep</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
+                  <span>Prepare</span>
+                  <ArrowRight className="w-3 h-3" />
                 </button>
               </div>
             </div>
@@ -237,72 +226,72 @@ export default function StudentPage() {
         </div>
       )}
 
-      {/* Employer-Dispatched Sprint Alert Banner (E6, S5, S6) */}
+      {/* Sprint Alert Banner */}
       {currentStudent.sprintAssigned?.status === "pending" && (
-        <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-amber-950/60 via-slate-900 to-amber-950/40 border-2 border-amber-500/60 flex flex-col sm:flex-row sm:items-center justify-between gap-4 animate-in fade-in duration-300 shadow-xl shadow-amber-950/40">
-          <div className="flex items-center gap-3.5">
-            <div className="w-12 h-12 rounded-xl bg-amber-500/20 border border-amber-500/50 flex items-center justify-center text-amber-300 shrink-0">
-              <Zap className="w-6 h-6 animate-pulse" />
+        <div className="p-4 rounded-xl bg-amber-500/5 border border-amber-500/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-400 shrink-0">
+              <Zap className="w-4.5 h-4.5" />
             </div>
             <div>
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 font-bold uppercase">
-                  ⚡ 1-Click Gap Sprint Received (E6)
+                <span className="text-[10px] font-medium px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 uppercase">
+                  Sprint Assigned
                 </span>
-                <span className="text-xs text-slate-400">
-                  Target: <strong className="text-white">{currentStudent.sprintAssigned.skillName}</strong>
+                <span className="text-xs text-gray-300">
+                  Skill: <strong className="text-white">{currentStudent.sprintAssigned.skillName}</strong>
                 </span>
               </div>
-              <p className="text-xs text-slate-300 mt-1 leading-relaxed">
-                An employer shortlisted you as <strong>Bridgeable</strong> and requested this 10-minute micro-assessment. Passing (≥80%) mints a SHA-256 proof and immediately elevates you to <strong>Job-Ready</strong> on their Radar (E9)!
+              <p className="text-xs text-gray-400 mt-0.5">
+                An employer identified a gap and assigned a micro-assessment. Complete it to improve your readiness score.
               </p>
             </div>
           </div>
           <button
             onClick={() => handleLaunchSprint(currentStudent.sprintAssigned!.skillId)}
-            className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-slate-950 font-bold text-xs flex items-center gap-2 shadow-lg shadow-amber-500/25 shrink-0 transition-transform active:scale-95"
+            className="px-3.5 py-2 rounded-lg bg-amber-500 hover:bg-amber-400 text-gray-900 font-medium text-xs flex items-center gap-1.5 shrink-0 transition-colors"
           >
-            <Zap className="w-4 h-4 fill-slate-950" />
-            <span>Complete Challenge Now (S6)</span>
+            <Zap className="w-3.5 h-3.5" />
+            <span>Start Challenge</span>
           </button>
         </div>
       )}
 
       {/* Tabs */}
-      <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-        <div className="flex items-center gap-2">
+      <div className="flex items-center justify-between border-b border-gray-800 pb-2.5">
+        <div className="flex items-center gap-1">
           <button
             onClick={() => setActiveTab("radar")}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
+            className={`flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-medium transition-colors ${
               activeTab === "radar"
-                ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-sm"
-                : "text-slate-400 hover:text-slate-200"
+                ? "bg-gray-800 text-white"
+                : "text-gray-400 hover:text-gray-200"
             }`}
           >
-            <Radar className="w-4 h-4" />
-            <span>Skill Gap Delta Radar (S3, S4)</span>
+            <Radar className="w-3.5 h-3.5" />
+            <span>Skill Gap Analysis</span>
           </button>
 
           <button
             onClick={() => setActiveTab("roadmap")}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
+            className={`flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-medium transition-colors ${
               activeTab === "roadmap"
-                ? "bg-amber-500/20 text-amber-300 border border-amber-500/40 shadow-sm"
-                : "text-slate-400 hover:text-slate-200"
+                ? "bg-gray-800 text-white"
+                : "text-gray-400 hover:text-gray-200"
             }`}
           >
-            <Compass className="w-4 h-4" />
-            <span>Application Readiness Report & Roadmap (S17, S18)</span>
+            <Compass className="w-3.5 h-3.5" />
+            <span>Readiness Roadmap</span>
           </button>
         </div>
 
-        <div className="hidden sm:flex items-center gap-3 text-xs">
-          <span className="text-slate-400">Target Role:</span>
-          <span className="font-semibold text-slate-200">{activeJob?.title}</span>
+        <div className="hidden sm:flex items-center gap-2 text-xs text-gray-500">
+          <span>Target:</span>
+          <span className="text-gray-300">{activeJob?.title}</span>
         </div>
       </div>
 
-      {/* Main Tab Content */}
+      {/* Tab Content */}
       {activeTab === "radar" && (
         <SkillGapRadar onLaunchSprint={handleLaunchSprint} />
       )}
@@ -311,61 +300,59 @@ export default function StudentPage() {
         <ReadinessRoadmap onLaunchSprint={handleLaunchSprint} />
       )}
 
-      {/* Minted Credentials Proof Showcase (S10, S11) */}
-      <div className="rounded-2xl glass-panel border-slate-800 p-6 space-y-4">
+      {/* Credentials */}
+      <div className="rounded-xl bg-gray-900 border border-gray-800 p-5 space-y-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Award className="w-5 h-5 text-cyan-400" />
-            <h4 className="text-xs uppercase font-mono tracking-wider text-slate-300 font-semibold">
-              My Cryptographic Proof-of-Work Badges (S10, S11)
+            <Award className="w-4 h-4 text-blue-400" />
+            <h4 className="text-xs uppercase tracking-wider text-gray-300 font-medium">
+              Verified Credentials
             </h4>
           </div>
-          <span className="text-[11px] text-slate-500 font-mono">
-            Zero-Trust Public Ledger
+          <span className="text-[11px] text-gray-500">
+            {currentStudent.credentials.length} earned
           </span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {currentStudent.credentials.map((cred) => (
             <div
               key={cred.hash}
-              className="p-4 rounded-xl border border-cyan-500/30 bg-slate-900/60 flex flex-col justify-between space-y-3"
+              className="p-4 rounded-lg border border-gray-800 bg-gray-800/30 space-y-2.5"
             >
-              <div>
-                <div className="flex items-start justify-between gap-2">
-                  <div>
-                    <h5 className="font-semibold text-xs text-white">
-                      {cred.skillName}
-                    </h5>
-                    <p className="text-[10px] text-slate-400 font-mono mt-0.5">
-                      Issued by {cred.issuerOrg} • {new Date(cred.issuedAt).toLocaleDateString()}
-                    </p>
-                  </div>
-                  <span className="text-xs font-mono font-bold text-emerald-400 px-2 py-0.5 rounded bg-emerald-950/80 border border-emerald-800">
-                    {cred.score}% Pass
-                  </span>
-                </div>
-
-                <div className="mt-2 p-2 rounded-lg bg-slate-950 border border-slate-800/80">
-                  <span className="text-[10px] text-slate-500 uppercase font-mono block">
-                    Tamper-Evident SHA-256 Digest:
-                  </span>
-                  <p className="text-[11px] font-mono text-cyan-300 break-all">
-                    {cred.hash}
+              <div className="flex items-start justify-between gap-2">
+                <div>
+                  <h5 className="font-medium text-xs text-white">
+                    {cred.skillName}
+                  </h5>
+                  <p className="text-[10px] text-gray-500 mt-0.5">
+                    {cred.issuerOrg} · {new Date(cred.issuedAt).toLocaleDateString()}
                   </p>
                 </div>
+                <span className="text-xs font-medium text-emerald-400 px-1.5 py-0.5 rounded bg-emerald-500/10">
+                  {cred.score}%
+                </span>
               </div>
 
-              <div className="pt-2 border-t border-slate-800 flex items-center justify-between text-xs">
-                <span className="text-[10px] text-emerald-400 font-mono flex items-center gap-1">
-                  <ShieldCheck className="w-3.5 h-3.5" /> Immutable Verification URL
+              <div className="p-2 rounded-md bg-gray-900 border border-gray-800">
+                <span className="text-[10px] text-gray-500 block mb-0.5">
+                  SHA-256 Hash
+                </span>
+                <p className="text-[11px] font-mono text-gray-400 break-all">
+                  {cred.hash}
+                </p>
+              </div>
+
+              <div className="pt-1.5 border-t border-gray-800 flex items-center justify-between text-xs">
+                <span className="text-[10px] text-emerald-400 flex items-center gap-1">
+                  <ShieldCheck className="w-3 h-3" /> Verified
                 </span>
                 <Link
                   href={`/verify/${cred.hash}`}
                   target="_blank"
-                  className="flex items-center gap-1 text-cyan-400 hover:text-cyan-300 font-medium text-[11px]"
+                  className="flex items-center gap-1 text-blue-400 hover:text-blue-300 text-[11px]"
                 >
-                  Verify Publicly (S11) <ExternalLink className="w-3 h-3" />
+                  View proof <ExternalLink className="w-3 h-3" />
                 </Link>
               </div>
             </div>

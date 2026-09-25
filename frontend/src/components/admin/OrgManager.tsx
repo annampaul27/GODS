@@ -2,8 +2,7 @@
 
 import React from "react";
 import { useStore } from "@/lib/store";
-import { Building2, Shield, Plus, CheckCircle, Ban, RefreshCcw } from "lucide-react";
-import { Organization } from "@/types";
+import { Building2, CheckCircle, Ban } from "lucide-react";
 
 export default function OrgManager() {
   const { organizations, setOrganizations, addToast } = useStore();
@@ -15,8 +14,8 @@ export default function OrgManager() {
         const newStatus = org.status === "active" ? "suspended" : "active";
         addToast({
           type: newStatus === "active" ? "success" : "warning",
-          title: `Organization Status Changed (A7)`,
-          message: `${org.name} has been ${newStatus.toUpperCase()}. Data remains intact for reinstatement.`,
+          title: "Organization Status Updated",
+          message: `${org.name} has been ${newStatus}. Access and seats updated accordingly.`,
         });
         return { ...org, status: newStatus };
       })
@@ -26,21 +25,21 @@ export default function OrgManager() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="p-6 rounded-2xl glass-panel border-indigo-500/20 bg-gradient-to-r from-slate-950 via-[#101429] to-slate-950">
+      <div className="p-6 rounded-xl bg-gray-900 border border-gray-800">
         <div className="flex items-center gap-3.5">
-          <div className="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400">
-            <Building2 className="w-6 h-6" />
+          <div className="w-10 h-10 rounded-lg bg-blue-950/60 border border-blue-800/80 flex items-center justify-center text-blue-400">
+            <Building2 className="w-5 h-5" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h3 className="text-lg font-bold text-white">
-                Multi-Tenant Organization Management (A7, A8, E11)
+              <h3 className="text-base font-semibold text-white">
+                Organization & Tenant Management
               </h3>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-indigo-950 text-indigo-300 border border-indigo-800 font-semibold">
-                Superuser Console
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-gray-800 text-gray-300 border border-gray-700 font-medium">
+                Admin Console
               </span>
             </div>
-            <p className="text-xs text-slate-400 mt-0.5">
+            <p className="text-xs text-gray-400 mt-0.5">
               Manage enterprise tenants, seat quotas, and subscription lifecycle.
             </p>
           </div>
@@ -55,82 +54,84 @@ export default function OrgManager() {
           return (
             <div
               key={org.id}
-              className={`p-5 rounded-2xl glass-panel border transition-all flex flex-col justify-between ${
-                isActive ? "border-slate-800" : "border-red-500/30 bg-red-950/10"
+              className={`p-5 rounded-xl border transition-colors flex flex-col justify-between ${
+                isActive
+                  ? "bg-gray-900 border-gray-800"
+                  : "bg-red-950/10 border-red-800/40"
               }`}
             >
               <div>
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-3">
-                    <span className="text-2xl p-2 rounded-xl bg-slate-900 border border-slate-800">
+                    <span className="text-xl p-2 rounded-lg bg-gray-950 border border-gray-800">
                       {org.logo}
                     </span>
                     <div>
                       <h4 className="text-sm font-semibold text-white">{org.name}</h4>
-                      <p className="text-[11px] text-slate-400 capitalize font-mono">
+                      <p className="text-xs text-gray-400 capitalize">
                         {org.type} • {org.plan} Plan
                       </p>
                     </div>
                   </div>
                   <span
-                    className={`text-[10px] font-mono uppercase px-2 py-0.5 rounded font-bold border ${
+                    className={`text-[10px] font-mono uppercase px-2 py-0.5 rounded font-medium border ${
                       isActive
-                        ? "bg-emerald-950/80 text-emerald-400 border-emerald-800/80"
-                        : "bg-red-950/80 text-red-400 border-red-800/80"
+                        ? "bg-emerald-950 text-emerald-400 border-emerald-800"
+                        : "bg-red-950 text-red-400 border-red-800"
                     }`}
                   >
                     {org.status}
                   </span>
                 </div>
 
-                {/* Seat Quotas & Metrics (A8, E15) */}
-                <div className="mt-4 pt-3 border-t border-slate-800/80 space-y-2 text-xs">
+                {/* Seat Quotas & Metrics */}
+                <div className="mt-4 pt-3 border-t border-gray-800 space-y-2 text-xs">
                   <div className="flex items-center justify-between">
-                    <span className="text-slate-400">Active Recruiter Seats:</span>
-                    <span className="font-mono text-cyan-300 font-semibold">
+                    <span className="text-gray-400">Recruiter Seats:</span>
+                    <span className="font-mono text-gray-200 font-medium">
                       {org.seatsUsed} / {org.seatsTotal} ({Math.round((org.seatsUsed / org.seatsTotal) * 100)}%)
                     </span>
                   </div>
-                  <div className="w-full h-1.5 rounded-full bg-slate-800 overflow-hidden">
+                  <div className="w-full h-1.5 rounded-full bg-gray-800 overflow-hidden">
                     <div
-                      className="h-full bg-cyan-400 rounded-full"
+                      className="h-full bg-blue-500 rounded-full"
                       style={{ width: `${(org.seatsUsed / org.seatsTotal) * 100}%` }}
                     />
                   </div>
 
-                  <div className="grid grid-cols-2 gap-2 pt-2 text-[11px] font-mono">
-                    <div className="p-2 rounded-lg bg-slate-900/60 border border-slate-800">
-                      <span className="text-slate-500 text-[10px] block">Screened</span>
-                      <span className="text-slate-200">{org.metrics.candidatesScreened}</span>
+                  <div className="grid grid-cols-2 gap-2 pt-2 text-xs">
+                    <div className="p-2.5 rounded-lg bg-gray-950 border border-gray-800">
+                      <span className="text-gray-500 text-[11px] block">Screened</span>
+                      <span className="text-gray-200 font-medium">{org.metrics.candidatesScreened}</span>
                     </div>
-                    <div className="p-2 rounded-lg bg-slate-900/60 border border-slate-800">
-                      <span className="text-slate-500 text-[10px] block">Gap Sprints</span>
-                      <span className="text-emerald-400">{org.metrics.gapSprintsCompleted}</span>
+                    <div className="p-2.5 rounded-lg bg-gray-950 border border-gray-800">
+                      <span className="text-gray-500 text-[11px] block">Skill Sprints</span>
+                      <span className="text-emerald-400 font-medium">{org.metrics.gapSprintsCompleted}</span>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Action buttons (A7) */}
-              <div className="mt-5 pt-3 border-t border-slate-800 flex items-center justify-between">
-                <span className="text-[10px] text-slate-500 font-mono">
-                  Created {org.createdDate}
+              {/* Action buttons */}
+              <div className="mt-5 pt-3 border-t border-gray-800 flex items-center justify-between">
+                <span className="text-xs text-gray-500">
+                  Added {org.createdDate}
                 </span>
                 <button
                   onClick={() => handleToggleStatus(org.id)}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
                     isActive
-                      ? "bg-red-500/10 hover:bg-red-500/20 text-red-300 border border-red-500/30"
-                      : "bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 border border-emerald-500/30"
+                      ? "bg-red-950/40 hover:bg-red-900/60 text-red-300 border border-red-800/80"
+                      : "bg-emerald-950/40 hover:bg-emerald-900/60 text-emerald-300 border border-emerald-800/80"
                   }`}
                 >
                   {isActive ? (
                     <>
-                      <Ban className="w-3 h-3" /> Suspend Tenant (A7)
+                      <Ban className="w-3.5 h-3.5" /> Suspend
                     </>
                   ) : (
                     <>
-                      <CheckCircle className="w-3 h-3" /> Reinstate Tenant
+                      <CheckCircle className="w-3.5 h-3.5" /> Activate
                     </>
                   )}
                 </button>

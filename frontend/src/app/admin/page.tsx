@@ -11,9 +11,6 @@ import {
   Network,
   Building2,
   AlertTriangle,
-  Activity,
-  Layers,
-  Sparkles,
 } from "lucide-react";
 
 export default function AdminPage() {
@@ -23,123 +20,118 @@ export default function AdminPage() {
   const pendingAnomalies = anomalies.filter((a) => !a.resolved);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-in fade-in">
-      {/* Platform Telemetry Header (A1) */}
-      <div className="p-6 rounded-3xl glass-panel border-purple-500/20 bg-gradient-to-r from-slate-950 via-[#150e24] to-slate-950 shadow-2xl">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+      {/* Header */}
+      <div className="p-5 rounded-xl bg-gray-900 border border-gray-800">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-2xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 text-2xl shadow-inner">
-              <Shield className="w-7 h-7" />
+          <div className="flex items-center gap-3.5">
+            <div className="w-11 h-11 rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-400">
+              <Shield className="w-5 h-5" />
             </div>
             <div>
-              <div className="flex items-center gap-2.5">
-                <h2 className="text-xl font-bold text-white tracking-tight">
-                  Platform Oversight & Trust Governance (Section 3)
+              <div className="flex items-center gap-2">
+                <h2 className="text-lg font-semibold text-white">
+                  Platform Administration
                 </h2>
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-purple-950 text-purple-300 border border-purple-800 font-semibold">
-                  SUPERUSER ROOT
+                <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">
+                  Admin
                 </span>
               </div>
-              <p className="text-xs text-slate-400 mt-1">
-                Zero-trust credential ledger, global skill canonicalization, and multi-tenant audit controls.
+              <p className="text-xs text-gray-400 mt-0.5">
+                Credential ledger, skill taxonomy, and organization management.
               </p>
             </div>
           </div>
         </div>
 
-        {/* Telemetry Stats (A1) */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-6 pt-5 border-t border-slate-800">
+        {/* Stats */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-5 pt-4 border-t border-gray-800">
           <div>
-            <span className="text-xs text-slate-400">Total Active Learners</span>
-            <p className="text-2xl font-bold font-mono text-white mt-1">
-              1,420 <span className="text-xs text-slate-400 font-sans font-normal">candidates</span>
+            <span className="text-xs text-gray-400">Candidates</span>
+            <p className="text-xl font-semibold text-white mt-0.5">
+              1,420
             </p>
-            <p className="text-[11px] text-cyan-400 mt-1 font-mono">Telemetry A1</p>
           </div>
 
           <div>
-            <span className="text-xs text-slate-400">Live Requisitions</span>
-            <p className="text-2xl font-bold font-mono text-cyan-400 mt-1">
-              {jobs.length} <span className="text-xs text-slate-400 font-sans font-normal">openings</span>
+            <span className="text-xs text-gray-400">Open Positions</span>
+            <p className="text-xl font-semibold text-blue-400 mt-0.5">
+              {jobs.length}
             </p>
-            <p className="text-[11px] text-cyan-400/80 mt-1 font-mono">Critical Weights Bound</p>
           </div>
 
           <div>
-            <span className="text-xs text-slate-400">Minted Proofs</span>
-            <p className="text-2xl font-bold font-mono text-purple-300 mt-1">
-              {credentials.length} <span className="text-xs text-slate-400 font-sans font-normal">verified</span>
+            <span className="text-xs text-gray-400">Verified Credentials</span>
+            <p className="text-xl font-semibold text-purple-400 mt-0.5">
+              {credentials.length}
             </p>
-            <p className="text-[11px] text-purple-400 mt-1 font-mono">100% SHA-256 Validated</p>
           </div>
 
           <div>
-            <span className="text-xs text-slate-400">Tenant Orgs</span>
-            <p className="text-2xl font-bold font-mono text-indigo-300 mt-1">
-              {organizations.length} <span className="text-xs text-slate-400 font-sans font-normal">tenants</span>
-            </p>
-            <p className="text-[11px] text-indigo-400 mt-1 font-mono">
-              {pendingAnomalies.length > 0 ? (
-                <span className="text-rose-400 font-semibold">{pendingAnomalies.length} Flagged Anomalies</span>
-              ) : (
-                "Sentinel Clean"
+            <span className="text-xs text-gray-400">Organizations</span>
+            <p className="text-xl font-semibold text-white mt-0.5">
+              {organizations.length}
+              {pendingAnomalies.length > 0 && (
+                <span className="text-xs text-red-400 font-normal ml-2">
+                  {pendingAnomalies.length} flagged
+                </span>
               )}
             </p>
           </div>
         </div>
       </div>
 
-      {/* Admin Tabs */}
-      <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-        <div className="flex flex-wrap items-center gap-2">
+      {/* Tabs */}
+      <div className="flex items-center justify-between border-b border-gray-800 pb-2.5">
+        <div className="flex flex-wrap items-center gap-1">
           <button
             onClick={() => setActiveTab("ledger")}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
+            className={`flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-medium transition-colors ${
               activeTab === "ledger"
-                ? "bg-purple-500/20 text-purple-300 border border-purple-500/40 shadow-sm"
-                : "text-slate-400 hover:text-slate-200"
+                ? "bg-gray-800 text-white"
+                : "text-gray-400 hover:text-gray-200"
             }`}
           >
-            <Shield className="w-4 h-4" />
-            <span>Cryptographic Credential Ledger (A3)</span>
+            <Shield className="w-3.5 h-3.5" />
+            <span>Credential Ledger</span>
           </button>
 
           <button
             onClick={() => setActiveTab("taxonomy")}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
+            className={`flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-medium transition-colors ${
               activeTab === "taxonomy"
-                ? "bg-purple-500/20 text-purple-300 border border-purple-500/40 shadow-sm"
-                : "text-slate-400 hover:text-slate-200"
+                ? "bg-gray-800 text-white"
+                : "text-gray-400 hover:text-gray-200"
             }`}
           >
-            <Network className="w-4 h-4" />
-            <span>Global Skill Taxonomy (A2)</span>
+            <Network className="w-3.5 h-3.5" />
+            <span>Skill Taxonomy</span>
           </button>
 
           <button
             onClick={() => setActiveTab("orgs")}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
+            className={`flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-medium transition-colors ${
               activeTab === "orgs"
-                ? "bg-purple-500/20 text-purple-300 border border-purple-500/40 shadow-sm"
-                : "text-slate-400 hover:text-slate-200"
+                ? "bg-gray-800 text-white"
+                : "text-gray-400 hover:text-gray-200"
             }`}
           >
-            <Building2 className="w-4 h-4" />
-            <span>Multi-Tenant Organizations (A7, A8)</span>
+            <Building2 className="w-3.5 h-3.5" />
+            <span>Organizations</span>
           </button>
 
           <button
             onClick={() => setActiveTab("anomalies")}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
+            className={`flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-medium transition-colors ${
               activeTab === "anomalies"
-                ? "bg-rose-500/20 text-rose-300 border border-rose-500/40 shadow-sm"
-                : "text-slate-400 hover:text-slate-200"
+                ? "bg-gray-800 text-white"
+                : "text-gray-400 hover:text-gray-200"
             }`}
           >
-            <AlertTriangle className="w-4 h-4" />
-            <span>Fraud & Conflict Sentinel (A9-A11)</span>
+            <AlertTriangle className="w-3.5 h-3.5" />
+            <span>Anomalies</span>
             {pendingAnomalies.length > 0 && (
-              <span className="text-[10px] font-mono px-1.5 py-0.2 rounded-full bg-rose-950 text-rose-300 border border-rose-800">
+              <span className="text-[10px] font-medium px-1.5 py-0.5 rounded-full bg-red-500/10 text-red-400 border border-red-500/20">
                 {pendingAnomalies.length}
               </span>
             )}
@@ -147,7 +139,7 @@ export default function AdminPage() {
         </div>
       </div>
 
-      {/* Main Tab Content */}
+      {/* Content */}
       {activeTab === "ledger" && <CredentialLedger />}
       {activeTab === "taxonomy" && <SkillTaxonomyTable />}
       {activeTab === "orgs" && <OrgManager />}

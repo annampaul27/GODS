@@ -6,11 +6,7 @@ import { useStore } from "@/lib/store";
 import {
   FileText,
   Sparkles,
-  Check,
-  Plus,
-  Trash2,
   X,
-  Layers,
   ArrowRight,
 } from "lucide-react";
 
@@ -77,7 +73,7 @@ export default function JobCreatorModal({ onClose }: JobCreatorModalProps) {
   const [criticalSkills, setCriticalSkills] = useState<SkillNode[]>(TEMPLATES[0].critical);
   const [optionalSkills, setOptionalSkills] = useState<SkillNode[]>(TEMPLATES[0].optional);
 
-  // Raw JD text parser state (E1, E2)
+  // Raw JD text parser state
   const [rawJDText, setRawJDText] = useState("");
   const [isParsing, setIsParsing] = useState(false);
 
@@ -94,7 +90,6 @@ export default function JobCreatorModal({ onClose }: JobCreatorModalProps) {
     setIsParsing(true);
 
     try {
-      // Connect to FastAPI ATS RESTful endpoint
       const response = await fetch("http://localhost:8000/api/v1/ats/parse-jd", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -104,7 +99,6 @@ export default function JobCreatorModal({ onClose }: JobCreatorModalProps) {
       if (response.ok) {
         const jdData = await response.json();
         
-        // Map mandatory skills -> Critical (weight=3.0) (E2)
         const parsedCritical: SkillNode[] = (jdData.mandatory_skills || []).map((skillName: string, idx: number) => ({
           id: `crit_${skillName.toLowerCase().replace(/[^a-z0-9]/g, "_")}_${idx}`,
           name: skillName,
@@ -113,7 +107,6 @@ export default function JobCreatorModal({ onClose }: JobCreatorModalProps) {
           isCritical: true,
         }));
 
-        // Map nice-to-have skills -> Optional (weight=1.0) (E2)
         const parsedOptional: SkillNode[] = (jdData.nice_to_have_skills || []).map((skillName: string, idx: number) => ({
           id: `opt_${skillName.toLowerCase().replace(/[^a-z0-9]/g, "_")}_${idx}`,
           name: skillName,
@@ -130,18 +123,18 @@ export default function JobCreatorModal({ onClose }: JobCreatorModalProps) {
 
         addToast({
           type: "success",
-          title: "ATS JD Parser Active (E1, E2)",
-          message: `Parsed ${parsedCritical.length} Critical (3.0w) and ${parsedOptional.length} Optional (1.0w) hiring benchmarks via ATS engine (Annam Paul).`,
+          title: "Job Description Parsed",
+          message: `Extracted ${parsedCritical.length} mandatory skills and ${parsedOptional.length} preferred skills from job description.`,
         });
         setIsParsing(false);
         setTab("template");
         return;
       }
     } catch (err) {
-      console.warn("Backend ATS offline, using local parser fallback (NF2):", err);
+      console.warn("Backend ATS offline, using local parser fallback:", err);
     }
 
-    // Local deterministic fallback (NF2 Offline Mode)
+    // Local deterministic fallback
     const foundCritical: SkillNode[] = [];
     const foundOptional: SkillNode[] = [];
 
@@ -219,39 +212,39 @@ export default function JobCreatorModal({ onClose }: JobCreatorModalProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in">
-      <div className="relative w-full max-w-3xl rounded-2xl glass-panel-elevated border-cyan-500/40 p-6 shadow-2xl flex flex-col max-h-[92vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75">
+      <div className="relative w-full max-w-3xl rounded-xl border border-gray-700 bg-gray-900 p-6 shadow-2xl flex flex-col max-h-[92vh]">
         {/* Header */}
-        <div className="flex items-start justify-between pb-4 border-b border-slate-800">
+        <div className="flex items-start justify-between pb-4 border-b border-gray-800">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
+            <div className="w-10 h-10 rounded-lg bg-blue-950 border border-blue-800 flex items-center justify-center text-blue-400">
               <FileText className="w-5 h-5" />
             </div>
             <div>
               <h3 className="text-base font-semibold text-white">
-                Job Ingestion & Benchmark Parser (E1, E2)
+                Create Job Requisition
               </h3>
-              <p className="text-xs text-slate-400">
-                Input job opening via industry template or paste raw JD for automatic skill node extraction.
+              <p className="text-xs text-gray-400">
+                Configure job details manually or paste a job description for automated skill extraction.
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition-colors"
+            className="text-gray-400 hover:text-white p-1 rounded-lg hover:bg-gray-800 transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Tab Selection */}
-        <div className="flex items-center gap-2 mt-4 border-b border-slate-800 pb-2">
+        <div className="flex items-center gap-2 mt-4 border-b border-gray-800 pb-2">
           <button
             onClick={() => setTab("template")}
             className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
               tab === "template"
-                ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/40"
-                : "text-slate-400 hover:text-slate-200"
+                ? "bg-gray-800 text-white border border-gray-700"
+                : "text-gray-400 hover:text-gray-200"
             }`}
           >
             Configure Requisition
@@ -260,11 +253,11 @@ export default function JobCreatorModal({ onClose }: JobCreatorModalProps) {
             onClick={() => setTab("raw")}
             className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
               tab === "raw"
-                ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/40"
-                : "text-slate-400 hover:text-slate-200"
+                ? "bg-gray-800 text-white border border-gray-700"
+                : "text-gray-400 hover:text-gray-200"
             }`}
           >
-            Paste Raw JD Text (Automated Parser E1)
+            Paste Job Description
           </button>
         </div>
 
@@ -272,25 +265,25 @@ export default function JobCreatorModal({ onClose }: JobCreatorModalProps) {
         <div className="flex-1 overflow-y-auto py-4 space-y-4">
           {tab === "raw" ? (
             <div className="space-y-4">
-              <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
-                <label className="text-xs font-medium text-slate-200 block mb-1">
-                  Paste Raw Job Description Text:
+              <div className="p-4 rounded-lg bg-gray-950 border border-gray-800">
+                <label className="text-xs font-medium text-gray-200 block mb-1">
+                  Job Description Text:
                 </label>
                 <textarea
                   value={rawJDText}
                   onChange={(e) => setRawJDText(e.target.value)}
                   placeholder="Paste JD text here (e.g. 'We are hiring a Senior Software Engineer with strong experience in FastAPI, PostgreSQL performance tuning, and Next.js React Server Components...')"
                   rows={8}
-                  className="w-full p-3 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-200 focus:outline-none focus:border-cyan-500 transition-colors font-mono resize-none"
+                  className="w-full p-3 rounded-lg bg-gray-900 border border-gray-800 text-xs text-gray-200 placeholder-gray-500 focus:outline-none focus:border-blue-500 transition-colors resize-none"
                 />
                 <button
                   type="button"
                   onClick={handleParseRawJD}
                   disabled={isParsing || !rawJDText.trim()}
-                  className="mt-3 flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold bg-cyan-500 hover:bg-cyan-400 text-slate-950 transition-all disabled:opacity-50"
+                  className="mt-3 flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium bg-blue-600 hover:bg-blue-500 text-white transition-colors disabled:opacity-50"
                 >
                   <Sparkles className="w-4 h-4" />
-                  {isParsing ? "Extracting Skill Nodes..." : "Parse JD into Critical & Optional Nodes (E2)"}
+                  {isParsing ? "Extracting Skills..." : "Extract Skills from Text"}
                 </button>
               </div>
             </div>
@@ -298,8 +291,8 @@ export default function JobCreatorModal({ onClose }: JobCreatorModalProps) {
             <form onSubmit={handleSubmit} className="space-y-4">
               {/* Preconfigured Templates Row */}
               <div className="space-y-2">
-                <label className="text-xs font-mono uppercase tracking-wider text-slate-400 font-semibold block">
-                  Select Pre-Configured Template (E1):
+                <label className="text-xs font-medium uppercase tracking-wider text-gray-400 block">
+                  Role Templates:
                 </label>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                   {TEMPLATES.map((tmpl, idx) => (
@@ -307,15 +300,15 @@ export default function JobCreatorModal({ onClose }: JobCreatorModalProps) {
                       key={idx}
                       type="button"
                       onClick={() => handleApplyTemplate(tmpl)}
-                      className={`p-2.5 rounded-xl border text-left text-xs transition-all ${
+                      className={`p-2.5 rounded-lg border text-left text-xs transition-colors ${
                         title === tmpl.name
-                          ? "bg-cyan-500/10 border-cyan-500/40 text-cyan-300"
-                          : "bg-slate-900/60 border-slate-800 text-slate-400 hover:text-slate-200"
+                          ? "bg-gray-800 border-gray-600 text-white"
+                          : "bg-gray-950 border-gray-800 text-gray-400 hover:text-gray-200"
                       }`}
                     >
                       <p className="font-semibold line-clamp-1">{tmpl.name}</p>
-                      <p className="text-[10px] text-slate-500 mt-1">
-                        {tmpl.critical.length} Critical • {tmpl.optional.length} Optional
+                      <p className="text-[11px] text-gray-500 mt-1">
+                        {tmpl.critical.length} Mandatory • {tmpl.optional.length} Preferred
                       </p>
                     </button>
                   ))}
@@ -325,70 +318,70 @@ export default function JobCreatorModal({ onClose }: JobCreatorModalProps) {
               {/* Title & Department */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="text-xs text-slate-400 block mb-1">Job Title</label>
+                  <label className="text-xs text-gray-400 block mb-1">Job Title</label>
                   <input
                     type="text"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                     required
-                    className="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-200 focus:outline-none focus:border-cyan-500"
+                    className="w-full p-2.5 rounded-lg bg-gray-950 border border-gray-800 text-xs text-gray-200 focus:outline-none focus:border-blue-500"
                   />
                 </div>
                 <div>
-                  <label className="text-xs text-slate-400 block mb-1">Department</label>
+                  <label className="text-xs text-gray-400 block mb-1">Department</label>
                   <input
                     type="text"
                     value={department}
                     onChange={(e) => setDepartment(e.target.value)}
                     required
-                    className="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-200 focus:outline-none focus:border-cyan-500"
+                    className="w-full p-2.5 rounded-lg bg-gray-950 border border-gray-800 text-xs text-gray-200 focus:outline-none focus:border-blue-500"
                   />
                 </div>
               </div>
 
-              {/* Structured Skills Section (E2) */}
+              {/* Structured Skills Section */}
               <div className="space-y-3 pt-2">
-                <div className="p-3.5 rounded-xl bg-slate-900/70 border border-emerald-500/30">
+                <div className="p-3.5 rounded-lg bg-gray-950 border border-gray-800">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-semibold text-emerald-400 font-mono uppercase tracking-wider flex items-center gap-1.5">
+                    <span className="text-xs font-semibold text-emerald-400 uppercase tracking-wider flex items-center gap-1.5">
                       <span className="w-2 h-2 rounded-full bg-emerald-400" />
-                      Critical Skills (Must-Have, Weight = 3.0) (E2)
+                      Mandatory Skills (Weight: 3.0)
                     </span>
-                    <span className="text-[10px] text-slate-400 font-mono">
-                      {criticalSkills.length} nodes
+                    <span className="text-xs text-gray-500">
+                      {criticalSkills.length} skills
                     </span>
                   </div>
                   <div className="flex flex-wrap gap-1.5">
                     {criticalSkills.map((sk) => (
                       <span
                         key={sk.id}
-                        className="px-2.5 py-1 rounded-lg bg-emerald-950/80 text-emerald-300 border border-emerald-800/60 text-xs font-mono flex items-center gap-1.5"
+                        className="px-2.5 py-1 rounded bg-gray-900 text-emerald-300 border border-gray-800 text-xs flex items-center gap-1.5"
                       >
                         {sk.name}
-                        <span className="text-[10px] text-emerald-500 font-bold">w=3.0</span>
+                        <span className="text-[10px] text-gray-500 font-bold">3.0</span>
                       </span>
                     ))}
                   </div>
                 </div>
 
-                <div className="p-3.5 rounded-xl bg-slate-900/70 border border-slate-800">
+                <div className="p-3.5 rounded-lg bg-gray-950 border border-gray-800">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-semibold text-slate-300 font-mono uppercase tracking-wider flex items-center gap-1.5">
-                      <span className="w-2 h-2 rounded-full bg-slate-500" />
-                      Optional Skills (Nice-to-Have, Weight = 1.0) (E2)
+                    <span className="text-xs font-semibold text-gray-300 uppercase tracking-wider flex items-center gap-1.5">
+                      <span className="w-2 h-2 rounded-full bg-gray-500" />
+                      Preferred Skills (Weight: 1.0)
                     </span>
-                    <span className="text-[10px] text-slate-400 font-mono">
-                      {optionalSkills.length} nodes
+                    <span className="text-xs text-gray-500">
+                      {optionalSkills.length} skills
                     </span>
                   </div>
                   <div className="flex flex-wrap gap-1.5">
                     {optionalSkills.map((sk) => (
                       <span
                         key={sk.id}
-                        className="px-2.5 py-1 rounded-lg bg-slate-950 text-slate-300 border border-slate-800 text-xs font-mono flex items-center gap-1.5"
+                        className="px-2.5 py-1 rounded bg-gray-900 text-gray-300 border border-gray-800 text-xs flex items-center gap-1.5"
                       >
                         {sk.name}
-                        <span className="text-[10px] text-slate-500">w=1.0</span>
+                        <span className="text-[10px] text-gray-500">1.0</span>
                       </span>
                     ))}
                   </div>
@@ -397,29 +390,29 @@ export default function JobCreatorModal({ onClose }: JobCreatorModalProps) {
 
               {/* Description */}
               <div>
-                <label className="text-xs text-slate-400 block mb-1">Description</label>
+                <label className="text-xs text-gray-400 block mb-1">Description</label>
                 <textarea
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   rows={3}
-                  className="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-200 focus:outline-none focus:border-cyan-500 resize-none"
+                  className="w-full p-2.5 rounded-lg bg-gray-950 border border-gray-800 text-xs text-gray-200 focus:outline-none focus:border-blue-500 resize-none"
                 />
               </div>
 
               {/* Submit Buttons */}
-              <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-800">
+              <div className="flex items-center justify-end gap-3 pt-3 border-t border-gray-800">
                 <button
                   type="button"
                   onClick={onClose}
-                  className="px-4 py-2 rounded-xl text-xs text-slate-400 hover:text-white transition-colors"
+                  className="px-3.5 py-2 rounded-lg text-xs text-gray-400 hover:text-white transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="flex items-center gap-2 px-5 py-2 rounded-xl text-xs font-semibold bg-gradient-to-r from-cyan-500 to-indigo-500 hover:from-cyan-400 hover:to-indigo-400 text-slate-950 shadow-lg shadow-cyan-500/20 transition-all"
+                  className="flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium bg-blue-600 hover:bg-blue-500 text-white transition-colors"
                 >
-                  <span>Publish Requisition & Benchmark Applicants</span>
+                  <span>Publish Job Requisition</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </div>

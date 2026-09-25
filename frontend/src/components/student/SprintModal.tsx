@@ -499,12 +499,12 @@ export default function SprintModal({ sprint, onClose }: SprintModalProps) {
                 ) : (
                   <button
                     onClick={handleNextQuestion}
-                    className="flex items-center gap-2 px-5 py-2 rounded-xl text-xs font-semibold bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow-lg shadow-emerald-500/20 transition-all"
+                    className="flex items-center gap-2 px-5 py-2 rounded-xl text-xs font-semibold bg-emerald-600 hover:bg-emerald-500 text-white transition-colors"
                   >
                     <span>
                       {currentQuestionIndex < sprint.part3Questions.length - 1
                         ? "Next Question"
-                        : "Finish & Mint SHA-256 Credential (S10)"}
+                        : "Finish & Claim Credential"}
                     </span>
                     <ArrowRight className="w-4 h-4" />
                   </button>
@@ -513,10 +513,10 @@ export default function SprintModal({ sprint, onClose }: SprintModalProps) {
             </div>
           )}
 
-          {/* QUIZ FINISHED / MINTED CREDENTIAL CELEBRATION (S10, S11, S12, S20) */}
+          {/* QUIZ FINISHED / MINTED CREDENTIAL CELEBRATION */}
           {quizFinished && (
             <div className="space-y-5 py-4 text-center animate-in zoom-in-95">
-              <div className="w-16 h-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/40 flex items-center justify-center text-emerald-400 mx-auto animate-pulse-glow">
+              <div className="w-16 h-16 rounded-xl bg-emerald-950 border border-emerald-800 flex items-center justify-center text-emerald-400 mx-auto">
                 <ShieldCheck className="w-10 h-10" />
               </div>
 
@@ -524,17 +524,17 @@ export default function SprintModal({ sprint, onClose }: SprintModalProps) {
                 <h4 className="text-xl font-bold text-white">
                   Assessment Complete — Competency Mastered!
                 </h4>
-                <p className="text-xs text-slate-400 mt-1">
+                <p className="text-xs text-gray-400 mt-1">
                   You scored <span className="text-emerald-400 font-bold font-mono text-sm">{score}%</span> on{" "}
                   <span className="text-white font-semibold">{sprint.skillName}</span>.
                 </p>
               </div>
 
               {score >= 80 && mintedHash ? (
-                <div className="p-5 rounded-2xl glass-panel border-emerald-500/50 bg-emerald-950/10 text-left space-y-3">
+                <div className="p-5 rounded-xl border border-gray-800 bg-gray-950 text-left space-y-3">
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-mono uppercase text-emerald-400 font-semibold flex items-center gap-1.5">
-                      <ShieldCheck className="w-4 h-4" /> Cryptographic SHA-256 Micro-Credential (S10)
+                      <ShieldCheck className="w-4 h-4" /> Verified SHA-256 Micro-Credential
                     </span>
                     <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800">
                       Immutable Proof
@@ -542,38 +542,38 @@ export default function SprintModal({ sprint, onClose }: SprintModalProps) {
                   </div>
 
                   <div>
-                    <span className="text-[10px] text-slate-400 uppercase font-mono block mb-1">
+                    <span className="text-xs text-gray-400 block mb-1">
                       Verification Digest Hash:
                     </span>
-                    <p className="p-2.5 rounded-lg bg-slate-950 text-xs font-mono text-cyan-300 break-all border border-slate-800">
+                    <p className="p-2.5 rounded-lg bg-gray-900 text-xs font-mono text-emerald-300 break-all border border-gray-800">
                       {mintedHash}
                     </p>
                   </div>
 
-                  <div className="p-3 rounded-xl bg-slate-950/80 border border-slate-800/80 flex items-center justify-between text-xs">
+                  <div className="p-3 rounded-lg bg-gray-900 border border-gray-800 flex items-center justify-between text-xs">
                     <div>
-                      <p className="text-slate-300 font-medium">Public Zero-Auth URL (S11)</p>
-                      <p className="text-[10px] text-slate-500">
+                      <p className="text-gray-200 font-medium">Public Verification URL</p>
+                      <p className="text-xs text-gray-400">
                         Share on LinkedIn, resumes, or send to recruiters
                       </p>
                     </div>
                     <Link
                       href={`/verify/${mintedHash}`}
                       target="_blank"
-                      className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 text-xs font-medium border border-cyan-500/40 transition-colors"
+                      className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs font-medium transition-colors"
                     >
                       Audit Hash <ExternalLink className="w-3.5 h-3.5" />
                     </Link>
                   </div>
 
-                  {/* Aha Moment Notification (S12, S20) */}
-                  <div className="p-3 rounded-xl bg-cyan-950/40 border border-cyan-500/40 flex items-center gap-2.5 text-xs text-cyan-200">
-                    <Zap className="w-4 h-4 text-cyan-400 shrink-0" />
+                  {/* Impact Notification */}
+                  <div className="p-3 rounded-lg bg-blue-950/40 border border-blue-800/60 flex items-center gap-2.5 text-xs text-blue-200">
+                    <Zap className="w-4 h-4 text-blue-400 shrink-0" />
                     <p>
-                      <strong className="text-white font-semibold">Direct Economic Impact:</strong>{" "}
+                      <strong className="text-white font-semibold">Readiness Impact:</strong>{" "}
                       Your fit score benchmark against employer openings has increased to{" "}
                       <strong className="text-emerald-400 font-mono">Job-Ready (≥85%)</strong>!
-                      You are now elevated on the recruiter radar (S12).
+                      You are now elevated on the recruiter radar.
                     </p>
                   </div>
                 </div>
