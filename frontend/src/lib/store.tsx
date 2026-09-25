@@ -73,6 +73,18 @@ interface StoreContextType {
   } | null;
   login: (role: RoleType, email: string, orgId?: string) => void;
   logout: () => void;
+  registerStudent: (studentData: {
+    fullName: string;
+    email: string;
+    college: string;
+    gradYear?: number;
+    targetRole?: string;
+    githubUrl?: string;
+    linkedinUrl?: string;
+    skills?: string[];
+  }) => Candidate;
+  updateEmployerProfile: (updates: { name?: string; email?: string; orgName?: string }) => void;
+  updateAdminProfile: (updates: { name?: string; email?: string }) => void;
 
   // Student specific
   currentStudent: Candidate;
@@ -178,6 +190,113 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       type: "info",
       title: "Session Terminated",
       message: "You have securely logged out of SkillSetu AI.",
+    });
+  };
+
+  const registerStudent = (studentData: {
+    fullName: string;
+    email: string;
+    college: string;
+    gradYear?: number;
+    targetRole?: string;
+    githubUrl?: string;
+    linkedinUrl?: string;
+    skills?: string[];
+  }): Candidate => {
+    const id = "cand-" + Date.now();
+    const candidateSkills = (studentData.skills || ["Python", "FastAPI", "SQL", "Git"]).map((s, idx) => ({
+      skillId: s.toLowerCase().replace(/[^a-z0-9]/g, "_"),
+      skillName: s,
+      category: "backend",
+      level: "Intermediate" as const,
+      isVerified: idx === 0,
+      credentialHash:
+        idx === 0
+          ? "0x" + Array.from({ length: 64 }, () => Math.floor(Math.random() * 16).toString(16)).join("")
+          : undefined,
+      verifiedAt: idx === 0 ? new Date().toISOString().split("T")[0] : undefined,
+      score: idx === 0 ? 92 : undefined,
+    }));
+
+    const newCandidate: Candidate = {
+      id,
+      fullName: studentData.fullName,
+      anonymizedId: `Candidate #${Math.floor(1000 + Math.random() * 9000)}`,
+      email: studentData.email,
+      college: studentData.college,
+      anonymizedCollege:
+        studentData.college.includes("IIT") ||
+        studentData.college.includes("NIT") ||
+        studentData.college.includes("BITS")
+          ? "Tier-1 Technical Institute"
+          : "Accredited Engineering University",
+      gradYear: studentData.gradYear || 2026,
+      avatarUrl: `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(studentData.fullName)}`,
+      targetRole: studentData.targetRole || "Software Engineer",
+      currentTier: "bridgeable",
+      readinessScore: 78,
+      skills: candidateSkills,
+      missingCompetencies: ["PostgreSQL Optimization", "System Architecture"],
+      githubUrl: studentData.githubUrl || `https://github.com/${studentData.fullName.toLowerCase().replace(/\s+/g, "")}`,
+      linkedinUrl: studentData.linkedinUrl || `https://linkedin.com/in/${studentData.fullName.toLowerCase().replace(/\s+/g, "")}`,
+      experienceYears: 1,
+      projects: [
+        {
+          title: "Distributed Microservices Engine",
+          description: "High-throughput asynchronous event processing backend built with FastAPI, Redis, and PostgreSQL.",
+          tech: ["Python", "FastAPI", "Docker", "PostgreSQL"],
+          link: studentData.githubUrl,
+        },
+      ],
+      pipelineStatus: "applied",
+      statusHistory: [
+        {
+          status: "applied",
+          timestamp: new Date().toLocaleDateString(),
+          updatedBy: "System Registration",
+        },
+      ],
+      credentials: [],
+    };
+
+    setCandidates((prev) => [newCandidate, ...prev]);
+    setCurrentStudentId(id);
+    setRole("student");
+    setIsAuthenticated(true);
+    setCurrentUser({
+      name: newCandidate.fullName,
+      email: newCandidate.email,
+      role: "student",
+      avatarUrl: newCandidate.avatarUrl,
+    });
+
+    addToast({
+      type: "success",
+      title: `Welcome, ${newCandidate.fullName}! 🎉`,
+      message: `Your student profile has been created and registered on SkillSetu AI.`,
+    });
+
+    return newCandidate;
+  };
+
+  const updateEmployerProfile = (updates: { name?: string; email?: string; orgName?: string }) => {
+    setCurrentUser((prev) => (prev ? { ...prev, ...updates } : prev));
+    if (updates.orgName) {
+      setCurrentOrg((prev) => ({ ...prev, name: updates.orgName! }));
+    }
+    addToast({
+      type: "success",
+      title: "Employer Profile Saved",
+      message: "Recruiter organization details updated successfully.",
+    });
+  };
+
+  const updateAdminProfile = (updates: { name?: string; email?: string }) => {
+    setCurrentUser((prev) => (prev ? { ...prev, ...updates } : prev));
+    addToast({
+      type: "success",
+      title: "Admin Profile Updated",
+      message: "Platform superuser profile successfully saved.",
     });
   };
 
@@ -627,6 +746,9 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         currentUser,
         login,
         logout,
+        registerStudent,
+        updateEmployerProfile,
+        updateAdminProfile,
         currentStudent,
         updateStudentProfile,
         studentPrivacyHideAttempts,

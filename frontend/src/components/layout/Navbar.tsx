@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useStore } from "@/lib/store";
@@ -17,6 +17,17 @@ import {
   CheckCircle,
   Brain,
   ShieldCheck,
+  Zap,
+  User,
+  Sparkles,
+  Menu,
+  X,
+  Sliders,
+  ExternalLink,
+  Layers,
+  KeyRound,
+  FileCheck,
+  Award,
 } from "lucide-react";
 import GithubIcon from "@/components/icons/GithubIcon";
 import { RoleType } from "@/types";
@@ -36,132 +47,355 @@ export default function Navbar() {
     credentials,
     isAuthenticated,
     currentUser,
+    login,
     logout,
   } = useStore();
 
   const [orgDropdownOpen, setOrgDropdownOpen] = useState(false);
+  const [userDropdownOpen, setUserDropdownOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const orgRef = useRef<HTMLDivElement>(null);
+  const userRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdowns on outside click
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (orgRef.current && !orgRef.current.contains(event.target as Node)) {
+        setOrgDropdownOpen(false);
+      }
+      if (userRef.current && !userRef.current.contains(event.target as Node)) {
+        setUserDropdownOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setMobileMenuOpen(false);
+    setUserDropdownOpen(false);
+    setOrgDropdownOpen(false);
+  }, [pathname]);
 
   const sampleHash =
     credentials[0]?.hash ||
     "a4f89d3810c92bf2234e405e6081297e68cfb939e6a0d0a52479e0237d45f3ba";
 
-  const handleRoleChange = (newRole: RoleType) => {
+  // Determine effective role based on current active route, or fall back to store role
+  const isStudentRoute = pathname.startsWith("/student");
+  const isEmployerRoute = pathname.startsWith("/employer");
+  const isAdminRoute = pathname.startsWith("/admin");
+  const isPublicLanding = pathname === "/" && !isAuthenticated;
+
+  const effectiveRole: RoleType = isStudentRoute
+    ? "student"
+    : isEmployerRoute
+    ? "employer"
+    : isAdminRoute
+    ? "admin"
+    : role || "student";
+
+  const handleRoleSwitch = (newRole: RoleType) => {
     setRole(newRole);
-    if (newRole === "employer") router.push("/employer");
-    else if (newRole === "student") router.push("/student");
-    else if (newRole === "admin") router.push("/admin");
+    if (newRole === "employer") {
+      login("employer", "priya.sharma@acme.com", organizations[0].id);
+      router.push("/employer");
+    } else if (newRole === "student") {
+      login("student", "aditya.verma@example.com");
+      router.push("/student");
+    } else if (newRole === "admin") {
+      login("admin", "root@skillsetu.ai");
+      router.push("/admin");
+    }
+    setUserDropdownOpen(false);
   };
 
+  const profileUrl =
+    effectiveRole === "student"
+      ? "/student/profile"
+      : effectiveRole === "employer"
+      ? "/employer/profile"
+      : "/admin/profile";
+
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-gray-800 bg-[#0c1220]/95 backdrop-blur-md">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between gap-4">
-        {/* Brand */}
-        <div className="flex items-center gap-5">
-          <Link href="/" className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold text-sm">
-              S
+    <header className="sticky top-0 z-50 w-full border-b border-slate-800/80 bg-slate-950/90 backdrop-blur-xl transition-all">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+        
+        {/* ========================================================= */}
+        {/* LEFT: BRAND & ROLE PORTAL BADGE                           */}
+        {/* ========================================================= */}
+        <div className="flex items-center gap-4">
+          <Link
+            href={
+              effectiveRole === "student"
+                ? "/student"
+                : effectiveRole === "employer"
+                ? "/employer"
+                : effectiveRole === "admin"
+                ? "/admin"
+                : "/"
+            }
+            className="flex items-center gap-2.5 group"
+          >
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-purple-600 via-indigo-600 to-blue-500 flex items-center justify-center text-white shadow-md shadow-purple-950/40 group-hover:scale-105 transition-transform">
+              <ShieldCheck className="w-5 h-5" />
             </div>
-            <span className="font-semibold text-base text-white tracking-tight">
-              SkillSetu
-            </span>
+            <div className="flex items-baseline gap-1.5">
+              <span className="font-extrabold text-lg text-white tracking-tight">
+                Skill<span className="text-purple-400">Setu</span>
+              </span>
+
+              {/* Role-Specific Portal Badge */}
+              {effectiveRole === "student" && (
+                <span className="hidden sm:inline-block text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+                  Student Portal
+                </span>
+              )}
+              {effectiveRole === "employer" && (
+                <span className="hidden sm:inline-block text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-500/15 text-blue-300 border border-blue-500/30">
+                  Employer ATS
+                </span>
+              )}
+              {effectiveRole === "admin" && (
+                <span className="hidden sm:inline-block text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-500/15 text-purple-300 border border-purple-500/30">
+                  Root Admin
+                </span>
+              )}
+            </div>
           </Link>
 
-          {/* Org Selector */}
-          <div className="relative hidden md:block">
-            <button
-              onClick={() => setOrgDropdownOpen(!orgDropdownOpen)}
-              className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gray-900 hover:bg-gray-800 border border-gray-800 text-xs font-medium text-gray-300 transition-colors"
-            >
-              <span className="text-sm leading-none">{currentOrg.logo}</span>
-              <span className="max-w-[140px] truncate">{currentOrg.name}</span>
-              <ChevronDown className="w-3.5 h-3.5 text-gray-500" />
-            </button>
+          {/* Employer-Only Workspace Switcher */}
+          {effectiveRole === "employer" && (
+            <div className="relative hidden xl:block" ref={orgRef}>
+              <button
+                onClick={() => setOrgDropdownOpen(!orgDropdownOpen)}
+                className="flex items-center gap-2 px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-xs font-medium text-slate-300 transition-colors"
+                title="Switch Corporate Workspace"
+              >
+                <span className="text-sm leading-none">{currentOrg.logo}</span>
+                <span className="max-w-[130px] truncate">{currentOrg.name}</span>
+                <ChevronDown className={`w-3.5 h-3.5 text-slate-500 transition-transform ${orgDropdownOpen ? "rotate-180" : ""}`} />
+              </button>
 
-            {orgDropdownOpen && (
-              <div className="absolute top-full left-0 mt-1.5 w-64 rounded-lg bg-gray-900 border border-gray-800 p-1.5 shadow-xl z-50">
-                <div className="px-2.5 py-2 border-b border-gray-800 mb-1">
-                  <p className="text-[11px] uppercase tracking-wider text-gray-500 font-medium">
-                    Workspaces
-                  </p>
-                </div>
-                {organizations.map((org) => (
-                  <button
-                    key={org.id}
-                    onClick={() => {
-                      setCurrentOrg(org);
-                      setOrgDropdownOpen(false);
-                    }}
-                    className={`w-full flex items-center justify-between p-2 rounded-md text-left text-xs transition-colors ${
-                      currentOrg.id === org.id
-                        ? "bg-blue-500/10 text-blue-400"
-                        : "hover:bg-gray-800 text-gray-300"
-                    }`}
-                  >
-                    <div className="flex items-center gap-2 truncate">
-                      <span className="text-base">{org.logo}</span>
-                      <div className="truncate">
-                        <p className="font-medium truncate">{org.name}</p>
-                        <p className="text-[10px] text-gray-500 capitalize">
-                          {org.type} · {org.plan} ({org.seatsUsed}/{org.seatsTotal})
-                        </p>
+              {orgDropdownOpen && (
+                <div className="absolute top-full left-0 mt-2 w-64 rounded-xl bg-slate-900 border border-slate-800 p-1.5 shadow-2xl z-50 animate-in fade-in">
+                  <div className="px-2.5 py-1.5 border-b border-slate-800 mb-1">
+                    <p className="text-[10px] uppercase tracking-wider text-slate-400 font-bold">
+                      Hiring Workspace
+                    </p>
+                  </div>
+                  {organizations.map((org) => (
+                    <button
+                      key={org.id}
+                      onClick={() => {
+                        setCurrentOrg(org);
+                        setOrgDropdownOpen(false);
+                      }}
+                      className={`w-full flex items-center justify-between p-2 rounded-lg text-left text-xs transition-colors ${
+                        currentOrg.id === org.id
+                          ? "bg-blue-500/10 text-blue-400 border border-blue-500/20"
+                          : "hover:bg-slate-800 text-slate-300"
+                      }`}
+                    >
+                      <div className="flex items-center gap-2 truncate">
+                        <span className="text-base">{org.logo}</span>
+                        <div className="truncate">
+                          <p className="font-semibold truncate">{org.name}</p>
+                          <p className="text-[10px] text-slate-500 capitalize">
+                            {org.type} · {org.plan}
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                    {currentOrg.id === org.id && (
-                      <CheckCircle className="w-3.5 h-3.5 text-blue-400 shrink-0" />
-                    )}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
+                      {currentOrg.id === org.id && (
+                        <CheckCircle className="w-3.5 h-3.5 text-blue-400 shrink-0" />
+                      )}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
         </div>
 
-        {/* Navigation */}
-        <div className="flex items-center gap-2.5">
-          {/* Role Tabs */}
-          <nav className="flex items-center bg-gray-900 p-0.5 rounded-lg border border-gray-800">
-            <button
-              onClick={() => handleRoleChange("employer")}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
-                pathname === "/employer" || (pathname === "/" && role === "employer")
-                  ? "bg-gray-800 text-white"
-                  : "text-gray-400 hover:text-gray-200"
-              }`}
-            >
-              <Briefcase className="w-3.5 h-3.5" />
-              <span>Employer</span>
-            </button>
-            <button
-              onClick={() => handleRoleChange("student")}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
-                pathname === "/student" || (pathname === "/" && role === "student")
-                  ? "bg-gray-800 text-white"
-                  : "text-gray-400 hover:text-gray-200"
-              }`}
-            >
-              <GraduationCap className="w-3.5 h-3.5" />
-              <span>Student</span>
-            </button>
-            <button
-              onClick={() => handleRoleChange("admin")}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
-                pathname === "/admin" || (pathname === "/" && role === "admin")
-                  ? "bg-gray-800 text-white"
-                  : "text-gray-400 hover:text-gray-200"
-              }`}
-            >
-              <Shield className="w-3.5 h-3.5" />
-              <span>Admin</span>
-            </button>
-          </nav>
+        {/* ========================================================= */}
+        {/* CENTER: ROLE-SPECIFIC NAVIGATION BAR                      */}
+        {/* ========================================================= */}
+        <nav className="hidden md:flex items-center gap-1">
+          {/* 1. STUDENT NAVIGATION (Clean & Student-Focused) */}
+          {effectiveRole === "student" && (
+            <div className="flex items-center bg-slate-900/90 p-1 rounded-xl border border-slate-800 shadow-inner">
+              <Link
+                href="/student"
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                  pathname === "/student"
+                    ? "bg-emerald-600 text-white shadow-sm"
+                    : "text-slate-400 hover:text-white hover:bg-slate-800/60"
+                }`}
+              >
+                <GraduationCap className="w-3.5 h-3.5" />
+                <span>Dashboard & Radar</span>
+              </Link>
 
-          {/* Live Pitch Cockpit Link */}
+              <Link
+                href="/student/github-security"
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                  pathname === "/student/github-security"
+                    ? "bg-emerald-600 text-white shadow-sm"
+                    : "text-slate-400 hover:text-white hover:bg-slate-800/60"
+                }`}
+              >
+                <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+                <span>GitHub Secret Shield</span>
+              </Link>
+
+              <Link
+                href="/hub"
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                  pathname === "/hub"
+                    ? "bg-purple-600 text-white shadow-sm"
+                    : "text-slate-400 hover:text-white hover:bg-slate-800/60"
+                }`}
+              >
+                <Brain className="w-3.5 h-3.5" />
+                <span>13 Courses & AI Suite</span>
+              </Link>
+
+              <Link
+                href="/student/profile"
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                  pathname === "/student/profile"
+                    ? "bg-slate-800 text-white border border-slate-700 shadow-sm"
+                    : "text-slate-400 hover:text-white hover:bg-slate-800/60"
+                }`}
+              >
+                <Award className="w-3.5 h-3.5 text-purple-300" />
+                <span>My Credentials</span>
+              </Link>
+            </div>
+          )}
+
+          {/* 2. EMPLOYER NAVIGATION (Screening & Candidate Sprints) */}
+          {effectiveRole === "employer" && (
+            <div className="flex items-center bg-slate-900/90 p-1 rounded-xl border border-slate-800 shadow-inner">
+              <Link
+                href="/employer"
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                  pathname === "/employer"
+                    ? "bg-blue-600 text-white shadow-sm"
+                    : "text-slate-400 hover:text-white hover:bg-slate-800/60"
+                }`}
+              >
+                <Briefcase className="w-3.5 h-3.5" />
+                <span>Talent Radar & Pipeline</span>
+              </Link>
+
+              <Link
+                href="/github-analysis"
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                  pathname === "/github-analysis"
+                    ? "bg-purple-600 text-white shadow-sm"
+                    : "text-slate-400 hover:text-white hover:bg-slate-800/60"
+                }`}
+              >
+                <GithubIcon className="w-3.5 h-3.5 text-purple-300" />
+                <span>Candidate AST Auditor</span>
+              </Link>
+
+              <Link
+                href="/hub"
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                  pathname === "/hub"
+                    ? "bg-indigo-600 text-white shadow-sm"
+                    : "text-slate-400 hover:text-white hover:bg-slate-800/60"
+                }`}
+              >
+                <Sparkles className="w-3.5 h-3.5 text-indigo-300" />
+                <span>60-JD Vector Matcher</span>
+              </Link>
+
+              <Link
+                href="/employer/profile"
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                  pathname === "/employer/profile"
+                    ? "bg-slate-800 text-white border border-slate-700 shadow-sm"
+                    : "text-slate-400 hover:text-white hover:bg-slate-800/60"
+                }`}
+              >
+                <Sliders className="w-3.5 h-3.5 text-blue-300" />
+                <span>Hiring Preferences</span>
+              </Link>
+            </div>
+          )}
+
+          {/* 3. ADMIN NAVIGATION (Platform Governance & Security) */}
+          {effectiveRole === "admin" && (
+            <div className="flex items-center bg-slate-900/90 p-1 rounded-xl border border-slate-800 shadow-inner">
+              <Link
+                href="/admin"
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                  pathname === "/admin"
+                    ? "bg-purple-600 text-white shadow-sm"
+                    : "text-slate-400 hover:text-white hover:bg-slate-800/60"
+                }`}
+              >
+                <Shield className="w-3.5 h-3.5" />
+                <span>Governance Console</span>
+              </Link>
+
+              <Link
+                href="/admin/profile"
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                  pathname === "/admin/profile"
+                    ? "bg-slate-800 text-white border border-slate-700 shadow-sm"
+                    : "text-slate-400 hover:text-white hover:bg-slate-800/60"
+                }`}
+              >
+                <KeyRound className="w-3.5 h-3.5 text-purple-400" />
+                <span>Key Authority & Telemetry</span>
+              </Link>
+
+              <Link
+                href={`/verify/${sampleHash}`}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white hover:bg-slate-800/60 transition-all"
+              >
+                <Hash className="w-3.5 h-3.5 text-blue-400" />
+                <span>Public Ledger Verify</span>
+              </Link>
+            </div>
+          )}
+
+          {/* 4. PUBLIC LANDING NAVIGATION */}
+          {isPublicLanding && (
+            <div className="flex items-center gap-4 text-xs font-medium text-slate-400">
+              <Link href="/employer" className="hover:text-white transition-colors">
+                For Employers
+              </Link>
+              <Link href="/student" className="hover:text-white transition-colors">
+                For Students
+              </Link>
+              <Link href="/hub" className="hover:text-white transition-colors">
+                Courses & AI Suite
+              </Link>
+              <Link href={`/verify/${sampleHash}`} className="hover:text-white transition-colors">
+                Verify Credential
+              </Link>
+            </div>
+          )}
+        </nav>
+
+        {/* ========================================================= */}
+        {/* RIGHT: ACTIONS, COCKPIT & ROLE-AWARE USER PROFILE         */}
+        {/* ========================================================= */}
+        <div className="flex items-center gap-2.5">
+          {/* Live Pitch Cockpit Beacon (Always visible for presentations) */}
           <Link
             href="/demo"
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all shadow-md ${
               pathname === "/demo"
-                ? "bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-amber-500/25 ring-1 ring-amber-400"
-                : "bg-gradient-to-r from-amber-500/15 to-orange-500/15 hover:from-amber-500/25 hover:to-orange-500/25 text-amber-300 hover:text-white border border-amber-500/40 shadow-amber-950/30"
+                ? "bg-amber-500 text-slate-950 ring-2 ring-amber-400/50 shadow-amber-500/20"
+                : "bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/30"
             }`}
             title="Open Live Pitch Cockpit"
           >
@@ -169,130 +403,262 @@ export default function Navbar() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
             </span>
-            <span>⚡ Live Pitch Cockpit</span>
+            <span>Live Pitch</span>
           </Link>
 
-          {/* AI Suite & 13 Courses Link */}
-          <Link
-            href="/hub"
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all border ${
-              pathname === "/hub"
-                ? "bg-gradient-to-r from-purple-600 to-indigo-600 border-purple-400 text-white shadow-purple-500/25 shadow-md ring-1 ring-purple-400"
-                : "bg-purple-950/40 border-purple-700/50 text-purple-200 hover:text-white hover:bg-purple-900/50 shadow-sm"
-            }`}
-            title="Open Backend AI Suite & 13-Course Micro-Academy"
-          >
-            <Brain className="w-3.5 h-3.5 text-purple-300" />
-            <span>🧠 AI Suite & 13 Courses</span>
-          </Link>
-
-          {/* GitHub AST Analysis Link */}
-          <Link
-            href="/github-analysis"
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all border ${
-              pathname === "/github-analysis"
-                ? "bg-purple-600 border-purple-500 text-white shadow-purple-500/25 shadow-md"
-                : "bg-purple-950/30 border-purple-800/40 text-purple-300 hover:text-white hover:bg-purple-900/40"
-            }`}
-            title="GitHub AST Codebase & Commit Verifier"
-          >
-            <GithubIcon className="w-3.5 h-3.5 text-purple-400" />
-            <span>🐙 GitHub Verifier</span>
-          </Link>
-
-          {/* Student Repo Secret Shield Link */}
-          <Link
-            href="/student/github-security"
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all border ${
-              pathname === "/student/github-security"
-                ? "bg-emerald-600 border-emerald-500 text-white shadow-emerald-500/25 shadow-md"
-                : "bg-emerald-950/30 border-emerald-800/40 text-emerald-300 hover:text-white hover:bg-emerald-900/40"
-            }`}
-            title="Student GitHub Health & Secret Shield"
-          >
-            <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-            <span>🛡️ Repo Shield</span>
-          </Link>
-
-          {/* Blind Screening Toggle — employer only */}
-          {(pathname === "/employer" || role === "employer") && (
+          {/* Contextual Blind Screening Toggle (ONLY shown on Employer route) */}
+          {effectiveRole === "employer" && (
             <button
               onClick={() => setIsAnonymizedScreening(!isAnonymizedScreening)}
-              className={`hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border text-xs font-medium transition-colors ${
+              className={`hidden lg:flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border text-xs font-semibold transition-colors ${
                 isAnonymizedScreening
-                  ? "bg-amber-500/10 border-amber-500/30 text-amber-400"
-                  : "bg-gray-900 border-gray-800 text-gray-400 hover:text-gray-200"
+                  ? "bg-amber-500/10 border-amber-500/40 text-amber-300"
+                  : "bg-slate-900 border-slate-800 text-slate-400 hover:text-white"
               }`}
-              title="Toggle blind screening mode"
+              title="Toggle Blind Merit Screening Mode (E17 Standard)"
             >
               {isAnonymizedScreening ? (
                 <>
-                  <EyeOff className="w-3.5 h-3.5" />
-                  <span>Blind: On</span>
+                  <EyeOff className="w-3.5 h-3.5 text-amber-400" />
+                  <span className="text-[11px]">Blind: ON</span>
                 </>
               ) : (
                 <>
                   <Eye className="w-3.5 h-3.5" />
-                  <span>Blind: Off</span>
+                  <span className="text-[11px]">Blind: OFF</span>
                 </>
               )}
             </button>
           )}
 
-          {/* Verify Link */}
-          <Link
-            href={`/verify/${sampleHash}`}
-            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-gray-900 hover:bg-gray-800 border border-gray-800 text-xs font-medium text-gray-400 hover:text-gray-200 transition-colors"
-            title="Verify a credential"
-          >
-            <Hash className="w-3.5 h-3.5" />
-            <span className="hidden lg:inline">Verify</span>
-          </Link>
-
-          {/* Notifications */}
+          {/* Notification Center */}
           <NotificationCenter userId="cand-1" />
 
-          {/* Auth */}
+          {/* Profile & Persona Account Menu */}
           {isAuthenticated && currentUser ? (
-            <div className="flex items-center gap-1.5 pl-2 border-l border-gray-800">
-              <Link
-                href="/login"
-                className="flex items-center gap-2 p-1 rounded-lg hover:bg-gray-800 text-xs text-gray-300 transition-colors"
+            <div className="relative" ref={userRef}>
+              <button
+                onClick={() => setUserDropdownOpen(!userDropdownOpen)}
+                className="flex items-center gap-2 p-1 pl-1.5 pr-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-xs text-slate-300 transition-colors"
+                title="Account & Persona"
               >
                 {currentUser.avatarUrl ? (
                   <img
                     src={currentUser.avatarUrl}
                     alt={currentUser.name}
-                    className="w-6 h-6 rounded-md object-cover"
+                    className="w-6 h-6 rounded-lg object-cover ring-1 ring-purple-500/30"
                   />
                 ) : (
-                  <div className="w-6 h-6 rounded-md bg-gray-800 flex items-center justify-center text-[10px] font-medium text-gray-300">
+                  <div className="w-6 h-6 rounded-lg bg-purple-600 text-white flex items-center justify-center text-[10px] font-bold">
                     {currentUser.name[0]}
                   </div>
                 )}
-                <span className="hidden xl:inline text-[11px] font-medium">
+                <span className="hidden sm:inline font-semibold text-white text-xs max-w-[100px] truncate">
                   {currentUser.name.split(" ")[0]}
                 </span>
-              </Link>
-              <button
-                onClick={logout}
-                className="p-1.5 rounded-lg hover:bg-gray-800 text-gray-500 hover:text-red-400 transition-colors"
-                title="Sign out"
-              >
-                <LogOut className="w-3.5 h-3.5" />
+                <ChevronDown className={`w-3 h-3 text-slate-500 transition-transform ${userDropdownOpen ? "rotate-180" : ""}`} />
               </button>
+
+              {userDropdownOpen && (
+                <div className="absolute right-0 top-full mt-2 w-64 rounded-2xl bg-slate-900 border border-slate-800 p-2 shadow-2xl z-50 space-y-1.5 animate-in fade-in">
+                  {/* User Identity Header */}
+                  <div className="px-3 py-2 border-b border-slate-800">
+                    <p className="text-xs font-bold text-white truncate">{currentUser.name}</p>
+                    <p className="text-[10px] text-slate-400 font-mono truncate">{currentUser.email}</p>
+                    <span className="inline-block mt-1 text-[9px] uppercase font-bold px-1.5 py-0.2 rounded bg-purple-500/10 text-purple-300 border border-purple-500/20">
+                      Logged in as {effectiveRole.toUpperCase()}
+                    </span>
+                  </div>
+
+                  {/* Profile Direct Link */}
+                  <Link
+                    href={profileUrl}
+                    className="w-full flex items-center gap-2 p-2 rounded-lg text-xs text-slate-300 hover:text-white hover:bg-slate-800 transition-colors"
+                  >
+                    <User className="w-3.5 h-3.5 text-purple-400" />
+                    <span>My Profile & Settings</span>
+                  </Link>
+
+                  {/* Quick Switch Persona (Demo / Evaluation Helper) */}
+                  <div className="px-2 pt-1 border-t border-slate-800/80">
+                    <p className="text-[9px] uppercase tracking-wider text-slate-500 font-bold px-1 mb-1">
+                      Switch Role Context
+                    </p>
+                    <div className="grid grid-cols-3 gap-1">
+                      <button
+                        onClick={() => handleRoleSwitch("student")}
+                        className={`p-1.5 rounded-lg text-[10px] font-semibold border flex flex-col items-center gap-0.5 transition-colors ${
+                          effectiveRole === "student"
+                            ? "bg-emerald-500/20 text-emerald-300 border-emerald-500/40"
+                            : "bg-slate-950 text-slate-400 border-slate-800 hover:text-white"
+                        }`}
+                      >
+                        <GraduationCap className="w-3 h-3 text-emerald-400" />
+                        <span>Student</span>
+                      </button>
+
+                      <button
+                        onClick={() => handleRoleSwitch("employer")}
+                        className={`p-1.5 rounded-lg text-[10px] font-semibold border flex flex-col items-center gap-0.5 transition-colors ${
+                          effectiveRole === "employer"
+                            ? "bg-blue-500/20 text-blue-300 border-blue-500/40"
+                            : "bg-slate-950 text-slate-400 border-slate-800 hover:text-white"
+                        }`}
+                      >
+                        <Briefcase className="w-3 h-3 text-blue-400" />
+                        <span>Employer</span>
+                      </button>
+
+                      <button
+                        onClick={() => handleRoleSwitch("admin")}
+                        className={`p-1.5 rounded-lg text-[10px] font-semibold border flex flex-col items-center gap-0.5 transition-colors ${
+                          effectiveRole === "admin"
+                            ? "bg-purple-500/20 text-purple-300 border-purple-500/40"
+                            : "bg-slate-950 text-slate-400 border-slate-800 hover:text-white"
+                        }`}
+                      >
+                        <Shield className="w-3 h-3 text-purple-400" />
+                        <span>Admin</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Sign Out */}
+                  <button
+                    onClick={() => {
+                      logout();
+                      router.push("/login");
+                    }}
+                    className="w-full flex items-center gap-2 p-2 rounded-lg text-xs text-rose-400 hover:text-rose-300 hover:bg-rose-950/30 transition-colors border-t border-slate-800/80"
+                  >
+                    <LogOut className="w-3.5 h-3.5" />
+                    <span>Sign Out</span>
+                  </button>
+                </div>
+              )}
             </div>
           ) : (
             <Link
               href="/login"
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-medium text-xs transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 text-white font-semibold text-xs shadow-md shadow-purple-950/40 transition-all"
             >
               <LogIn className="w-3.5 h-3.5" />
               <span>Sign In</span>
             </Link>
           )}
+
+          {/* Mobile Menu Hamburger */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-white"
+            aria-label="Toggle Menu"
+          >
+            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
         </div>
       </div>
+
+      {/* ========================================================= */}
+      {/* MOBILE EXPANDED ROLE DRAWER                               */}
+      {/* ========================================================= */}
+      {mobileMenuOpen && (
+        <div className="md:hidden border-t border-slate-800 bg-slate-950 p-4 space-y-3 animate-in slide-in-from-top">
+          {effectiveRole === "student" && (
+            <div className="space-y-1.5">
+              <Link
+                href="/student"
+                className="flex items-center gap-2 p-2.5 rounded-xl bg-slate-900 text-xs font-semibold text-white"
+              >
+                <GraduationCap className="w-4 h-4 text-emerald-400" />
+                <span>Dashboard & Radar</span>
+              </Link>
+              <Link
+                href="/student/github-security"
+                className="flex items-center gap-2 p-2.5 rounded-xl bg-slate-900 text-xs font-semibold text-slate-300"
+              >
+                <ShieldCheck className="w-4 h-4 text-emerald-400" />
+                <span>GitHub Secret Shield</span>
+              </Link>
+              <Link
+                href="/hub"
+                className="flex items-center gap-2 p-2.5 rounded-xl bg-slate-900 text-xs font-semibold text-slate-300"
+              >
+                <Brain className="w-4 h-4 text-purple-400" />
+                <span>13 Courses & AI Suite</span>
+              </Link>
+              <Link
+                href="/student/profile"
+                className="flex items-center gap-2 p-2.5 rounded-xl bg-slate-900 text-xs font-semibold text-slate-300"
+              >
+                <Award className="w-4 h-4 text-purple-300" />
+                <span>My Credentials</span>
+              </Link>
+            </div>
+          )}
+
+          {effectiveRole === "employer" && (
+            <div className="space-y-1.5">
+              <Link
+                href="/employer"
+                className="flex items-center gap-2 p-2.5 rounded-xl bg-slate-900 text-xs font-semibold text-white"
+              >
+                <Briefcase className="w-4 h-4 text-blue-400" />
+                <span>Talent Radar & Pipeline</span>
+              </Link>
+              <Link
+                href="/github-analysis"
+                className="flex items-center gap-2 p-2.5 rounded-xl bg-slate-900 text-xs font-semibold text-slate-300"
+              >
+                <GithubIcon className="w-4 h-4 text-purple-400" />
+                <span>Candidate AST Auditor</span>
+              </Link>
+              <Link
+                href="/employer/profile"
+                className="flex items-center gap-2 p-2.5 rounded-xl bg-slate-900 text-xs font-semibold text-slate-300"
+              >
+                <Sliders className="w-4 h-4 text-blue-300" />
+                <span>Hiring Preferences & Workspace</span>
+              </Link>
+            </div>
+          )}
+
+          {effectiveRole === "admin" && (
+            <div className="space-y-1.5">
+              <Link
+                href="/admin"
+                className="flex items-center gap-2 p-2.5 rounded-xl bg-slate-900 text-xs font-semibold text-white"
+              >
+                <Shield className="w-4 h-4 text-purple-400" />
+                <span>Governance Console</span>
+              </Link>
+              <Link
+                href="/admin/profile"
+                className="flex items-center gap-2 p-2.5 rounded-xl bg-slate-900 text-xs font-semibold text-slate-300"
+              >
+                <KeyRound className="w-4 h-4 text-purple-400" />
+                <span>Key Authority & Telemetry</span>
+              </Link>
+            </div>
+          )}
+
+          <div className="pt-2 border-t border-slate-800 space-y-1 text-xs">
+            <Link
+              href="/demo"
+              className="flex items-center justify-between p-2 rounded-lg bg-amber-500/10 text-amber-300 font-bold"
+            >
+              <span>⚡ Live Pitch Cockpit</span>
+              <ChevronDown className="w-4 h-4 -rotate-90" />
+            </Link>
+            <Link
+              href={profileUrl}
+              className="flex items-center justify-between p-2 rounded-lg text-slate-300 hover:bg-slate-900"
+            >
+              <span>👤 Profile & Settings</span>
+              <ChevronDown className="w-4 h-4 -rotate-90 text-slate-600" />
+            </Link>
+          </div>
+        </div>
+      )}
     </header>
   );
 }
