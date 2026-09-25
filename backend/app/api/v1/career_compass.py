@@ -8,7 +8,12 @@ from pydantic import BaseModel, Field
 from typing import Dict, List, Optional, Any
 
 from features.career_roadmap import prepare_career_roadmap, get_career_roadmap_requirements
-from features.github_analysis import prepare_github_analysis, get_github_analysis_requirements
+from features.github_analysis import (
+    prepare_github_analysis,
+    get_github_analysis_requirements,
+    github_service,
+)
+from app.models.github import RemediationRequest, ScanRequest
 from features.interview_coach import (
     prepare_interview_question,
     build_interview_question,
@@ -41,6 +46,7 @@ class RoadmapRequest(BaseModel):
 
 
 @router.post("/roadmap", summary="Prepare 90-Day Career Roadmap (Jayasree A B)")
+@router.post("/generate", summary="Generate 90-Day Career Compass (Jayasree A B)")
 def get_roadmap(req: RoadmapRequest):
     try:
         return prepare_career_roadmap(
@@ -84,6 +90,38 @@ def analyze_github_repo(req: GithubAnalysisRequest):
 @router.get("/github-analysis/requirements", summary="Get GitHub Analysis Requirements")
 def get_github_schema():
     return {"requirements": get_github_analysis_requirements()}
+
+
+@router.get("/github/repos", summary="Fetch student public GitHub repositories")
+async def get_student_repos(username: Optional[str] = Query(None)):
+    try:
+        return await github_service.get_all_repos(username_override=username)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.post("/github/scan", summary="Scan student repository for secrets & health score")
+async def scan_student_repo(req: ScanRequest):
+    try:
+        return await github_service.scan_for_secrets(req.repo_full_name)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.post("/github/remediate", summary="1-Click Security Remediation")
+async def remediate_student_repo(req: RemediationRequest):
+    try:
+        return await github_service.remediate_repo(req.repo_full_name, req.action)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.get("/github/inspect", summary="Deep Code & Architecture Inspection")
+async def inspect_student_repo(repo_full_name: str = Query(...)):
+    try:
+        return await github_service.inspect_repo_code(repo_full_name)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 # -------------------------------------------------------------
