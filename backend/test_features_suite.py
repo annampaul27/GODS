@@ -213,3 +213,71 @@ def test_career_compass_fastapi_endpoints():
     )
     assert interview_resp.status_code == 200
     assert interview_resp.json()["evaluation"]["overall_score"] >= 80
+
+
+def test_personalized_roadmap_module():
+    from features.personalized_roadmap import (
+        normalize_skill,
+        extract_gap_skills,
+        match_skills_to_courses,
+        order_courses,
+        generate_personalized_roadmap,
+        create_roadmap_from_skill_gap_result,
+    )
+
+    # Test normalization
+    assert normalize_skill("python programming") == "python"
+    assert normalize_skill("AWS") == "aws"
+    assert normalize_skill("Structured Query Language") == "sql"
+
+    # Test extract gap skills
+    gaps = extract_gap_skills(["Python", {"skill": "SQL", "current_level": "Beginner"}])
+    assert len(gaps) == 2
+    assert gaps[0]["skill"] == "python"
+    assert gaps[1]["skill"] == "sql"
+
+    # Test match skills to courses
+    matches = match_skills_to_courses(gaps)
+    assert len(matches) == 2
+    assert matches[0]["course_available"] is True
+
+    # Test order courses (prerequisites)
+    tree_and_array = [{"skill": "trees", "current_level": "none", "required_level": "required", "course_available": True, "course_title": "Trees", "course_path": "courses/trees", "duration_minutes": 60, "prerequisites": ["arrays"]}, {"skill": "arrays", "current_level": "none", "required_level": "required", "course_available": True, "course_title": "Arrays", "course_path": "courses/arrays", "duration_minutes": 60, "prerequisites": ["python"]}]
+    ordered = order_courses(tree_and_array)
+    ordered_skills = [c["skill"] for c in ordered]
+    assert "arrays" in ordered_skills
+
+    # Test generate personalized roadmap
+    roadmap = generate_personalized_roadmap(
+        skill_gaps=[{"skill": "Python", "current_level": "Beginner"}, "AWS", "UnknownSkillXYZ"],
+        target_role="Full Stack Engineer",
+        weekly_hours=6
+    )
+    assert "Personalized Roadmap for Full Stack Engineer" in roadmap["roadmap_title"]
+    assert roadmap["skill_gap_count"] == 3
+    assert roadmap["available_course_count"] == 2
+    assert roadmap["external_learning_count"] == 1
+    assert len(roadmap["phases"]) >= 2
+
+    # Test convenience wrapper
+    skill_gap_result = {"gap_skills": ["SQL", "Pandas"]}
+    res = create_roadmap_from_skill_gap_result(skill_gap_result, target_role="Data Analyst")
+    assert res["target_role"] == "Data Analyst"
+    assert len(res["phases"]) >= 2
+
+
+def test_personalized_roadmap_fastapi_endpoint():
+    res = client.post(
+        "/api/v1/career-compass/personalized-roadmap",
+        json={
+            "skill_gaps": ["Python", "SQL", "Pandas"],
+            "target_role": "Data Scientist",
+            "weekly_hours": 8
+        }
+    )
+    assert res.status_code == 200
+    data = res.json()
+    assert data["target_role"] == "Data Scientist"
+    assert data["weekly_learning_hours"] == 8
+    assert len(data["phases"]) >= 2
+    assert data["phases"][0]["mock_test"]["passing_score"] == 60

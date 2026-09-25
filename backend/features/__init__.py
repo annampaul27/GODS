@@ -19,6 +19,15 @@ from .skill_gap_analysis import (
     build_competency_area,
     VALID_SKILL_LEVELS,
 )
+from .personalized_roadmap import (
+    generate_personalized_roadmap,
+    create_roadmap_from_skill_gap_result,
+    normalize_skill,
+    extract_gap_skills,
+    match_skills_to_courses,
+    order_courses,
+    COURSE_CATALOGUE,
+)
 
 __author__ = "Jayasree A B <jayasreeab2004@gmail.com>"
 __all__ = [
@@ -40,4 +49,11 @@ __all__ = [
     "prepare_skill_gap_analysis",
     "build_competency_area",
     "VALID_SKILL_LEVELS",
+    "generate_personalized_roadmap",
+    "create_roadmap_from_skill_gap_result",
+    "normalize_skill",
+    "extract_gap_skills",
+    "match_skills_to_courses",
+    "order_courses",
+    "COURSE_CATALOGUE",
 ]

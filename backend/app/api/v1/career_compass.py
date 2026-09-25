@@ -226,3 +226,34 @@ def prepare_skill_gap(req: SkillGapPrepRequest):
         )
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
+
+
+# -------------------------------------------------------------
+# 8. Personalized Roadmap Generation
+# -------------------------------------------------------------
+from features.personalized_roadmap import (
+    generate_personalized_roadmap,
+    create_roadmap_from_skill_gap_result,
+)
+
+class PersonalizedRoadmapRequest(BaseModel):
+    skill_gaps: List[Any] = Field(
+        ...,
+        description="List of skill strings or gap objects (e.g. [{'skill': 'Python', 'current_level': 'Beginner'}])",
+        examples=[[{"skill": "Python", "current_level": "Beginner", "required_level": "Advanced"}, "AWS"]]
+    )
+    target_role: Optional[str] = Field("Backend Engineer", description="Target job role")
+    weekly_hours: Optional[int] = Field(5, description="Weekly hours available for study")
+
+
+@router.post("/personalized-roadmap", summary="Generate Personalized Roadmap (Jayasree A B)")
+def generate_roadmap(req: PersonalizedRoadmapRequest):
+    try:
+        return generate_personalized_roadmap(
+            skill_gaps=req.skill_gaps,
+            target_role=req.target_role or "Target Role",
+            weekly_hours=req.weekly_hours or 5,
+        )
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
