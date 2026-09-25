@@ -325,8 +325,8 @@ export default function StudentPage() {
                   <h5 className="font-medium text-xs text-white">
                     {cred.skillName}
                   </h5>
-                  <p className="text-[10px] text-gray-500 mt-0.5">
-                    {cred.issuerOrg} · {new Date(cred.issuedAt).toLocaleDateString()}
+                  <p suppressHydrationWarning className="text-[10px] text-gray-500 mt-0.5">
+                    {cred.issuerOrg} · {cred.issuedAt ? cred.issuedAt.split("T")[0] : ""}
                   </p>
                 </div>
                 <span className="text-xs font-medium text-emerald-400 px-1.5 py-0.5 rounded bg-emerald-500/10">

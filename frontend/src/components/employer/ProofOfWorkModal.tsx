@@ -213,8 +213,8 @@ export default function ProofOfWorkModal({
                 </div>
                 <div className="p-3 rounded-lg bg-gray-950 border border-gray-800">
                   <span className="text-gray-400 text-[10px] uppercase">Issued Date</span>
-                  <p className="font-semibold text-gray-200 mt-1 font-mono">
-                    {new Date(credential.issuedAt).toLocaleDateString()}
+                  <p suppressHydrationWarning className="font-semibold text-gray-200 mt-1 font-mono">
+                    {credential.issuedAt ? credential.issuedAt.split("T")[0] : ""}
                   </p>
                 </div>
                 <div className="p-3 rounded-lg bg-gray-950 border border-gray-800">

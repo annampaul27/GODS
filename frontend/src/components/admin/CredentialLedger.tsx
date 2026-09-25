@@ -140,8 +140,8 @@ export default function CredentialLedger() {
                     <td className="py-3.5 font-mono font-semibold text-emerald-400">
                       {c.score}%
                     </td>
-                    <td className="py-3.5 text-gray-400 text-xs">
-                      {new Date(c.issuedAt).toLocaleDateString()}
+                    <td suppressHydrationWarning className="py-3.5 text-gray-400 text-xs">
+                      {c.issuedAt ? c.issuedAt.split("T")[0] : ""}
                     </td>
                     <td className="py-3.5">
                       <div className="flex items-center gap-2">

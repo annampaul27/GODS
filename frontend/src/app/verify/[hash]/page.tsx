@@ -239,7 +239,9 @@ export default function VerifyCredentialPage() {
         {/* Footer */}
         <div className="mt-6 pt-4 border-t border-gray-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-gray-500">
           <span>Proctored Assessment • 0 Tab Blur Violations</span>
-          <span>Issued: {credential?.issuedAt}</span>
+          <span suppressHydrationWarning>
+            Issued: {credential?.issuedAt ? credential.issuedAt.split("T")[0] : ""}
+          </span>
         </div>
       </div>
     </div>
