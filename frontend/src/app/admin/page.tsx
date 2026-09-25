@@ -6,11 +6,13 @@ import CredentialLedger from "@/components/admin/CredentialLedger";
 import SkillTaxonomyTable from "@/components/admin/SkillTaxonomyTable";
 import OrgManager from "@/components/admin/OrgManager";
 import AnomalyMonitor from "@/components/admin/AnomalyMonitor";
+import Link from "next/link";
 import {
   Shield,
   Network,
   Building2,
   AlertTriangle,
+  KeyRound,
 } from "lucide-react";
 
 export default function AdminPage() {
@@ -41,6 +43,17 @@ export default function AdminPage() {
                 Credential ledger, skill taxonomy, and organization management.
               </p>
             </div>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <Link
+              href="/admin/profile"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 border border-gray-700 text-xs font-semibold text-purple-300 hover:text-white transition-colors"
+              title="Super Admin Profile & Key Authority"
+            >
+              <KeyRound className="w-3.5 h-3.5 text-purple-400" />
+              <span>Super Admin Profile</span>
+            </Link>
           </div>
         </div>
 

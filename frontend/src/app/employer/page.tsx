@@ -9,6 +9,7 @@ import ProofOfWorkModal from "@/components/employer/ProofOfWorkModal";
 import CandidateDrawer from "@/components/employer/CandidateDrawer";
 import JobCreatorModal from "@/components/employer/JobCreatorModal";
 import UniversityCohortAnalytics from "@/components/employer/UniversityCohortAnalytics";
+import Link from "next/link";
 import {
   Plus,
   Layers,
@@ -19,6 +20,7 @@ import {
   Shield,
   Share2,
   Check,
+  Settings,
 } from "lucide-react";
 
 export default function EmployerPage() {
@@ -142,6 +144,16 @@ export default function EmployerPage() {
             <Plus className="w-3.5 h-3.5" />
             <span>New Job</span>
           </button>
+
+          {/* Recruiter Profile Link */}
+          <Link
+            href="/employer/profile"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 border border-gray-700 text-xs font-medium text-gray-300 hover:text-white transition-colors"
+            title="Recruiter & Workspace Profile"
+          >
+            <Settings className="w-3.5 h-3.5 text-blue-400" />
+            <span>Profile</span>
+          </Link>
         </div>
       </div>
 

@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useStore } from "@/lib/store";
 import { RoleType } from "@/types";
 import {
@@ -17,12 +18,41 @@ import {
   Building2,
   KeyRound,
   Code2,
+  CheckCircle2,
+  Sparkles,
+  Zap,
+  Award,
+  Check,
+  UserPlus,
+  LogIn,
+  Building,
+  User,
+  Calendar,
+  Globe,
 } from "lucide-react";
+import GithubIcon from "@/components/icons/GithubIcon";
 
 export default function LoginPage() {
   const router = useRouter();
-  const { role, setRole, organizations, currentOrg, setCurrentOrg, login, addToast } = useStore();
+  const searchParams = useSearchParams();
+  const initialMode = searchParams?.get("mode") === "register" ? "register-student" : "login";
 
+  const {
+    role,
+    setRole,
+    organizations,
+    currentOrg,
+    setCurrentOrg,
+    login,
+    registerStudent,
+    addToast,
+  } = useStore();
+
+  const [activeTab, setActiveTab] = useState<"login" | "register-student" | "register-employer">(
+    initialMode as any
+  );
+
+  // Sign In State
   const [selectedRole, setSelectedRole] = useState<RoleType>(role || "employer");
   const [selectedOrgId, setSelectedOrgId] = useState<string>(currentOrg?.id || organizations[0].id);
   const [email, setEmail] = useState<string>("priya.sharma@acme.com");
@@ -32,6 +62,40 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [showForgotModal, setShowForgotModal] = useState<boolean>(false);
   const [forgotEmail, setForgotEmail] = useState<string>("");
+
+  // Student Registration State
+  const [regFullName, setRegFullName] = useState("");
+  const [regEmail, setRegEmail] = useState("");
+  const [regPassword, setRegPassword] = useState("");
+  const [regCollege, setRegCollege] = useState("IIT Madras");
+  const [regDegree, setRegDegree] = useState("B.Tech Computer Science");
+  const [regGradYear, setRegGradYear] = useState(2026);
+  const [regTargetRole, setRegTargetRole] = useState("Backend Distributed Systems Engineer");
+  const [regGithub, setRegGithub] = useState("aaravsharma-dev");
+  const [regLinkedin, setRegLinkedin] = useState("aarav-sharma-tech");
+  const [selectedSkills, setSelectedSkills] = useState<string[]>([
+    "Python",
+    "FastAPI",
+    "PostgreSQL",
+    "Docker",
+  ]);
+
+  // Employer Registration State
+  const [empCompanyName, setEmpCompanyName] = useState("");
+  const [empRecruiterName, setEmpRecruiterName] = useState("");
+  const [empWorkEmail, setEmpWorkEmail] = useState("");
+  const [empIndustry, setEmpIndustry] = useState("corporate");
+  const [empHiringRole, setEmpHiringRole] = useState("Senior Backend Engineer");
+
+  const [backendOnline, setBackendOnline] = useState<boolean>(true);
+
+  useEffect(() => {
+    fetch("http://localhost:8000/health")
+      .then((res) => {
+        if (res.ok) setBackendOnline(true);
+      })
+      .catch(() => setBackendOnline(false));
+  }, []);
 
   const handleRoleTabChange = (newRole: RoleType) => {
     setSelectedRole(newRole);
@@ -54,16 +118,6 @@ export default function LoginPage() {
     triggerLogin(demoRole, demoEmail, orgId);
   };
 
-  const [backendOnline, setBackendOnline] = useState<boolean>(true);
-
-  React.useEffect(() => {
-    fetch("http://localhost:8000/health")
-      .then((res) => {
-        if (res.ok) setBackendOnline(true);
-      })
-      .catch(() => setBackendOnline(false));
-  }, []);
-
   const triggerLogin = async (r: RoleType, em: string, orgId?: string) => {
     setIsLoading(true);
     const targetOrg = orgId || selectedOrgId;
@@ -85,14 +139,9 @@ export default function LoginPage() {
         if (typeof window !== "undefined") {
           localStorage.setItem("skillsetu_jwt_token", data.access_token);
         }
-        addToast({
-          type: "credential",
-          title: "Signed in successfully",
-          message: `Session token issued.`,
-        });
       }
     } catch (err) {
-      console.warn("Backend offline, using offline mode:", err);
+      console.warn("Backend offline or local demo mode:", err);
     } finally {
       login(r, em, targetOrg);
       setIsLoading(false);
@@ -102,297 +151,627 @@ export default function LoginPage() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleStudentRegistration = async (e: React.FormEvent) => {
     e.preventDefault();
-    triggerLogin(selectedRole, email, selectedOrgId);
+    if (!regFullName || !regEmail) {
+      alert("Please fill in your name and email.");
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      // Try registering with backend
+      await fetch("http://localhost:8000/api/v1/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          full_name: regFullName,
+          email: regEmail,
+          password: regPassword || "SkillSetu@2026",
+          role: "student",
+          college: regCollege,
+        }),
+      }).catch((e) => console.warn("Backend registration offline:", e));
+    } catch (e) {
+      // zero fail
+    }
+
+    // Register into store
+    const newCand = registerStudent({
+      fullName: regFullName,
+      email: regEmail,
+      college: regCollege,
+      gradYear: Number(regGradYear),
+      targetRole: regTargetRole,
+      githubUrl: regGithub ? `https://github.com/${regGithub.replace(/.*github\.com\//, "")}` : undefined,
+      linkedinUrl: regLinkedin ? `https://linkedin.com/in/${regLinkedin.replace(/.*linkedin\.com\/in\//, "")}` : undefined,
+      skills: selectedSkills,
+    });
+
+    setIsLoading(false);
+    // Redirect directly to the student profile page so they can review their newly minted profile!
+    router.push("/student/profile");
   };
 
-  const handleForgotSubmit = (e: React.FormEvent) => {
+  const handleEmployerRegistration = (e: React.FormEvent) => {
     e.preventDefault();
-    setShowForgotModal(false);
+    if (!empCompanyName || !empWorkEmail) {
+      alert("Please provide your organization name and work email.");
+      return;
+    }
+
+    setIsLoading(true);
+    login("employer", empWorkEmail);
     addToast({
-      type: "info",
-      title: "Password Reset Sent",
-      message: `A reset link has been sent to ${forgotEmail || email}.`,
+      type: "success",
+      title: "Organization Registered! 🏢",
+      message: `${empCompanyName} workspace initialized. ATS screening pipeline ready.`,
     });
+    setIsLoading(false);
+    router.push("/employer/profile");
   };
+
+  const toggleSkill = (skill: string) => {
+    if (selectedSkills.includes(skill)) {
+      setSelectedSkills(selectedSkills.filter((s) => s !== skill));
+    } else {
+      setSelectedSkills([...selectedSkills, skill]);
+    }
+  };
+
+  const POPULAR_SKILLS = [
+    "Python",
+    "FastAPI",
+    "PostgreSQL",
+    "Docker",
+    "TypeScript",
+    "React",
+    "Go",
+    "Kubernetes",
+    "SQL",
+    "Kafka",
+    "AWS",
+    "Git",
+  ];
 
   return (
-    <div className="min-h-[calc(100vh-3.5rem)] flex items-center justify-center p-4 sm:p-6 lg:p-8">
-      <div className="w-full max-w-md rounded-xl bg-gray-900 border border-gray-800 p-6 sm:p-8 space-y-5">
-        {/* Header */}
-        <div className="text-center space-y-1.5">
-          <div className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-blue-600 text-white font-bold text-sm mb-2">
-            S
-          </div>
-          <h1 className="text-xl font-semibold text-white">
-            Sign in to SkillSetu
-          </h1>
-          <p className="text-xs text-gray-400">
-            Select your role and enter your credentials.
-          </p>
-          <div className="flex items-center justify-center gap-2 pt-1">
-            <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-gray-800 border border-gray-700 text-[10px]">
-              <span className={`w-1.5 h-1.5 rounded-full ${backendOnline ? "bg-emerald-400" : "bg-amber-400"}`} />
-              <span className={backendOnline ? "text-emerald-400" : "text-amber-400"}>
-                {backendOnline ? "Backend online" : "Offline mode"}
-              </span>
+    <div className="min-h-screen bg-slate-950 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 text-slate-100">
+      <div className="sm:mx-auto sm:w-full sm:max-w-xl">
+        {/* Brand Logo & Headline */}
+        <div className="text-center space-y-2">
+          <Link href="/" className="inline-flex items-center gap-2.5 group">
+            <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-purple-600 via-indigo-600 to-blue-500 flex items-center justify-center shadow-lg shadow-purple-950/60 ring-2 ring-purple-500/30 group-hover:scale-105 transition-transform">
+              <ShieldCheck className="w-6 h-6 text-white" />
+            </div>
+            <span className="text-2xl font-black tracking-tight text-white">
+              Skill<span className="text-purple-400">Setu</span>
             </span>
-          </div>
-        </div>
-
-        {/* Role Tabs */}
-        <div className="grid grid-cols-3 gap-1.5 p-1 rounded-lg bg-gray-800 border border-gray-700">
-          <button
-            type="button"
-            onClick={() => handleRoleTabChange("employer")}
-            className={`flex flex-col items-center py-2 px-2 rounded-md text-xs font-medium transition-colors ${
-              selectedRole === "employer"
-                ? "bg-gray-700 text-white"
-                : "text-gray-400 hover:text-gray-200"
-            }`}
-          >
-            <Briefcase className="w-4 h-4 mb-1" />
-            <span>Employer</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => handleRoleTabChange("student")}
-            className={`flex flex-col items-center py-2 px-2 rounded-md text-xs font-medium transition-colors ${
-              selectedRole === "student"
-                ? "bg-gray-700 text-white"
-                : "text-gray-400 hover:text-gray-200"
-            }`}
-          >
-            <GraduationCap className="w-4 h-4 mb-1" />
-            <span>Student</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => handleRoleTabChange("admin")}
-            className={`flex flex-col items-center py-2 px-2 rounded-md text-xs font-medium transition-colors ${
-              selectedRole === "admin"
-                ? "bg-gray-700 text-white"
-                : "text-gray-400 hover:text-gray-200"
-            }`}
-          >
-            <Shield className="w-4 h-4 mb-1" />
-            <span>Admin</span>
-          </button>
-        </div>
-
-        {/* Demo Accounts */}
-        <div className="p-3 rounded-lg bg-gray-800/50 border border-gray-700/50 space-y-1.5">
-          <p className="text-[11px] text-gray-500 font-medium">Quick demo login</p>
-          <div className="grid grid-cols-3 gap-1.5">
-            <button
-              type="button"
-              onClick={() => handleQuickLogin("employer", "priya.sharma@acme.com", "org-acme")}
-              className="p-2 rounded-md bg-gray-900 hover:bg-gray-800 border border-gray-800 text-left text-[11px] transition-colors"
-            >
-              <span className="font-medium text-gray-200 block truncate">Recruiter</span>
-              <span className="text-[10px] text-gray-500">Acme Corp</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleQuickLogin("student", "aditya.verma@example.com")}
-              className="p-2 rounded-md bg-gray-900 hover:bg-gray-800 border border-gray-800 text-left text-[11px] transition-colors"
-            >
-              <span className="font-medium text-gray-200 block truncate">Student</span>
-              <span className="text-[10px] text-gray-500">78% ready</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleQuickLogin("admin", "root@skillsetu.ai")}
-              className="p-2 rounded-md bg-gray-900 hover:bg-gray-800 border border-gray-800 text-left text-[11px] transition-colors"
-            >
-              <span className="font-medium text-gray-200 block truncate">Admin</span>
-              <span className="text-[10px] text-gray-500">Full access</span>
-            </button>
-          </div>
-        </div>
-
-        {/* Form */}
-        <form onSubmit={handleSubmit} className="space-y-3.5">
-          {selectedRole === "employer" && (
-            <div className="space-y-1">
-              <label className="text-xs text-gray-300 font-medium flex items-center gap-1.5">
-                <Building2 className="w-3.5 h-3.5 text-gray-500" />
-                Organization
-              </label>
-              <select
-                value={selectedOrgId}
-                onChange={(e) => setSelectedOrgId(e.target.value)}
-                className="w-full p-2.5 rounded-lg bg-gray-800 border border-gray-700 text-xs text-white focus:outline-none focus:border-blue-500"
-              >
-                {organizations.map((org) => (
-                  <option key={org.id} value={org.id}>
-                    {org.logo} {org.name} ({org.type} · {org.plan})
-                  </option>
-                ))}
-              </select>
-            </div>
-          )}
-
-          <div className="space-y-1">
-            <label className="text-xs text-gray-300 font-medium flex items-center gap-1.5">
-              <Mail className="w-3.5 h-3.5 text-gray-500" />
-              Email
-            </label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              placeholder="user@example.com"
-              className="w-full p-2.5 rounded-lg bg-gray-800 border border-gray-700 text-xs text-white focus:outline-none focus:border-blue-500 transition-colors"
-            />
-          </div>
-
-          <div className="space-y-1">
-            <div className="flex items-center justify-between">
-              <label className="text-xs text-gray-300 font-medium flex items-center gap-1.5">
-                <Lock className="w-3.5 h-3.5 text-gray-500" />
-                Password
-              </label>
-              <button
-                type="button"
-                onClick={() => setShowForgotModal(true)}
-                className="text-[11px] text-blue-400 hover:text-blue-300 transition-colors"
-              >
-                Forgot?
-              </button>
-            </div>
-            <div className="relative">
-              <input
-                type={showPassword ? "text" : "password"}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                className="w-full p-2.5 pr-10 rounded-lg bg-gray-800 border border-gray-700 text-xs text-white focus:outline-none focus:border-blue-500 transition-colors"
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300"
-              >
-                {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-              </button>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-between pt-0.5">
-            <label className="flex items-center gap-2 cursor-pointer text-xs text-gray-400">
-              <input
-                type="checkbox"
-                checked={rememberMe}
-                onChange={(e) => setRememberMe(e.target.checked)}
-                className="rounded border-gray-600 bg-gray-800 text-blue-500 focus:ring-0"
-              />
-              <span>Remember me</span>
-            </label>
-          </div>
-
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="w-full py-2.5 px-4 rounded-lg text-sm font-medium text-white bg-blue-600 hover:bg-blue-500 flex items-center justify-center gap-2 transition-colors disabled:opacity-50"
-          >
-            {isLoading ? (
-              <>
-                <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                <span>Signing in...</span>
-              </>
-            ) : (
-              <>
-                <span>
-                  Sign in as{" "}
-                  {selectedRole === "employer"
-                    ? "Employer"
-                    : selectedRole === "student"
-                    ? "Student"
-                    : "Admin"}
-                </span>
-                <ArrowRight className="w-4 h-4" />
-              </>
-            )}
-          </button>
-        </form>
-
-        {/* SSO */}
-        <div className="pt-3 border-t border-gray-800 space-y-2.5">
-          <p className="text-[11px] text-center text-gray-500">
-            Or sign in with
+          </Link>
+          <h2 className="text-2xl font-bold tracking-tight text-white">
+            Unified Career & Talent Gateway
+          </h2>
+          <p className="text-xs text-slate-400">
+            Sign in to your role dashboard or register a new candidate / employer profile.
           </p>
-          <div className="grid grid-cols-2 gap-2">
-            <button
-              type="button"
-              onClick={() => handleQuickLogin("employer", "saml.recruiter@enterprise.com", "org-acme")}
-              className="flex items-center justify-center gap-2 p-2 rounded-lg bg-gray-800 hover:bg-gray-700 border border-gray-700 text-xs text-gray-300 transition-colors"
-            >
-              <KeyRound className="w-3.5 h-3.5" />
-              <span>SAML / Okta</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => handleQuickLogin("student", "github.engineer@skillsetu.ai")}
-              className="flex items-center justify-center gap-2 p-2 rounded-lg bg-gray-800 hover:bg-gray-700 border border-gray-700 text-xs text-gray-300 transition-colors"
-            >
-              <Code2 className="w-3.5 h-3.5" />
-              <span>GitHub</span>
-            </button>
-          </div>
         </div>
-      </div>
 
-      {/* Forgot Password Modal */}
-      {showForgotModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
-          <div className="w-full max-w-sm rounded-xl bg-gray-900 border border-gray-800 p-5 space-y-3.5">
-            <div className="flex items-center justify-between pb-2.5 border-b border-gray-800">
-              <h3 className="text-sm font-medium text-white">Reset Password</h3>
-              <button
-                onClick={() => setShowForgotModal(false)}
-                className="text-gray-400 hover:text-white text-xs"
-              >
-                ✕
-              </button>
-            </div>
-            <p className="text-xs text-gray-400">
-              Enter your email to receive a password reset link.
-            </p>
-            <form onSubmit={handleForgotSubmit} className="space-y-3">
-              <input
-                type="email"
-                required
-                placeholder="name@organization.com"
-                value={forgotEmail}
-                onChange={(e) => setForgotEmail(e.target.value)}
-                className="w-full p-2.5 rounded-lg bg-gray-800 border border-gray-700 text-xs text-white focus:outline-none focus:border-blue-500"
-              />
-              <div className="flex justify-end gap-2">
+        {/* Mode Switcher Tabs */}
+        <div className="mt-6 p-1 bg-slate-900/90 rounded-2xl border border-slate-800 flex items-center shadow-inner">
+          <button
+            onClick={() => setActiveTab("login")}
+            className={`flex-1 py-2 text-xs font-bold rounded-xl flex items-center justify-center gap-1.5 transition-all ${
+              activeTab === "login"
+                ? "bg-purple-600 text-white shadow-md shadow-purple-950/50"
+                : "text-slate-400 hover:text-white"
+            }`}
+          >
+            <LogIn className="w-3.5 h-3.5" />
+            <span>Sign In</span>
+          </button>
+          <button
+            onClick={() => setActiveTab("register-student")}
+            className={`flex-1 py-2 text-xs font-bold rounded-xl flex items-center justify-center gap-1.5 transition-all ${
+              activeTab === "register-student"
+                ? "bg-emerald-600 text-white shadow-md shadow-emerald-950/50"
+                : "text-slate-400 hover:text-white"
+            }`}
+          >
+            <GraduationCap className="w-3.5 h-3.5" />
+            <span>Register Student</span>
+          </button>
+          <button
+            onClick={() => setActiveTab("register-employer")}
+            className={`flex-1 py-2 text-xs font-bold rounded-xl flex items-center justify-center gap-1.5 transition-all ${
+              activeTab === "register-employer"
+                ? "bg-blue-600 text-white shadow-md shadow-blue-950/50"
+                : "text-slate-400 hover:text-white"
+            }`}
+          >
+            <Briefcase className="w-3.5 h-3.5" />
+            <span>Register Employer</span>
+          </button>
+        </div>
+
+        {/* TAB 1: SIGN IN */}
+        {activeTab === "login" && (
+          <div className="mt-5 bg-slate-900/90 border border-slate-800/80 shadow-2xl rounded-2xl p-6 sm:p-8 space-y-6 animate-in fade-in">
+            {/* Role Selector Tabs */}
+            <div className="space-y-1.5">
+              <label className="text-xs font-semibold text-slate-300 block">Select Role Persona</label>
+              <div className="grid grid-cols-3 gap-2">
                 <button
                   type="button"
+                  onClick={() => handleRoleTabChange("student")}
+                  className={`py-2 px-3 rounded-xl border text-xs font-bold flex flex-col items-center gap-1 transition-all ${
+                    selectedRole === "student"
+                      ? "bg-emerald-500/15 border-emerald-500/50 text-emerald-300 shadow-sm"
+                      : "bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-700 hover:text-slate-200"
+                  }`}
+                >
+                  <GraduationCap className="w-4 h-4 text-emerald-400" />
+                  <span>Student</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleRoleTabChange("employer")}
+                  className={`py-2 px-3 rounded-xl border text-xs font-bold flex flex-col items-center gap-1 transition-all ${
+                    selectedRole === "employer"
+                      ? "bg-blue-500/15 border-blue-500/50 text-blue-300 shadow-sm"
+                      : "bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-700 hover:text-slate-200"
+                  }`}
+                >
+                  <Briefcase className="w-4 h-4 text-blue-400" />
+                  <span>Employer</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleRoleTabChange("admin")}
+                  className={`py-2 px-3 rounded-xl border text-xs font-bold flex flex-col items-center gap-1 transition-all ${
+                    selectedRole === "admin"
+                      ? "bg-purple-500/15 border-purple-500/50 text-purple-300 shadow-sm"
+                      : "bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-700 hover:text-slate-200"
+                  }`}
+                >
+                  <Shield className="w-4 h-4 text-purple-400" />
+                  <span>Super Admin</span>
+                </button>
+              </div>
+            </div>
+
+            {/* 1-Click Fast Instant Demo Access */}
+            <div className="p-3.5 rounded-xl bg-purple-950/20 border border-purple-500/25 space-y-2">
+              <span className="text-[11px] font-bold text-purple-300 flex items-center gap-1.5 uppercase tracking-wider">
+                <Zap className="w-3.5 h-3.5 text-amber-400" />
+                <span>1-Click Instant Demo Access (Evaluation Bypass)</span>
+              </span>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                <button
+                  type="button"
+                  onClick={() => handleQuickLogin("student", "aditya.verma@example.com")}
+                  className="px-2.5 py-1.5 rounded-lg bg-emerald-950/60 hover:bg-emerald-900/60 border border-emerald-500/30 text-emerald-300 text-xs font-semibold transition-colors flex items-center justify-center gap-1"
+                >
+                  <span>Student (Aditya)</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleQuickLogin("employer", "priya.sharma@acme.com", organizations[0].id)}
+                  className="px-2.5 py-1.5 rounded-lg bg-blue-950/60 hover:bg-blue-900/60 border border-blue-500/30 text-blue-300 text-xs font-semibold transition-colors flex items-center justify-center gap-1"
+                >
+                  <span>Recruiter (Priya)</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleQuickLogin("admin", "root@skillsetu.ai")}
+                  className="px-2.5 py-1.5 rounded-lg bg-purple-950/60 hover:bg-purple-900/60 border border-purple-500/30 text-purple-300 text-xs font-semibold transition-colors flex items-center justify-center gap-1"
+                >
+                  <span>Super Admin (Root)</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Form */}
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                triggerLogin(selectedRole, email);
+              }}
+              className="space-y-4"
+            >
+              <div>
+                <label className="text-xs font-medium text-slate-300 block mb-1">
+                  Email Address / Username
+                </label>
+                <div className="relative">
+                  <Mail className="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl pl-10 pr-4 py-2 text-xs text-white focus:outline-none focus:border-purple-500 transition-colors"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <div className="flex items-center justify-between mb-1">
+                  <label className="text-xs font-medium text-slate-300">Password</label>
+                  <button
+                    type="button"
+                    onClick={() => setShowForgotModal(true)}
+                    className="text-[11px] text-purple-400 hover:underline"
+                  >
+                    Forgot password?
+                  </button>
+                </div>
+                <div className="relative">
+                  <Lock className="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl pl-10 pr-10 py-2 text-xs text-white focus:outline-none focus:border-purple-500 transition-colors font-mono"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300"
+                  >
+                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
+                </div>
+              </div>
+
+              {/* Employer Org Select */}
+              {selectedRole === "employer" && (
+                <div>
+                  <label className="text-xs font-medium text-slate-300 block mb-1">
+                    Select Hiring Organization / Workspace
+                  </label>
+                  <select
+                    value={selectedOrgId}
+                    onChange={(e) => setSelectedOrgId(e.target.value)}
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-purple-500"
+                  >
+                    {organizations.map((org) => (
+                      <option key={org.id} value={org.id}>
+                        {org.logo} {org.name} ({org.plan} Plan)
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
+
+              <div className="flex items-center justify-between text-xs pt-1">
+                <label className="flex items-center gap-2 cursor-pointer text-slate-400">
+                  <input
+                    type="checkbox"
+                    checked={rememberMe}
+                    onChange={(e) => setRememberMe(e.target.checked)}
+                    className="rounded bg-slate-950 border-slate-800 text-purple-600 focus:ring-0"
+                  />
+                  <span>Remember session</span>
+                </label>
+                <span className="text-[11px] text-slate-500">
+                  {backendOnline ? "🟢 FastAPI Online" : "🟡 Offline Demo Mode"}
+                </span>
+              </div>
+
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="w-full py-2.5 px-4 rounded-xl text-xs font-bold bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white shadow-lg shadow-purple-950/60 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+              >
+                {isLoading ? (
+                  <span>Authenticating...</span>
+                ) : (
+                  <>
+                    <span>Enter {selectedRole === "student" ? "Student Dashboard" : selectedRole === "employer" ? "Employer ATS" : "Admin Console"}</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </>
+                )}
+              </button>
+            </form>
+          </div>
+        )}
+
+        {/* TAB 2: REGISTER STUDENT FORM */}
+        {activeTab === "register-student" && (
+          <form
+            onSubmit={handleStudentRegistration}
+            className="mt-5 bg-slate-900/90 border border-slate-800/80 shadow-2xl rounded-2xl p-6 sm:p-8 space-y-5 animate-in fade-in"
+          >
+            <div className="border-b border-slate-800 pb-3">
+              <h3 className="text-base font-bold text-white flex items-center gap-2">
+                <GraduationCap className="w-5 h-5 text-emerald-400" />
+                <span>Create Student Candidate Account</span>
+              </h3>
+              <p className="text-xs text-slate-400 mt-0.5">
+                Register your engineering credentials to access verified skill sprints, tamper-proof proof-of-work badges, and direct ATS matching.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="text-xs font-medium text-slate-300 block mb-1">Full Legal Name *</label>
+                <div className="relative">
+                  <User className="w-4 h-4 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" />
+                  <input
+                    type="text"
+                    value={regFullName}
+                    onChange={(e) => setRegFullName(e.target.value)}
+                    placeholder="e.g. Aarav Sharma"
+                    required
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl pl-9 pr-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="text-xs font-medium text-slate-300 block mb-1">College Email Address *</label>
+                <div className="relative">
+                  <Mail className="w-4 h-4 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" />
+                  <input
+                    type="email"
+                    value={regEmail}
+                    onChange={(e) => setRegEmail(e.target.value)}
+                    placeholder="e.g. aarav.sharma@iitm.ac.in"
+                    required
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl pl-9 pr-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="text-xs font-medium text-slate-300 block mb-1">College / University *</label>
+                <div className="relative">
+                  <Building className="w-4 h-4 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" />
+                  <input
+                    type="text"
+                    value={regCollege}
+                    onChange={(e) => setRegCollege(e.target.value)}
+                    placeholder="e.g. IIT Madras, Anna University, NIT Trichy"
+                    required
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl pl-9 pr-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="text-xs font-medium text-slate-300 block mb-1">Degree & Major</label>
+                <input
+                  type="text"
+                  value={regDegree}
+                  onChange={(e) => setRegDegree(e.target.value)}
+                  placeholder="e.g. B.Tech Computer Science & Engineering"
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500"
+                />
+              </div>
+
+              <div>
+                <label className="text-xs font-medium text-slate-300 block mb-1">Graduation Year</label>
+                <div className="relative">
+                  <Calendar className="w-4 h-4 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" />
+                  <input
+                    type="number"
+                    value={regGradYear}
+                    onChange={(e) => setRegGradYear(Number(e.target.value))}
+                    min={2024}
+                    max={2030}
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl pl-9 pr-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="text-xs font-medium text-slate-300 block mb-1">Target Engineering Role</label>
+                <input
+                  type="text"
+                  value={regTargetRole}
+                  onChange={(e) => setRegTargetRole(e.target.value)}
+                  placeholder="e.g. Backend Distributed Systems Engineer"
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500"
+                />
+              </div>
+
+              <div>
+                <label className="text-xs font-medium text-slate-300 block mb-1">GitHub Username</label>
+                <div className="relative">
+                  <GithubIcon className="w-4 h-4 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" />
+                  <input
+                    type="text"
+                    value={regGithub}
+                    onChange={(e) => setRegGithub(e.target.value)}
+                    placeholder="e.g. aaravsharma-dev"
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl pl-9 pr-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500 font-mono"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="text-xs font-medium text-slate-300 block mb-1">Account Password *</label>
+                <div className="relative">
+                  <Lock className="w-4 h-4 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" />
+                  <input
+                    type="password"
+                    value={regPassword}
+                    onChange={(e) => setRegPassword(e.target.value)}
+                    placeholder="Min. 6 characters"
+                    required
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl pl-9 pr-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500 font-mono"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Technical Skills Selector */}
+            <div className="space-y-1.5 pt-2">
+              <label className="text-xs font-medium text-slate-300 block">
+                Primary Technical Competencies (Select all that apply)
+              </label>
+              <div className="flex flex-wrap gap-2">
+                {POPULAR_SKILLS.map((sk) => {
+                  const isSel = selectedSkills.includes(sk);
+                  return (
+                    <button
+                      key={sk}
+                      type="button"
+                      onClick={() => toggleSkill(sk)}
+                      className={`px-3 py-1 rounded-lg text-xs font-semibold border transition-all ${
+                        isSel
+                          ? "bg-emerald-500/20 text-emerald-300 border-emerald-500/40"
+                          : "bg-slate-950 text-slate-400 border-slate-800 hover:border-slate-700"
+                      }`}
+                    >
+                      {isSel ? "✓ " : "+ "}
+                      {sk}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="w-full py-2.5 px-4 rounded-xl text-xs font-bold bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white shadow-lg shadow-emerald-950/60 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+            >
+              <UserPlus className="w-4 h-4" />
+              <span>Register Candidate Profile & Launch Dashboard</span>
+            </button>
+          </form>
+        )}
+
+        {/* TAB 3: REGISTER EMPLOYER FORM */}
+        {activeTab === "register-employer" && (
+          <form
+            onSubmit={handleEmployerRegistration}
+            className="mt-5 bg-slate-900/90 border border-slate-800/80 shadow-2xl rounded-2xl p-6 sm:p-8 space-y-4 animate-in fade-in"
+          >
+            <div className="border-b border-slate-800 pb-3">
+              <h3 className="text-base font-bold text-white flex items-center gap-2">
+                <Briefcase className="w-5 h-5 text-blue-400" />
+                <span>Register Organization & Hiring Team</span>
+              </h3>
+              <p className="text-xs text-slate-400 mt-0.5">
+                Set up a verified multi-tenant employer workspace to post job openings and filter verified candidates.
+              </p>
+            </div>
+
+            <div className="space-y-3">
+              <div>
+                <label className="text-xs font-medium text-slate-300 block mb-1">Company / Organization Name *</label>
+                <input
+                  type="text"
+                  value={empCompanyName}
+                  onChange={(e) => setEmpCompanyName(e.target.value)}
+                  placeholder="e.g. Acme HyperScale Systems, Razorpay, Swiggy"
+                  required
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-blue-500"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="text-xs font-medium text-slate-300 block mb-1">Hiring Manager / Recruiter Name *</label>
+                  <input
+                    type="text"
+                    value={empRecruiterName}
+                    onChange={(e) => setEmpRecruiterName(e.target.value)}
+                    placeholder="e.g. Priya Sharma"
+                    required
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-blue-500"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-medium text-slate-300 block mb-1">Work Email Address *</label>
+                  <input
+                    type="email"
+                    value={empWorkEmail}
+                    onChange={(e) => setEmpWorkEmail(e.target.value)}
+                    placeholder="e.g. priya.sharma@acme.com"
+                    required
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-blue-500"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="text-xs font-medium text-slate-300 block mb-1">Primary Role You Are Hiring For</label>
+                <input
+                  type="text"
+                  value={empHiringRole}
+                  onChange={(e) => setEmpHiringRole(e.target.value)}
+                  placeholder="e.g. Senior Backend Engineer (FastAPI / Distributed Systems)"
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-blue-500"
+                />
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="w-full py-2.5 px-4 rounded-xl text-xs font-bold bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white shadow-lg shadow-blue-950/60 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+            >
+              <Building2 className="w-4 h-4" />
+              <span>Create Employer Workspace</span>
+            </button>
+          </form>
+        )}
+
+        {/* Forgot Password Modal */}
+        {showForgotModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in">
+            <div className="w-full max-w-md rounded-2xl bg-slate-900 border border-slate-800 p-6 space-y-4 shadow-2xl">
+              <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+                <h3 className="text-sm font-bold text-white flex items-center gap-2">
+                  <KeyRound className="w-4 h-4 text-purple-400" />
+                  <span>Reset Password</span>
+                </h3>
+                <button
                   onClick={() => setShowForgotModal(false)}
-                  className="px-3 py-1.5 rounded-lg text-xs text-gray-400 hover:text-white"
+                  className="text-xs text-slate-400 hover:text-white"
+                >
+                  ✕
+                </button>
+              </div>
+              <p className="text-xs text-slate-300">
+                Enter your registered email address and we will dispatch a cryptographic password recovery token.
+              </p>
+              <input
+                type="email"
+                value={forgotEmail}
+                onChange={(e) => setForgotEmail(e.target.value)}
+                placeholder="you@college.edu or you@company.com"
+                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-purple-500"
+              />
+              <div className="flex items-center justify-end gap-2 pt-2">
+                <button
+                  onClick={() => setShowForgotModal(false)}
+                  className="px-3 py-1.5 rounded-xl text-xs text-slate-400 hover:text-white"
                 >
                   Cancel
                 </button>
                 <button
-                  type="submit"
-                  className="px-3.5 py-1.5 rounded-lg text-xs font-medium bg-blue-600 hover:bg-blue-500 text-white"
+                  onClick={() => {
+                    addToast({
+                      type: "info",
+                      title: "Recovery Link Dispatched",
+                      message: `A secure reset link has been dispatched to ${forgotEmail || "your email"}.`,
+                    });
+                    setShowForgotModal(false);
+                  }}
+                  className="px-4 py-1.5 rounded-xl text-xs font-bold bg-purple-600 hover:bg-purple-500 text-white"
                 >
-                  Send Reset Link
+                  Send Recovery Link
                 </button>
               </div>
-            </form>
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }

@@ -14,6 +14,7 @@ import {
   FileCheck2,
   Cpu,
   Zap,
+  LogIn,
 } from "lucide-react";
 
 export default function HomePage() {
@@ -46,6 +47,14 @@ export default function HomePage() {
           </p>
 
           <div className="pt-2 flex flex-wrap items-center gap-3">
+            <Link
+              href="/login"
+              className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-bold bg-gradient-to-r from-purple-600 via-indigo-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white transition-all shadow-lg shadow-purple-950/60"
+            >
+              <LogIn className="w-4 h-4" />
+              <span>Sign In / Register</span>
+            </Link>
+
             <Link
               href="/employer"
               onClick={() => setRole("employer")}
