@@ -32,26 +32,18 @@ async def login(req: LoginRequest):
     Role-separated authentication endpoint with multi-tenant org validation.
     """
     user = get_user_by_email(req.email)
-    
-    # If user doesn't exist in seed database, allow seamless fallback for quick sandbox testing
     if not user:
-        # Create user on the fly for sandbox convenience
-        user = create_user(
-            email=req.email,
-            password=req.password,
-            full_name=req.email.split("@")[0].replace(".", " ").title(),
-            role=req.role.value,
-            org_id=req.org_id,
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid email or password credentials",
         )
-    else:
-        # Verify password (allows demo passwords or real bcrypt match)
-        is_valid = verify_password(req.password, user["password_hash"])
-        # For demo ergonomics, also allow common test passwords
-        if not is_valid and req.password not in ["SkillSetu@2026", "password", "••••••••••••"]:
-            raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Invalid email or password credentials",
-            )
+
+    # Cryptographically verify password against stored bcrypt hash
+    if not verify_password(req.password, user["password_hash"]):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid email or password credentials",
+        )
             
     # Check role alignment
     if user.get("role") != req.role.value:
