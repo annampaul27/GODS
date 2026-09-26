@@ -5,37 +5,22 @@ import Link from "next/link";
 import {
   BookOpen,
   Compass,
-  Code2,
   Bot,
   Briefcase,
   Bell,
   CheckCircle2,
   AlertTriangle,
-  Flame,
   Award,
-  ExternalLink,
   RefreshCw,
-  Play,
   Clock,
-  Sparkles,
   Zap,
-  ArrowRight,
   ShieldCheck,
-  Cpu,
-  Layers,
-  Check,
   TrendingUp,
   Activity,
-  Terminal,
-  FileCode,
-  DollarSign,
-  ChevronRight,
-  Send,
 } from "lucide-react";
 import GithubIcon from "@/components/icons/GithubIcon";
 import {
   fetchAllCourses,
-  fetchCourseDetails,
   fetchCourseLessons,
   fetchCourseMockTest,
   submitCourseMockTest,
@@ -82,7 +67,6 @@ export default function BackendEngineTabs({
   const [activeMockTest, setActiveMockTest] = useState<{ title: string; questions: MockTestQuestion[] } | null>(null);
   const [testAnswers, setTestAnswers] = useState<Record<string, number>>({});
   const [testResult, setTestResult] = useState<MockTestEvaluation | null>(null);
-  const [coursesLoading, setCoursesLoading] = useState(false);
 
   // TAB 2: Career Compass Roadmap State
   const [roadmapRole, setRoadmapRole] = useState(candidateRole);
@@ -97,22 +81,18 @@ export default function BackendEngineTabs({
   const [githubUser, setGithubUser] = useState("aaravsharma-dev");
   const [githubAudit, setGithubAudit] = useState<GitHubAuditResult | null>(null);
   const [githubLoading, setGithubLoading] = useState(false);
-  const [mintedGithubHash, setMintedGithubHash] = useState<string | null>(null);
 
   // TAB 4: Interview Coach & Capstone State
-  const [interviewRole, setInterviewRole] = useState(candidateRole);
   const [interviewData, setInterviewData] = useState<AIInterviewCoachData | null>(null);
   const [capstoneBlueprints, setCapstoneBlueprints] = useState<CapstoneProjectBlueprint[]>([]);
   const [selectedQuestionIndex, setSelectedQuestionIndex] = useState(0);
   const [candidateResponseText, setCandidateResponseText] = useState("");
   const [evaluatedScore, setEvaluatedScore] = useState<number | null>(null);
-  const [interviewLoading, setInterviewLoading] = useState(false);
   const [copiedCapstoneId, setCopiedCapstoneId] = useState<string | null>(null);
 
   // TAB 5: 60-JD Matcher & Market CTC State
   const [jdMatches, setJdMatches] = useState<Match60JDResult | null>(null);
   const [marketIntelligence, setMarketIntelligence] = useState<JobMarketIntelligence | null>(null);
-  const [jdLoading, setJdLoading] = useState(false);
 
   // TAB 6: FR-04 Worker & Router Health State
   const [workerLogs, setWorkerLogs] = useState<FR04WorkerSweepResult | null>(null);
@@ -156,7 +136,7 @@ export default function BackendEngineTabs({
         setCapstoneBlueprints(cPrints);
         setMarketIntelligence(mInt);
         setJdMatches(jds);
-      } catch (err) {
+      } catch {
         console.debug("[Hub] Initial load fallback applied");
       }
     }
@@ -169,29 +149,23 @@ export default function BackendEngineTabs({
 
   // Tab 1: Lesson Open
   const handleOpenLessons = async (slug: string) => {
-    setCoursesLoading(true);
     const data = await fetchCourseLessons(slug);
     setActiveLessonModal(data.lessons);
-    setCoursesLoading(false);
   };
 
   // Tab 1: Mock Test Open
   const handleOpenMockTest = async (slug: string) => {
-    setCoursesLoading(true);
     setTestResult(null);
     setTestAnswers({});
     const data = await fetchCourseMockTest(slug);
     setActiveMockTest({ title: data.title, questions: data.questions });
-    setCoursesLoading(false);
   };
 
   // Tab 1: Submit Mock Test
   const handleSubmitMockTest = async () => {
     if (!selectedCourse) return;
-    setCoursesLoading(true);
     const result = await submitCourseMockTest(selectedCourse.slug, testAnswers);
     setTestResult(result);
-    setCoursesLoading(false);
   };
 
   // Tab 2: Refresh Roadmap
@@ -205,7 +179,6 @@ export default function BackendEngineTabs({
   // Tab 3: Run GitHub Audit
   const handleRunGithubAudit = async (targetUser: string) => {
     setGithubLoading(true);
-    setMintedGithubHash(null);
     const audit = await runDeepGitHubAudit(targetUser);
     setGithubAudit(audit);
     setGithubLoading(false);

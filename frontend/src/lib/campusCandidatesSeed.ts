@@ -1,4 +1,4 @@
-import { Candidate, ProofOfWorkCredential } from "@/types";
+import { Candidate } from "@/types";
 
 export const CAMPUS_25_CANDIDATES: Candidate[] = [
   // ================= 6 JOB-READY (85% - 96%) =================

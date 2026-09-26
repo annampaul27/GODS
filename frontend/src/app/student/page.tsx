@@ -91,6 +91,7 @@ export default function StudentPage() {
       {/* Profile Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-5 rounded-xl bg-gray-900 border border-gray-800">
         <div className="flex items-center gap-3.5">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={currentStudent.avatarUrl}
             alt={currentStudent.fullName}

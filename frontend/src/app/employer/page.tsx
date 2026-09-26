@@ -17,7 +17,6 @@ import {
   Users,
   Eye,
   EyeOff,
-  Shield,
   Share2,
   Check,
   Settings,

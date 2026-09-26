@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useMemo } from "react";
 import Link from "next/link";
 import { useStore } from "@/lib/store";
 import { Candidate, ProofOfWorkCredential } from "@/types";
@@ -9,29 +9,21 @@ import {
   ShieldCheck,
   Zap,
   Code2,
-  Terminal,
   CheckCircle2,
-  AlertTriangle,
   Award,
-  ArrowRight,
   ExternalLink,
   Copy,
   Check,
-  RefreshCw,
   Sparkles,
   Users,
-  Building,
   GraduationCap,
   Play,
   RotateCcw,
-  Sliders,
   Filter,
   Eye,
   EyeOff,
-  ChevronRight,
   CheckCircle,
   HelpCircle,
-  TrendingUp,
   Bot,
 } from "lucide-react";
 import GithubIcon from "@/components/icons/GithubIcon";
@@ -44,21 +36,18 @@ export default function LivePitchCockpitPage() {
     candidates: globalCandidates,
     setCandidates: setGlobalCandidates,
     seedCampusCandidates: seedGlobalCampus,
-    credentials: globalCredentials,
-    mintCredential,
     addToast,
-    isAnonymizedScreening: globalAnonymized,
     setIsAnonymizedScreening: setGlobalAnonymized,
   } = useStore();
 
   // Guaranteed candidate fallback to prevent failure
-  const candidates =
+  const [candidates, setCandidates] = useState<Candidate[]>(() =>
     globalCandidates && globalCandidates.length >= 20
       ? globalCandidates
-      : CAMPUS_25_CANDIDATES;
+      : CAMPUS_25_CANDIDATES
+  );
 
   // Demo Controls
-  const [selectedJob, setSelectedJob] = useState<string>("fastapi-architect");
   const [blindDeiMode, setBlindDeiMode] = useState<boolean>(false);
   const [onlyBridgeableFilter, setOnlyBridgeableFilter] = useState<boolean>(false);
   const [selectedCandidateId, setSelectedCandidateId] = useState<string>("cand-aarav-hero");
@@ -67,8 +56,6 @@ export default function LivePitchCockpitPage() {
   const [isGitHubAnalysisOpen, setIsGitHubAnalysisOpen] = useState<boolean>(false);
 
   // Zone B Sandbox State (Aarav Sharma)
-  const [sandboxCodeTab, setSandboxCodeTab] = useState<"fastapi" | "docker">("fastapi");
-  const [sprintDispatched, setSprintDispatched] = useState<boolean>(true);
   const [testRunLogs, setTestRunLogs] = useState<string[]>([]);
   const [isTestRunning, setIsTestRunning] = useState<boolean>(false);
   const [testsPassed, setTestsPassed] = useState<boolean>(false);
@@ -110,6 +97,7 @@ async def process_payment(amount: float):
   // Zone D TPO State
   const [tpoSprintDeployed, setTpoSprintDeployed] = useState<boolean>(false);
   const [campusReadiness, setCampusReadiness] = useState<number>(42);
+  const [sprintDispatched, setSprintDispatched] = useState<boolean>(false);
 
   // Computed Top KPIs
   const totalCandidatesCount = candidates.length;
@@ -153,7 +141,7 @@ async def process_payment(amount: float):
     setTestRunLogs([]);
     setTpoSprintDeployed(false);
     setCampusReadiness(42);
-    setSprintDispatched(true);
+    setSprintDispatched(false);
     addToast({
       type: "info",
       title: "🔄 Live Demo Reset",
@@ -240,7 +228,7 @@ async def process_payment(amount: float):
       const hashBuffer = await window.crypto.subtle.digest("SHA-256", msgBuffer);
       const hashArray = Array.from(new Uint8Array(hashBuffer));
       hash = hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
-    } catch (e) {
+    } catch {
       hash = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855";
     }
 
@@ -634,6 +622,7 @@ async def process_payment(amount: float):
                           {cand.anonymizedId.slice(-2)}
                         </div>
                       ) : (
+                        /* eslint-disable-next-line @next/next/no-img-element */
                         <img
                           src={cand.avatarUrl}
                           alt={cand.fullName}
@@ -718,10 +707,15 @@ async def process_payment(amount: float):
                             message: "Assigned targeted 15-min Docker & FastAPI concurrency challenge to Aarav Sharma.",
                           });
                         }}
-                        className="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 transition-all shadow-sm flex items-center gap-1 shrink-0"
+                        disabled={sprintDispatched}
+                        className={`px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all shadow-sm flex items-center gap-1 shrink-0 ${
+                          sprintDispatched
+                            ? "bg-slate-800 text-slate-400 border border-slate-700 cursor-default"
+                            : "bg-amber-500 hover:bg-amber-400 text-slate-950"
+                        }`}
                       >
                         <Zap className="w-3 h-3 fill-current" />
-                        <span>Dispatch Sprint</span>
+                        <span>{sprintDispatched ? "✓ Sprint Dispatched" : "Dispatch Sprint"}</span>
                       </button>
                     )}
                   </div>

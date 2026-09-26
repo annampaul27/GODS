@@ -254,6 +254,7 @@ export default function TalentRadar({
                         <Shield className="w-5 h-5 text-gray-400" />
                       </div>
                     ) : (
+                      /* eslint-disable-next-line @next/next/no-img-element */
                       <img
                         src={candidate.avatarUrl}
                         alt={candidate.fullName}

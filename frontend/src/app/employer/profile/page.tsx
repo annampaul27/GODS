@@ -10,20 +10,16 @@ import {
   Mail,
   Users,
   ShieldCheck,
-  CheckCircle2,
   Eye,
   EyeOff,
   Sliders,
-  Settings,
   Edit3,
   Save,
   ArrowLeft,
-  Sparkles,
   Zap,
   TrendingUp,
   Clock,
   LogOut,
-  ExternalLink,
 } from "lucide-react";
 import RoleGuard from "@/components/auth/RoleGuard";
 

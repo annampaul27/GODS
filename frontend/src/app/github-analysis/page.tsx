@@ -6,19 +6,15 @@ import {
   CheckCircle2,
   AlertTriangle,
   Code2,
-  GitBranch,
   Cpu,
   Layers,
   Sparkles,
   ShieldCheck,
   ExternalLink,
   RefreshCw,
-  FileCode,
-  Flame,
   Award,
   Zap,
   ArrowLeft,
-  Search,
 } from "lucide-react";
 import GithubIcon from "@/components/icons/GithubIcon";
 import {
@@ -58,7 +54,9 @@ export default function GitHubAnalysisPage() {
   }, []);
 
   useEffect(() => {
-    handleRunAudit("aaravsharma-dev");
+    queueMicrotask(() => {
+      handleRunAudit("aaravsharma-dev");
+    });
   }, [handleRunAudit]);
 
   const handleMintBadge = () => {

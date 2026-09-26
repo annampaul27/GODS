@@ -4,10 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useStore } from "@/lib/store";
 import confetti from "canvas-confetti";
 import {
-  Sparkles,
   Clock,
-  AlertTriangle,
-  CheckCircle2,
   XCircle,
   ShieldCheck,
   ArrowRight,
@@ -15,7 +12,6 @@ import {
   X,
   Award,
   RotateCcw,
-  Zap,
   Bookmark,
   Check,
 } from "lucide-react";
@@ -361,7 +357,7 @@ export default function SkillVerificationModal({
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
-  }, [storageKey, answersStorageKey, gradeResult]);
+  }, [storageKey, answersStorageKey, gradeResult, addToast, skillId]);
 
   const handleSelectOption = (optionIndex: number) => {
     if (gradeResult || isSubmitting || !questions[currentIndex]) return;
@@ -415,7 +411,7 @@ export default function SkillVerificationModal({
               spread: 80,
               origin: { y: 0.6 },
             });
-          } catch (e) {}
+          } catch {}
 
           // Also mint in client-side crypto store
           await mintCredential({
@@ -509,7 +505,7 @@ export default function SkillVerificationModal({
     if (passed) {
       try {
         confetti({ particleCount: 90, spread: 70, origin: { y: 0.6 } });
-      } catch (e) {}
+      } catch {}
       await mintCredential({
         candidateId: currentStudent.id,
         candidateName: currentStudent.fullName,

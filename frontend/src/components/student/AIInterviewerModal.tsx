@@ -2,21 +2,16 @@
 
 import React, { useState } from "react";
 import {
-  Mic,
   Sparkles,
   Bot,
   CheckCircle2,
   AlertTriangle,
   Lightbulb,
   Award,
-  ArrowRight,
   RefreshCw,
   X,
-  Play,
-  KeyRound,
   Sliders,
   Send,
-  Volume2,
 } from "lucide-react";
 
 interface AIInterviewerModalProps {
@@ -76,7 +71,6 @@ export default function AIInterviewerModal({
   const [candidateAnswer, setCandidateAnswer] = useState("");
   const [evaluation, setEvaluation] = useState<EvaluationData | null>(null);
   const [showHints, setShowHints] = useState(false);
-  const [isListening, setIsListening] = useState(false);
 
   if (!isOpen) return null;
 

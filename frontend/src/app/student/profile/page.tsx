@@ -21,10 +21,7 @@ import {
   Zap,
   Lock,
   LogOut,
-  FileCode,
-  Share2,
   Briefcase,
-  Check,
 } from "lucide-react";
 import GithubIcon from "@/components/icons/GithubIcon";
 import RoleGuard from "@/components/auth/RoleGuard";
@@ -147,6 +144,7 @@ export default function StudentProfilePage() {
         <div className="p-6 rounded-2xl bg-gradient-to-br from-slate-900 via-slate-900/90 to-slate-950 border border-slate-800/90 shadow-xl">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div className="flex items-center gap-4">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={currentStudent.avatarUrl}
                 alt={currentStudent.fullName}
@@ -279,6 +277,15 @@ export default function StudentProfilePage() {
                   type="url"
                   value={githubUrl}
                   onChange={(e) => setGithubUrl(e.target.value)}
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-purple-500"
+                />
+              </div>
+              <div>
+                <label className="text-xs font-medium text-slate-400 block mb-1">LinkedIn Profile URL</label>
+                <input
+                  type="url"
+                  value={linkedinUrl}
+                  onChange={(e) => setLinkedinUrl(e.target.value)}
                   className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-purple-500"
                 />
               </div>

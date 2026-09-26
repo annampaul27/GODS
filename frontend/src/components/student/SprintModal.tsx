@@ -11,8 +11,6 @@ import {
   HelpCircle,
   Clock,
   AlertTriangle,
-  CheckCircle2,
-  XCircle,
   ShieldCheck,
   ArrowRight,
   X,
@@ -158,7 +156,7 @@ export default function SprintModal({ sprint, onClose }: SprintModalProps) {
             spread: 70,
             origin: { y: 0.6 },
           });
-        } catch (e) {}
+        } catch {}
 
         const cred = await mintCredential({
           candidateId: currentStudent.id,
@@ -445,17 +443,8 @@ export default function SprintModal({ sprint, onClose }: SprintModalProps) {
               {/* Options */}
               <div className="space-y-2">
                 {currentQ.options.map((opt, optIdx) => {
-                  const borderStyle = isAnswerSubmitted
-                    ? optIdx === currentQ.correctOptionIndex
-                      ? "border-emerald-500/80 bg-emerald-950/40 text-emerald-200"
-                      : isSelected
-                      ? "border-red-500/80 bg-red-950/40 text-red-200"
-                      : "border-slate-800 hover:border-slate-700 bg-slate-900/50"
-                    : isSelected
-                    ? "border-cyan-500/80 bg-cyan-950/30 text-cyan-200"
-                    : "border-slate-800 hover:border-slate-700 bg-slate-900/50";
-                  const textColor = "text-slate-300";
-
+                  const isSelected = selectedOption === optIdx;
+                  let borderStyle = "border-slate-800 hover:border-slate-700 bg-slate-900/50";
                   if (isAnswerSubmitted) {
                     if (optIdx === currentQ.correctOptionIndex) {
                       borderStyle = "border-emerald-500/80 bg-emerald-950/40 text-emerald-200";

@@ -80,7 +80,7 @@ export default function JobDetailsModal({ jobId, onClose }: JobDetailsModalProps
         spread: 70,
         origin: { y: 0.6 }
       });
-    } catch (e) {
+    } catch {
       // non-fatal
     }
 

@@ -54,6 +54,7 @@ export default function CandidateDrawer({
                 <Shield className="w-6 h-6" />
               </div>
             ) : (
+              /* eslint-disable-next-line @next/next/no-img-element */
               <img
                 src={candidate.avatarUrl}
                 alt={candidate.fullName}
