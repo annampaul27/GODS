@@ -89,7 +89,9 @@ export default function StudentGithubSecurityPage() {
 
   // Initial load
   useEffect(() => {
-    loadReposAndScan("aaravsharma-dev");
+    queueMicrotask(() => {
+      loadReposAndScan("aaravsharma-dev");
+    });
   }, [loadReposAndScan]);
 
   const handleScanSingle = async (repo: StudentGithubRepo) => {

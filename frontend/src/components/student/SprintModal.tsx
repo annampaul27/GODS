@@ -79,7 +79,9 @@ export default function SprintModal({ sprint, onClose }: SprintModalProps) {
   }, [addToast]);
 
   const handleTimeUpRef = useRef(handleTimeUp);
-  handleTimeUpRef.current = handleTimeUp;
+  useEffect(() => {
+    handleTimeUpRef.current = handleTimeUp;
+  });
 
   // 90s countdown timer effect (S7)
   useEffect(() => {

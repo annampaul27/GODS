@@ -51,6 +51,18 @@ const PRESET_TOPICS = [
   { role: "AI/RAG Systems Engineer", topic: "Vector Embeddings & HNSW Retrieval" },
 ];
 
+function createFallbackQuestion(role: string, topic: string): QuestionData {
+  return {
+    question_id: "q-ai-fallback",
+    question_text: `How would you architect a fault-tolerant, low-latency microservices pipeline in a ${role} scenario handling ${topic}?`,
+    expected_keywords: ["CAP theorem", "split-brain", "quorum consensus", "idempotency", "backpressure"],
+    hints: [
+      "Consider trade-offs between availability and strict consistency under network partitions.",
+      "Discuss consensus mechanisms (e.g. Raft) and asynchronous dead-letter queues.",
+    ],
+  };
+}
+
 export default function AIInterviewerModal({
   isOpen,
   onClose,
@@ -92,15 +104,7 @@ export default function AIInterviewerModal({
       }
     } catch (err) {
       console.warn("Backend offline or error, using local generator fallback:", err);
-      setActiveQuestion({
-        question_id: `q-ai-${Date.now().toString(36)}`,
-        question_text: `How would you architect a fault-tolerant, low-latency microservices pipeline in a ${role} scenario handling ${topic}?`,
-        expected_keywords: ["CAP theorem", "split-brain", "quorum consensus", "idempotency", "backpressure"],
-        hints: [
-          "Consider trade-offs between availability and strict consistency under network partitions.",
-          "Discuss consensus mechanisms (e.g. Raft) and asynchronous dead-letter queues.",
-        ],
-      });
+      setActiveQuestion(createFallbackQuestion(role, topic));
     } finally {
       setIsGenerating(false);
     }

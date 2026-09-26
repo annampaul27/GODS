@@ -539,7 +539,9 @@ export default function SkillVerificationModal({
 
     setIsSubmitting(false);
   };
-  handleSubmitAssessmentRef.current = handleSubmitAssessment;
+  useEffect(() => {
+    handleSubmitAssessmentRef.current = handleSubmitAssessment;
+  });
 
   const handleRetake = () => {
     localStorage.removeItem(storageKey);

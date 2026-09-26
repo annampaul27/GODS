@@ -98,7 +98,7 @@ export default function DynamicSandboxModal({
       }
 
       const data = await res.json();
-      setChallengeId(data.challenge_id || "gen-" + Date.now());
+      setChallengeId(data.challenge_id || "gen-custom-challenge");
       setChallengeTitle(data.title || "Custom Challenge");
       setChallengeDesc(data.scenario_description || "Solve the challenge according to requirements.");
       setStarterCode(data.starter_code || "");
@@ -219,10 +219,11 @@ export default function DynamicSandboxModal({
         message: "Verified credential minted to your candidate profile.",
         type: "credential",
       });
-    } catch (err: any) {
+    } catch (err: unknown) {
+      const errMsg = err instanceof Error ? err.message : String(err);
       addToast({
         title: "Claim Error",
-        message: "Error minting credential: " + err.message,
+        message: "Error minting credential: " + errMsg,
         type: "warning",
       });
     } finally {

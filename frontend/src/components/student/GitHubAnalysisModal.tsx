@@ -69,7 +69,9 @@ export const GitHubAnalysisModal: React.FC<GitHubAnalysisModalProps> = ({
 
   useEffect(() => {
     if (isOpen) {
-      handleRunAudit(defaultUsername);
+      queueMicrotask(() => {
+        handleRunAudit(defaultUsername);
+      });
     }
   }, [isOpen, defaultUsername, handleRunAudit]);
 
