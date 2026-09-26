@@ -1,13 +1,13 @@
 "use client";
 
 import React from "react";
-import { Candidate } from "@/types";
+import { Candidate, ProofOfWorkCredential } from "@/types";
 import { useStore } from "@/lib/store";
 import { ShieldCheck } from "lucide-react";
 
 interface PipelineKanbanProps {
   onSelectCandidate: (candidate: Candidate) => void;
-  onAuditCredential: (cred: any, cand: Candidate) => void;
+  onAuditCredential: (cred: ProofOfWorkCredential, cand: Candidate) => void;
 }
 
 const STAGES: { id: Candidate["pipelineStatus"]; title: string; color: string }[] = [

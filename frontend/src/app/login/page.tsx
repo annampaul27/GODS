@@ -35,7 +35,8 @@ import GithubIcon from "@/components/icons/GithubIcon";
 function LoginPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const initialMode = searchParams?.get("mode") === "register" ? "register-student" : "login";
+  const initialMode: "login" | "register-student" | "register-employer" =
+    searchParams?.get("mode") === "register" ? "register-student" : "login";
 
   const {
     role,
@@ -49,7 +50,7 @@ function LoginPageContent() {
   } = useStore();
 
   const [activeTab, setActiveTab] = useState<"login" | "register-student" | "register-employer">(
-    initialMode as any
+    initialMode
   );
 
   // Sign In State

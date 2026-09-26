@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Candidate } from "@/types";
+import { Candidate, ProofOfWorkCredential } from "@/types";
 import { useStore } from "@/lib/store";
 import {
   X,
@@ -25,7 +25,7 @@ import { GitHubAnalysisModal } from "@/components/student/GitHubAnalysisModal";
 interface CandidateDrawerProps {
   candidate: Candidate;
   onClose: () => void;
-  onAuditCredential: (cred: any) => void;
+  onAuditCredential: (cred: ProofOfWorkCredential) => void;
   onDispatchSprint: (candId: string, skillId: string, skillName: string) => void;
 }
 
