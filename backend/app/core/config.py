@@ -22,6 +22,7 @@ class Settings(BaseSettings):
     # ATS & AI Services Settings
     GROQ_API_KEY: str = ""
     GEMINI_API_KEY: str = ""
+    GROQ_MODEL: str = "llama-3.3-70b-versatile"
     CHROMA_DB_PATH: str = "./chroma_db"
     USE_OFFLINE_CACHE: bool = True
 
