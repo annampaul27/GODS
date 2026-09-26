@@ -11,11 +11,9 @@ import {
   ShieldCheck,
   Award,
   Lock,
-  FileCheck2,
   Cpu,
   Zap,
   LogIn,
-  User,
 } from "lucide-react";
 
 export default function HomePage() {

@@ -17,39 +17,32 @@ import {
   ShieldCheck,
   Building2,
   KeyRound,
-  Code2,
-  CheckCircle2,
-  Sparkles,
   Zap,
-  Award,
-  Check,
   UserPlus,
   LogIn,
   Building,
   User,
   Calendar,
-  Globe,
 } from "lucide-react";
 import GithubIcon from "@/components/icons/GithubIcon";
 
 function LoginPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const initialMode = searchParams?.get("mode") === "register" ? "register-student" : "login";
+  const initialMode: "login" | "register-student" | "register-employer" =
+    searchParams?.get("mode") === "register" ? "register-student" : "login";
 
   const {
     role,
-    setRole,
     organizations,
     currentOrg,
-    setCurrentOrg,
     login,
     registerStudent,
     addToast,
   } = useStore();
 
   const [activeTab, setActiveTab] = useState<"login" | "register-student" | "register-employer">(
-    initialMode as any
+    initialMode
   );
 
   // Sign In State
@@ -173,12 +166,12 @@ function LoginPageContent() {
           college: regCollege,
         }),
       }).catch((e) => console.warn("Backend registration offline:", e));
-    } catch (e) {
+    } catch {
       // zero fail
     }
 
     // Register into store
-    const newCand = registerStudent({
+    registerStudent({
       fullName: regFullName,
       email: regEmail,
       college: regCollege,
@@ -591,6 +584,20 @@ function LoginPageContent() {
               </div>
 
               <div>
+                <label className="text-xs font-medium text-slate-300 block mb-1">LinkedIn Profile</label>
+                <div className="relative">
+                  <User className="w-4 h-4 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" />
+                  <input
+                    type="text"
+                    value={regLinkedin}
+                    onChange={(e) => setRegLinkedin(e.target.value)}
+                    placeholder="e.g. aarav-sharma-tech"
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl pl-9 pr-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500 font-mono"
+                  />
+                </div>
+              </div>
+
+              <div>
                 <label className="text-xs font-medium text-slate-300 block mb-1">Account Password *</label>
                 <div className="relative">
                   <Lock className="w-4 h-4 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" />
@@ -707,6 +714,19 @@ function LoginPageContent() {
                   placeholder="e.g. Senior Backend Engineer (FastAPI / Distributed Systems)"
                   className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-blue-500"
                 />
+              </div>
+
+              <div>
+                <label className="text-xs font-medium text-slate-300 block mb-1">Industry Type</label>
+                <select
+                  value={empIndustry}
+                  onChange={(e) => setEmpIndustry(e.target.value)}
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-blue-500"
+                >
+                  <option value="corporate">Enterprise Software / SaaS</option>
+                  <option value="staffing">Staffing & Recruitment Agency</option>
+                  <option value="university">University Placement Cell</option>
+                </select>
               </div>
             </div>
 

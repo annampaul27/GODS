@@ -16,8 +16,6 @@ import {
   Printer,
   ExternalLink,
   Sparkles,
-  Award,
-  Lock,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -35,64 +33,75 @@ export default function VerifyCredentialPage() {
 
   useEffect(() => {
     if (!hashParam) return;
+    let isCancelled = false;
 
-    // Search in credentials ledger
-    const found = credentials.find(
-      (c) => c.hash.toLowerCase() === hashParam.toLowerCase()
-    );
+    (async () => {
+      // Search in credentials ledger
+      const found = credentials.find(
+        (c) => c.hash.toLowerCase() === hashParam.toLowerCase()
+      );
 
-    if (found) {
-      setCredential(found);
-      verifyCredentialIntegrity(found.hash, found.canonicalPayload).then((res) => {
-        setIsValid(res.isValid);
-        setIsVerifying(false);
-      });
-    } else {
-      // If not in state, construct verifiable proof to demonstrate public verification
-      const fallbackPayload = JSON.stringify({
-        candidateEmail: "aditya.verma@example.com",
-        candidateId: "cand-verified-01",
-        issuedAt: "2026-09-20T11:42:00Z",
-        passedQuestions: 3,
-        score: 94,
-        skillId: "postgres_optimization",
-        totalQuestions: 3,
-      });
+      if (found) {
+        const res = await verifyCredentialIntegrity(found.hash, found.canonicalPayload);
+        if (!isCancelled) {
+          setCredential(found);
+          setIsValid(res.isValid);
+          setIsVerifying(false);
+        }
+      } else {
+        // If not in state, construct verifiable proof to demonstrate public verification
+        const fallbackPayload = JSON.stringify({
+          candidateEmail: "aditya.verma@example.com",
+          candidateId: "cand-verified-01",
+          issuedAt: "2026-09-20T11:42:00Z",
+          passedQuestions: 3,
+          score: 94,
+          skillId: "postgres_optimization",
+          totalQuestions: 3,
+        });
 
-      const fallbackCred: ProofOfWorkCredential = {
-        hash: hashParam,
-        candidateId: "cand-verified-01",
-        candidateName: "Aditya Verma",
-        candidateEmail: "aditya.verma@example.com",
-        skillId: "postgres_optimization",
-        skillName: "PostgreSQL Indexing & Query Tuning",
-        score: 94,
-        passedQuestions: 3,
-        totalQuestions: 3,
-        issuedAt: "2026-09-20T11:42:00Z",
-        issuerOrg: "SkillSetu Verification Engine",
-        isSponsored: true,
-        sponsorOrg: "Snowflake Labs",
-        canonicalPayload: fallbackPayload,
-        answersLog: [
-          {
-            questionId: "q1",
-            question: "Why did the query fail to utilize B-Tree index on (org_id, email)?",
-            selectedOption: "Applying lower(email) prevents query planner from utilizing raw column index.",
-            isCorrect: true,
-            timeSpentSeconds: 41,
+        const fallbackCred: ProofOfWorkCredential = {
+          hash: hashParam,
+          candidateId: "cand-verified-01",
+          candidateName: "Aditya Verma",
+          candidateEmail: "aditya.verma@example.com",
+          skillId: "postgres_optimization",
+          skillName: "PostgreSQL Indexing & Query Tuning",
+          score: 94,
+          passedQuestions: 3,
+          totalQuestions: 3,
+          issuedAt: "2026-09-20T11:42:00Z",
+          issuerOrg: "SkillSetu Verification Engine",
+          isSponsored: true,
+          sponsorOrg: "Snowflake Labs",
+          canonicalPayload: fallbackPayload,
+          answersLog: [
+            {
+              questionId: "q1",
+              question: "Why did the query fail to utilize B-Tree index on (org_id, email)?",
+              selectedOption: "Applying lower(email) prevents query planner from utilizing raw column index.",
+              isCorrect: true,
+              timeSpentSeconds: 41,
+            },
+          ],
+          antiCheatAudit: {
+            tabBlurEvents: 0,
+            flagged: false,
           },
-        ],
-        antiCheatAudit: {
-          tabBlurEvents: 0,
-          flagged: false,
-        },
-      };
+        };
 
-      setCredential(fallbackCred);
-      setIsValid(true);
-      setIsVerifying(false);
-    }
+        const res = await verifyCredentialIntegrity(fallbackCred.hash, fallbackCred.canonicalPayload);
+        if (!isCancelled) {
+          setCredential(fallbackCred);
+          setIsValid(res.isValid);
+          setIsVerifying(false);
+        }
+      }
+    })();
+
+    return () => {
+      isCancelled = true;
+    };
   }, [hashParam, credentials]);
 
   const copyHash = () => {

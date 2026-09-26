@@ -17,7 +17,7 @@ import {
 import RoleGuard from "@/components/auth/RoleGuard";
 
 export default function AdminPage() {
-  const { candidates, jobs, credentials, organizations, anomalies } = useStore();
+  const { jobs, credentials, organizations, anomalies } = useStore();
   const [activeTab, setActiveTab] = useState<"ledger" | "taxonomy" | "orgs" | "anomalies">("ledger");
 
   const pendingAnomalies = anomalies.filter((a) => !a.resolved);

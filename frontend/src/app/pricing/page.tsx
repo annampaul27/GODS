@@ -7,10 +7,7 @@ import {
   Briefcase,
   CheckCircle2,
   Sparkles,
-  Zap,
   ShieldCheck,
-  Building2,
-  TrendingUp,
   ArrowRight,
   HelpCircle,
   Calculator,
@@ -18,19 +15,14 @@ import {
   Check,
   Copy,
   Users,
-  Award,
-  Layers,
   FileCheck,
   ShieldAlert,
-  GitBranch,
-  Bot,
-  ExternalLink,
   Crown,
 } from "lucide-react";
 import { useStore } from "@/lib/store";
 
 export default function PricingRevenuePage() {
-  const { role, isAuthenticated } = useStore();
+  const { role } = useStore();
 
   // Active audience tab: 'students' | 'employers' | 'all'
   const [activeSegment, setActiveSegment] = useState<"all" | "students" | "employers">(

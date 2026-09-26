@@ -17,18 +17,13 @@ import {
   CheckCircle,
   Brain,
   ShieldCheck,
-  Zap,
   User,
   Sparkles,
   Menu,
   X,
   Sliders,
-  ExternalLink,
-  Layers,
   KeyRound,
-  FileCheck,
   Award,
-  BookOpen,
   Crown,
 } from "lucide-react";
 import GithubIcon from "@/components/icons/GithubIcon";
@@ -39,7 +34,6 @@ export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
   const {
-    role,
     currentOrg,
     setCurrentOrg,
     organizations,
@@ -73,10 +67,14 @@ export default function Navbar() {
   }, []);
 
   // Close mobile menu on route change
+  const prevPathnameRef = React.useRef(pathname);
   useEffect(() => {
-    setMobileMenuOpen(false);
-    setUserDropdownOpen(false);
-    setOrgDropdownOpen(false);
+    if (prevPathnameRef.current !== pathname) {
+      prevPathnameRef.current = pathname;
+      setMobileMenuOpen(false);
+      setUserDropdownOpen(false);
+      setOrgDropdownOpen(false);
+    }
   }, [pathname]);
 
   const sampleHash =
@@ -464,6 +462,7 @@ export default function Navbar() {
                 title="Account Menu"
               >
                 {currentUser.avatarUrl ? (
+                  /* eslint-disable-next-line @next/next/no-img-element */
                   <img
                     src={currentUser.avatarUrl}
                     alt={currentUser.name}

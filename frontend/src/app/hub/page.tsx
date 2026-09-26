@@ -3,19 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import BackendEngineTabs from "@/components/hub/BackendEngineTabs";
-import {
-  Brain,
-  BookOpen,
-  Cpu,
-  ShieldCheck,
-  Zap,
-  ArrowRight,
-  Sparkles,
-  Bot,
-  Briefcase,
-  Layers,
-  Terminal,
-} from "lucide-react";
+
 
 export default function BackendHubPage() {
   return (

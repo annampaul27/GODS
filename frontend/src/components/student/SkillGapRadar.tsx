@@ -118,6 +118,9 @@ export default function SkillGapRadar({ onLaunchSprint }: SkillGapRadarProps) {
               >
                 {currentStudent.currentTier.replace("_", " ")}
               </span>
+              <span className="text-[10px] text-gray-500 block font-mono">
+                {verifiedCount}/{skillDeltas.length} Verified
+              </span>
             </div>
 
             <div>

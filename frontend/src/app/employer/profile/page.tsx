@@ -10,20 +10,16 @@ import {
   Mail,
   Users,
   ShieldCheck,
-  CheckCircle2,
   Eye,
   EyeOff,
   Sliders,
-  Settings,
   Edit3,
   Save,
   ArrowLeft,
-  Sparkles,
   Zap,
   TrendingUp,
   Clock,
   LogOut,
-  ExternalLink,
 } from "lucide-react";
 import RoleGuard from "@/components/auth/RoleGuard";
 
@@ -347,7 +343,7 @@ export default function EmployerProfilePage() {
               <div>
                 <span className="text-xs font-semibold text-white block">Blind Screening (Anti-Bias Mode)</span>
                 <p className="text-[11px] text-slate-400 mt-0.5">
-                  Anonymizes candidate names, genders, and universities (e.g. "Candidate #8492") to prevent demographic hiring bias.
+                  Anonymizes candidate names, genders, and universities (e.g. &quot;Candidate #8492&quot;) to prevent demographic hiring bias.
                 </p>
               </div>
               <button

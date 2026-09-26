@@ -1,16 +1,17 @@
 /**
  * Deterministic canonical JSON serializer (sorts keys recursively)
  */
-export function canonicalizeJSON(obj: any): string {
+export function canonicalizeJSON(obj: unknown): string {
   if (obj === null || typeof obj !== "object") {
     return JSON.stringify(obj);
   }
   if (Array.isArray(obj)) {
     return `[${obj.map((item) => canonicalizeJSON(item)).join(",")}]`;
   }
-  const sortedKeys = Object.keys(obj).sort();
+  const record = obj as Record<string, unknown>;
+  const sortedKeys = Object.keys(record).sort();
   const pairs = sortedKeys.map(
-    (key) => `${JSON.stringify(key)}:${canonicalizeJSON(obj[key])}`
+    (key) => `${JSON.stringify(key)}:${canonicalizeJSON(record[key])}`
   );
   return `{${pairs.join(",")}}`;
 }
@@ -42,7 +43,7 @@ export async function verifyCredentialIntegrity(
       isValid: calculated.toLowerCase() === hash.toLowerCase(),
       calculatedHash: calculated,
     };
-  } catch (err) {
+  } catch {
     return {
       isValid: false,
       calculatedHash: "",

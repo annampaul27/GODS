@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import {
   ShieldCheck,
@@ -18,10 +18,7 @@ import {
   Sparkles,
   Zap,
   Award,
-  Search,
   Check,
-  Code2,
-  ChevronRight,
   GitBranch,
   Star,
   GitFork,
@@ -55,12 +52,7 @@ export default function StudentGithubSecurityPage() {
   >([]);
   const [certifiedHash, setCertifiedHash] = useState<string | null>(null);
 
-  // Initial load
-  useEffect(() => {
-    loadReposAndScan("aaravsharma-dev");
-  }, []);
-
-  const loadReposAndScan = async (user: string) => {
+  const loadReposAndScan = useCallback(async (user: string) => {
     setLoadingRepos(true);
     try {
       const fetchedRepos = await fetchStudentGithubRepos(user);
@@ -90,7 +82,14 @@ export default function StudentGithubSecurityPage() {
     } finally {
       setLoadingRepos(false);
     }
-  };
+  }, []);
+
+  // Initial load
+  useEffect(() => {
+    queueMicrotask(() => {
+      loadReposAndScan("aaravsharma-dev");
+    });
+  }, [loadReposAndScan]);
 
   const handleScanSingle = async (repo: StudentGithubRepo) => {
     setScanningMap((prev) => ({ ...prev, [repo.full_name]: true }));

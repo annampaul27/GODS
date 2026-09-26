@@ -130,7 +130,7 @@ export default function JobCreatorModal({ onClose }: JobCreatorModalProps) {
         setTab("template");
         return;
       }
-    } catch (err) {
+    } catch {
       console.debug("[Offline Fallback] ATS offline, using local parser fallback");
     }
 
@@ -333,6 +333,30 @@ export default function JobCreatorModal({ onClose }: JobCreatorModalProps) {
                     type="text"
                     value={department}
                     onChange={(e) => setDepartment(e.target.value)}
+                    required
+                    className="w-full p-2.5 rounded-lg bg-gray-950 border border-gray-800 text-xs text-gray-200 focus:outline-none focus:border-blue-500"
+                  />
+                </div>
+              </div>
+
+              {/* Location & Salary Range */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="text-xs text-gray-400 block mb-1">Location</label>
+                  <input
+                    type="text"
+                    value={location}
+                    onChange={(e) => setLocation(e.target.value)}
+                    required
+                    className="w-full p-2.5 rounded-lg bg-gray-950 border border-gray-800 text-xs text-gray-200 focus:outline-none focus:border-blue-500"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs text-gray-400 block mb-1">Salary Range</label>
+                  <input
+                    type="text"
+                    value={salaryRange}
+                    onChange={(e) => setSalaryRange(e.target.value)}
                     required
                     className="w-full p-2.5 rounded-lg bg-gray-950 border border-gray-800 text-xs text-gray-200 focus:outline-none focus:border-blue-500"
                   />

@@ -13,7 +13,7 @@ interface ToastItemProps {
 function ToastCard({ toast, onDismiss, durationMs = 4000 }: ToastItemProps) {
   const [progress, setProgress] = useState(100);
   const [isPaused, setIsPaused] = useState(false);
-  const startTimeRef = useRef<number>(Date.now());
+  const startTimeRef = useRef<number>(0);
   const remainingTimeRef = useRef<number>(durationMs);
 
   useEffect(() => {

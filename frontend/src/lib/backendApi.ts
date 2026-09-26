@@ -455,7 +455,7 @@ export async function fetchAllCourses(): Promise<CourseOverview[]> {
         return data.courses;
       }
     }
-  } catch (err) {
+  } catch {
     console.debug("[Offline Fallback] /courses, using catalog fallback");
   }
   return ALL_13_COURSES_FALLBACK;
@@ -467,7 +467,7 @@ export async function fetchCourseDetails(slug: string): Promise<CourseOverview> 
     if (res.ok) {
       return await res.json();
     }
-  } catch (err) {
+  } catch {
     console.debug(`[Offline Fallback] /courses/${slug}, using fallback`);
   }
   const match = ALL_13_COURSES_FALLBACK.find((c) => c.slug === slug || c.course_id === slug);
@@ -480,7 +480,7 @@ export async function fetchCourseLessons(slug: string): Promise<{ course_id: str
     if (res.ok) {
       return await res.json();
     }
-  } catch (err) {
+  } catch {
     console.debug(`[Offline Fallback] /courses/${slug}/lessons, using fallback`);
   }
 
@@ -537,7 +537,7 @@ export async function fetchCourseMockTest(
     if (res.ok) {
       return await res.json();
     }
-  } catch (err) {
+  } catch {
     console.debug(`[Offline Fallback] /courses/${slug}/mock-test, using fallback`);
   }
 
@@ -614,7 +614,7 @@ export async function submitCourseMockTest(
     if (res.ok) {
       return await res.json();
     }
-  } catch (err) {
+  } catch {
     console.debug(`[Offline Fallback] /courses/${slug}/mock-test/submit offline, calculating local grade`);
   }
 
@@ -660,6 +660,7 @@ export async function generate90DayCareerCompass(
     });
     if (res.ok) {
       const data = await res.json();
+      if (data && data.phases) return data;
       return {
         target_role: targetRole,
         generated_at: new Date().toLocaleDateString(),
@@ -777,7 +778,7 @@ export async function generate90DayCareerCompass(
         backend_source: "FastAPI /api/v1/career-compass/roadmap",
       };
     }
-  } catch (err) {
+  } catch {
     console.debug("[Offline Fallback] /career-compass/roadmap, using verified fallback");
   }
 
@@ -922,7 +923,7 @@ export async function runGitHubAnalysis(
     if (res.ok) {
       return await res.json();
     }
-  } catch (err) {
+  } catch {
     console.debug("[Offline Fallback] /career-compass/github-analysis, using fallback");
   }
 
@@ -943,8 +944,7 @@ export async function runGitHubAnalysis(
 }
 
 export async function runDeepGitHubAudit(
-  username: string = "aaravsharma-dev",
-  targetRole: string = "Senior Backend Engineer"
+  username: string = "aaravsharma-dev"
 ): Promise<GitHubAuditResult> {
   const cleanUsername = username.trim().toLowerCase().replace("@", "");
   const isAarav = cleanUsername.includes("aarav");
@@ -1118,7 +1118,7 @@ export async function runAIInterviewCoach(
     if (res.ok) {
       await res.json();
     }
-  } catch (err) {
+  } catch {
     console.debug("[Offline Fallback] /career-compass/interview/question, using grill suite fallback");
   }
 
@@ -1193,7 +1193,7 @@ export async function runPortfolioBuilder(
     if (res.ok) {
       await res.json();
     }
-  } catch (err) {
+  } catch {
     console.debug("[Offline Fallback] /career-compass/portfolio, using capstone blueprints fallback");
   }
 
@@ -1254,8 +1254,7 @@ export async function runPortfolioBuilder(
 // =============================================================
 
 export async function runMarketSalaryIntelligence(
-  role: string = "Backend Engineer",
-  skills: string[] = ["Python", "FastAPI", "SQL", "Docker"]
+  role: string = "Backend Engineer"
 ): Promise<JobMarketIntelligence> {
   try {
     const res = await fetchWithTimeout(
@@ -1264,7 +1263,7 @@ export async function runMarketSalaryIntelligence(
     if (res.ok) {
       await res.json();
     }
-  } catch (err) {
+  } catch {
     console.debug("[Offline Fallback] /career-compass/job-market, using Indian CTC intelligence fallback");
   }
 
@@ -1335,7 +1334,7 @@ export async function match60JobDescriptions(
         };
       }
     }
-  } catch (err) {
+  } catch {
     console.debug("[Offline Fallback] /jobs/match-feed, using 60-JD engine fallback");
   }
 
@@ -1439,7 +1438,7 @@ export async function triggerFR04DeadlineWorker(): Promise<FR04WorkerSweepResult
         ],
       };
     }
-  } catch (err) {
+  } catch {
     console.debug("[Offline Fallback] /notifications/trigger-worker, running client sweep simulation");
   }
 

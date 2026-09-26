@@ -1,11 +1,10 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   CheckCircle2,
   AlertTriangle,
   Code2,
-  GitBranch,
   Cpu,
   Layers,
   Sparkles,
@@ -13,7 +12,6 @@ import {
   ExternalLink,
   RefreshCw,
   X,
-  FileCode,
   Flame,
   Award,
   Zap,
@@ -44,13 +42,7 @@ export const GitHubAnalysisModal: React.FC<GitHubAnalysisModalProps> = ({
   const [mintedProof, setMintedProof] = useState<string | null>(null);
   const [scanningStep, setScanningStep] = useState<string>("");
 
-  useEffect(() => {
-    if (isOpen) {
-      handleRunAudit(defaultUsername);
-    }
-  }, [isOpen, defaultUsername]);
-
-  const handleRunAudit = async (targetUser: string) => {
+  const handleRunAudit = useCallback(async (targetUser: string) => {
     setLoading(true);
     setMintedProof(null);
     setScanningStep("Connecting to FastAPI CareerCompass router...");
@@ -71,7 +63,15 @@ export const GitHubAnalysisModal: React.FC<GitHubAnalysisModalProps> = ({
       setLoading(false);
       setScanningStep("");
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    if (isOpen) {
+      queueMicrotask(() => {
+        handleRunAudit(defaultUsername);
+      });
+    }
+  }, [isOpen, defaultUsername, handleRunAudit]);
 
   const handleMintBadge = () => {
     const hash = "0x" + Array.from({ length: 64 }, () => Math.floor(Math.random() * 16).toString(16)).join("");
@@ -172,7 +172,7 @@ export const GitHubAnalysisModal: React.FC<GitHubAnalysisModalProps> = ({
             return (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id as any)}
+                onClick={() => setActiveTab(tab.id as "audit" | "discrepancies" | "repos" | "proof")}
                 className={`flex items-center gap-2 py-3 px-4 text-xs font-medium border-b-2 transition-colors ${
                   isActive
                     ? "border-purple-500 text-purple-400"
@@ -373,7 +373,7 @@ export const GitHubAnalysisModal: React.FC<GitHubAnalysisModalProps> = ({
                       </span>
                     </div>
                     <p className="text-xs text-slate-400">
-                      Cross-checks every technical skill claimed on the candidate's resume with public commit history, repository structures, and AST imports.
+                      Cross-checks every technical skill claimed on the candidate&apos;s resume with public commit history, repository structures, and AST imports.
                     </p>
                   </div>
 
@@ -546,7 +546,7 @@ export const GitHubAnalysisModal: React.FC<GitHubAnalysisModalProps> = ({
                       Mint Verified GitHub Code Credential
                     </h4>
                     <p className="text-xs text-slate-400 leading-relaxed">
-                      Issue a tamper-proof cryptographic proof binding @{auditResult.username}'s public AST code quality score ({auditResult.overallScore}/100) to their student profile.
+                      Issue a tamper-proof cryptographic proof binding @{auditResult.username}&apos;s public AST code quality score ({auditResult.overallScore}/100) to their student profile.
                     </p>
                   </div>
 

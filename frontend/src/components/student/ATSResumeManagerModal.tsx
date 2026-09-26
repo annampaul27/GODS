@@ -6,7 +6,6 @@ import {
   UploadCloud,
   FileText,
   Sparkles,
-  CheckCircle2,
   X,
   Plus,
   Trash2,

@@ -6,25 +6,19 @@ import { useRouter } from "next/navigation";
 import { useStore } from "@/lib/store";
 import {
   Shield,
-  ShieldAlert,
   ShieldCheck,
   Server,
   Activity,
-  Cpu,
   Lock,
   KeyRound,
   Database,
   Building,
   AlertTriangle,
-  CheckCircle2,
   Edit3,
   Save,
   ArrowLeft,
-  Sparkles,
-  Zap,
   Terminal,
   LogOut,
-  RefreshCw,
   ExternalLink,
 } from "lucide-react";
 import RoleGuard from "@/components/auth/RoleGuard";
@@ -35,7 +29,6 @@ export default function AdminProfilePage() {
     currentUser,
     updateAdminProfile,
     organizations,
-    candidates,
     credentials,
     anomalies,
     logout,

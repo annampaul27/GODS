@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Candidate, ReadinessTier } from "@/types";
+import { Candidate, ReadinessTier, ProofOfWorkCredential } from "@/types";
 import { useStore } from "@/lib/store";
 import {
   Zap,
@@ -18,7 +18,7 @@ import {
 interface TalentRadarProps {
   candidates: Candidate[];
   onSelectCandidate: (candidate: Candidate) => void;
-  onAuditCredential: (cred: any, cand: Candidate) => void;
+  onAuditCredential: (cred: ProofOfWorkCredential, cand: Candidate) => void;
 }
 
 export default function TalentRadar({
@@ -254,6 +254,7 @@ export default function TalentRadar({
                         <Shield className="w-5 h-5 text-gray-400" />
                       </div>
                     ) : (
+                      /* eslint-disable-next-line @next/next/no-img-element */
                       <img
                         src={candidate.avatarUrl}
                         alt={candidate.fullName}
