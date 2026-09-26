@@ -51,25 +51,11 @@ export default function LivePitchCockpitPage() {
     setIsAnonymizedScreening: setGlobalAnonymized,
   } = useStore();
 
-  // Local state with guaranteed fallback to prevent failure
-  const [candidates, setCandidates] = useState<Candidate[]>(() => {
-    if (globalCandidates && globalCandidates.length >= 20) {
-      return globalCandidates;
-    }
-    return CAMPUS_25_CANDIDATES;
-  });
-
-  // Keep in sync with global store
-  useEffect(() => {
-    if (globalCandidates && globalCandidates.length < 20) {
-      if (typeof seedGlobalCampus === "function") {
-        seedGlobalCampus(CAMPUS_25_CANDIDATES);
-      } else if (typeof setGlobalCandidates === "function") {
-        setGlobalCandidates(CAMPUS_25_CANDIDATES);
-      }
-      setCandidates(CAMPUS_25_CANDIDATES);
-    }
-  }, [globalCandidates, seedGlobalCampus, setGlobalCandidates]);
+  // Guaranteed candidate fallback to prevent failure
+  const candidates =
+    globalCandidates && globalCandidates.length >= 20
+      ? globalCandidates
+      : CAMPUS_25_CANDIDATES;
 
   // Demo Controls
   const [selectedJob, setSelectedJob] = useState<string>("fastapi-architect");

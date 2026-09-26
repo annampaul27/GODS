@@ -105,8 +105,89 @@ interface StoreContextType {
 
 const StoreContext = createContext<StoreContextType | null>(null);
 
+function getSavedSession() {
+  if (typeof window === "undefined") return null;
+  try {
+    const saved = localStorage.getItem("skillsetu_auth_session");
+    return saved ? JSON.parse(saved) : null;
+  } catch {
+    return null;
+  }
+}
+
+function createRegisteredCandidate(studentData: {
+  fullName: string;
+  email: string;
+  college: string;
+  gradYear?: number;
+  targetRole?: string;
+  githubUrl?: string;
+  linkedinUrl?: string;
+  skills?: string[];
+}): Candidate {
+  const id = "cand-" + Date.now();
+  const candidateSkills = (studentData.skills || ["Python", "FastAPI", "SQL", "Git"]).map((s, idx) => ({
+    skillId: s.toLowerCase().replace(/[^a-z0-9]/g, "_"),
+    skillName: s,
+    category: "backend" as const,
+    level: "Intermediate" as const,
+    isVerified: idx === 0,
+    credentialHash:
+      idx === 0
+        ? "0x" + Array.from({ length: 64 }, () => Math.floor(Math.random() * 16).toString(16)).join("")
+        : undefined,
+    verifiedAt: idx === 0 ? new Date().toISOString().split("T")[0] : undefined,
+    score: idx === 0 ? 92 : undefined,
+  }));
+
+  const newCandidate: Candidate = {
+    id,
+    fullName: studentData.fullName,
+    anonymizedId: `Candidate #${Math.floor(1000 + Math.random() * 9000)}`,
+    email: studentData.email,
+    college: studentData.college,
+    anonymizedCollege:
+      studentData.college.includes("IIT") ||
+      studentData.college.includes("NIT") ||
+      studentData.college.includes("BITS")
+        ? "Tier-1 Technical Institute"
+        : "Accredited Engineering University",
+    gradYear: studentData.gradYear || 2026,
+    avatarUrl: `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(studentData.fullName)}`,
+    targetRole: studentData.targetRole || "Software Engineer",
+    currentTier: "bridgeable",
+    readinessScore: 78,
+    skills: candidateSkills,
+    missingCompetencies: ["PostgreSQL Optimization", "System Architecture"],
+    githubUrl: studentData.githubUrl || `https://github.com/${studentData.fullName.toLowerCase().replace(/\s+/g, "")}`,
+    linkedinUrl: studentData.linkedinUrl || `https://linkedin.com/in/${studentData.fullName.toLowerCase().replace(/\s+/g, "")}`,
+    experienceYears: 1,
+    projects: [
+      {
+        title: "Distributed Microservices Engine",
+        description: "High-throughput asynchronous event processing backend built with FastAPI, Redis, and PostgreSQL.",
+        tech: ["Python", "FastAPI", "Docker", "PostgreSQL"],
+        link: studentData.githubUrl,
+      },
+    ],
+    pipelineStatus: "applied",
+    statusHistory: [
+      {
+        status: "applied",
+        timestamp: new Date().toLocaleDateString(),
+        updatedBy: "System Registration",
+      },
+    ],
+    credentials: [],
+  };
+
+  return newCandidate;
+}
+
 export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [role, setRole] = useState<RoleType>("employer");
+  const [role, setRole] = useState<RoleType>(() => {
+    return getSavedSession()?.role || "employer";
+  });
   const [organizations, setOrganizations] = useState<Organization[]>(INITIAL_ORGS);
   const [currentOrg, setCurrentOrg] = useState<Organization>(INITIAL_ORGS[0]);
   const [jobs, setJobs] = useState<JobOpening[]>(INITIAL_JOBS);
@@ -120,38 +201,31 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [toasts, setToasts] = useState<ToastNotification[]>([]);
 
   // The logged-in student persona defaults to cand-1 ("Aditya Verma", Bridgeable at 78%)
-  const [currentStudentId, setCurrentStudentId] = useState<string>("cand-1");
+  const [currentStudentId, setCurrentStudentId] = useState<string>(() => {
+    return getSavedSession()?.currentStudentId || "cand-1";
+  });
 
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
+    const session = getSavedSession();
+    return session?.isAuthenticated !== undefined ? session.isAuthenticated : true;
+  });
   const [currentUser, setCurrentUser] = useState<{
     name: string;
     email: string;
     role: RoleType;
     avatarUrl?: string;
     orgName?: string;
-  } | null>({
-    name: "Priya Sharma",
-    email: "priya.sharma@acme.com",
-    role: "employer",
-    orgName: "Acme HyperScale Systems",
-    avatarUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80",
+  } | null>(() => {
+    const session = getSavedSession();
+    if (session?.currentUser) return session.currentUser;
+    return {
+      name: "Priya Sharma",
+      email: "priya.sharma@acme.com",
+      role: "employer",
+      orgName: "Acme HyperScale Systems",
+      avatarUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80",
+    };
   });
-
-  // Restore persisted session on mount
-  useEffect(() => {
-    try {
-      const savedSession = localStorage.getItem("skillsetu_auth_session");
-      if (savedSession) {
-        const parsed = JSON.parse(savedSession);
-        if (parsed.role) setRole(parsed.role);
-        if (parsed.isAuthenticated !== undefined) setIsAuthenticated(parsed.isAuthenticated);
-        if (parsed.currentUser) setCurrentUser(parsed.currentUser);
-        if (parsed.currentStudentId) setCurrentStudentId(parsed.currentStudentId);
-      }
-    } catch (e) {
-      console.warn("Failed to restore session from localStorage", e);
-    }
-  }, []);
 
   const persistSession = (
     savedRole: RoleType,
@@ -237,7 +311,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     setCurrentUser(null);
     try {
       localStorage.removeItem("skillsetu_auth_session");
-    } catch (e) {}
+    } catch {}
     addToast({
       type: "info",
       title: "Session Terminated",
@@ -255,61 +329,8 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     linkedinUrl?: string;
     skills?: string[];
   }): Candidate => {
-    const id = "cand-" + Date.now();
-    const candidateSkills = (studentData.skills || ["Python", "FastAPI", "SQL", "Git"]).map((s, idx) => ({
-      skillId: s.toLowerCase().replace(/[^a-z0-9]/g, "_"),
-      skillName: s,
-      category: "backend",
-      level: "Intermediate" as const,
-      isVerified: idx === 0,
-      credentialHash:
-        idx === 0
-          ? "0x" + Array.from({ length: 64 }, () => Math.floor(Math.random() * 16).toString(16)).join("")
-          : undefined,
-      verifiedAt: idx === 0 ? new Date().toISOString().split("T")[0] : undefined,
-      score: idx === 0 ? 92 : undefined,
-    }));
-
-    const newCandidate: Candidate = {
-      id,
-      fullName: studentData.fullName,
-      anonymizedId: `Candidate #${Math.floor(1000 + Math.random() * 9000)}`,
-      email: studentData.email,
-      college: studentData.college,
-      anonymizedCollege:
-        studentData.college.includes("IIT") ||
-        studentData.college.includes("NIT") ||
-        studentData.college.includes("BITS")
-          ? "Tier-1 Technical Institute"
-          : "Accredited Engineering University",
-      gradYear: studentData.gradYear || 2026,
-      avatarUrl: `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(studentData.fullName)}`,
-      targetRole: studentData.targetRole || "Software Engineer",
-      currentTier: "bridgeable",
-      readinessScore: 78,
-      skills: candidateSkills,
-      missingCompetencies: ["PostgreSQL Optimization", "System Architecture"],
-      githubUrl: studentData.githubUrl || `https://github.com/${studentData.fullName.toLowerCase().replace(/\s+/g, "")}`,
-      linkedinUrl: studentData.linkedinUrl || `https://linkedin.com/in/${studentData.fullName.toLowerCase().replace(/\s+/g, "")}`,
-      experienceYears: 1,
-      projects: [
-        {
-          title: "Distributed Microservices Engine",
-          description: "High-throughput asynchronous event processing backend built with FastAPI, Redis, and PostgreSQL.",
-          tech: ["Python", "FastAPI", "Docker", "PostgreSQL"],
-          link: studentData.githubUrl,
-        },
-      ],
-      pipelineStatus: "applied",
-      statusHistory: [
-        {
-          status: "applied",
-          timestamp: new Date().toLocaleDateString(),
-          updatedBy: "System Registration",
-        },
-      ],
-      credentials: [],
-    };
+    const newCandidate = createRegisteredCandidate(studentData);
+    const id = newCandidate.id;
 
     setCandidates((prev) => [newCandidate, ...prev]);
     setCurrentStudentId(id);
@@ -683,7 +704,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
           score: credData.score,
         }),
       }).catch((e) => console.warn("Backend sprint sync offline:", e));
-    } catch (e) {}
+    } catch {}
 
     // Automatically boost candidate profile (S12, E9)
     setCandidates((prev) =>

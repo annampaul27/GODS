@@ -25,8 +25,7 @@ export default function NotificationCenter({ userId = "cand-1" }: NotificationCe
   const [activeTab, setActiveTab] = useState<"all" | "unread">("all");
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const fetchNotifications = async () => {
-    setIsLoading(true);
+  const fetchNotifications = React.useCallback(async () => {
     try {
       const res = await fetch(`http://localhost:8000/api/v1/notifications?user_id=${userId}`);
       if (res.ok) {
@@ -39,13 +38,21 @@ export default function NotificationCenter({ userId = "cand-1" }: NotificationCe
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [userId]);
 
   useEffect(() => {
-    fetchNotifications();
+    let isCancelled = false;
+    (async () => {
+      if (!isCancelled) {
+        await fetchNotifications();
+      }
+    })();
     const interval = setInterval(fetchNotifications, 20000);
-    return () => clearInterval(interval);
-  }, [userId]);
+    return () => {
+      isCancelled = true;
+      clearInterval(interval);
+    };
+  }, [fetchNotifications]);
 
   // Handle outside click to close dropdown
   useEffect(() => {

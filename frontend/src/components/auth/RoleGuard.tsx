@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Link from "next/link";
 import { useStore } from "@/lib/store";
+import { useMounted } from "@/lib/useMounted";
 import { RoleType } from "@/types";
 import { ShieldAlert, Lock, ArrowRight, GraduationCap, Briefcase, ShieldCheck, LogIn } from "lucide-react";
 
@@ -18,11 +19,7 @@ export default function RoleGuard({
   children,
 }: RoleGuardProps) {
   const { isAuthenticated, currentUser } = useStore();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useMounted();
 
   if (!mounted) {
     return (

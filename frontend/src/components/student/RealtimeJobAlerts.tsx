@@ -25,7 +25,7 @@ export default function RealtimeJobAlerts({
   const seenIdsRef = useRef<Set<string>>(new Set());
   const isInitialFetchRef = useRef<boolean>(true);
 
-  const fetchJobMatchNotifications = async () => {
+  const fetchJobMatchNotifications = React.useCallback(async () => {
     try {
       const res = await fetch(`http://localhost:8000/api/v1/notifications?user_id=${userId}`);
       if (!res.ok) return;
@@ -57,16 +57,24 @@ export default function RealtimeJobAlerts({
           });
         }
       }
-    } catch (err) {
+    } catch {
       // background fetch silent catch
     }
-  };
+  }, [userId]);
 
   useEffect(() => {
-    fetchJobMatchNotifications();
+    let isCancelled = false;
+    (async () => {
+      if (!isCancelled) {
+        await fetchJobMatchNotifications();
+      }
+    })();
     const timer = setInterval(fetchJobMatchNotifications, 5000);
-    return () => clearInterval(timer);
-  }, [userId]);
+    return () => {
+      isCancelled = true;
+      clearInterval(timer);
+    };
+  }, [fetchJobMatchNotifications]);
 
   const dismissToast = (id: string, e?: React.MouseEvent) => {
     if (e) e.stopPropagation();

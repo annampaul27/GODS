@@ -70,7 +70,19 @@ export default function SkillVerificationModal({
   const [questions, setQuestions] = useState<QuestionItem[]>([]);
   const [loadingQuestions, setLoadingQuestions] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [selectedAnswers, setSelectedAnswers] = useState<Record<string, number>>({});
+  const [selectedAnswers, setSelectedAnswers] = useState<Record<string, number>>(() => {
+    if (typeof window === "undefined") return {};
+    const key = `skillsetu_answers_${skillId}_${currentStudent.id}`;
+    const saved = localStorage.getItem(key);
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch {
+        return {};
+      }
+    }
+    return {};
+  });
   const [flaggedQuestions, setFlaggedQuestions] = useState<Record<string, boolean>>({});
 
   // 12-Minute Countdown Timer with LocalStorage State Persistence
@@ -79,6 +91,7 @@ export default function SkillVerificationModal({
   const [gradeResult, setGradeResult] = useState<GradeResult | null>(null);
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const handleSubmitAssessmentRef = useRef<(() => Promise<void>) | null>(null);
   const storageKey = `skillsetu_timer_${skillId}_${currentStudent.id}`;
   const answersStorageKey = `skillsetu_answers_${skillId}_${currentStudent.id}`;
 
@@ -322,14 +335,6 @@ export default function SkillVerificationModal({
       localStorage.setItem(storageKey, JSON.stringify({ endTime: targetEndTime, totalSeconds: TOTAL_TEST_SECONDS, skillId }));
     }
 
-    // Restore any previously answered questions from localStorage
-    const savedAnswers = localStorage.getItem(answersStorageKey);
-    if (savedAnswers) {
-      try {
-        setSelectedAnswers(JSON.parse(savedAnswers));
-      } catch (e) {}
-    }
-
     // Interval to calculate remaining seconds from absolute targetEndTime
     const updateCountdown = () => {
       const now = Date.now();
@@ -344,7 +349,9 @@ export default function SkillVerificationModal({
           title: "12-Minute Time Limit Reached (FR-01)",
           message: "Assessment timer has expired. Your current answers are being submitted for grading.",
         });
-        handleSubmitAssessment();
+        if (handleSubmitAssessmentRef.current) {
+          handleSubmitAssessmentRef.current();
+        }
       }
     };
 
@@ -532,6 +539,7 @@ export default function SkillVerificationModal({
 
     setIsSubmitting(false);
   };
+  handleSubmitAssessmentRef.current = handleSubmitAssessment;
 
   const handleRetake = () => {
     localStorage.removeItem(storageKey);
@@ -694,7 +702,7 @@ export default function SkillVerificationModal({
                   </div>
                 </div>
                 <p className="text-[10px] text-slate-500 italic mt-1">
-                  *Scores below 70% mark the skill as "Failed" and require a re-evaluation attempt.
+                  *Scores below 70% mark the skill as &quot;Failed&quot; and require a re-evaluation attempt.
                 </p>
               </div>
 

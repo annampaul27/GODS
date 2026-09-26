@@ -73,10 +73,14 @@ export default function Navbar() {
   }, []);
 
   // Close mobile menu on route change
+  const prevPathnameRef = React.useRef(pathname);
   useEffect(() => {
-    setMobileMenuOpen(false);
-    setUserDropdownOpen(false);
-    setOrgDropdownOpen(false);
+    if (prevPathnameRef.current !== pathname) {
+      prevPathnameRef.current = pathname;
+      setMobileMenuOpen(false);
+      setUserDropdownOpen(false);
+      setOrgDropdownOpen(false);
+    }
   }, [pathname]);
 
   const sampleHash =

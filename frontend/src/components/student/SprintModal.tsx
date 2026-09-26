@@ -69,15 +69,26 @@ export default function SprintModal({ sprint, onClose }: SprintModalProps) {
     return () => window.removeEventListener("blur", handleBlur);
   }, [part, quizFinished, currentStudent.fullName, sprint.skillName, logAnomaly]);
 
+  const handleTimeUp = React.useCallback(() => {
+    setIsAnswerSubmitted(true);
+    addToast({
+      type: "warning",
+      title: "Time Expired (S7)",
+      message: "The 90-second countdown has reached 0. Your current selection was locked.",
+    });
+  }, [addToast]);
+
+  const handleTimeUpRef = useRef(handleTimeUp);
+  handleTimeUpRef.current = handleTimeUp;
+
   // 90s countdown timer effect (S7)
   useEffect(() => {
     if (part === 3 && !isAnswerSubmitted && !quizFinished) {
-      setTimeLeft(90);
       timerRef.current = setInterval(() => {
         setTimeLeft((prev) => {
           if (prev <= 1) {
-            clearInterval(timerRef.current!);
-            handleTimeUp();
+            if (timerRef.current) clearInterval(timerRef.current);
+            handleTimeUpRef.current();
             return 0;
           }
           return prev - 1;
@@ -88,16 +99,7 @@ export default function SprintModal({ sprint, onClose }: SprintModalProps) {
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
-  }, [part, currentQuestionIndex, isAnswerSubmitted, quizFinished]);
-
-  const handleTimeUp = () => {
-    setIsAnswerSubmitted(true);
-    addToast({
-      type: "warning",
-      title: "Time Expired (S7)",
-      message: "The 90-second countdown has reached 0. Your current selection was locked.",
-    });
-  };
+  }, [part, isAnswerSubmitted, quizFinished]);
 
   const handleSelectOption = (optionIndex: number) => {
     if (isAnswerSubmitted) return;
@@ -119,6 +121,7 @@ export default function SprintModal({ sprint, onClose }: SprintModalProps) {
     if (currentQuestionIndex < sprint.part3Questions.length - 1) {
       setCurrentQuestionIndex((prev) => prev + 1);
       setIsAnswerSubmitted(false);
+      setTimeLeft(90);
     } else {
       // Complete quiz
       if (timerRef.current) clearInterval(timerRef.current);
@@ -378,7 +381,10 @@ export default function SprintModal({ sprint, onClose }: SprintModalProps) {
                   ← Back to Concept
                 </button>
                 <button
-                  onClick={() => setPart(3)}
+                  onClick={() => {
+                    setPart(3);
+                    setTimeLeft(90);
+                  }}
                   className="flex items-center gap-2 px-5 py-2 rounded-xl text-xs font-semibold bg-gradient-to-r from-cyan-500 to-emerald-500 hover:from-cyan-400 hover:to-emerald-400 text-slate-950 shadow-lg shadow-emerald-500/20 transition-all"
                 >
                   <span>Launch Part 3: Timed Assessment</span>
@@ -437,9 +443,16 @@ export default function SprintModal({ sprint, onClose }: SprintModalProps) {
               {/* Options */}
               <div className="space-y-2">
                 {currentQ.options.map((opt, optIdx) => {
-                  const isSelected = selectedOption === optIdx;
-                  let borderStyle = "border-slate-800 hover:border-slate-700 bg-slate-900/50";
-                  let textColor = "text-slate-300";
+                  const borderStyle = isAnswerSubmitted
+                    ? optIdx === currentQ.correctOptionIndex
+                      ? "border-emerald-500/80 bg-emerald-950/40 text-emerald-200"
+                      : isSelected
+                      ? "border-red-500/80 bg-red-950/40 text-red-200"
+                      : "border-slate-800 hover:border-slate-700 bg-slate-900/50"
+                    : isSelected
+                    ? "border-cyan-500/80 bg-cyan-950/30 text-cyan-200"
+                    : "border-slate-800 hover:border-slate-700 bg-slate-900/50";
+                  const textColor = "text-slate-300";
 
                   if (isAnswerSubmitted) {
                     if (optIdx === currentQ.correctOptionIndex) {
