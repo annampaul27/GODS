@@ -1,9 +1,0 @@
-{
-  "title": "Lead Cloud Platform Engineer",
-  "company": "Amazon Web Services Partner",
-  "department": "Platform Architecture",
-  "location": "Bengaluru / Remote",
-  "salary_range": "₹35,00,000 - ₹48,00,000",
-  "required_skills": ["Python", "SQL", "AWS", "Docker"],
-  "description": "Architect high-scale distributed backend pipelines and container orchestration on AWS. Requires proven mastery of Python concurrency, relational SQL optimization, Docker container lifecycles, and AWS cloud primitives."
-}

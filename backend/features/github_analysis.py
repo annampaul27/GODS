@@ -24,11 +24,8 @@ except ImportError:
 try:
     from app.models.github import GithubRepo, RepoScan
 except ImportError:
-    try:
-        from models.github import GithubRepo, RepoScan
-    except ImportError:
-        GithubRepo = Any
-        RepoScan = Any
+    GithubRepo = Any
+    RepoScan = Any
 
 logger = logging.getLogger("career_os")
 
