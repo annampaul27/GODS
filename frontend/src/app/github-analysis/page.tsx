@@ -34,11 +34,7 @@ export default function GitHubAnalysisPage() {
   const [mintedProof, setMintedProof] = useState<string | null>(null);
   const [scanningStep, setScanningStep] = useState<string>("");
 
-  useEffect(() => {
-    handleRunAudit("aaravsharma-dev");
-  }, []);
-
-  const handleRunAudit = async (targetUser: string) => {
+  const handleRunAudit = React.useCallback(async (targetUser: string) => {
     setLoading(true);
     setMintedProof(null);
     setScanningStep("Connecting to FastAPI CareerCompass router...");
@@ -59,7 +55,11 @@ export default function GitHubAnalysisPage() {
       setLoading(false);
       setScanningStep("");
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    handleRunAudit("aaravsharma-dev");
+  }, [handleRunAudit]);
 
   const handleMintBadge = () => {
     const hash = "0x" + Array.from({ length: 64 }, () => Math.floor(Math.random() * 16).toString(16)).join("");
@@ -182,7 +182,7 @@ export default function GitHubAnalysisPage() {
             return (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id as any)}
+                onClick={() => setActiveTab(tab.id as "audit" | "discrepancies" | "repos" | "proof")}
                 className={`flex items-center gap-2 py-3 px-5 text-sm font-medium border-b-2 transition-colors ${
                   isActive
                     ? "border-purple-500 text-purple-400"
@@ -523,7 +523,7 @@ export default function GitHubAnalysisPage() {
                     Mint Verified GitHub Code Credential
                   </h3>
                   <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
-                    Issue a tamper-proof cryptographic proof binding @{auditResult.username}'s public AST code quality score ({auditResult.overallScore}/100) to their profile for employers to verify.
+                    Issue a tamper-proof cryptographic proof binding @{auditResult.username}&apos;s public AST code quality score ({auditResult.overallScore}/100) to their profile for employers to verify.
                   </p>
                 </div>
 
