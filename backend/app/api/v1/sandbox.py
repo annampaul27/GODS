@@ -5,6 +5,7 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 from typing import List, Optional, Any
 from dotenv import load_dotenv
+from app.core.config import settings
 
 load_dotenv()
 
@@ -97,7 +98,7 @@ async def generate_dynamic_challenge(data: ChallengeRequest):
             """
 
             result = client.chat.completions.create(
-                model="openai/gpt-oss-20b",
+                model=settings.GROQ_MODEL,
                 response_model=ChallengeResponse,
                 messages=[{"role": "user", "content": prompt}],
                 max_tokens=2048,
@@ -161,7 +162,7 @@ async def evaluate_bug_fix(data: BugFixRequest):
             """
 
             result = client.chat.completions.create(
-                model="openai/gpt-oss-20b",
+                model=settings.GROQ_MODEL,
                 response_model=BugFixResponse,
                 messages=[{"role": "user", "content": prompt}],
                 max_tokens=2048,

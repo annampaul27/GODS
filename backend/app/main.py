@@ -54,6 +54,7 @@ app.include_router(courses_router, prefix=settings.API_V1_STR)
 app.include_router(courses_router, prefix="/api")
 app.include_router(github_router, prefix=f"{settings.API_V1_STR}/github", tags=["GitHub Analysis & Security"])
 app.include_router(github_router, prefix="/api/github", tags=["GitHub Analysis & Security"])
+app.include_router(github_router, prefix=f"{settings.API_V1_STR}/career-compass/github", tags=["GitHub Analysis & Security"])
 
 scheduler = AsyncIOScheduler()
 

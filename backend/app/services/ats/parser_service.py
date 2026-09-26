@@ -5,6 +5,7 @@ from typing import Optional, List
 import pdfplumber
 import docx
 from app.models.ats import ResumeSchema, JDSchema, WorkExperience
+from app.core.config import settings
 
 async def extract_text_from_pdf(file_bytes: bytes) -> str:
     text = ""
@@ -147,7 +148,7 @@ def parse_resume(raw_text: str) -> ResumeSchema:
         {raw_text}
         """
         response = client.chat.completions.create(
-            model="openai/gpt-oss-20b",
+            model=settings.GROQ_MODEL,
             response_model=ResumeSchema,
             messages=[{"role": "user", "content": prompt}],
         )
@@ -177,7 +178,7 @@ def parse_jd(raw_text: str) -> JDSchema:
         {raw_text}
         """
         response = client.chat.completions.create(
-            model="openai/gpt-oss-20b",
+            model=settings.GROQ_MODEL,
             response_model=JDSchema,
             messages=[{"role": "user", "content": prompt}],
         )

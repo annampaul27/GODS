@@ -1,32 +1,8 @@
-import json
-import urllib.request
-import urllib.error
 import sys
+from fastapi.testclient import TestClient
+from app.main import app
 
-BASE_URL = "http://localhost:8000"
-
-def make_request(path, method="GET", body=None, token=None):
-    url = f"{BASE_URL}{path}"
-    headers = {"Content-Type": "application/json"}
-    if token:
-        headers["Authorization"] = f"Bearer {token}"
-    
-    data = json.dumps(body).encode("utf-8") if body is not None else None
-    req = urllib.request.Request(url, data=data, headers=headers, method=method)
-    try:
-        with urllib.request.urlopen(req, timeout=5) as response:
-            status_code = response.status
-            content = json.loads(response.read().decode("utf-8"))
-            return status_code, content
-    except urllib.error.HTTPError as e:
-        error_content = {}
-        try:
-            error_content = json.loads(e.read().decode("utf-8"))
-        except Exception:
-            pass
-        return e.code, error_content
-    except Exception as e:
-        return 0, {"error": str(e)}
+client = TestClient(app)
 
 def run_auth_test_suite():
     tests_run = 0
@@ -45,100 +21,132 @@ def run_auth_test_suite():
     print("\n================ AUTHENTICATION & LOGIN TEST SUITE ================")
 
     # Test 1: Valid Employer Login
-    code, data = make_request("/api/v1/auth/login", method="POST", body={
+    res = client.post("/api/v1/auth/login", json={
         "email": "priya.sharma@acme.com",
         "password": "SkillSetu@2026",
         "role": "employer",
         "org_id": "org-acme"
     })
+    data = res.json()
     employer_token = data.get("access_token")
-    passed = (code == 200 and employer_token is not None and data.get("user", {}).get("role") == "employer")
-    record_test("Employer Login (Valid)", passed, f"Status: {code} | User: {data.get('user', {}).get('full_name')} | Org: {data.get('organization', {}).get('name')}")
+    passed = (res.status_code == 200 and employer_token is not None and data.get("user", {}).get("role") == "employer")
+    record_test("Employer Login (Valid)", passed, f"Status: {res.status_code} | User: {data.get('user', {}).get('full_name')} | Org: {data.get('organization', {}).get('name')}")
 
     # Test 2: Protected /me validation with Employer JWT
-    code, data = make_request("/api/v1/auth/me", method="GET", token=employer_token)
-    passed = (code == 200 and data.get("email") == "priya.sharma@acme.com" and data.get("org_name") == "Acme HyperScale Systems")
-    record_test("Protected Profile /me (Valid Bearer JWT)", passed, f"Status: {code} | Profile email: {data.get('email')} | Org: {data.get('org_name')}")
+    res = client.get("/api/v1/auth/me", headers={"Authorization": f"Bearer {employer_token}"})
+    data = res.json()
+    passed = (res.status_code == 200 and data.get("email") == "priya.sharma@acme.com" and data.get("org_name") == "Acme HyperScale Systems")
+    record_test("Protected Profile /me (Valid Bearer JWT)", passed, f"Status: {res.status_code} | Profile email: {data.get('email')} | Org: {data.get('org_name')}")
 
     # Test 3: Valid Student Login
-    code, data = make_request("/api/v1/auth/login", method="POST", body={
+    res = client.post("/api/v1/auth/login", json={
         "email": "aditya.verma@example.com",
         "password": "SkillSetu@2026",
         "role": "student"
     })
+    data = res.json()
     student_token = data.get("access_token")
-    passed = (code == 200 and student_token is not None and data.get("user", {}).get("readiness_score") == 78)
-    record_test("Student Login (Valid)", passed, f"Status: {code} | User: {data.get('user', {}).get('full_name')} | Score: {data.get('user', {}).get('readiness_score')}%")
+    passed = (res.status_code == 200 and student_token is not None and data.get("user", {}).get("readiness_score") == 78)
+    record_test("Student Login (Valid)", passed, f"Status: {res.status_code} | User: {data.get('user', {}).get('full_name')} | Score: {data.get('user', {}).get('readiness_score')}%")
 
     # Test 4: Valid Admin Login
-    code, data = make_request("/api/v1/auth/login", method="POST", body={
+    res = client.post("/api/v1/auth/login", json={
         "email": "root@skillsetu.ai",
         "password": "SkillSetu@2026",
         "role": "admin"
     })
+    data = res.json()
     admin_token = data.get("access_token")
-    passed = (code == 200 and admin_token is not None and data.get("user", {}).get("role") == "admin")
-    record_test("Admin Superuser Login (Valid)", passed, f"Status: {code} | Role: {data.get('user', {}).get('role')}")
+    passed = (res.status_code == 200 and admin_token is not None and data.get("user", {}).get("role") == "admin")
+    record_test("Admin Superuser Login (Valid)", passed, f"Status: {res.status_code} | Role: {data.get('user', {}).get('role')}")
 
-    # Test 5: Invalid Password Check
-    code, data = make_request("/api/v1/auth/login", method="POST", body={
+    # Test 5: Invalid Password Check (Rejected with 401)
+    res = client.post("/api/v1/auth/login", json={
         "email": "priya.sharma@acme.com",
         "password": "WrongPassword999!",
         "role": "employer",
         "org_id": "org-acme"
     })
-    passed = (code == 401 and "Invalid email or password" in data.get("detail", ""))
-    record_test("Login with Invalid Password (Rejected)", passed, f"Status: {code} | Detail: {data.get('detail')}")
+    data = res.json()
+    passed = (res.status_code == 401 and "Invalid email or password" in data.get("detail", ""))
+    record_test("Login with Invalid Password (Rejected)", passed, f"Status: {res.status_code} | Detail: {data.get('detail')}")
 
-    # Test 6: Role Mismatch Check (User registered as employer tries to log in as student)
-    code, data = make_request("/api/v1/auth/login", method="POST", body={
+    # Test 6: Non-existent User Login (Rejected with 401, no silent auto-creation)
+    res = client.post("/api/v1/auth/login", json={
+        "email": "unregistered.intruder@unknown.com",
+        "password": "SomePassword123!",
+        "role": "student"
+    })
+    data = res.json()
+    passed = (res.status_code == 401 and "Invalid email or password" in data.get("detail", ""))
+    record_test("Unregistered User Login Rejection (No Silent Auto-Creation)", passed, f"Status: {res.status_code} | Detail: {data.get('detail')}")
+
+    # Test 7: Role Mismatch Check (User registered as employer tries to log in as student)
+    res = client.post("/api/v1/auth/login", json={
         "email": "priya.sharma@acme.com",
         "password": "SkillSetu@2026",
         "role": "student"
     })
-    passed = (code == 403 and "Account exists under role" in data.get("detail", ""))
-    record_test("Role Mismatch Enforcement (Rejected)", passed, f"Status: {code} | Detail: {data.get('detail')}")
+    data = res.json()
+    passed = (res.status_code == 403 and "Account exists under role" in data.get("detail", ""))
+    record_test("Role Mismatch Enforcement (Rejected)", passed, f"Status: {res.status_code} | Detail: {data.get('detail')}")
 
-    # Test 7: Invalid Organization ID Scoping
-    code, data = make_request("/api/v1/auth/login", method="POST", body={
+    # Test 8: Invalid Organization ID Scoping
+    res = client.post("/api/v1/auth/login", json={
         "email": "priya.sharma@acme.com",
         "password": "SkillSetu@2026",
         "role": "employer",
         "org_id": "org-non-existent-99"
     })
-    passed = (code == 404 and "not found" in data.get("detail", ""))
-    record_test("Non-Existent Tenant Scoping (Rejected)", passed, f"Status: {code} | Detail: {data.get('detail')}")
+    data = res.json()
+    passed = (res.status_code == 404 and "not found" in data.get("detail", ""))
+    record_test("Non-Existent Tenant Scoping (Rejected)", passed, f"Status: {res.status_code} | Detail: {data.get('detail')}")
 
-    # Test 8: Unauthenticated Access to Protected Route
-    code, data = make_request("/api/v1/auth/me", method="GET", token=None)
-    passed = (code == 401 or code == 403)
-    record_test("Unauthorized Access /me without Token (Blocked)", passed, f"Status: {code} | Detail: {data.get('detail')}")
+    # Test 9: Unauthenticated Access to Protected Route
+    res = client.get("/api/v1/auth/me")
+    passed = (res.status_code in [401, 403])
+    record_test("Unauthorized Access /me without Token (Blocked)", passed, f"Status: {res.status_code}")
 
-    # Test 9: Tampered / Corrupt Bearer Token
-    code, data = make_request("/api/v1/auth/me", method="GET", token="invalid.token.signature")
-    passed = (code == 401)
-    record_test("Corrupted Bearer Token Access (Blocked)", passed, f"Status: {code} | Detail: {data.get('detail')}")
+    # Test 10: Tampered / Corrupt Bearer Token
+    res = client.get("/api/v1/auth/me", headers={"Authorization": "Bearer invalid.token.signature"})
+    passed = (res.status_code == 401)
+    record_test("Corrupted Bearer Token Access (Blocked)", passed, f"Status: {res.status_code}")
 
-    # Test 10: Auto-provision Sandbox User on Login
-    code, data = make_request("/api/v1/auth/login", method="POST", body={
-        "email": "guest.evaluator@talenttest.org",
-        "password": "TemporaryPassword123",
+    # Test 11: Valid Registration via /auth/register
+    res = client.post("/api/v1/auth/register", json={
+        "email": "new.candidate@talenttest.org",
+        "password": "StrongPassword123!",
+        "full_name": "New Candidate",
+        "role": "student",
+        "college": "Apex Institute"
+    })
+    data = res.json()
+    passed = (res.status_code == 200 and data.get("access_token") is not None and data.get("user", {}).get("email") == "new.candidate@talenttest.org")
+    record_test("Valid User Registration via /auth/register", passed, f"Status: {res.status_code} | Created: {data.get('user', {}).get('full_name')} ({data.get('user', {}).get('id')})")
+
+    # Test 12: Duplicate Registration Rejection
+    res = client.post("/api/v1/auth/register", json={
+        "email": "new.candidate@talenttest.org",
+        "password": "StrongPassword123!",
+        "full_name": "Duplicate Candidate",
         "role": "student"
     })
-    passed = (code == 200 and data.get("access_token") is not None and data.get("user", {}).get("email") == "guest.evaluator@talenttest.org")
-    record_test("Dynamic Sandbox User Auto-Provisioning", passed, f"Status: {code} | Created: {data.get('user', {}).get('full_name')} ({data.get('user', {}).get('id')})")
+    passed = (res.status_code == 400 and "already exists" in res.json().get("detail", ""))
+    record_test("Duplicate Registration Rejection (Blocked)", passed, f"Status: {res.status_code}")
 
-    # Test 11: Forgot Password Cryptographic Dispatch
-    code, data = make_request("/api/v1/auth/forgot-password", method="POST", body={
+    # Test 13: Forgot Password Cryptographic Dispatch
+    res = client.post("/api/v1/auth/forgot-password", json={
         "email": "aditya.verma@example.com"
     })
-    passed = (code == 200 and data.get("success") is True)
-    record_test("Cryptographic Password Reset Dispatch", passed, f"Status: {code} | Message: {data.get('message')}")
+    data = res.json()
+    passed = (res.status_code == 200 and data.get("success") is True)
+    record_test("Cryptographic Password Reset Dispatch", passed, f"Status: {res.status_code} | Message: {data.get('message')}")
 
-    # Test 12: List Tenant Organizations
-    code, data = make_request("/api/v1/auth/organizations", method="GET")
-    passed = (code == 200 and isinstance(data, list) and len(data) >= 3)
-    record_test("Tenant Organization Directory Listing", passed, f"Status: {code} | Found {len(data)} tenant organizations")
+    # Test 14: List Tenant Organizations
+    res = client.get("/api/v1/auth/organizations")
+    data = res.json()
+    passed = (res.status_code == 200 and isinstance(data, list) and len(data) >= 3)
+    record_test("Tenant Organization Directory Listing", passed, f"Status: {res.status_code} | Found {len(data)} tenant organizations")
 
     print("\n======================= TEST SUMMARY =======================")
     print(f"Total Tests Executed: {tests_run}")

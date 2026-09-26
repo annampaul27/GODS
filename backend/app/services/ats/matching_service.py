@@ -1,21 +1,11 @@
 from app.models.ats import ResumeSchema, JDSchema, ComparisonResultSchema
-
-def _normalize_skill(skill: str) -> str:
-    s = skill.strip().lower()
-    aliases = {
-        "postgres": "postgresql",
-        "react.js": "react",
-        "reactjs": "react",
-        "nextjs": "next.js",
-        "k8s": "kubernetes",
-        "ts": "typescript",
-        "js": "javascript",
-    }
-    return aliases.get(s, s)
+from app.core.matching_engine import normalize_skill
 
 def _skills_match(r_skill: str, j_skill: str) -> bool:
-    r = _normalize_skill(r_skill)
-    j = _normalize_skill(j_skill)
+    r = normalize_skill(r_skill)
+    j = normalize_skill(j_skill)
+    if not r or not j:
+        return False
     if r == j:
         return True
     if "react" in r and "react" in j:
